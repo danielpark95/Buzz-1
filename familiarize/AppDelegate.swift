@@ -6,6 +6,9 @@
 //  Copyright © 2017 nosleep. All rights reserved.
 //
 
+// FYI the icons that are on the navigation bar are copyrighted material.
+// Please create own content before the app is realeased: https://icons8.com
+
 import UIKit
 import CoreData
 
@@ -17,6 +20,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        
+        
+        
+        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let navigationController = UINavigationController(rootViewController: contactsController)
+        window?.rootViewController = navigationController
+        
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        
+        
+        
+        
+        //For making the time/wifi signal/ and battery to show white text instead of black text.
+        application.statusBarStyle = .lightContent
+        
         return true
     }
 
