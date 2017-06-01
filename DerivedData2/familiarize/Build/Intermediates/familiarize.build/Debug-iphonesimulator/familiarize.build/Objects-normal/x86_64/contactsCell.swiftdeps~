@@ -1,9 +1,12 @@
 ### Swift dependencies file v0 ###
 provides-top-level:
+- "BaseCell"
 - "ContactsCell"
 provides-nominal:
+- "C11familiarize8BaseCell"
 - "C11familiarize12ContactsCell"
 provides-member:
+- ["C11familiarize8BaseCell", ""]
 - ["C11familiarize12ContactsCell", ""]
 provides-dynamic-lookup:
 - "nameLabel"
@@ -13,6 +16,7 @@ provides-dynamic-lookup:
 depends-top-level:
 - "/"
 - "AssignmentPrecedence"
+- "BaseCell"
 - "BooleanLiteralType"
 - "CGRect"
 - "ContactsCell"
@@ -78,6 +82,35 @@ depends-member:
 - !private ["Ps9AnyObject", "white"]
 - !private ["Ps9AnyObject", "widthAnchor"]
 - ["Ps9AnyObject", ""]
+- ["C11familiarize8BaseCell", "CGRect"]
+- ["C11familiarize8BaseCell", "NSAttributedString"]
+- ["C11familiarize8BaseCell", "NSCoder"]
+- ["C11familiarize8BaseCell", "NSFontAttributeName"]
+- ["C11familiarize8BaseCell", "NSForegroundColorAttributeName"]
+- ["C11familiarize8BaseCell", "NSMakeRange"]
+- ["C11familiarize8BaseCell", "NSMutableAttributedString"]
+- ["C11familiarize8BaseCell", "NSMutableParagraphStyle"]
+- ["C11familiarize8BaseCell", "NSParagraphStyleAttributeName"]
+- ["C11familiarize8BaseCell", "UIColor"]
+- ["C11familiarize8BaseCell", "UIFont"]
+- ["C11familiarize8BaseCell", "UIImage"]
+- ["C11familiarize8BaseCell", "UIImageView"]
+- ["C11familiarize8BaseCell", "UILabel"]
+- ["C11familiarize8BaseCell", "UIView"]
+- !private ["C11familiarize8BaseCell", "addSubview"]
+- !private ["C11familiarize8BaseCell", "backgroundColor"]
+- !private ["C11familiarize8BaseCell", "bottomAnchor"]
+- ["C11familiarize8BaseCell", "deinit"]
+- !private ["C11familiarize8BaseCell", "fatalError"]
+- ["C11familiarize8BaseCell", "init"]
+- !private ["C11familiarize8BaseCell", "leftAnchor"]
+- ["C11familiarize8BaseCell", "nameLabel"]
+- ["C11familiarize8BaseCell", "profileImageView"]
+- !private ["C11familiarize8BaseCell", "rightAnchor"]
+- ["C11familiarize8BaseCell", "separatorView"]
+- ["C11familiarize8BaseCell", "setupViews"]
+- !private ["C11familiarize8BaseCell", "topAnchor"]
+- ["C11familiarize8BaseCell", ""]
 - ["Ps23BidirectionalCollection", "count"]
 - ["PSo15CALayerDelegate", "NSAttributedString"]
 - ["PSo15CALayerDelegate", "NSFontAttributeName"]
@@ -159,9 +192,7 @@ depends-member:
 - ["Ps10Collection", "count"]
 - ["Ps10Comparable", "characters"]
 - ["Ps10Comparable", "init"]
-- ["C11familiarize12ContactsCell", "CGRect"]
 - ["C11familiarize12ContactsCell", "NSAttributedString"]
-- ["C11familiarize12ContactsCell", "NSCoder"]
 - ["C11familiarize12ContactsCell", "NSFontAttributeName"]
 - ["C11familiarize12ContactsCell", "NSForegroundColorAttributeName"]
 - ["C11familiarize12ContactsCell", "NSMakeRange"]
@@ -178,7 +209,6 @@ depends-member:
 - !private ["C11familiarize12ContactsCell", "backgroundColor"]
 - !private ["C11familiarize12ContactsCell", "bottomAnchor"]
 - ["C11familiarize12ContactsCell", "deinit"]
-- !private ["C11familiarize12ContactsCell", "fatalError"]
 - ["C11familiarize12ContactsCell", "init"]
 - !private ["C11familiarize12ContactsCell", "leftAnchor"]
 - ["C11familiarize12ContactsCell", "nameLabel"]
@@ -1103,6 +1133,7 @@ depends-member:
 - ["Ps26_RangeReplaceableIndexable", "count"]
 depends-nominal:
 - "Ps9AnyObject"
+- "C11familiarize8BaseCell"
 - "Ps23BidirectionalCollection"
 - "PSo15CALayerDelegate"
 - "Ps7CVarArg"
@@ -1199,4 +1230,4 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/SwiftOnoneSupport.swiftmodule"
-interface-hash: "7f94ef8c3a7576c8ab8a9b131ff50215"
+interface-hash: "29b8f48d5715d8bc6164fd4f3622e691"

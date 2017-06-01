@@ -1,9 +1,10 @@
 version: "Apple Swift version 3.1 (swiftlang-802.0.53 clang-802.0.42)"
 options: "bfbcd752e3fe9460b8613aebb3a2a9f5"
-build_time: [549498250, 295270000]
+build_time: [549607045, 866554000]
 inputs:
-  "/Users/alexoh/Documents/familiarize/familiarize/ViewController.swift": [549498249, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/FamiliarizeController.swift": [549604800, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/ContactsController.swift": [549604039, 0]
   "/Users/alexoh/Documents/familiarize/familiarize/MenuBar.swift": [549495917, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/contactsCell.swift": [549415814, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/CustomTabBarController.swift": [549443828, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/AppDelegate.swift": [549411533, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/ContactsCell.swift": [549607045, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/CustomTabBarController.swift": [549604187, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/AppDelegate.swift": [549600516, 0]

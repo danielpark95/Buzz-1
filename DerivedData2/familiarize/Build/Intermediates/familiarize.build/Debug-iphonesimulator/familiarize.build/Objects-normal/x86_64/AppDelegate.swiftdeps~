@@ -22,7 +22,7 @@ depends-top-level:
 - "Bool"
 - !private "BooleanLiteralType"
 - "CastingPrecedence"
-- !private "ContactsController"
+- !private "CustomTabBarController"
 - !private "Dictionary"
 - !private "NSError"
 - !private "NSForegroundColorAttributeName"
@@ -31,22 +31,18 @@ depends-top-level:
 - "UIApplication"
 - "UIApplicationDelegate"
 - "UIApplicationLaunchOptionsKey"
-- !private "UICollectionViewFlowLayout"
 - !private "UIColor"
 - !private "UINavigationBar"
-- !private "UINavigationController"
 - "UIResponder"
 - !private "UIScreen"
 - "UIWindow"
 - !private "fatalError"
 depends-member:
-- !private ["Ps9AnyObject", "ContactsController"]
+- !private ["Ps9AnyObject", "CustomTabBarController"]
 - !private ["Ps9AnyObject", "NSForegroundColorAttributeName"]
 - !private ["Ps9AnyObject", "NSPersistentContainer"]
-- !private ["Ps9AnyObject", "UICollectionViewFlowLayout"]
 - !private ["Ps9AnyObject", "UIColor"]
 - !private ["Ps9AnyObject", "UINavigationBar"]
-- !private ["Ps9AnyObject", "UINavigationController"]
 - !private ["Ps9AnyObject", "UIScreen"]
 - !private ["Ps9AnyObject", "UIWindow"]
 - !private ["Ps9AnyObject", "appearance"]
@@ -82,16 +78,14 @@ depends-member:
 - ["Ps9AnyObject", "window"]
 - ["Ps9AnyObject", ""]
 - ["C11familiarize11AppDelegate", "Bool"]
-- !private ["C11familiarize11AppDelegate", "ContactsController"]
+- !private ["C11familiarize11AppDelegate", "CustomTabBarController"]
 - !private ["C11familiarize11AppDelegate", "NSError"]
 - !private ["C11familiarize11AppDelegate", "NSForegroundColorAttributeName"]
 - ["C11familiarize11AppDelegate", "NSPersistentContainer"]
 - ["C11familiarize11AppDelegate", "UIApplication"]
 - ["C11familiarize11AppDelegate", "UIApplicationLaunchOptionsKey"]
-- !private ["C11familiarize11AppDelegate", "UICollectionViewFlowLayout"]
 - !private ["C11familiarize11AppDelegate", "UIColor"]
 - !private ["C11familiarize11AppDelegate", "UINavigationBar"]
-- !private ["C11familiarize11AppDelegate", "UINavigationController"]
 - !private ["C11familiarize11AppDelegate", "UIScreen"]
 - ["C11familiarize11AppDelegate", "UIWindow"]
 - ["C11familiarize11AppDelegate", "application"]
@@ -120,13 +114,11 @@ depends-member:
 - !private ["PSo15CALayerDelegate", "makeKeyAndVisible"]
 - !private ["PSo15CALayerDelegate", "rootViewController"]
 - !private ["PSo15CALayerDelegate", "titleTextAttributes"]
-- !private ["Ps7CVarArg", "ContactsController"]
+- !private ["Ps7CVarArg", "CustomTabBarController"]
 - !private ["Ps7CVarArg", "NSForegroundColorAttributeName"]
 - !private ["Ps7CVarArg", "NSPersistentContainer"]
-- !private ["Ps7CVarArg", "UICollectionViewFlowLayout"]
 - !private ["Ps7CVarArg", "UIColor"]
 - !private ["Ps7CVarArg", "UINavigationBar"]
-- !private ["Ps7CVarArg", "UINavigationController"]
 - !private ["Ps7CVarArg", "UIScreen"]
 - !private ["Ps7CVarArg", "UIWindow"]
 - !private ["Ps7CVarArg", "appearance"]
@@ -162,14 +154,11 @@ depends-member:
 - ["Ps7CVarArg", "window"]
 - ["Ps7CVarArg", ""]
 - !private ["Ps10Comparable", "init"]
-- !private ["C11familiarize18ContactsController", "init"]
-- !private ["Ps28CustomDebugStringConvertible", "ContactsController"]
+- !private ["Ps28CustomDebugStringConvertible", "CustomTabBarController"]
 - !private ["Ps28CustomDebugStringConvertible", "NSForegroundColorAttributeName"]
 - !private ["Ps28CustomDebugStringConvertible", "NSPersistentContainer"]
-- !private ["Ps28CustomDebugStringConvertible", "UICollectionViewFlowLayout"]
 - !private ["Ps28CustomDebugStringConvertible", "UIColor"]
 - !private ["Ps28CustomDebugStringConvertible", "UINavigationBar"]
-- !private ["Ps28CustomDebugStringConvertible", "UINavigationController"]
 - !private ["Ps28CustomDebugStringConvertible", "UIScreen"]
 - !private ["Ps28CustomDebugStringConvertible", "UIWindow"]
 - !private ["Ps28CustomDebugStringConvertible", "appearance"]
@@ -208,13 +197,11 @@ depends-member:
 - !private ["Ps29CustomPlaygroundQuickLookable", "init"]
 - !private ["Ps17CustomReflectable", "_getBuiltinLogicValue"]
 - !private ["Ps17CustomReflectable", "init"]
-- !private ["Ps23CustomStringConvertible", "ContactsController"]
+- !private ["Ps23CustomStringConvertible", "CustomTabBarController"]
 - !private ["Ps23CustomStringConvertible", "NSForegroundColorAttributeName"]
 - !private ["Ps23CustomStringConvertible", "NSPersistentContainer"]
-- !private ["Ps23CustomStringConvertible", "UICollectionViewFlowLayout"]
 - !private ["Ps23CustomStringConvertible", "UIColor"]
 - !private ["Ps23CustomStringConvertible", "UINavigationBar"]
-- !private ["Ps23CustomStringConvertible", "UINavigationController"]
 - !private ["Ps23CustomStringConvertible", "UIScreen"]
 - !private ["Ps23CustomStringConvertible", "UIWindow"]
 - !private ["Ps23CustomStringConvertible", "_getBuiltinLogicValue"]
@@ -250,13 +237,12 @@ depends-member:
 - !private ["Ps23CustomStringConvertible", "white"]
 - ["Ps23CustomStringConvertible", "window"]
 - ["Ps23CustomStringConvertible", ""]
-- !private ["Ps9Equatable", "ContactsController"]
+- !private ["C11familiarize22CustomTabBarController", "init"]
+- !private ["Ps9Equatable", "CustomTabBarController"]
 - !private ["Ps9Equatable", "NSForegroundColorAttributeName"]
 - !private ["Ps9Equatable", "NSPersistentContainer"]
-- !private ["Ps9Equatable", "UICollectionViewFlowLayout"]
 - !private ["Ps9Equatable", "UIColor"]
 - !private ["Ps9Equatable", "UINavigationBar"]
-- !private ["Ps9Equatable", "UINavigationController"]
 - !private ["Ps9Equatable", "UIScreen"]
 - !private ["Ps9Equatable", "UIWindow"]
 - !private ["Ps9Equatable", "_getBuiltinLogicValue"]
@@ -298,13 +284,11 @@ depends-member:
 - !private ["Ps43ExpressibleByExtendedGraphemeClusterLiteral", "init"]
 - !private ["Ps26ExpressibleByStringLiteral", "init"]
 - !private ["Ps33ExpressibleByUnicodeScalarLiteral", "init"]
-- !private ["Ps8Hashable", "ContactsController"]
+- !private ["Ps8Hashable", "CustomTabBarController"]
 - !private ["Ps8Hashable", "NSForegroundColorAttributeName"]
 - !private ["Ps8Hashable", "NSPersistentContainer"]
-- !private ["Ps8Hashable", "UICollectionViewFlowLayout"]
 - !private ["Ps8Hashable", "UIColor"]
 - !private ["Ps8Hashable", "UINavigationBar"]
-- !private ["Ps8Hashable", "UINavigationController"]
 - !private ["Ps8Hashable", "UIScreen"]
 - !private ["Ps8Hashable", "UIWindow"]
 - !private ["Ps8Hashable", "_getBuiltinLogicValue"]
@@ -365,16 +349,14 @@ depends-member:
 - !private ["CSo22NSManagedObjectContext", "save"]
 - !private ["PSo16NSMutableCopying", "init"]
 - ["CSo8NSObject", "Bool"]
-- !private ["CSo8NSObject", "ContactsController"]
+- !private ["CSo8NSObject", "CustomTabBarController"]
 - !private ["CSo8NSObject", "NSError"]
 - !private ["CSo8NSObject", "NSForegroundColorAttributeName"]
 - ["CSo8NSObject", "NSPersistentContainer"]
 - ["CSo8NSObject", "UIApplication"]
 - ["CSo8NSObject", "UIApplicationLaunchOptionsKey"]
-- !private ["CSo8NSObject", "UICollectionViewFlowLayout"]
 - !private ["CSo8NSObject", "UIColor"]
 - !private ["CSo8NSObject", "UINavigationBar"]
-- !private ["CSo8NSObject", "UINavigationController"]
 - !private ["CSo8NSObject", "UIScreen"]
 - ["CSo8NSObject", "UIWindow"]
 - !private ["CSo8NSObject", "appearance"]
@@ -409,13 +391,11 @@ depends-member:
 - !private ["CSo8NSObject", "viewContext"]
 - !private ["CSo8NSObject", "white"]
 - ["CSo8NSObject", "window"]
-- !private ["PSo16NSObjectProtocol", "ContactsController"]
+- !private ["PSo16NSObjectProtocol", "CustomTabBarController"]
 - !private ["PSo16NSObjectProtocol", "NSForegroundColorAttributeName"]
 - !private ["PSo16NSObjectProtocol", "NSPersistentContainer"]
-- !private ["PSo16NSObjectProtocol", "UICollectionViewFlowLayout"]
 - !private ["PSo16NSObjectProtocol", "UIColor"]
 - !private ["PSo16NSObjectProtocol", "UINavigationBar"]
-- !private ["PSo16NSObjectProtocol", "UINavigationController"]
 - !private ["PSo16NSObjectProtocol", "UIScreen"]
 - !private ["PSo16NSObjectProtocol", "UIWindow"]
 - !private ["PSo16NSObjectProtocol", "appearance"]
@@ -481,13 +461,11 @@ depends-member:
 - !private ["PSo21UIAppearanceContainer", "rootViewController"]
 - !private ["PSo21UIAppearanceContainer", "titleTextAttributes"]
 - !private ["CSo13UIApplication", "statusBarStyle"]
-- !private ["PSo21UIApplicationDelegate", "ContactsController"]
+- !private ["PSo21UIApplicationDelegate", "CustomTabBarController"]
 - !private ["PSo21UIApplicationDelegate", "NSForegroundColorAttributeName"]
 - !private ["PSo21UIApplicationDelegate", "NSPersistentContainer"]
-- !private ["PSo21UIApplicationDelegate", "UICollectionViewFlowLayout"]
 - !private ["PSo21UIApplicationDelegate", "UIColor"]
 - !private ["PSo21UIApplicationDelegate", "UINavigationBar"]
-- !private ["PSo21UIApplicationDelegate", "UINavigationController"]
 - !private ["PSo21UIApplicationDelegate", "UIScreen"]
 - !private ["PSo21UIApplicationDelegate", "UIWindow"]
 - ["PSo21UIApplicationDelegate", "application"]
@@ -510,12 +488,6 @@ depends-member:
 - !private ["PSo16UIBarPositioning", "appearance"]
 - !private ["PSo16UIBarPositioning", "barTintColor"]
 - !private ["PSo16UIBarPositioning", "titleTextAttributes"]
-- !private ["CSo26UICollectionViewController", "init"]
-- !private ["PSo26UICollectionViewDataSource", "init"]
-- !private ["PSo24UICollectionViewDelegate", "init"]
-- !private ["PSo34UICollectionViewDelegateFlowLayout", "init"]
-- !private ["CSo26UICollectionViewFlowLayout", "init"]
-- !private ["CSo22UICollectionViewLayout", "init"]
 - !private ["CSo7UIColor", "init"]
 - !private ["CSo7UIColor", "white"]
 - !private ["PSo18UIContentContainer", "init"]
@@ -546,18 +518,15 @@ depends-member:
 - !private ["CSo15UINavigationBar", "appearance"]
 - !private ["CSo15UINavigationBar", "barTintColor"]
 - !private ["CSo15UINavigationBar", "titleTextAttributes"]
-- !private ["CSo22UINavigationController", "init"]
 - ["CSo11UIResponder", "Bool"]
-- !private ["CSo11UIResponder", "ContactsController"]
+- !private ["CSo11UIResponder", "CustomTabBarController"]
 - !private ["CSo11UIResponder", "NSError"]
 - !private ["CSo11UIResponder", "NSForegroundColorAttributeName"]
 - ["CSo11UIResponder", "NSPersistentContainer"]
 - ["CSo11UIResponder", "UIApplication"]
 - ["CSo11UIResponder", "UIApplicationLaunchOptionsKey"]
-- !private ["CSo11UIResponder", "UICollectionViewFlowLayout"]
 - !private ["CSo11UIResponder", "UIColor"]
 - !private ["CSo11UIResponder", "UINavigationBar"]
-- !private ["CSo11UIResponder", "UINavigationController"]
 - !private ["CSo11UIResponder", "UIScreen"]
 - ["CSo11UIResponder", "UIWindow"]
 - !private ["CSo11UIResponder", "appearance"]
@@ -585,13 +554,11 @@ depends-member:
 - !private ["CSo11UIResponder", "titleTextAttributes"]
 - ["CSo11UIResponder", "window"]
 - ["CSo11UIResponder", ""]
-- !private ["PSo30UIResponderStandardEditActions", "ContactsController"]
+- !private ["PSo30UIResponderStandardEditActions", "CustomTabBarController"]
 - !private ["PSo30UIResponderStandardEditActions", "NSForegroundColorAttributeName"]
 - !private ["PSo30UIResponderStandardEditActions", "NSPersistentContainer"]
-- !private ["PSo30UIResponderStandardEditActions", "UICollectionViewFlowLayout"]
 - !private ["PSo30UIResponderStandardEditActions", "UIColor"]
 - !private ["PSo30UIResponderStandardEditActions", "UINavigationBar"]
-- !private ["PSo30UIResponderStandardEditActions", "UINavigationController"]
 - !private ["PSo30UIResponderStandardEditActions", "UIScreen"]
 - !private ["PSo30UIResponderStandardEditActions", "UIWindow"]
 - !private ["PSo30UIResponderStandardEditActions", "appearance"]
@@ -620,9 +587,10 @@ depends-member:
 - ["PSo30UIResponderStandardEditActions", ""]
 - !private ["CSo8UIScreen", "bounds"]
 - !private ["CSo8UIScreen", "main"]
-- !private ["PSo20UIScrollViewDelegate", "init"]
 - !private ["PSo16UIStateRestoring", "init"]
 - !private ["OSC16UIStatusBarStyle", "lightContent"]
+- !private ["CSo18UITabBarController", "init"]
+- !private ["PSo16UITabBarDelegate", "init"]
 - !private ["PSo18UITraitEnvironment", "appearance"]
 - !private ["PSo18UITraitEnvironment", "barTintColor"]
 - !private ["PSo18UITraitEnvironment", "bounds"]
@@ -656,13 +624,11 @@ depends-member:
 - !private ["Ps26_ExpressibleByColorLiteral", "white"]
 - !private ["Ps33_ExpressibleByStringInterpolation", "init"]
 - !private ["Ps35_HasCustomAnyHashableRepresentation", "init"]
-- !private ["Ps9_Hashable", "ContactsController"]
+- !private ["Ps9_Hashable", "CustomTabBarController"]
 - !private ["Ps9_Hashable", "NSForegroundColorAttributeName"]
 - !private ["Ps9_Hashable", "NSPersistentContainer"]
-- !private ["Ps9_Hashable", "UICollectionViewFlowLayout"]
 - !private ["Ps9_Hashable", "UIColor"]
 - !private ["Ps9_Hashable", "UINavigationBar"]
-- !private ["Ps9_Hashable", "UINavigationController"]
 - !private ["Ps9_Hashable", "UIScreen"]
 - !private ["Ps9_Hashable", "UIWindow"]
 - !private ["Ps9_Hashable", "_getBuiltinLogicValue"]
@@ -708,11 +674,11 @@ depends-nominal:
 - !private "PSo15CALayerDelegate"
 - "Ps7CVarArg"
 - !private "Ps10Comparable"
-- !private "C11familiarize18ContactsController"
 - "Ps28CustomDebugStringConvertible"
 - !private "Ps29CustomPlaygroundQuickLookable"
 - !private "Ps17CustomReflectable"
 - "Ps23CustomStringConvertible"
+- !private "C11familiarize22CustomTabBarController"
 - "Ps9Equatable"
 - !private "Ps5Error"
 - !private "Ps27ExpressibleByBooleanLiteral"
@@ -745,12 +711,6 @@ depends-nominal:
 - !private "CSo13UIApplication"
 - "PSo21UIApplicationDelegate"
 - !private "PSo16UIBarPositioning"
-- !private "CSo26UICollectionViewController"
-- !private "PSo26UICollectionViewDataSource"
-- !private "PSo24UICollectionViewDelegate"
-- !private "PSo34UICollectionViewDelegateFlowLayout"
-- !private "CSo26UICollectionViewFlowLayout"
-- !private "CSo22UICollectionViewLayout"
 - !private "CSo7UIColor"
 - !private "PSo18UIContentContainer"
 - !private "PSo17UICoordinateSpace"
@@ -758,13 +718,13 @@ depends-nominal:
 - !private "PSo18UIFocusEnvironment"
 - !private "PSo11UIFocusItem"
 - !private "CSo15UINavigationBar"
-- !private "CSo22UINavigationController"
 - "CSo11UIResponder"
 - "PSo30UIResponderStandardEditActions"
 - !private "CSo8UIScreen"
-- !private "PSo20UIScrollViewDelegate"
 - !private "PSo16UIStateRestoring"
 - !private "OSC16UIStatusBarStyle"
+- !private "CSo18UITabBarController"
+- !private "PSo16UITabBarDelegate"
 - !private "PSo18UITraitEnvironment"
 - !private "CSo6UIView"
 - !private "CSo16UIViewController"
