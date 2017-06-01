@@ -26,9 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
-        let navigationController = UINavigationController(rootViewController: contactsController)
-        window?.rootViewController = navigationController
+        window?.rootViewController = CustomTabBarController()
         
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)

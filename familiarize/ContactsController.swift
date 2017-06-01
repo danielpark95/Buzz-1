@@ -11,8 +11,6 @@ import UIKit
 let cellId = "cellId"
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,13 +28,13 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         // Instead it ends at the bottom navigation bar.
         collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 40, 0)
         
-        setupMenuBar()
+        // setupMenuBar()
         
         setupNavBarButtons()
     }
     
     func setupNavBarButtons() {
-        let searchImage = UIImage(named: "Search-50-3x")?.withRenderingMode(.alwaysTemplate)
+        let searchImage = UIImage(named: "Search-50-3x")?.withRenderingMode(.alwaysOriginal)
         let searchBarButtonItem = UIBarButtonItem(image: searchImage, style: .plain, target: self, action: #selector(handleMore))
         navigationItem.rightBarButtonItem = searchBarButtonItem
     }
