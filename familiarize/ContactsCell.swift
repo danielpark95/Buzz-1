@@ -9,23 +9,7 @@
 import UIKit
 
 
-// Refactoring redundant code so that any new cell can use this shabang.
-class BaseCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setupViews()
-    }
-    
-    func setupViews() {
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
+
 
 
 class ContactsCell: BaseCell {
@@ -60,6 +44,7 @@ class ContactsCell: BaseCell {
         return imageView
     }()
     
+    // This creates the line in between each of the cells.
     let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.95, alpha:1)

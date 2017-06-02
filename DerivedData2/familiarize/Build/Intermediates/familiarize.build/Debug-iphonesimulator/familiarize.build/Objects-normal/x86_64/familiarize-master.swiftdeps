@@ -1,11 +1,12 @@
 version: "Apple Swift version 3.1 (swiftlang-802.0.53 clang-802.0.42)"
-options: "e12aad4fe7571d36b3f436f4c7fb297a"
-build_time: [549686129, 215865000]
+options: "272ee747f5372cd4d1a297ee6169078b"
+build_time: [549693620, 965312000]
 inputs:
-  "/Users/alexoh/Documents/familiarize/familiarize/FamiliarizeController.swift": [549674533, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/ContactsController.swift": [549604039, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/FamiliarizeController.swift": [549692948, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/CellBaseClass.swift": [549692189, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/ContactsController.swift": [549686669, 0]
   "/Users/alexoh/Documents/familiarize/familiarize/MenuBar.swift": [549495917, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/ContactsCell.swift": [549607388, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/FamiliarizeCell.swift": [549684472, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/CustomTabBarController.swift": [549604187, 0]
-  "/Users/alexoh/Documents/familiarize/familiarize/AppDelegate.swift": [549600516, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/ContactsCell.swift": [549692165, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/FamiliarizeCell.swift": [549686971, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/CustomTabBarController.swift": [549692503, 0]
+  "/Users/alexoh/Documents/familiarize/familiarize/AppDelegate.swift": [549693620, 0]

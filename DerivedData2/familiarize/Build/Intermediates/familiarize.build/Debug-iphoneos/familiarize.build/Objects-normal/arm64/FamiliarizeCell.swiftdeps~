@@ -1,0 +1,260 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "FamiliarizeCell"
+provides-nominal:
+- "C11familiarize15FamiliarizeCell"
+provides-member:
+- ["C11familiarize15FamiliarizeCell", ""]
+provides-dynamic-lookup:
+- "qrImageView"
+depends-top-level:
+- "AssignmentPrecedence"
+- "BaseCell"
+- "BooleanLiteralType"
+- "FamiliarizeCell"
+- "QRCode"
+- "StringLiteralType"
+- "UIImageView"
+depends-member:
+- ["Ps9AnyObject", "QRCode"]
+- ["Ps9AnyObject", "UIImageView"]
+- ["Ps9AnyObject", "contentMode"]
+- ["Ps9AnyObject", "image"]
+- ["Ps9AnyObject", "init"]
+- ["Ps9AnyObject", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps9AnyObject", ""]
+- ["C11familiarize8BaseCell", "QRCode"]
+- ["C11familiarize8BaseCell", "UIImageView"]
+- ["C11familiarize8BaseCell", "init"]
+- ["C11familiarize8BaseCell", "qrImageView"]
+- ["C11familiarize8BaseCell", ""]
+- ["PSo15CALayerDelegate", "QRCode"]
+- ["PSo15CALayerDelegate", "UIImageView"]
+- ["PSo15CALayerDelegate", "contentMode"]
+- ["PSo15CALayerDelegate", "image"]
+- ["PSo15CALayerDelegate", "init"]
+- ["PSo15CALayerDelegate", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo15CALayerDelegate", ""]
+- ["Ps7CVarArg", "QRCode"]
+- ["Ps7CVarArg", "UIImageView"]
+- ["Ps7CVarArg", "contentMode"]
+- ["Ps7CVarArg", "image"]
+- ["Ps7CVarArg", "init"]
+- ["Ps7CVarArg", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps7CVarArg", ""]
+- ["Ps28CustomDebugStringConvertible", "QRCode"]
+- ["Ps28CustomDebugStringConvertible", "UIImageView"]
+- ["Ps28CustomDebugStringConvertible", "contentMode"]
+- ["Ps28CustomDebugStringConvertible", "image"]
+- ["Ps28CustomDebugStringConvertible", "init"]
+- ["Ps28CustomDebugStringConvertible", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps28CustomDebugStringConvertible", ""]
+- ["Ps23CustomStringConvertible", "QRCode"]
+- ["Ps23CustomStringConvertible", "UIImageView"]
+- ["Ps23CustomStringConvertible", "contentMode"]
+- ["Ps23CustomStringConvertible", "image"]
+- ["Ps23CustomStringConvertible", "init"]
+- ["Ps23CustomStringConvertible", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps23CustomStringConvertible", ""]
+- ["Ps9Equatable", "QRCode"]
+- ["Ps9Equatable", "UIImageView"]
+- ["Ps9Equatable", "contentMode"]
+- ["Ps9Equatable", "image"]
+- ["Ps9Equatable", "init"]
+- ["Ps9Equatable", "scaleAspectFit"]
+- ["Ps9Equatable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps9Equatable", ""]
+- ["C11familiarize15FamiliarizeCell", "QRCode"]
+- ["C11familiarize15FamiliarizeCell", "UIImageView"]
+- ["C11familiarize15FamiliarizeCell", "deinit"]
+- ["C11familiarize15FamiliarizeCell", "init"]
+- ["C11familiarize15FamiliarizeCell", "qrImageView"]
+- ["Ps8Hashable", "QRCode"]
+- ["Ps8Hashable", "UIImageView"]
+- ["Ps8Hashable", "contentMode"]
+- ["Ps8Hashable", "image"]
+- ["Ps8Hashable", "init"]
+- ["Ps8Hashable", "scaleAspectFit"]
+- ["Ps8Hashable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps8Hashable", ""]
+- ["PSo8NSCoding", "QRCode"]
+- ["PSo8NSCoding", "UIImageView"]
+- ["PSo8NSCoding", "contentMode"]
+- ["PSo8NSCoding", "image"]
+- ["PSo8NSCoding", "init"]
+- ["PSo8NSCoding", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo8NSCoding", ""]
+- ["CSo8NSObject", "QRCode"]
+- ["CSo8NSObject", "UIImageView"]
+- ["CSo8NSObject", "contentMode"]
+- ["CSo8NSObject", "image"]
+- ["CSo8NSObject", "init"]
+- ["CSo8NSObject", "qrImageView"]
+- ["CSo8NSObject", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo16NSObjectProtocol", "QRCode"]
+- ["PSo16NSObjectProtocol", "UIImageView"]
+- ["PSo16NSObjectProtocol", "contentMode"]
+- ["PSo16NSObjectProtocol", "image"]
+- ["PSo16NSObjectProtocol", "init"]
+- ["PSo16NSObjectProtocol", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo16NSObjectProtocol", ""]
+- ["Ps16RawRepresentable", "scaleAspectFit"]
+- ["PSo29UIAccessibilityIdentification", "QRCode"]
+- ["PSo29UIAccessibilityIdentification", "UIImageView"]
+- ["PSo29UIAccessibilityIdentification", "contentMode"]
+- ["PSo29UIAccessibilityIdentification", "image"]
+- ["PSo29UIAccessibilityIdentification", "init"]
+- ["PSo29UIAccessibilityIdentification", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo29UIAccessibilityIdentification", ""]
+- ["PSo12UIAppearance", "QRCode"]
+- ["PSo12UIAppearance", "UIImageView"]
+- ["PSo12UIAppearance", "contentMode"]
+- ["PSo12UIAppearance", "image"]
+- ["PSo12UIAppearance", "init"]
+- ["PSo12UIAppearance", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo12UIAppearance", ""]
+- ["PSo21UIAppearanceContainer", "QRCode"]
+- ["PSo21UIAppearanceContainer", "UIImageView"]
+- ["PSo21UIAppearanceContainer", "contentMode"]
+- ["PSo21UIAppearanceContainer", "image"]
+- ["PSo21UIAppearanceContainer", "init"]
+- ["PSo21UIAppearanceContainer", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo21UIAppearanceContainer", ""]
+- ["CSo24UICollectionReusableView", "QRCode"]
+- ["CSo24UICollectionReusableView", "UIImageView"]
+- ["CSo24UICollectionReusableView", "init"]
+- ["CSo24UICollectionReusableView", "qrImageView"]
+- ["CSo20UICollectionViewCell", "QRCode"]
+- ["CSo20UICollectionViewCell", "UIImageView"]
+- ["CSo20UICollectionViewCell", "init"]
+- ["CSo20UICollectionViewCell", "qrImageView"]
+- ["PSo17UICoordinateSpace", "QRCode"]
+- ["PSo17UICoordinateSpace", "UIImageView"]
+- ["PSo17UICoordinateSpace", "contentMode"]
+- ["PSo17UICoordinateSpace", "image"]
+- ["PSo17UICoordinateSpace", "init"]
+- ["PSo17UICoordinateSpace", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo17UICoordinateSpace", ""]
+- ["PSo13UIDynamicItem", "QRCode"]
+- ["PSo13UIDynamicItem", "UIImageView"]
+- ["PSo13UIDynamicItem", "contentMode"]
+- ["PSo13UIDynamicItem", "image"]
+- ["PSo13UIDynamicItem", "init"]
+- ["PSo13UIDynamicItem", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo13UIDynamicItem", ""]
+- ["PSo18UIFocusEnvironment", "QRCode"]
+- ["PSo18UIFocusEnvironment", "UIImageView"]
+- ["PSo18UIFocusEnvironment", "contentMode"]
+- ["PSo18UIFocusEnvironment", "image"]
+- ["PSo18UIFocusEnvironment", "init"]
+- ["PSo18UIFocusEnvironment", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo18UIFocusEnvironment", ""]
+- ["PSo11UIFocusItem", "QRCode"]
+- ["PSo11UIFocusItem", "UIImageView"]
+- ["PSo11UIFocusItem", "contentMode"]
+- ["PSo11UIFocusItem", "image"]
+- ["PSo11UIFocusItem", "init"]
+- ["PSo11UIFocusItem", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo11UIFocusItem", ""]
+- ["CSo11UIImageView", "contentMode"]
+- ["CSo11UIImageView", "image"]
+- ["CSo11UIImageView", "init"]
+- ["CSo11UIImageView", "translatesAutoresizingMaskIntoConstraints"]
+- ["CSo11UIResponder", "QRCode"]
+- ["CSo11UIResponder", "UIImageView"]
+- ["CSo11UIResponder", "contentMode"]
+- ["CSo11UIResponder", "image"]
+- ["CSo11UIResponder", "init"]
+- ["CSo11UIResponder", "qrImageView"]
+- ["CSo11UIResponder", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo30UIResponderStandardEditActions", "QRCode"]
+- ["PSo30UIResponderStandardEditActions", "UIImageView"]
+- ["PSo30UIResponderStandardEditActions", "contentMode"]
+- ["PSo30UIResponderStandardEditActions", "image"]
+- ["PSo30UIResponderStandardEditActions", "init"]
+- ["PSo30UIResponderStandardEditActions", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo30UIResponderStandardEditActions", ""]
+- ["PSo18UITraitEnvironment", "QRCode"]
+- ["PSo18UITraitEnvironment", "UIImageView"]
+- ["PSo18UITraitEnvironment", "contentMode"]
+- ["PSo18UITraitEnvironment", "image"]
+- ["PSo18UITraitEnvironment", "init"]
+- ["PSo18UITraitEnvironment", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo18UITraitEnvironment", ""]
+- ["CSo6UIView", "QRCode"]
+- ["CSo6UIView", "UIImageView"]
+- ["CSo6UIView", "contentMode"]
+- ["CSo6UIView", "image"]
+- ["CSo6UIView", "init"]
+- ["CSo6UIView", "qrImageView"]
+- ["CSo6UIView", "translatesAutoresizingMaskIntoConstraints"]
+- ["OSC17UIViewContentMode", "scaleAspectFit"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "QRCode"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "UIImageView"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "contentMode"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "image"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "init"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", ""]
+- ["Ps9_Hashable", "QRCode"]
+- ["Ps9_Hashable", "UIImageView"]
+- ["Ps9_Hashable", "contentMode"]
+- ["Ps9_Hashable", "image"]
+- ["Ps9_Hashable", "init"]
+- ["Ps9_Hashable", "scaleAspectFit"]
+- ["Ps9_Hashable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps9_Hashable", ""]
+depends-nominal:
+- "Ps9AnyObject"
+- "C11familiarize8BaseCell"
+- "PSo15CALayerDelegate"
+- "Ps7CVarArg"
+- "Ps28CustomDebugStringConvertible"
+- "Ps23CustomStringConvertible"
+- "Ps9Equatable"
+- "C11familiarize15FamiliarizeCell"
+- "Ps8Hashable"
+- "PSo8NSCoding"
+- "CSo8NSObject"
+- "PSo16NSObjectProtocol"
+- "Ps16RawRepresentable"
+- "PSo29UIAccessibilityIdentification"
+- "PSo12UIAppearance"
+- "PSo21UIAppearanceContainer"
+- "CSo24UICollectionReusableView"
+- "CSo20UICollectionViewCell"
+- "PSo17UICoordinateSpace"
+- "PSo13UIDynamicItem"
+- "PSo18UIFocusEnvironment"
+- "PSo11UIFocusItem"
+- "CSo11UIImageView"
+- "CSo11UIResponder"
+- "PSo30UIResponderStandardEditActions"
+- "PSo18UITraitEnvironment"
+- "CSo6UIView"
+- "OSC17UIViewContentMode"
+- "Ps37_DefaultCustomPlaygroundQuickLookable"
+- "Ps9_Hashable"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/ObjectiveC.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreData.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Metal.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreText.apinotesc"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Modules/QRCode.swiftmodule/arm64.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/SwiftOnoneSupport.swiftmodule"
+interface-hash: "727dd9c6d1b9848e4104d28114f7cd65"

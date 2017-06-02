@@ -21,12 +21,12 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         
         collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: cellId)
         
-        // This is so that the last item doesnt get hidden by the bottom navigation bar
-        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 40, 0)
-        
-        // This is so that the scrolling animation doesnt bleed into the bottom navigation bar. 
-        // Instead it ends at the bottom navigation bar.
-        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 40, 0)
+//        // This is so that the last item doesnt get hidden by the bottom navigation bar
+//        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+//        
+//        // This is so that the scrolling animation doesnt bleed into the bottom navigation bar. 
+//        // Instead it ends at the bottom navigation bar.
+//        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
         
         // setupMenuBar()
         

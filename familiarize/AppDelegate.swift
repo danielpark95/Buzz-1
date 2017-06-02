@@ -23,23 +23,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
-        
-        
         window?.rootViewController = CustomTabBarController()
         
+        // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
+        if window?.rootViewController as? CustomTabBarController != nil {
+            let tabBarController = window!.rootViewController as! CustomTabBarController
+            tabBarController.selectedIndex = 1
+        }
         
         UINavigationBar.appearance().barTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        
-        
-        
-        
-        
+
         //For making the time/wifi signal/ and battery to show white text instead of black text.
         application.statusBarStyle = .lightContent
         
         return true
+    }
+    
+    // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.portrait.rawValue)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -65,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
 
     // MARK: - Core Data stack
 

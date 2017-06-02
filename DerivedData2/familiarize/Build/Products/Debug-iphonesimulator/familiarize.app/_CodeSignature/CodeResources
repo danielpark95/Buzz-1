@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		gwSUHQLVM347gR3KJMPYS9+SEBA=
+		dZttEhFMvlJOE7kL7yyL2JCI3Rc=
 		</data>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -19,6 +19,18 @@
 		<key>Base.lproj/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib</key>
 		<data>
 		D5mHVYIi2CitMYfCKche1YkD9zI=
+		</data>
+		<key>Frameworks/QRCode.framework/Info.plist</key>
+		<data>
+		3VVwBMftYNjjpvx/Sxbfd6YSNZ8=
+		</data>
+		<key>Frameworks/QRCode.framework/QRCode</key>
+		<data>
+		i1MzLncRCPBRSkBBzhWf8eXK2RY=
+		</data>
+		<key>Frameworks/QRCode.framework/_CodeSignature/CodeResources</key>
+		<data>
+		bIPODW/H6g/854KF5KyBUmjYwzw=
 		</data>
 		<key>Frameworks/libswiftCore.dylib</key>
 		<data>
@@ -95,11 +107,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			gwSUHQLVM347gR3KJMPYS9+SEBA=
+			dZttEhFMvlJOE7kL7yyL2JCI3Rc=
 			</data>
 			<key>hash2</key>
 			<data>
-			KRIguoPqvM8+51CL256ChnVMVc8P5SDw7JxPoXLgiLs=
+			KLhSm9wtmYDS0LuYnJ8ZT/NzV2HjcbPXHfaK2/vjnQ0=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -133,6 +145,39 @@
 			<key>hash2</key>
 			<data>
 			KrAhrsF85oGAyPQHjM1917wC2tG5EVcRtkTVHC/92FE=
+			</data>
+		</dict>
+		<key>Frameworks/QRCode.framework/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			3VVwBMftYNjjpvx/Sxbfd6YSNZ8=
+			</data>
+			<key>hash2</key>
+			<data>
+			G2yaUDi0Jj52gTsqm0BlSPrl2F5/NxBdNZyNgHGDccs=
+			</data>
+		</dict>
+		<key>Frameworks/QRCode.framework/QRCode</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			i1MzLncRCPBRSkBBzhWf8eXK2RY=
+			</data>
+			<key>hash2</key>
+			<data>
+			dwRBSmEID82/bAU/XtiRZ736tzXaKKl/8UBxh7q/8Tg=
+			</data>
+		</dict>
+		<key>Frameworks/QRCode.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			bIPODW/H6g/854KF5KyBUmjYwzw=
+			</data>
+			<key>hash2</key>
+			<data>
+			oLC0tbbbddE4aKXqrmcW4tZByD4QEu1GfZ1WUFaIHXM=
 			</data>
 		</dict>
 		<key>Frameworks/libswiftCore.dylib</key>

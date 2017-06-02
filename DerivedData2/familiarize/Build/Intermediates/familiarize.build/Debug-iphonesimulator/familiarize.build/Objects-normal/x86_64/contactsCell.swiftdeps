@@ -1,12 +1,9 @@
 ### Swift dependencies file v0 ###
 provides-top-level:
-- "BaseCell"
 - "ContactsCell"
 provides-nominal:
-- "C11familiarize8BaseCell"
 - "C11familiarize12ContactsCell"
 provides-member:
-- ["C11familiarize8BaseCell", ""]
 - ["C11familiarize12ContactsCell", ""]
 provides-dynamic-lookup:
 - "nameLabel"
@@ -18,11 +15,9 @@ depends-top-level:
 - "AssignmentPrecedence"
 - "BaseCell"
 - "BooleanLiteralType"
-- "CGRect"
 - "ContactsCell"
 - "Dictionary"
 - "NSAttributedString"
-- "NSCoder"
 - "NSFontAttributeName"
 - "NSForegroundColorAttributeName"
 - "NSMakeRange"
@@ -30,14 +25,12 @@ depends-top-level:
 - "NSMutableParagraphStyle"
 - "NSParagraphStyleAttributeName"
 - "StringLiteralType"
-- "UICollectionViewCell"
 - "UIColor"
 - "UIFont"
 - "UIImage"
 - "UIImageView"
 - "UILabel"
 - "UIView"
-- !private "fatalError"
 depends-member:
 - ["Ps9AnyObject", "NSAttributedString"]
 - ["Ps9AnyObject", "NSFontAttributeName"]
@@ -62,7 +55,6 @@ depends-member:
 - ["Ps9AnyObject", "characters"]
 - !private ["Ps9AnyObject", "constraint"]
 - ["Ps9AnyObject", "contentMode"]
-- !private ["Ps9AnyObject", "fatalError"]
 - !private ["Ps9AnyObject", "heightAnchor"]
 - ["Ps9AnyObject", "image"]
 - ["Ps9AnyObject", "init"]
@@ -74,7 +66,6 @@ depends-member:
 - !private ["Ps9AnyObject", "profileImageView"]
 - !private ["Ps9AnyObject", "rightAnchor"]
 - !private ["Ps9AnyObject", "separatorView"]
-- !private ["Ps9AnyObject", "setupViews"]
 - ["Ps9AnyObject", "string"]
 - ["Ps9AnyObject", "systemFont"]
 - !private ["Ps9AnyObject", "topAnchor"]
@@ -82,9 +73,7 @@ depends-member:
 - !private ["Ps9AnyObject", "white"]
 - !private ["Ps9AnyObject", "widthAnchor"]
 - ["Ps9AnyObject", ""]
-- ["C11familiarize8BaseCell", "CGRect"]
 - ["C11familiarize8BaseCell", "NSAttributedString"]
-- ["C11familiarize8BaseCell", "NSCoder"]
 - ["C11familiarize8BaseCell", "NSFontAttributeName"]
 - ["C11familiarize8BaseCell", "NSForegroundColorAttributeName"]
 - ["C11familiarize8BaseCell", "NSMakeRange"]
@@ -100,8 +89,6 @@ depends-member:
 - !private ["C11familiarize8BaseCell", "addSubview"]
 - !private ["C11familiarize8BaseCell", "backgroundColor"]
 - !private ["C11familiarize8BaseCell", "bottomAnchor"]
-- ["C11familiarize8BaseCell", "deinit"]
-- !private ["C11familiarize8BaseCell", "fatalError"]
 - ["C11familiarize8BaseCell", "init"]
 - !private ["C11familiarize8BaseCell", "leftAnchor"]
 - ["C11familiarize8BaseCell", "nameLabel"]
@@ -130,7 +117,6 @@ depends-member:
 - ["PSo15CALayerDelegate", "backgroundColor"]
 - !private ["PSo15CALayerDelegate", "bottomAnchor"]
 - ["PSo15CALayerDelegate", "contentMode"]
-- !private ["PSo15CALayerDelegate", "fatalError"]
 - !private ["PSo15CALayerDelegate", "heightAnchor"]
 - ["PSo15CALayerDelegate", "image"]
 - ["PSo15CALayerDelegate", "init"]
@@ -140,7 +126,6 @@ depends-member:
 - !private ["PSo15CALayerDelegate", "profileImageView"]
 - !private ["PSo15CALayerDelegate", "rightAnchor"]
 - !private ["PSo15CALayerDelegate", "separatorView"]
-- !private ["PSo15CALayerDelegate", "setupViews"]
 - !private ["PSo15CALayerDelegate", "topAnchor"]
 - ["PSo15CALayerDelegate", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo15CALayerDelegate", "widthAnchor"]
@@ -168,7 +153,6 @@ depends-member:
 - ["Ps7CVarArg", "characters"]
 - !private ["Ps7CVarArg", "constraint"]
 - ["Ps7CVarArg", "contentMode"]
-- !private ["Ps7CVarArg", "fatalError"]
 - !private ["Ps7CVarArg", "heightAnchor"]
 - ["Ps7CVarArg", "image"]
 - ["Ps7CVarArg", "init"]
@@ -180,7 +164,6 @@ depends-member:
 - !private ["Ps7CVarArg", "profileImageView"]
 - !private ["Ps7CVarArg", "rightAnchor"]
 - !private ["Ps7CVarArg", "separatorView"]
-- !private ["Ps7CVarArg", "setupViews"]
 - ["Ps7CVarArg", "string"]
 - ["Ps7CVarArg", "systemFont"]
 - !private ["Ps7CVarArg", "topAnchor"]
@@ -240,7 +223,6 @@ depends-member:
 - ["Ps28CustomDebugStringConvertible", "characters"]
 - !private ["Ps28CustomDebugStringConvertible", "constraint"]
 - ["Ps28CustomDebugStringConvertible", "contentMode"]
-- !private ["Ps28CustomDebugStringConvertible", "fatalError"]
 - !private ["Ps28CustomDebugStringConvertible", "heightAnchor"]
 - ["Ps28CustomDebugStringConvertible", "image"]
 - ["Ps28CustomDebugStringConvertible", "init"]
@@ -252,7 +234,6 @@ depends-member:
 - !private ["Ps28CustomDebugStringConvertible", "profileImageView"]
 - !private ["Ps28CustomDebugStringConvertible", "rightAnchor"]
 - !private ["Ps28CustomDebugStringConvertible", "separatorView"]
-- !private ["Ps28CustomDebugStringConvertible", "setupViews"]
 - ["Ps28CustomDebugStringConvertible", "string"]
 - ["Ps28CustomDebugStringConvertible", "systemFont"]
 - !private ["Ps28CustomDebugStringConvertible", "topAnchor"]
@@ -287,7 +268,6 @@ depends-member:
 - ["Ps23CustomStringConvertible", "characters"]
 - !private ["Ps23CustomStringConvertible", "constraint"]
 - ["Ps23CustomStringConvertible", "contentMode"]
-- !private ["Ps23CustomStringConvertible", "fatalError"]
 - !private ["Ps23CustomStringConvertible", "heightAnchor"]
 - ["Ps23CustomStringConvertible", "image"]
 - ["Ps23CustomStringConvertible", "init"]
@@ -299,7 +279,6 @@ depends-member:
 - !private ["Ps23CustomStringConvertible", "profileImageView"]
 - !private ["Ps23CustomStringConvertible", "rightAnchor"]
 - !private ["Ps23CustomStringConvertible", "separatorView"]
-- !private ["Ps23CustomStringConvertible", "setupViews"]
 - ["Ps23CustomStringConvertible", "string"]
 - ["Ps23CustomStringConvertible", "systemFont"]
 - !private ["Ps23CustomStringConvertible", "topAnchor"]
@@ -330,7 +309,6 @@ depends-member:
 - ["Ps9Equatable", "characters"]
 - !private ["Ps9Equatable", "constraint"]
 - ["Ps9Equatable", "contentMode"]
-- !private ["Ps9Equatable", "fatalError"]
 - !private ["Ps9Equatable", "heightAnchor"]
 - ["Ps9Equatable", "image"]
 - ["Ps9Equatable", "init"]
@@ -343,7 +321,6 @@ depends-member:
 - !private ["Ps9Equatable", "rightAnchor"]
 - ["Ps9Equatable", "scaleAspectFit"]
 - !private ["Ps9Equatable", "separatorView"]
-- !private ["Ps9Equatable", "setupViews"]
 - ["Ps9Equatable", "string"]
 - ["Ps9Equatable", "systemFont"]
 - !private ["Ps9Equatable", "topAnchor"]
@@ -380,7 +357,6 @@ depends-member:
 - ["Ps8Hashable", "characters"]
 - !private ["Ps8Hashable", "constraint"]
 - ["Ps8Hashable", "contentMode"]
-- !private ["Ps8Hashable", "fatalError"]
 - !private ["Ps8Hashable", "heightAnchor"]
 - ["Ps8Hashable", "image"]
 - ["Ps8Hashable", "init"]
@@ -393,7 +369,6 @@ depends-member:
 - !private ["Ps8Hashable", "rightAnchor"]
 - ["Ps8Hashable", "scaleAspectFit"]
 - !private ["Ps8Hashable", "separatorView"]
-- !private ["Ps8Hashable", "setupViews"]
 - ["Ps8Hashable", "string"]
 - ["Ps8Hashable", "systemFont"]
 - !private ["Ps8Hashable", "topAnchor"]
@@ -430,7 +405,6 @@ depends-member:
 - !private ["PSo8NSCoding", "bottomAnchor"]
 - ["PSo8NSCoding", "characters"]
 - ["PSo8NSCoding", "contentMode"]
-- !private ["PSo8NSCoding", "fatalError"]
 - !private ["PSo8NSCoding", "heightAnchor"]
 - ["PSo8NSCoding", "image"]
 - ["PSo8NSCoding", "init"]
@@ -441,7 +415,6 @@ depends-member:
 - !private ["PSo8NSCoding", "profileImageView"]
 - !private ["PSo8NSCoding", "rightAnchor"]
 - !private ["PSo8NSCoding", "separatorView"]
-- !private ["PSo8NSCoding", "setupViews"]
 - ["PSo8NSCoding", "string"]
 - !private ["PSo8NSCoding", "topAnchor"]
 - ["PSo8NSCoding", "translatesAutoresizingMaskIntoConstraints"]
@@ -474,9 +447,7 @@ depends-member:
 - ["PSo16NSMutableCopying", "string"]
 - ["CSo23NSMutableParagraphStyle", "init"]
 - ["CSo23NSMutableParagraphStyle", "lineSpacing"]
-- ["CSo8NSObject", "CGRect"]
 - ["CSo8NSObject", "NSAttributedString"]
-- ["CSo8NSObject", "NSCoder"]
 - ["CSo8NSObject", "NSFontAttributeName"]
 - ["CSo8NSObject", "NSForegroundColorAttributeName"]
 - ["CSo8NSObject", "NSMakeRange"]
@@ -499,7 +470,6 @@ depends-member:
 - ["CSo8NSObject", "characters"]
 - !private ["CSo8NSObject", "constraint"]
 - ["CSo8NSObject", "contentMode"]
-- !private ["CSo8NSObject", "fatalError"]
 - !private ["CSo8NSObject", "heightAnchor"]
 - ["CSo8NSObject", "image"]
 - ["CSo8NSObject", "init"]
@@ -541,7 +511,6 @@ depends-member:
 - ["PSo16NSObjectProtocol", "characters"]
 - !private ["PSo16NSObjectProtocol", "constraint"]
 - ["PSo16NSObjectProtocol", "contentMode"]
-- !private ["PSo16NSObjectProtocol", "fatalError"]
 - !private ["PSo16NSObjectProtocol", "heightAnchor"]
 - ["PSo16NSObjectProtocol", "image"]
 - ["PSo16NSObjectProtocol", "init"]
@@ -553,7 +522,6 @@ depends-member:
 - !private ["PSo16NSObjectProtocol", "profileImageView"]
 - !private ["PSo16NSObjectProtocol", "rightAnchor"]
 - !private ["PSo16NSObjectProtocol", "separatorView"]
-- !private ["PSo16NSObjectProtocol", "setupViews"]
 - ["PSo16NSObjectProtocol", "string"]
 - ["PSo16NSObjectProtocol", "systemFont"]
 - !private ["PSo16NSObjectProtocol", "topAnchor"]
@@ -575,7 +543,6 @@ depends-member:
 - ["Ps26RangeReplaceableCollection", "count"]
 - ["Ps16RawRepresentable", "scaleAspectFit"]
 - ["Ps8Sequence", "count"]
-- !private ["Vs12StaticString", "init"]
 - ["SS", "characters"]
 - ["SS", "init"]
 - ["Ps16TextOutputStream", "characters"]
@@ -600,7 +567,6 @@ depends-member:
 - ["PSo29UIAccessibilityIdentification", "backgroundColor"]
 - !private ["PSo29UIAccessibilityIdentification", "bottomAnchor"]
 - ["PSo29UIAccessibilityIdentification", "contentMode"]
-- !private ["PSo29UIAccessibilityIdentification", "fatalError"]
 - !private ["PSo29UIAccessibilityIdentification", "heightAnchor"]
 - ["PSo29UIAccessibilityIdentification", "image"]
 - ["PSo29UIAccessibilityIdentification", "init"]
@@ -610,7 +576,6 @@ depends-member:
 - !private ["PSo29UIAccessibilityIdentification", "profileImageView"]
 - !private ["PSo29UIAccessibilityIdentification", "rightAnchor"]
 - !private ["PSo29UIAccessibilityIdentification", "separatorView"]
-- !private ["PSo29UIAccessibilityIdentification", "setupViews"]
 - !private ["PSo29UIAccessibilityIdentification", "topAnchor"]
 - ["PSo29UIAccessibilityIdentification", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo29UIAccessibilityIdentification", "widthAnchor"]
@@ -633,7 +598,6 @@ depends-member:
 - ["PSo12UIAppearance", "backgroundColor"]
 - !private ["PSo12UIAppearance", "bottomAnchor"]
 - ["PSo12UIAppearance", "contentMode"]
-- !private ["PSo12UIAppearance", "fatalError"]
 - !private ["PSo12UIAppearance", "heightAnchor"]
 - ["PSo12UIAppearance", "image"]
 - ["PSo12UIAppearance", "init"]
@@ -643,7 +607,6 @@ depends-member:
 - !private ["PSo12UIAppearance", "profileImageView"]
 - !private ["PSo12UIAppearance", "rightAnchor"]
 - !private ["PSo12UIAppearance", "separatorView"]
-- !private ["PSo12UIAppearance", "setupViews"]
 - !private ["PSo12UIAppearance", "topAnchor"]
 - ["PSo12UIAppearance", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo12UIAppearance", "widthAnchor"]
@@ -666,7 +629,6 @@ depends-member:
 - ["PSo21UIAppearanceContainer", "backgroundColor"]
 - !private ["PSo21UIAppearanceContainer", "bottomAnchor"]
 - ["PSo21UIAppearanceContainer", "contentMode"]
-- !private ["PSo21UIAppearanceContainer", "fatalError"]
 - !private ["PSo21UIAppearanceContainer", "heightAnchor"]
 - ["PSo21UIAppearanceContainer", "image"]
 - ["PSo21UIAppearanceContainer", "init"]
@@ -676,14 +638,11 @@ depends-member:
 - !private ["PSo21UIAppearanceContainer", "profileImageView"]
 - !private ["PSo21UIAppearanceContainer", "rightAnchor"]
 - !private ["PSo21UIAppearanceContainer", "separatorView"]
-- !private ["PSo21UIAppearanceContainer", "setupViews"]
 - !private ["PSo21UIAppearanceContainer", "topAnchor"]
 - ["PSo21UIAppearanceContainer", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo21UIAppearanceContainer", "widthAnchor"]
 - ["PSo21UIAppearanceContainer", ""]
-- ["CSo24UICollectionReusableView", "CGRect"]
 - ["CSo24UICollectionReusableView", "NSAttributedString"]
-- ["CSo24UICollectionReusableView", "NSCoder"]
 - ["CSo24UICollectionReusableView", "NSFontAttributeName"]
 - ["CSo24UICollectionReusableView", "NSForegroundColorAttributeName"]
 - ["CSo24UICollectionReusableView", "NSMakeRange"]
@@ -699,7 +658,6 @@ depends-member:
 - !private ["CSo24UICollectionReusableView", "addSubview"]
 - !private ["CSo24UICollectionReusableView", "backgroundColor"]
 - !private ["CSo24UICollectionReusableView", "bottomAnchor"]
-- !private ["CSo24UICollectionReusableView", "fatalError"]
 - ["CSo24UICollectionReusableView", "init"]
 - !private ["CSo24UICollectionReusableView", "leftAnchor"]
 - ["CSo24UICollectionReusableView", "nameLabel"]
@@ -708,9 +666,7 @@ depends-member:
 - ["CSo24UICollectionReusableView", "separatorView"]
 - ["CSo24UICollectionReusableView", "setupViews"]
 - !private ["CSo24UICollectionReusableView", "topAnchor"]
-- ["CSo20UICollectionViewCell", "CGRect"]
 - ["CSo20UICollectionViewCell", "NSAttributedString"]
-- ["CSo20UICollectionViewCell", "NSCoder"]
 - ["CSo20UICollectionViewCell", "NSFontAttributeName"]
 - ["CSo20UICollectionViewCell", "NSForegroundColorAttributeName"]
 - ["CSo20UICollectionViewCell", "NSMakeRange"]
@@ -726,7 +682,6 @@ depends-member:
 - !private ["CSo20UICollectionViewCell", "addSubview"]
 - !private ["CSo20UICollectionViewCell", "backgroundColor"]
 - !private ["CSo20UICollectionViewCell", "bottomAnchor"]
-- !private ["CSo20UICollectionViewCell", "fatalError"]
 - ["CSo20UICollectionViewCell", "init"]
 - !private ["CSo20UICollectionViewCell", "leftAnchor"]
 - ["CSo20UICollectionViewCell", "nameLabel"]
@@ -735,7 +690,6 @@ depends-member:
 - ["CSo20UICollectionViewCell", "separatorView"]
 - ["CSo20UICollectionViewCell", "setupViews"]
 - !private ["CSo20UICollectionViewCell", "topAnchor"]
-- ["CSo20UICollectionViewCell", ""]
 - ["CSo7UIColor", "init"]
 - !private ["CSo7UIColor", "white"]
 - ["PSo30UIContentSizeCategoryAdjusting", "attributedText"]
@@ -764,7 +718,6 @@ depends-member:
 - ["PSo17UICoordinateSpace", "backgroundColor"]
 - !private ["PSo17UICoordinateSpace", "bottomAnchor"]
 - ["PSo17UICoordinateSpace", "contentMode"]
-- !private ["PSo17UICoordinateSpace", "fatalError"]
 - !private ["PSo17UICoordinateSpace", "heightAnchor"]
 - ["PSo17UICoordinateSpace", "image"]
 - ["PSo17UICoordinateSpace", "init"]
@@ -774,7 +727,6 @@ depends-member:
 - !private ["PSo17UICoordinateSpace", "profileImageView"]
 - !private ["PSo17UICoordinateSpace", "rightAnchor"]
 - !private ["PSo17UICoordinateSpace", "separatorView"]
-- !private ["PSo17UICoordinateSpace", "setupViews"]
 - !private ["PSo17UICoordinateSpace", "topAnchor"]
 - ["PSo17UICoordinateSpace", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo17UICoordinateSpace", "widthAnchor"]
@@ -797,7 +749,6 @@ depends-member:
 - ["PSo13UIDynamicItem", "backgroundColor"]
 - !private ["PSo13UIDynamicItem", "bottomAnchor"]
 - ["PSo13UIDynamicItem", "contentMode"]
-- !private ["PSo13UIDynamicItem", "fatalError"]
 - !private ["PSo13UIDynamicItem", "heightAnchor"]
 - ["PSo13UIDynamicItem", "image"]
 - ["PSo13UIDynamicItem", "init"]
@@ -807,7 +758,6 @@ depends-member:
 - !private ["PSo13UIDynamicItem", "profileImageView"]
 - !private ["PSo13UIDynamicItem", "rightAnchor"]
 - !private ["PSo13UIDynamicItem", "separatorView"]
-- !private ["PSo13UIDynamicItem", "setupViews"]
 - !private ["PSo13UIDynamicItem", "topAnchor"]
 - ["PSo13UIDynamicItem", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo13UIDynamicItem", "widthAnchor"]
@@ -830,7 +780,6 @@ depends-member:
 - ["PSo18UIFocusEnvironment", "backgroundColor"]
 - !private ["PSo18UIFocusEnvironment", "bottomAnchor"]
 - ["PSo18UIFocusEnvironment", "contentMode"]
-- !private ["PSo18UIFocusEnvironment", "fatalError"]
 - !private ["PSo18UIFocusEnvironment", "heightAnchor"]
 - ["PSo18UIFocusEnvironment", "image"]
 - ["PSo18UIFocusEnvironment", "init"]
@@ -840,7 +789,6 @@ depends-member:
 - !private ["PSo18UIFocusEnvironment", "profileImageView"]
 - !private ["PSo18UIFocusEnvironment", "rightAnchor"]
 - !private ["PSo18UIFocusEnvironment", "separatorView"]
-- !private ["PSo18UIFocusEnvironment", "setupViews"]
 - !private ["PSo18UIFocusEnvironment", "topAnchor"]
 - ["PSo18UIFocusEnvironment", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo18UIFocusEnvironment", "widthAnchor"]
@@ -863,7 +811,6 @@ depends-member:
 - ["PSo11UIFocusItem", "backgroundColor"]
 - !private ["PSo11UIFocusItem", "bottomAnchor"]
 - ["PSo11UIFocusItem", "contentMode"]
-- !private ["PSo11UIFocusItem", "fatalError"]
 - !private ["PSo11UIFocusItem", "heightAnchor"]
 - ["PSo11UIFocusItem", "image"]
 - ["PSo11UIFocusItem", "init"]
@@ -873,7 +820,6 @@ depends-member:
 - !private ["PSo11UIFocusItem", "profileImageView"]
 - !private ["PSo11UIFocusItem", "rightAnchor"]
 - !private ["PSo11UIFocusItem", "separatorView"]
-- !private ["PSo11UIFocusItem", "setupViews"]
 - !private ["PSo11UIFocusItem", "topAnchor"]
 - ["PSo11UIFocusItem", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo11UIFocusItem", "widthAnchor"]
@@ -898,9 +844,7 @@ depends-member:
 - !private ["CSo7UILabel", "rightAnchor"]
 - !private ["CSo7UILabel", "topAnchor"]
 - ["CSo7UILabel", "translatesAutoresizingMaskIntoConstraints"]
-- ["CSo11UIResponder", "CGRect"]
 - ["CSo11UIResponder", "NSAttributedString"]
-- ["CSo11UIResponder", "NSCoder"]
 - ["CSo11UIResponder", "NSFontAttributeName"]
 - ["CSo11UIResponder", "NSForegroundColorAttributeName"]
 - ["CSo11UIResponder", "NSMakeRange"]
@@ -918,7 +862,6 @@ depends-member:
 - ["CSo11UIResponder", "backgroundColor"]
 - !private ["CSo11UIResponder", "bottomAnchor"]
 - ["CSo11UIResponder", "contentMode"]
-- !private ["CSo11UIResponder", "fatalError"]
 - !private ["CSo11UIResponder", "heightAnchor"]
 - ["CSo11UIResponder", "image"]
 - ["CSo11UIResponder", "init"]
@@ -950,7 +893,6 @@ depends-member:
 - ["PSo30UIResponderStandardEditActions", "backgroundColor"]
 - !private ["PSo30UIResponderStandardEditActions", "bottomAnchor"]
 - ["PSo30UIResponderStandardEditActions", "contentMode"]
-- !private ["PSo30UIResponderStandardEditActions", "fatalError"]
 - !private ["PSo30UIResponderStandardEditActions", "heightAnchor"]
 - ["PSo30UIResponderStandardEditActions", "image"]
 - ["PSo30UIResponderStandardEditActions", "init"]
@@ -960,7 +902,6 @@ depends-member:
 - !private ["PSo30UIResponderStandardEditActions", "profileImageView"]
 - !private ["PSo30UIResponderStandardEditActions", "rightAnchor"]
 - !private ["PSo30UIResponderStandardEditActions", "separatorView"]
-- !private ["PSo30UIResponderStandardEditActions", "setupViews"]
 - !private ["PSo30UIResponderStandardEditActions", "topAnchor"]
 - ["PSo30UIResponderStandardEditActions", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo30UIResponderStandardEditActions", "widthAnchor"]
@@ -983,7 +924,6 @@ depends-member:
 - ["PSo18UITraitEnvironment", "backgroundColor"]
 - !private ["PSo18UITraitEnvironment", "bottomAnchor"]
 - ["PSo18UITraitEnvironment", "contentMode"]
-- !private ["PSo18UITraitEnvironment", "fatalError"]
 - !private ["PSo18UITraitEnvironment", "heightAnchor"]
 - ["PSo18UITraitEnvironment", "image"]
 - ["PSo18UITraitEnvironment", "init"]
@@ -993,14 +933,11 @@ depends-member:
 - !private ["PSo18UITraitEnvironment", "profileImageView"]
 - !private ["PSo18UITraitEnvironment", "rightAnchor"]
 - !private ["PSo18UITraitEnvironment", "separatorView"]
-- !private ["PSo18UITraitEnvironment", "setupViews"]
 - !private ["PSo18UITraitEnvironment", "topAnchor"]
 - ["PSo18UITraitEnvironment", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["PSo18UITraitEnvironment", "widthAnchor"]
 - ["PSo18UITraitEnvironment", ""]
-- ["CSo6UIView", "CGRect"]
 - ["CSo6UIView", "NSAttributedString"]
-- ["CSo6UIView", "NSCoder"]
 - ["CSo6UIView", "NSFontAttributeName"]
 - ["CSo6UIView", "NSForegroundColorAttributeName"]
 - ["CSo6UIView", "NSMakeRange"]
@@ -1018,7 +955,6 @@ depends-member:
 - ["CSo6UIView", "backgroundColor"]
 - !private ["CSo6UIView", "bottomAnchor"]
 - ["CSo6UIView", "contentMode"]
-- !private ["CSo6UIView", "fatalError"]
 - !private ["CSo6UIView", "heightAnchor"]
 - ["CSo6UIView", "image"]
 - ["CSo6UIView", "init"]
@@ -1052,7 +988,6 @@ depends-member:
 - ["Ps37_DefaultCustomPlaygroundQuickLookable", "backgroundColor"]
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "bottomAnchor"]
 - ["Ps37_DefaultCustomPlaygroundQuickLookable", "contentMode"]
-- !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "fatalError"]
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "heightAnchor"]
 - ["Ps37_DefaultCustomPlaygroundQuickLookable", "image"]
 - ["Ps37_DefaultCustomPlaygroundQuickLookable", "init"]
@@ -1062,7 +997,6 @@ depends-member:
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "profileImageView"]
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "rightAnchor"]
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "separatorView"]
-- !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "setupViews"]
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "topAnchor"]
 - ["Ps37_DefaultCustomPlaygroundQuickLookable", "translatesAutoresizingMaskIntoConstraints"]
 - !private ["Ps37_DefaultCustomPlaygroundQuickLookable", "widthAnchor"]
@@ -1105,7 +1039,6 @@ depends-member:
 - ["Ps9_Hashable", "characters"]
 - !private ["Ps9_Hashable", "constraint"]
 - ["Ps9_Hashable", "contentMode"]
-- !private ["Ps9_Hashable", "fatalError"]
 - !private ["Ps9_Hashable", "heightAnchor"]
 - ["Ps9_Hashable", "image"]
 - ["Ps9_Hashable", "init"]
@@ -1118,7 +1051,6 @@ depends-member:
 - !private ["Ps9_Hashable", "rightAnchor"]
 - ["Ps9_Hashable", "scaleAspectFit"]
 - !private ["Ps9_Hashable", "separatorView"]
-- !private ["Ps9_Hashable", "setupViews"]
 - ["Ps9_Hashable", "string"]
 - ["Ps9_Hashable", "systemFont"]
 - !private ["Ps9_Hashable", "topAnchor"]
@@ -1171,7 +1103,6 @@ depends-nominal:
 - "Ps26RangeReplaceableCollection"
 - "Ps16RawRepresentable"
 - "Ps8Sequence"
-- !private "Vs12StaticString"
 - "SS"
 - "Ps16TextOutputStream"
 - "Ps20TextOutputStreamable"
@@ -1219,6 +1150,7 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreText.apinotesc"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Modules/QRCode.swiftmodule/x86_64.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
@@ -1230,4 +1162,7 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/SwiftOnoneSupport.swiftmodule"
-interface-hash: "29b8f48d5715d8bc6164fd4f3622e691"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Headers/QRCode-umbrella.h"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Headers/QRCode-Swift.h"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Modules/module.modulemap"
+interface-hash: "136eca67345802b3dd467c8e8690edd3"

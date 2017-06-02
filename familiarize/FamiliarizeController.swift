@@ -11,26 +11,50 @@ import UIKit
 let famCellId = "cellId"
 class FamiliarizeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        
-        navigationItem.title = "Familiarize"
-        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
-        
-        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: famCellId)
-        
-        setupColectionView()
 
-    }
     func setupColectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
         }
+
         collectionView?.isPagingEnabled = true
     }
+    
+    let pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.pageIndicatorTintColor = .lightGray
+        pc.numberOfPages = 3 // Change the number of pages to something else after you get like the coredata working
+        pc.currentPageIndicatorTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        return pc
+    }()
+    
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        view.addSubview(pageControl)
+        pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        collectionView?.showsHorizontalScrollIndicator = false
+        navigationItem.title = "Familiarize"
+        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
+        
+        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: famCellId)
+        
+        setupColectionView()
+        
+    }
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
+        pageControl.currentPage = pageNumber
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return 3 // Change the number of pages to something else after you get like the coredata working
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return collectionView.dequeueReusableCell(withReuseIdentifier: famCellId, for: indexPath)

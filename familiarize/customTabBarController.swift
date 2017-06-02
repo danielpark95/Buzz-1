@@ -43,14 +43,14 @@ class CustomTabBarController: UITabBarController {
         topBorder.backgroundColor = UIColor(red: 229/255, green: 231/255, blue: 235/255, alpha: 1.0).cgColor
         tabBar.layer.addSublayer(topBorder)
         tabBar.clipsToBounds = true
-//
-    }
-    override func viewWillLayoutSubviews() {
         
-        var tabFramey = self.tabBar.frame
-        tabFramey.size.height = 38
-        tabFramey.origin.y = self.view.frame.size.height - 38
-        self.tabBar.frame = tabFramey
+    }
+    
+    override func viewWillLayoutSubviews() {
+        var tabFrame = self.tabBar.frame
+        tabFrame.size.height = 38
+        tabFrame.origin.y = self.view.frame.size.height - 38
+        self.tabBar.frame = tabFrame
     }
     
     
