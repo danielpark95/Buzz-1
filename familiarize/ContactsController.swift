@@ -15,46 +15,26 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
         
         navigationItem.title = "Contacts"
-        
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
-        
-        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: cellId)
-        
-//        // This is so that the last item doesnt get hidden by the bottom navigation bar
-//        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-//        
-//        // This is so that the scrolling animation doesnt bleed into the bottom navigation bar. 
-//        // Instead it ends at the bottom navigation bar.
-//        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        
-        // setupMenuBar()
-        
+
+        setupCollectionView()
         setupNavBarButtons()
     }
+    func setupCollectionView() {
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
+        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: cellId)
+    }
     
+    // This possibly can be extended more to create a search function for looking up contact history.
+    // Look up "how to create youtube" by lets build that app
     func setupNavBarButtons() {
         let searchImage = UIImage(named: "Search-50-3x")?.withRenderingMode(.alwaysOriginal)
         let searchBarButtonItem = UIBarButtonItem(image: searchImage, style: .plain, target: self, action: #selector(handleMore))
         navigationItem.rightBarButtonItem = searchBarButtonItem
     }
     
-    func handleMore() {
+    func handleMore() { //This piece of man is still here.
         
-    }
-    
-    let menuBar: MenuBar = {
-        let mb = MenuBar()
-        mb.translatesAutoresizingMaskIntoConstraints = false
-        return mb
-    }()
-    
-    private func setupMenuBar() {
-        view.addSubview(menuBar)
-        menuBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        menuBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        menuBar.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
-        menuBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -76,3 +56,34 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
 }
 
 
+
+
+// Deprecated code that was initially used to retrict the boundaries of the scroll and the last cell.
+/*
+// This is so that the last item doesnt get hidden by the bottom navigation bar
+collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+
+// This is so that the scrolling animation doesnt bleed into the bottom navigation bar.
+// Instead it ends at the bottom navigation bar.
+collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+ */
+
+
+
+
+// Deprecated code that was initially used to create the navigation bar. -- Youtube style
+/*
+let menuBar: MenuBar = {
+    let mb = MenuBar()
+    mb.translatesAutoresizingMaskIntoConstraints = false
+    return mb
+}()
+
+private func setupMenuBar() {
+    view.addSubview(menuBar)
+    menuBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+    menuBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    menuBar.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+    menuBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
+}
+ */

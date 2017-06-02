@@ -11,15 +11,40 @@ import UIKit
 let famCellId = "cellId"
 class FamiliarizeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-
-    func setupColectionView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.title = "Familiarize"
+        
+        setupView()
+        setupCollectionView()
+        
+        
+    }
+    
+    func setupView() {
+        // Add the dots that animate your current location with the qrcodes into the view
+        view.addSubview(pageControl)
+        
+        pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
+    }
+    
+    func setupCollectionView() {
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
+        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: famCellId)
+        
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
         }
-
+        
         collectionView?.isPagingEnabled = true
     }
     
+    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .lightGray
@@ -29,26 +54,6 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         return pc
     }()
     
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        
-        view.addSubview(pageControl)
-        pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        pageControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        collectionView?.showsHorizontalScrollIndicator = false
-        navigationItem.title = "Familiarize"
-        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
-        
-        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: famCellId)
-        
-        setupColectionView()
-        
-    }
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
         pageControl.currentPage = pageNumber
