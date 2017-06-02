@@ -1,0 +1,13 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': '/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Modules'
+    'contents': [{
+      'type': 'file',
+      'name': 'module.modulemap',
+      'external-contents': '/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Intermediates/Pods.build/Debug-iphoneos/QRCode.build/unextended-module.modulemap',
+    }]
+  }]
+}

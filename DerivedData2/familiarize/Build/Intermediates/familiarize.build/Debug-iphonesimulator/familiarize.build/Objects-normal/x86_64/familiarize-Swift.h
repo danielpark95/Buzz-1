@@ -210,6 +210,14 @@ SWIFT_CLASS("_TtC11familiarize22CustomTabBarController")
 @end
 
 
+SWIFT_CLASS("_TtC11familiarize15FamiliarizeCell")
+@interface FamiliarizeCell : BaseCell
+@property (nonatomic, readonly, strong) UIImageView * _Nonnull qrImageView;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC11familiarize21FamiliarizeController")
 @interface FamiliarizeController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
 - (void)viewDidLoad;

@@ -1,0 +1,307 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "FamiliarizeCell"
+provides-nominal:
+- "C11familiarize15FamiliarizeCell"
+provides-member:
+- ["C11familiarize15FamiliarizeCell", ""]
+provides-dynamic-lookup:
+- "qrImageView"
+depends-top-level:
+- "AssignmentPrecedence"
+- "BaseCell"
+- "BooleanLiteralType"
+- "FamiliarizeCell"
+- "StringLiteralType"
+- "UIImage"
+- "UIImageView"
+depends-member:
+- ["Ps9AnyObject", "UIImage"]
+- ["Ps9AnyObject", "UIImageView"]
+- ["Ps9AnyObject", "contentMode"]
+- ["Ps9AnyObject", "image"]
+- ["Ps9AnyObject", "init"]
+- ["Ps9AnyObject", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps9AnyObject", ""]
+- ["C11familiarize8BaseCell", "UIImage"]
+- ["C11familiarize8BaseCell", "UIImageView"]
+- ["C11familiarize8BaseCell", "init"]
+- ["C11familiarize8BaseCell", "qrImageView"]
+- ["C11familiarize8BaseCell", ""]
+- ["PSo15CALayerDelegate", "UIImage"]
+- ["PSo15CALayerDelegate", "UIImageView"]
+- ["PSo15CALayerDelegate", "contentMode"]
+- ["PSo15CALayerDelegate", "image"]
+- ["PSo15CALayerDelegate", "init"]
+- ["PSo15CALayerDelegate", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo15CALayerDelegate", ""]
+- ["Ps7CVarArg", "UIImage"]
+- ["Ps7CVarArg", "UIImageView"]
+- ["Ps7CVarArg", "contentMode"]
+- ["Ps7CVarArg", "image"]
+- ["Ps7CVarArg", "init"]
+- ["Ps7CVarArg", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps7CVarArg", ""]
+- ["Ps10Comparable", "init"]
+- ["Ps28CustomDebugStringConvertible", "UIImage"]
+- ["Ps28CustomDebugStringConvertible", "UIImageView"]
+- ["Ps28CustomDebugStringConvertible", "contentMode"]
+- ["Ps28CustomDebugStringConvertible", "image"]
+- ["Ps28CustomDebugStringConvertible", "init"]
+- ["Ps28CustomDebugStringConvertible", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps28CustomDebugStringConvertible", ""]
+- ["Ps29CustomPlaygroundQuickLookable", "init"]
+- ["Ps17CustomReflectable", "init"]
+- ["Ps23CustomStringConvertible", "UIImage"]
+- ["Ps23CustomStringConvertible", "UIImageView"]
+- ["Ps23CustomStringConvertible", "contentMode"]
+- ["Ps23CustomStringConvertible", "image"]
+- ["Ps23CustomStringConvertible", "init"]
+- ["Ps23CustomStringConvertible", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps23CustomStringConvertible", ""]
+- ["Ps9Equatable", "UIImage"]
+- ["Ps9Equatable", "UIImageView"]
+- ["Ps9Equatable", "contentMode"]
+- ["Ps9Equatable", "image"]
+- ["Ps9Equatable", "init"]
+- ["Ps9Equatable", "scaleAspectFit"]
+- ["Ps9Equatable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps9Equatable", ""]
+- ["Ps43ExpressibleByExtendedGraphemeClusterLiteral", "init"]
+- ["Ps26ExpressibleByStringLiteral", "init"]
+- ["Ps33ExpressibleByUnicodeScalarLiteral", "init"]
+- ["C11familiarize15FamiliarizeCell", "UIImage"]
+- ["C11familiarize15FamiliarizeCell", "UIImageView"]
+- ["C11familiarize15FamiliarizeCell", "deinit"]
+- ["C11familiarize15FamiliarizeCell", "init"]
+- ["C11familiarize15FamiliarizeCell", "qrImageView"]
+- ["Ps8Hashable", "UIImage"]
+- ["Ps8Hashable", "UIImageView"]
+- ["Ps8Hashable", "contentMode"]
+- ["Ps8Hashable", "image"]
+- ["Ps8Hashable", "init"]
+- ["Ps8Hashable", "scaleAspectFit"]
+- ["Ps8Hashable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps8Hashable", ""]
+- ["Ps25LosslessStringConvertible", "init"]
+- ["Ps10MirrorPath", "init"]
+- ["PSo8NSCoding", "UIImage"]
+- ["PSo8NSCoding", "UIImageView"]
+- ["PSo8NSCoding", "contentMode"]
+- ["PSo8NSCoding", "image"]
+- ["PSo8NSCoding", "init"]
+- ["PSo8NSCoding", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo8NSCoding", ""]
+- ["PSo9NSCopying", "init"]
+- ["PSo16NSMutableCopying", "init"]
+- ["CSo8NSObject", "UIImage"]
+- ["CSo8NSObject", "UIImageView"]
+- ["CSo8NSObject", "contentMode"]
+- ["CSo8NSObject", "image"]
+- ["CSo8NSObject", "init"]
+- ["CSo8NSObject", "qrImageView"]
+- ["CSo8NSObject", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo16NSObjectProtocol", "UIImage"]
+- ["PSo16NSObjectProtocol", "UIImageView"]
+- ["PSo16NSObjectProtocol", "contentMode"]
+- ["PSo16NSObjectProtocol", "image"]
+- ["PSo16NSObjectProtocol", "init"]
+- ["PSo16NSObjectProtocol", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo16NSObjectProtocol", ""]
+- ["PSo14NSSecureCoding", "init"]
+- ["CSo8NSString", "init"]
+- ["Ps16RawRepresentable", "scaleAspectFit"]
+- ["SS", "init"]
+- ["Ps16TextOutputStream", "init"]
+- ["Ps20TextOutputStreamable", "init"]
+- ["PSo29UIAccessibilityIdentification", "UIImage"]
+- ["PSo29UIAccessibilityIdentification", "UIImageView"]
+- ["PSo29UIAccessibilityIdentification", "contentMode"]
+- ["PSo29UIAccessibilityIdentification", "image"]
+- ["PSo29UIAccessibilityIdentification", "init"]
+- ["PSo29UIAccessibilityIdentification", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo29UIAccessibilityIdentification", ""]
+- ["PSo12UIAppearance", "UIImage"]
+- ["PSo12UIAppearance", "UIImageView"]
+- ["PSo12UIAppearance", "contentMode"]
+- ["PSo12UIAppearance", "image"]
+- ["PSo12UIAppearance", "init"]
+- ["PSo12UIAppearance", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo12UIAppearance", ""]
+- ["PSo21UIAppearanceContainer", "UIImage"]
+- ["PSo21UIAppearanceContainer", "UIImageView"]
+- ["PSo21UIAppearanceContainer", "contentMode"]
+- ["PSo21UIAppearanceContainer", "image"]
+- ["PSo21UIAppearanceContainer", "init"]
+- ["PSo21UIAppearanceContainer", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo21UIAppearanceContainer", ""]
+- ["CSo24UICollectionReusableView", "UIImage"]
+- ["CSo24UICollectionReusableView", "UIImageView"]
+- ["CSo24UICollectionReusableView", "init"]
+- ["CSo24UICollectionReusableView", "qrImageView"]
+- ["CSo20UICollectionViewCell", "UIImage"]
+- ["CSo20UICollectionViewCell", "UIImageView"]
+- ["CSo20UICollectionViewCell", "init"]
+- ["CSo20UICollectionViewCell", "qrImageView"]
+- ["PSo17UICoordinateSpace", "UIImage"]
+- ["PSo17UICoordinateSpace", "UIImageView"]
+- ["PSo17UICoordinateSpace", "contentMode"]
+- ["PSo17UICoordinateSpace", "image"]
+- ["PSo17UICoordinateSpace", "init"]
+- ["PSo17UICoordinateSpace", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo17UICoordinateSpace", ""]
+- ["PSo13UIDynamicItem", "UIImage"]
+- ["PSo13UIDynamicItem", "UIImageView"]
+- ["PSo13UIDynamicItem", "contentMode"]
+- ["PSo13UIDynamicItem", "image"]
+- ["PSo13UIDynamicItem", "init"]
+- ["PSo13UIDynamicItem", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo13UIDynamicItem", ""]
+- ["PSo18UIFocusEnvironment", "UIImage"]
+- ["PSo18UIFocusEnvironment", "UIImageView"]
+- ["PSo18UIFocusEnvironment", "contentMode"]
+- ["PSo18UIFocusEnvironment", "image"]
+- ["PSo18UIFocusEnvironment", "init"]
+- ["PSo18UIFocusEnvironment", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo18UIFocusEnvironment", ""]
+- ["PSo11UIFocusItem", "UIImage"]
+- ["PSo11UIFocusItem", "UIImageView"]
+- ["PSo11UIFocusItem", "contentMode"]
+- ["PSo11UIFocusItem", "image"]
+- ["PSo11UIFocusItem", "init"]
+- ["PSo11UIFocusItem", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo11UIFocusItem", ""]
+- ["CSo7UIImage", "init"]
+- ["CSo11UIImageView", "contentMode"]
+- ["CSo11UIImageView", "image"]
+- ["CSo11UIImageView", "init"]
+- ["CSo11UIImageView", "translatesAutoresizingMaskIntoConstraints"]
+- ["CSo11UIResponder", "UIImage"]
+- ["CSo11UIResponder", "UIImageView"]
+- ["CSo11UIResponder", "contentMode"]
+- ["CSo11UIResponder", "image"]
+- ["CSo11UIResponder", "init"]
+- ["CSo11UIResponder", "qrImageView"]
+- ["CSo11UIResponder", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo30UIResponderStandardEditActions", "UIImage"]
+- ["PSo30UIResponderStandardEditActions", "UIImageView"]
+- ["PSo30UIResponderStandardEditActions", "contentMode"]
+- ["PSo30UIResponderStandardEditActions", "image"]
+- ["PSo30UIResponderStandardEditActions", "init"]
+- ["PSo30UIResponderStandardEditActions", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo30UIResponderStandardEditActions", ""]
+- ["PSo18UITraitEnvironment", "UIImage"]
+- ["PSo18UITraitEnvironment", "UIImageView"]
+- ["PSo18UITraitEnvironment", "contentMode"]
+- ["PSo18UITraitEnvironment", "image"]
+- ["PSo18UITraitEnvironment", "init"]
+- ["PSo18UITraitEnvironment", "translatesAutoresizingMaskIntoConstraints"]
+- ["PSo18UITraitEnvironment", ""]
+- ["CSo6UIView", "UIImage"]
+- ["CSo6UIView", "UIImageView"]
+- ["CSo6UIView", "contentMode"]
+- ["CSo6UIView", "image"]
+- ["CSo6UIView", "init"]
+- ["CSo6UIView", "qrImageView"]
+- ["CSo6UIView", "translatesAutoresizingMaskIntoConstraints"]
+- ["OSC17UIViewContentMode", "scaleAspectFit"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "UIImage"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "UIImageView"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "contentMode"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "image"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "init"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps37_DefaultCustomPlaygroundQuickLookable", ""]
+- ["Ps51_ExpressibleByBuiltinExtendedGraphemeClusterLiteral", "init"]
+- ["Ps34_ExpressibleByBuiltinStringLiteral", "init"]
+- ["Ps39_ExpressibleByBuiltinUTF16StringLiteral", "init"]
+- ["Ps41_ExpressibleByBuiltinUnicodeScalarLiteral", "init"]
+- ["Ps26_ExpressibleByImageLiteral", "init"]
+- ["Ps33_ExpressibleByStringInterpolation", "init"]
+- ["Ps35_HasCustomAnyHashableRepresentation", "init"]
+- ["Ps9_Hashable", "UIImage"]
+- ["Ps9_Hashable", "UIImageView"]
+- ["Ps9_Hashable", "contentMode"]
+- ["Ps9_Hashable", "image"]
+- ["Ps9_Hashable", "init"]
+- ["Ps9_Hashable", "scaleAspectFit"]
+- ["Ps9_Hashable", "translatesAutoresizingMaskIntoConstraints"]
+- ["Ps9_Hashable", ""]
+- ["Ps21_ObjectiveCBridgeable", "init"]
+depends-nominal:
+- "Ps9AnyObject"
+- "C11familiarize8BaseCell"
+- "PSo15CALayerDelegate"
+- "Ps7CVarArg"
+- "Ps10Comparable"
+- "Ps28CustomDebugStringConvertible"
+- "Ps29CustomPlaygroundQuickLookable"
+- "Ps17CustomReflectable"
+- "Ps23CustomStringConvertible"
+- "Ps9Equatable"
+- "Ps43ExpressibleByExtendedGraphemeClusterLiteral"
+- "Ps26ExpressibleByStringLiteral"
+- "Ps33ExpressibleByUnicodeScalarLiteral"
+- "C11familiarize15FamiliarizeCell"
+- "Ps8Hashable"
+- "Ps25LosslessStringConvertible"
+- "Ps10MirrorPath"
+- "PSo8NSCoding"
+- "PSo9NSCopying"
+- "PSo16NSMutableCopying"
+- "CSo8NSObject"
+- "PSo16NSObjectProtocol"
+- "PSo14NSSecureCoding"
+- "CSo8NSString"
+- "Ps16RawRepresentable"
+- "SS"
+- "Ps16TextOutputStream"
+- "Ps20TextOutputStreamable"
+- "PSo29UIAccessibilityIdentification"
+- "PSo12UIAppearance"
+- "PSo21UIAppearanceContainer"
+- "CSo24UICollectionReusableView"
+- "CSo20UICollectionViewCell"
+- "PSo17UICoordinateSpace"
+- "PSo13UIDynamicItem"
+- "PSo18UIFocusEnvironment"
+- "PSo11UIFocusItem"
+- "CSo7UIImage"
+- "CSo11UIImageView"
+- "CSo11UIResponder"
+- "PSo30UIResponderStandardEditActions"
+- "PSo18UITraitEnvironment"
+- "CSo6UIView"
+- "OSC17UIViewContentMode"
+- "Ps37_DefaultCustomPlaygroundQuickLookable"
+- "Ps51_ExpressibleByBuiltinExtendedGraphemeClusterLiteral"
+- "Ps34_ExpressibleByBuiltinStringLiteral"
+- "Ps39_ExpressibleByBuiltinUTF16StringLiteral"
+- "Ps41_ExpressibleByBuiltinUnicodeScalarLiteral"
+- "Ps26_ExpressibleByImageLiteral"
+- "Ps33_ExpressibleByStringInterpolation"
+- "Ps35_HasCustomAnyHashableRepresentation"
+- "Ps9_Hashable"
+- "Ps21_ObjectiveCBridgeable"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/ObjectiveC.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreData.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Metal.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreText.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/SwiftOnoneSupport.swiftmodule"
+interface-hash: "f954747a84576180f831724e2e7b5ddd"

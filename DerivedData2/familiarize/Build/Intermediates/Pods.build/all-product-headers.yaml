@@ -1,0 +1,60 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/Pods_familiarize.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "Pods-familiarize-umbrella.h",
+          'external-contents': "/Users/alexoh/Documents/familiarize/Pods/Target Support Files/Pods-familiarize/Pods-familiarize-umbrella.h"
+        },
+        {
+          'type': 'file',
+          'name': "Pods_familiarize-Swift.h",
+          'external-contents': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/Pods_familiarize.framework/Headers/Pods_familiarize-Swift.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/Pods_familiarize.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Intermediates/Pods.build/Debug-iphoneos/Pods-familiarize.build/module.modulemap"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "QRCode-Swift.h",
+          'external-contents': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Headers/QRCode-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "QRCode-umbrella.h",
+          'external-contents': "/Users/alexoh/Documents/familiarize/Pods/Target Support Files/QRCode/QRCode-umbrella.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Intermediates/Pods.build/Debug-iphoneos/QRCode.build/module.modulemap"
+        }
+      ]
+    }
+  ]
+}
