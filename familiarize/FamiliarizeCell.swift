@@ -28,12 +28,10 @@ class FamiliarizeCell: BaseCell {
         
         addSubview(qrImageView)
         
-        
         qrImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         qrImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         qrImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         qrImageView.widthAnchor.constraint(equalToConstant: 250).isActive = true
-
 
     }
     

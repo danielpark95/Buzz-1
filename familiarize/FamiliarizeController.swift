@@ -27,14 +27,14 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         var button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(turnToCamera), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didSelectCamera), for: .touchUpInside)
         return button
     }()
     
-    func turnToCamera() {
-        print("He touched me")
+    func didSelectCamera() {
+        let cameraController = QRScannerController()
+        self.present(cameraController, animated: false)
     }
-    
     
     func setupView() {
         // Add the dots that animate your current location with the qrcodes into the view

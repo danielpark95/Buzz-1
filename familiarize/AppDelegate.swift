@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = CustomTabBarController()
         
+        
         // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
         if window?.rootViewController as? CustomTabBarController != nil {
             let tabBarController = window!.rootViewController as! CustomTabBarController
@@ -34,8 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
 
+        
         //For making the time/wifi signal/ and battery to show white text instead of black text.
-        application.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         
         return true
     }

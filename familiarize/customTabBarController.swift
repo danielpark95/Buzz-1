@@ -7,6 +7,11 @@
 //
 
 import UIKit
+extension UITabBarController {
+    open override var childViewControllerForStatusBarStyle: UIViewController? {
+        return selectedViewController
+    }
+}
 class CustomTabBarController: UITabBarController {
     
     override func viewDidLoad() {
@@ -56,6 +61,7 @@ class CustomTabBarController: UITabBarController {
         self.tabBar.frame = tabFrame
     }
     
-    
+
 }
+
 
