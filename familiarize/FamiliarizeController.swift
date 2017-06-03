@@ -22,14 +22,34 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         
     }
     
+    lazy var cameraButton: UIButton = {
+        let image = UIImage(named: "camera-button") as UIImage?
+        var button = UIButton(type: .custom) as UIButton
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(turnToCamera), for: .touchUpInside)
+        return button
+    }()
+    
+    func turnToCamera() {
+        print("He touched me")
+    }
+    
+    
     func setupView() {
         // Add the dots that animate your current location with the qrcodes into the view
         view.addSubview(pageControl)
+        view.addSubview(cameraButton)
         
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        cameraButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cameraButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -75).isActive = true
+        cameraButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        cameraButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     func setupCollectionView() {
@@ -42,6 +62,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         }
         
         collectionView?.isPagingEnabled = true
+        
     }
     
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
@@ -65,6 +86,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         return collectionView.dequeueReusableCell(withReuseIdentifier: famCellId, for: indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //return CGSize(width: collectionView.frame.width/3, height: collectionView.frame.he)
         return CGSize(width: view.frame.width, height: view.frame.height)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

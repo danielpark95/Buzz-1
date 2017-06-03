@@ -34,22 +34,25 @@ class CustomTabBarController: UITabBarController {
         userNavigationController.tabBarItem.image = UIImage(named: "User-50")?.withRenderingMode(.alwaysOriginal)
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
-        
         viewControllers = [navigationController, secondNavigationController, userNavigationController]
         
+        setupCustomTabBar()
+        
+    }
+
+    func setupCustomTabBar() {
         tabBar.isTranslucent = false
         let topBorder = CALayer()
         topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0.5)
         topBorder.backgroundColor = UIColor(red: 229/255, green: 231/255, blue: 235/255, alpha: 1.0).cgColor
         tabBar.layer.addSublayer(topBorder)
         tabBar.clipsToBounds = true
-        
     }
     
     override func viewWillLayoutSubviews() {
         var tabFrame = self.tabBar.frame
-        tabFrame.size.height = 38
-        tabFrame.origin.y = self.view.frame.size.height - 38
+        tabFrame.size.height = 45
+        tabFrame.origin.y = self.view.frame.size.height - 45
         self.tabBar.frame = tabFrame
     }
     
