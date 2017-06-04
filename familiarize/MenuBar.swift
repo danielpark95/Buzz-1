@@ -6,7 +6,7 @@
 //  Copyright © 2017 nosleep. All rights reserved.
 //
 
-// This code has been deprecated and is no longer in server.
+// This code has been deprecated and is no longer in service.
 
 import UIKit
 

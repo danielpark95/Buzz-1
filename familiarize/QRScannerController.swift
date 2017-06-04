@@ -102,6 +102,23 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         // Dispose of any resources that can be recreated.
     }
     
+    func passNameToPopup(_ popupController: PopupController) {
+        
+        popupController.questionLabel.numberOfLines = 1
+        let attributedText = NSMutableAttributedString(string: "Alex Oh", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10
+        
+        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
+        
+        popupController.questionLabel.attributedText = attributedText
+        popupController.setupView()
+    }
+    
+    func selectedAnswerFromPop(_ addFriend: Bool) {
+        print(addFriend)
+    }
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
     
@@ -128,7 +145,10 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 // Furthermore, the camera is still on after the modal presentation occurs.
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 popupController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-                self.present(popupController, animated: true)
+                //self.present(popupController, animated: true)
+                self.present(popupController, animated: true, completion: {
+                    self.passNameToPopup(popupController)
+                })
                 
                 //messageLabel.text = metadataObj.stringValue
                 print(metadataObj.stringValue)

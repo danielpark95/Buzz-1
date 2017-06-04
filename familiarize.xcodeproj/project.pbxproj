@@ -18,6 +18,8 @@
 		144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */; };
 		14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */; };
 		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
+		14F35FEB1EE260B5007A2A8D /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */; };
+		14F35FED1EE2A427007A2A8D /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* PopupController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeCell.swift; sourceTree = "<group>"; };
 		14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellBaseClass.swift; sourceTree = "<group>"; };
 		14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
+		14F35FEC1EE2A427007A2A8D /* PopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupController.swift; sourceTree = "<group>"; };
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.debug.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.release.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.release.xcconfig"; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 			children = (
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
 				140A40001EDFC42E00D4539E /* FamiliarizeController.swift */,
+				14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */,
+				14F35FEC1EE2A427007A2A8D /* PopupController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -254,12 +260,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */,
+				14F35FED1EE2A427007A2A8D /* PopupController.swift in Sources */,
 				14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
 				141CEEBE1EDCD1050068B2B9 /* MenuBar.swift in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
+				14F35FEB1EE260B5007A2A8D /* QRScannerController.swift in Sources */,
 				14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
 			);
