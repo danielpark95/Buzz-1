@@ -125,8 +125,13 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 let popupController = PopupController()
                 
                 // Be sure to do the completion block after you get a callback saying that they accept that person as a friend. And write that completion block to the nscoredata
-                self.present(popupController, animated: false, completion: {})
-
+                // Furthermore, the camera is still on after the modal presentation occurs.
+                popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                popupController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                self.present(popupController, animated: true)
+                
+                //messageLabel.text = metadataObj.stringValue
+                print(metadataObj.stringValue)
             }
         }
     }

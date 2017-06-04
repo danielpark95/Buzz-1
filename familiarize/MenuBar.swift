@@ -6,6 +6,8 @@
 //  Copyright © 2017 nosleep. All rights reserved.
 //
 
+// This code has been deprecated and is no longer in server.
+
 import UIKit
 
 class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
