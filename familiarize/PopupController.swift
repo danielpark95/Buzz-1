@@ -8,15 +8,19 @@
 
 // Popup -- https://www.youtube.com/watch?v=DmWv-JtQH4Q
 // Color -- 37 | 60 | 97
+// NSCoreData -- https://www.youtube.com/watch?v=TW_jcvVvPwI -- Also need to maybe clear the data from this simulator? No idea (:
 
 
 import UIKit
+import SwiftyJSON
+import CoreData
 
 class PopupController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        setupBackground()
     }
+    var qrJSON: JSON = []
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
@@ -38,33 +42,64 @@ class PopupController: UIViewController {
     lazy var addFriendButton: UIButton = {
         let image = UIImage(named: "add-friend-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
+        button.tag = 1
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didSelectAdd), for: .touchUpInside)
         return button
     }()
     
-    func didSelectAdd() {
-        self.dismiss(animated: false, completion: {
-            let qrScannerController = QRScannerController()
-            qrScannerController.selectedAnswerFromPop(true)
-        })
-    }
+
     
     lazy var dismissFriendButton: UIButton = {
         let image = UIImage(named: "dismiss-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
+        button.tag = 2
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectDismiss), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didSelectAdd), for: .touchUpInside)
         return button
     }()
     
-    func didSelectDismiss() {
+    func didSelectAdd(sender: UIButton) {
         self.dismiss(animated: false, completion: {
-            let qrScannerController = QRScannerController()
-            qrScannerController.selectedAnswerFromPop(false)
+            self.setupData(sender.tag)
         })
+    }
+    
+    func setupData(_ buttonTag: Int) {
+        
+        // NSCore data functionalities. -- Persist the data when user clicks add friend.
+        if (buttonTag == 1) {
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            let managedObjectContext = delegate.persistentContainer.viewContext
+            let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
+            newUser.name = self.qrJSON["name"].string
+            newUser.faceBookProfile = self.qrJSON["fb"].string
+            newUser.instagramProfile = self.qrJSON["ig"].string
+            newUser.snapChatProfile = self.qrJSON["sc"].string
+            newUser.phoneNumber = self.qrJSON["pn"].string
+            do {
+                try(managedObjectContext.save())
+            } catch let err {
+                print(err)
+            }
+            //self.loadData()
+        }
+        
+    }
+    
+    // This is just a test run on how we can utilize loadData within the contactsVC
+    func loadData() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        do {
+            let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
+            print(userProfiles!)
+        } catch let err {
+            print(err)
+        }
     }
     
     lazy var visualEffectView: UIVisualEffectView = {
@@ -73,17 +108,16 @@ class PopupController: UIViewController {
         return visualEffect
     }()
     
-    func setupView() {
+    func setupBackground() {
         view.addSubview(visualEffectView)
         view.addSubview(popupImageView)
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         popupImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 20).isActive = true
+    }
+    func setupGraphics() {
 
-        if (questionLabel.text == "") {
-            return
-        }
         view.addSubview(questionLabel)
         view.addSubview(addFriendButton)
         view.addSubview(dismissFriendButton)

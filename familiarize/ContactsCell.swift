@@ -39,7 +39,6 @@ class ContactsCell: BaseCell {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "blank_man")
         imageView.contentMode = .scaleAspectFit
-        //imageView.backgroundColor = .red
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

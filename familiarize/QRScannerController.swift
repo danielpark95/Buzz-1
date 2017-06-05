@@ -8,11 +8,13 @@
 
 import UIKit
 import AVFoundation
+import SwiftyJSON
 
 class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
+    var qrJSON: JSON = []
     
     let supportedCodeTypes = [AVMetadataObjectTypeQRCode]
     
@@ -82,7 +84,6 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     func didSelectDelete() {
         self.dismiss(animated: false)
-        
     }
     
     func setupViews() {
@@ -93,35 +94,25 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
     
-    func passNameToPopup(_ popupController: PopupController) {
-        
-        popupController.questionLabel.numberOfLines = 1
-        let attributedText = NSMutableAttributedString(string: "Alex Oh", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
-        
-        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
-        
-        popupController.questionLabel.attributedText = attributedText
-        popupController.setupView()
+    
+    func setQRJSON(_ qrCode: String, popupController: PopupController) {
+        let data = qrCode.data(using: .utf8)
+        qrJSON = JSON(data!)
+        popupController.qrJSON = qrJSON
+    
     }
     
-    func selectedAnswerFromPop(_ addFriend: Bool) {
-        print(addFriend)
-    }
-    
+
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
-    
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         
         // Check if the metadataObjects array is not nil and it contains at least one object.
@@ -139,21 +130,35 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
+                // Setting up the controller and animations
                 let popupController = PopupController()
-                
-                // Be sure to do the completion block after you get a callback saying that they accept that person as a friend. And write that completion block to the nscoredata
-                // Furthermore, the camera is still on after the modal presentation occurs.
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 popupController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-                //self.present(popupController, animated: true)
+                
+                setQRJSON(metadataObj.stringValue, popupController: popupController)
+                
                 self.present(popupController, animated: true, completion: {
                     self.passNameToPopup(popupController)
                 })
                 
-                //messageLabel.text = metadataObj.stringValue
-                print(metadataObj.stringValue)
             }
         }
+    }
+    
+    
+    func passNameToPopup(_ popupController: PopupController) {
+        
+        popupController.questionLabel.numberOfLines = 1
+        
+        let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10
+        
+        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
+        
+        popupController.questionLabel.attributedText = attributedText
+        popupController.setupGraphics()
     }
 
 

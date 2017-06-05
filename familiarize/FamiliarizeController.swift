@@ -18,8 +18,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         
         setupView()
         setupCollectionView()
-        
-        
+
     }
     
     lazy var cameraButton: UIButton = {

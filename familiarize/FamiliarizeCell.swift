@@ -7,14 +7,27 @@
 //
 
 import QRCode
-
+import SwiftyJSON
 import UIKit
+
+// You need to convert the JSON string to a data and then intialize it to create a json object! 
+
 
 class FamiliarizeCell: BaseCell {
     
-    let qrImageView: UIImageView = {
-        var qrCode = QRCode("someRandomData")
-        
+    func createJSON() -> String {
+        let qrJSON: JSON = [
+            "name": "Alex Oh",
+            "fb": "alexswo",
+            "ig": "alexswozi",
+            "sc": "alexoooh",
+            "pn": "2136041187",
+            ]
+        return qrJSON.rawString()!
+    }
+    
+    lazy var qrImageView: UIImageView = {
+        var qrCode = QRCode(self.createJSON())
         qrCode?.backgroundColor = CIColor(red: 242/255, green: 242/255, blue: 242/255)
         let imageView = UIImageView()
         imageView.image = qrCode?.image
