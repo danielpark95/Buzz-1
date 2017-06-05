@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 import SwiftyJSON
+import Alamofire
+import Kanna
 
 class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession:AVCaptureSession?
@@ -111,6 +113,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     }
     
+    
 
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
@@ -137,28 +140,37 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 
                 setQRJSON(metadataObj.stringValue, popupController: popupController)
                 
+                
+                self.scrapeSocialMedia(popupController)
+                
                 self.present(popupController, animated: true, completion: {
-                    self.passNameToPopup(popupController)
+                    popupController.setupGraphics()
                 })
                 
             }
         }
     }
     
+    func scrapeSocialMedia(_ popupController: PopupController) {
+        Alamofire.request("https://www.facebook.com/alexswoh").responseString { response in
+            print("\(response.result.isSuccess)")
+            if let html = response.result.value {
+                self.parseHTML(html: html, popupController: popupController)
+            }
+        }
+    }
     
-    func passNameToPopup(_ popupController: PopupController) {
-        
-        popupController.questionLabel.numberOfLines = 1
-        
-        let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
-        
-        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
-        
-        popupController.questionLabel.attributedText = attributedText
-        popupController.setupGraphics()
+    func parseHTML(html: String, popupController: PopupController) {
+        if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
+            for show in doc.css("img[class^='profilePic img']") {
+                let url = NSURL(string: show["src"]!)!
+                let data:NSData? = NSData(contentsOf: url as URL)
+                popupController.profileImage.image = UIImage(data : data! as Data)!
+                popupController.profileImage.clipsToBounds = true
+                popupController.profileImage.layer.cornerRadius = 25.0
+            }
+    
+        }
     }
 
 

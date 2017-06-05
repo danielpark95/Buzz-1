@@ -16,6 +16,16 @@ import SwiftyJSON
 import CoreData
 
 class PopupController: UIViewController {
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
+        print("init nibName style")
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
@@ -36,6 +46,14 @@ class PopupController: UIViewController {
         imageView.image = UIImage(named: "popup-image")
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    var profileImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         return imageView
     }()
     
@@ -66,7 +84,6 @@ class PopupController: UIViewController {
             self.setupData(sender.tag)
         })
     }
-    
     func setupData(_ buttonTag: Int) {
         
         // NSCore data functionalities. -- Persist the data when user clicks add friend.
@@ -91,9 +108,6 @@ class PopupController: UIViewController {
         
     }
     
-
-
-    
     lazy var visualEffectView: UIVisualEffectView = {
         var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffect.frame = self.view.bounds
@@ -108,8 +122,23 @@ class PopupController: UIViewController {
         popupImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 20).isActive = true
     }
+    func setupText() {
+        questionLabel.numberOfLines = 1
+        
+        let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10
+        
+        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
+        
+        questionLabel.attributedText = attributedText
+    }
     func setupGraphics() {
 
+        setupText()
+        
+        view.addSubview(self.profileImage)
         view.addSubview(questionLabel)
         view.addSubview(addFriendButton)
         view.addSubview(dismissFriendButton)
@@ -129,5 +158,10 @@ class PopupController: UIViewController {
         dismissFriendButton.heightAnchor.constraint(equalToConstant: 17).isActive = true
         dismissFriendButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
+        self.profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
+        self.profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        self.profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        
     }
 }
