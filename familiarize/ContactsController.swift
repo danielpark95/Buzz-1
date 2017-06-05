@@ -9,26 +9,42 @@
 import UIKit
 import CoreData
 
+extension Notification.Name {
+    static let reload = Notification.Name("reload")
+}
+
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     var userProfiles: [UserProfile]?
+    var refresher:UIRefreshControl!
     
     override func viewDidLoad() {
         
         //self.clearData()
         super.viewDidLoad()
-        
-        navigationItem.title = "Contacts"
 
+        navigationItem.title = "Contacts"
+        setupRefreshingAndReloading()
         setupCollectionView()
         setupNavBarButtons()
         
         self.loadData()
     }
+    
+    func setupRefreshingAndReloading() {
+        // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reload, object: nil)
+        
+        //This is a different signal from the one written in notification center. This signal is fired whenever a user drags down the collection view in contacts.
+        self.refresher = UIRefreshControl()
+        self.refresher.addTarget(self, action: #selector(refreshTableData), for: UIControlEvents.valueChanged)
+        collectionView?.refreshControl = refresher
+        
+    }
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
-        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
     }
     
     // This possibly can be extended more to create a search function for looking up contact history.
@@ -42,7 +58,16 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     func handleMore() { // This piece of man is still here.
         
     }
-
+    
+    func reloadTableData() {
+        collectionView?.reloadData()
+    }
+    
+    func refreshTableData() {
+        collectionView!.refreshControl?.beginRefreshing()
+        collectionView?.reloadData()
+        collectionView?.refreshControl?.endRefreshing()
+    }
     
     func loadData() {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -50,25 +75,24 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         do {
-            userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
+            self.userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
 
         } catch let err {
             print(err)
         }
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = userProfiles?.count {
+        if let count = self.userProfiles?.count {
             return count
         }
         return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ContactsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ContactsCell
         
         if let userProfile = userProfiles?[indexPath.item] {
             cell.userProfile = userProfile
-            print (cell.userProfile)
         }
         
         return cell

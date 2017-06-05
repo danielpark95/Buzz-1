@@ -86,7 +86,7 @@ class PopupController: UIViewController {
             } catch let err {
                 print(err)
             }
-            //self.loadData()
+            NotificationCenter.default.post(name: .reload, object: nil)
         }
         
     }

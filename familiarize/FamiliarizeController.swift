@@ -8,9 +8,10 @@
 
 import UIKit
 
-let famCellId = "cellId"
+
 class FamiliarizeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
+
+    private let cellId = "cellId"
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +55,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     func setupCollectionView() {
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
-        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: famCellId)
+        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -82,7 +83,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         return 3 // Change the number of pages to something else after you get like the coredata working
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: famCellId, for: indexPath)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //return CGSize(width: collectionView.frame.width/3, height: collectionView.frame.he)
