@@ -91,18 +91,8 @@ class PopupController: UIViewController {
         
     }
     
-    // This is just a test run on how we can utilize loadData within the contactsVC
-    func loadData() {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
-        do {
-            let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
-            print(userProfiles!)
-        } catch let err {
-            print(err)
-        }
-    }
+
+
     
     lazy var visualEffectView: UIVisualEffectView = {
         var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))

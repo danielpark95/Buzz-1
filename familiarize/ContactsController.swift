@@ -7,17 +7,23 @@
 //
 
 import UIKit
+import CoreData
 
-let cellId = "cellId"
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    private let cellId = "cellId"
+    var userProfiles: [UserProfile]?
+    
     override func viewDidLoad() {
+        
+        //self.clearData()
         super.viewDidLoad()
         
         navigationItem.title = "Contacts"
 
         setupCollectionView()
         setupNavBarButtons()
+        
+        self.loadData()
     }
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
@@ -33,18 +39,55 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         navigationItem.rightBarButtonItem = searchBarButtonItem
     }
     
-    func handleMore() { //This piece of man is still here.
+    func handleMore() { // This piece of man is still here.
         
     }
 
+    
+    func loadData() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        do {
+            userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
+
+        } catch let err {
+            print(err)
+        }
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        if let count = userProfiles?.count {
+            return count
+        }
+        return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ContactsCell
+        
+        if let userProfile = userProfiles?[indexPath.item] {
+            cell.userProfile = userProfile
+            print (cell.userProfile)
+        }
+        
+        return cell
     }
 
+    // This is just a test run on how we can utilize clearData within the contactsVC
+    func clearData() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        do {
+            let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
+            for userProfile in userProfiles! {
+                managedObjectContext.delete(userProfile)
+            }
+        } catch let err {
+            print(err)
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 60)
@@ -56,9 +99,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
 
 }
 
-
-
-
 // Deprecated code that was initially used to retrict the boundaries of the scroll and the last cell.
 /*
 // This is so that the last item doesnt get hidden by the bottom navigation bar
@@ -68,9 +108,6 @@ collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
 // Instead it ends at the bottom navigation bar.
 collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0)
  */
-
-
-
 
 // Deprecated code that was initially used to create the navigation bar. -- Youtube style
 /*
