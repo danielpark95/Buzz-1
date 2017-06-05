@@ -79,6 +79,8 @@ class PopupController: UIViewController {
             newUser.instagramProfile = self.qrJSON["ig"].string
             newUser.snapChatProfile = self.qrJSON["sc"].string
             newUser.phoneNumber = self.qrJSON["pn"].string
+            newUser.date = NSDate()
+            print(newUser)
             do {
                 try(managedObjectContext.save())
             } catch let err {

@@ -74,10 +74,7 @@ class ContactsCell: BaseCell {
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
-        
-        
-        
+
         
     }
     
