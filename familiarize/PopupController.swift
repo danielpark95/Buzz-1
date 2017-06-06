@@ -16,7 +16,6 @@ import SwiftyJSON
 import CoreData
 
 class PopupController: UIViewController {
-
     
     enum buttonPressed: Int {
         case addFriend = 1
