@@ -18,21 +18,16 @@ import CoreData
 class PopupController: UIViewController {
 
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
-        print("init nibName style")
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    enum buttonPressed: Int {
+        case addFriend = 1
+        case dismiss = 2
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
     }
     var qrJSON: JSON = []
-    var qrScannerController: QRScannerController = QRScannerController()
+    
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
@@ -62,27 +57,25 @@ class PopupController: UIViewController {
     lazy var addFriendButton: UIButton = {
         let image = UIImage(named: "add-friend-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
-        button.tag = 1
+        button.tag = buttonPressed.addFriend.rawValue
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
         return button
     }()
-    
-
     
     lazy var dismissFriendButton: UIButton = {
         let image = UIImage(named: "dismiss-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
-        button.tag = 2
+        button.tag = buttonPressed.dismiss.rawValue
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
         return button
     }()
-    
+    var QRScannerDelegate: QRScannerControllerDelegate?
     func didSelectButton(sender: UIButton) {
-        self.qrScannerController.popupShown = false
+        QRScannerDelegate?.commenceCameraScanning()
         self.dismiss(animated: false, completion: {
             self.setupData(sender.tag)
         })
@@ -90,7 +83,7 @@ class PopupController: UIViewController {
     func setupData(_ buttonTag: Int) {
         
         // NSCore data functionalities. -- Persist the data when user clicks add friend.
-        if (buttonTag == 1) {
+        if (buttonTag == buttonPressed.addFriend.rawValue) {
             let delegate = UIApplication.shared.delegate as! AppDelegate
             let managedObjectContext = delegate.persistentContainer.viewContext
             let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
@@ -103,13 +96,11 @@ class PopupController: UIViewController {
             print(newUser)
             do {
                 try(managedObjectContext.save())
+                NotificationCenter.default.post(name: .reload, object: nil)
             } catch let err {
                 print(err)
             }
-            NotificationCenter.default.post(name: .reload, object: nil)
         }
-
-        
     }
     
     lazy var visualEffectView: UIVisualEffectView = {
@@ -127,8 +118,6 @@ class PopupController: UIViewController {
         popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 160).isActive = true
     }
     func setupText() {
-        //nameLabel.numberOfLines = 1
-        
         let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         
         nameLabel.attributedText = attributedText

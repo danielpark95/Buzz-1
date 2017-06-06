@@ -60,6 +60,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func reloadTableData() {
+        self.loadData()
         collectionView?.reloadData()
     }
     
