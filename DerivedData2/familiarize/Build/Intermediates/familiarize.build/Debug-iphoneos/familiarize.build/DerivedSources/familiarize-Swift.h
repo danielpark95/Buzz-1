@@ -135,6 +135,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import UIKit;
 @import CoreGraphics;
 @import Foundation;
+@import AVFoundation;
+@import CoreData;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -167,13 +169,15 @@ SWIFT_CLASS("_TtC11familiarize8BaseCell")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class UserProfile;
 @class UILabel;
 @class UIImageView;
 @class UIView;
 
 SWIFT_CLASS("_TtC11familiarize12ContactsCell")
 @interface ContactsCell : BaseCell
-@property (nonatomic, readonly, strong) UILabel * _Nonnull nameLabel;
+@property (nonatomic, strong) UserProfile * _Nullable userProfile;
+@property (nonatomic, readonly, strong) UILabel * _Nonnull nameLabelAndTime;
 @property (nonatomic, readonly, strong) UIImageView * _Nonnull profileImageView;
 @property (nonatomic, readonly, strong) UIView * _Nonnull separatorView;
 - (void)setupViews;
@@ -181,19 +185,26 @@ SWIFT_CLASS("_TtC11familiarize12ContactsCell")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class MenuBar;
+@class UIRefreshControl;
 @class UICollectionView;
 @class UICollectionViewLayout;
 @class NSBundle;
 
 SWIFT_CLASS("_TtC11familiarize18ContactsController")
 @interface ContactsController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
+@property (nonatomic, copy) NSArray<UserProfile *> * _Nullable userProfiles;
+@property (nonatomic, strong) UIRefreshControl * _Null_unspecified refresher;
 - (void)viewDidLoad;
+- (void)setupRefreshingAndReloading;
+- (void)setupCollectionView;
 - (void)setupNavBarButtons;
 - (void)handleMore;
-@property (nonatomic, readonly, strong) MenuBar * _Nonnull menuBar;
+- (void)reloadTableData;
+- (void)refreshTableData;
+- (void)loadData;
 - (NSInteger)collectionView:(UICollectionView * _Nonnull)collectionView numberOfItemsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (UICollectionViewCell * _Nonnull)collectionView:(UICollectionView * _Nonnull)collectionView cellForItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+- (void)clearData;
 - (CGSize)collectionView:(UICollectionView * _Nonnull)collectionView layout:(UICollectionViewLayout * _Nonnull)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
 - (CGFloat)collectionView:(UICollectionView * _Nonnull)collectionView layout:(UICollectionViewLayout * _Nonnull)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)initWithCollectionViewLayout:(UICollectionViewLayout * _Nonnull)layout OBJC_DESIGNATED_INITIALIZER;
@@ -205,6 +216,7 @@ SWIFT_CLASS("_TtC11familiarize18ContactsController")
 SWIFT_CLASS("_TtC11familiarize22CustomTabBarController")
 @interface CustomTabBarController : UITabBarController
 - (void)viewDidLoad;
+- (void)setupCustomTabBar;
 - (void)viewWillLayoutSubviews;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
@@ -213,20 +225,25 @@ SWIFT_CLASS("_TtC11familiarize22CustomTabBarController")
 
 SWIFT_CLASS("_TtC11familiarize15FamiliarizeCell")
 @interface FamiliarizeCell : BaseCell
-@property (nonatomic, readonly, strong) UIImageView * _Nonnull qrImageView;
+- (NSString * _Nonnull)createJSON SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, strong) UIImageView * _Nonnull qrImageView;
 - (void)setupViews;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class UIButton;
 @class UIPageControl;
 @class UIScrollView;
 
 SWIFT_CLASS("_TtC11familiarize21FamiliarizeController")
 @interface FamiliarizeController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
-- (void)setupColectionView;
-@property (nonatomic, readonly, strong) UIPageControl * _Nonnull pageControl;
 - (void)viewDidLoad;
+@property (nonatomic, strong) UIButton * _Nonnull cameraButton;
+- (void)didSelectCamera;
+- (void)setupView;
+- (void)setupCollectionView;
+@property (nonatomic, readonly, strong) UIPageControl * _Nonnull pageControl;
 - (void)scrollViewWillEndDragging:(UIScrollView * _Nonnull)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(CGPoint * _Nonnull)targetContentOffset;
 - (NSInteger)collectionView:(UICollectionView * _Nonnull)collectionView numberOfItemsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
 - (UICollectionViewCell * _Nonnull)collectionView:(UICollectionView * _Nonnull)collectionView cellForItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
@@ -260,6 +277,82 @@ SWIFT_CLASS("_TtC11familiarize8MenuCell")
 - (void)setupViews;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface NSDate (SWIFT_EXTENSION(familiarize))
+- (NSString * _Nonnull)getElapsedTime SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class QRScannerController;
+@class UIVisualEffectView;
+
+SWIFT_CLASS("_TtC11familiarize15PopupController")
+@interface PopupController : UIViewController
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)viewDidLoad;
+@property (nonatomic, strong) QRScannerController * _Nonnull qrScannerController;
+@property (nonatomic, readonly, strong) UILabel * _Nonnull nameLabel;
+@property (nonatomic, readonly, strong) UIImageView * _Nonnull popupImageView;
+@property (nonatomic, strong) UIImageView * _Nonnull profileImage;
+@property (nonatomic, strong) UIButton * _Nonnull addFriendButton;
+@property (nonatomic, strong) UIButton * _Nonnull dismissFriendButton;
+- (void)didSelectButtonWithSender:(UIButton * _Nonnull)sender;
+- (void)setupData:(NSInteger)buttonTag;
+@property (nonatomic, strong) UIVisualEffectView * _Nonnull visualEffectView;
+- (void)setupBackground;
+- (void)setupText;
+- (void)setupGraphics;
+- (void)viewWillLayoutSubviews;
+@end
+
+@class AVCaptureSession;
+@class AVCaptureVideoPreviewLayer;
+@class AVCaptureOutput;
+@class AVCaptureConnection;
+
+SWIFT_CLASS("_TtC11familiarize19QRScannerController")
+@interface QRScannerController : UIViewController <AVCaptureMetadataOutputObjectsDelegate>
+@property (nonatomic, strong) AVCaptureSession * _Nullable captureSession;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer * _Nullable videoPreviewLayer;
+@property (nonatomic, strong) UIView * _Nullable qrCodeFrameView;
+@property (nonatomic) BOOL popupShown;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull supportedCodeTypes;
+- (void)viewDidLoad;
+@property (nonatomic, strong) UIButton * _Nonnull backButton;
+- (void)didSelectDelete;
+- (void)setupViews;
+- (void)didReceiveMemoryWarning;
+- (void)setQRJSON:(NSString * _Nonnull)qrCode popupController:(PopupController * _Nonnull)popupController;
+- (void)captureOutput:(AVCaptureOutput * _Null_unspecified)captureOutput didOutputMetadataObjects:(NSArray * _Null_unspecified)metadataObjects fromConnection:(AVCaptureConnection * _Null_unspecified)connection;
+- (void)scrapeSocialMedia:(PopupController * _Nonnull)popupController;
+- (void)parseHTMLWithHtml:(NSString * _Nonnull)html popupController:(PopupController * _Nonnull)popupController;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface UITabBarController (SWIFT_EXTENSION(familiarize))
+@property (nonatomic, readonly, strong) UIViewController * _Nullable childViewControllerForStatusBarStyle;
+@end
+
+@class NSEntityDescription;
+@class NSManagedObjectContext;
+
+SWIFT_CLASS_NAMED("UserProfile")
+@interface UserProfile : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface UserProfile (SWIFT_EXTENSION(familiarize))
+@property (nonatomic, copy) NSString * _Nullable faceBookProfile;
+@property (nonatomic, copy) NSString * _Nullable instagramProfile;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable phoneNumber;
+@property (nonatomic, copy) NSString * _Nullable snapChatProfile;
+@property (nonatomic, strong) NSDate * _Nullable date;
 @end
 
 #pragma clang diagnostic pop

@@ -43,6 +43,7 @@ depends-member:
 - !private ["Ps9AnyObject", "CustomTabBarController"]
 - !private ["Ps9AnyObject", "NSForegroundColorAttributeName"]
 - !private ["Ps9AnyObject", "NSPersistentContainer"]
+- !private ["Ps9AnyObject", "UIApplication"]
 - !private ["Ps9AnyObject", "UIColor"]
 - !private ["Ps9AnyObject", "UIInterfaceOrientationMask"]
 - !private ["Ps9AnyObject", "UINavigationBar"]
@@ -74,6 +75,7 @@ depends-member:
 - !private ["Ps9AnyObject", "save"]
 - !private ["Ps9AnyObject", "saveContext"]
 - !private ["Ps9AnyObject", "selectedIndex"]
+- !private ["Ps9AnyObject", "shared"]
 - !private ["Ps9AnyObject", "statusBarStyle"]
 - !private ["Ps9AnyObject", "titleTextAttributes"]
 - !private ["Ps9AnyObject", "userInfo"]
@@ -122,6 +124,7 @@ depends-member:
 - !private ["Ps7CVarArg", "CustomTabBarController"]
 - !private ["Ps7CVarArg", "NSForegroundColorAttributeName"]
 - !private ["Ps7CVarArg", "NSPersistentContainer"]
+- !private ["Ps7CVarArg", "UIApplication"]
 - !private ["Ps7CVarArg", "UIColor"]
 - !private ["Ps7CVarArg", "UIInterfaceOrientationMask"]
 - !private ["Ps7CVarArg", "UINavigationBar"]
@@ -153,6 +156,7 @@ depends-member:
 - !private ["Ps7CVarArg", "save"]
 - !private ["Ps7CVarArg", "saveContext"]
 - !private ["Ps7CVarArg", "selectedIndex"]
+- !private ["Ps7CVarArg", "shared"]
 - !private ["Ps7CVarArg", "statusBarStyle"]
 - !private ["Ps7CVarArg", "titleTextAttributes"]
 - !private ["Ps7CVarArg", "userInfo"]
@@ -164,6 +168,7 @@ depends-member:
 - !private ["Ps28CustomDebugStringConvertible", "CustomTabBarController"]
 - !private ["Ps28CustomDebugStringConvertible", "NSForegroundColorAttributeName"]
 - !private ["Ps28CustomDebugStringConvertible", "NSPersistentContainer"]
+- !private ["Ps28CustomDebugStringConvertible", "UIApplication"]
 - !private ["Ps28CustomDebugStringConvertible", "UIColor"]
 - !private ["Ps28CustomDebugStringConvertible", "UIInterfaceOrientationMask"]
 - !private ["Ps28CustomDebugStringConvertible", "UINavigationBar"]
@@ -195,6 +200,7 @@ depends-member:
 - !private ["Ps28CustomDebugStringConvertible", "save"]
 - !private ["Ps28CustomDebugStringConvertible", "saveContext"]
 - !private ["Ps28CustomDebugStringConvertible", "selectedIndex"]
+- !private ["Ps28CustomDebugStringConvertible", "shared"]
 - !private ["Ps28CustomDebugStringConvertible", "statusBarStyle"]
 - !private ["Ps28CustomDebugStringConvertible", "titleTextAttributes"]
 - !private ["Ps28CustomDebugStringConvertible", "userInfo"]
@@ -209,6 +215,7 @@ depends-member:
 - !private ["Ps23CustomStringConvertible", "CustomTabBarController"]
 - !private ["Ps23CustomStringConvertible", "NSForegroundColorAttributeName"]
 - !private ["Ps23CustomStringConvertible", "NSPersistentContainer"]
+- !private ["Ps23CustomStringConvertible", "UIApplication"]
 - !private ["Ps23CustomStringConvertible", "UIColor"]
 - !private ["Ps23CustomStringConvertible", "UIInterfaceOrientationMask"]
 - !private ["Ps23CustomStringConvertible", "UINavigationBar"]
@@ -241,6 +248,7 @@ depends-member:
 - !private ["Ps23CustomStringConvertible", "save"]
 - !private ["Ps23CustomStringConvertible", "saveContext"]
 - !private ["Ps23CustomStringConvertible", "selectedIndex"]
+- !private ["Ps23CustomStringConvertible", "shared"]
 - !private ["Ps23CustomStringConvertible", "statusBarStyle"]
 - !private ["Ps23CustomStringConvertible", "titleTextAttributes"]
 - !private ["Ps23CustomStringConvertible", "userInfo"]
@@ -254,6 +262,7 @@ depends-member:
 - !private ["Ps9Equatable", "CustomTabBarController"]
 - !private ["Ps9Equatable", "NSForegroundColorAttributeName"]
 - !private ["Ps9Equatable", "NSPersistentContainer"]
+- !private ["Ps9Equatable", "UIApplication"]
 - !private ["Ps9Equatable", "UIColor"]
 - !private ["Ps9Equatable", "UIInterfaceOrientationMask"]
 - !private ["Ps9Equatable", "UINavigationBar"]
@@ -289,6 +298,7 @@ depends-member:
 - !private ["Ps9Equatable", "save"]
 - !private ["Ps9Equatable", "saveContext"]
 - !private ["Ps9Equatable", "selectedIndex"]
+- !private ["Ps9Equatable", "shared"]
 - !private ["Ps9Equatable", "statusBarStyle"]
 - !private ["Ps9Equatable", "titleTextAttributes"]
 - !private ["Ps9Equatable", "userInfo"]
@@ -307,6 +317,7 @@ depends-member:
 - !private ["Ps8Hashable", "CustomTabBarController"]
 - !private ["Ps8Hashable", "NSForegroundColorAttributeName"]
 - !private ["Ps8Hashable", "NSPersistentContainer"]
+- !private ["Ps8Hashable", "UIApplication"]
 - !private ["Ps8Hashable", "UIColor"]
 - !private ["Ps8Hashable", "UIInterfaceOrientationMask"]
 - !private ["Ps8Hashable", "UINavigationBar"]
@@ -340,6 +351,7 @@ depends-member:
 - !private ["Ps8Hashable", "save"]
 - !private ["Ps8Hashable", "saveContext"]
 - !private ["Ps8Hashable", "selectedIndex"]
+- !private ["Ps8Hashable", "shared"]
 - !private ["Ps8Hashable", "statusBarStyle"]
 - !private ["Ps8Hashable", "titleTextAttributes"]
 - !private ["Ps8Hashable", "userInfo"]
@@ -347,6 +359,7 @@ depends-member:
 - !private ["Ps8Hashable", "white"]
 - ["Ps8Hashable", "window"]
 - ["Ps8Hashable", ""]
+- !private ["P10SwiftyJSON17JSONSubscriptType", "init"]
 - !private ["Ps25LosslessStringConvertible", "_getBuiltinLogicValue"]
 - !private ["Ps25LosslessStringConvertible", "init"]
 - !private ["Ps10MirrorPath", "init"]
@@ -411,6 +424,7 @@ depends-member:
 - !private ["CSo8NSObject", "save"]
 - ["CSo8NSObject", "saveContext"]
 - !private ["CSo8NSObject", "selectedIndex"]
+- !private ["CSo8NSObject", "shared"]
 - !private ["CSo8NSObject", "statusBarStyle"]
 - !private ["CSo8NSObject", "titleTextAttributes"]
 - !private ["CSo8NSObject", "userInfo"]
@@ -420,6 +434,7 @@ depends-member:
 - !private ["PSo16NSObjectProtocol", "CustomTabBarController"]
 - !private ["PSo16NSObjectProtocol", "NSForegroundColorAttributeName"]
 - !private ["PSo16NSObjectProtocol", "NSPersistentContainer"]
+- !private ["PSo16NSObjectProtocol", "UIApplication"]
 - !private ["PSo16NSObjectProtocol", "UIColor"]
 - !private ["PSo16NSObjectProtocol", "UIInterfaceOrientationMask"]
 - !private ["PSo16NSObjectProtocol", "UINavigationBar"]
@@ -451,6 +466,7 @@ depends-member:
 - !private ["PSo16NSObjectProtocol", "save"]
 - !private ["PSo16NSObjectProtocol", "saveContext"]
 - !private ["PSo16NSObjectProtocol", "selectedIndex"]
+- !private ["PSo16NSObjectProtocol", "shared"]
 - !private ["PSo16NSObjectProtocol", "statusBarStyle"]
 - !private ["PSo16NSObjectProtocol", "titleTextAttributes"]
 - !private ["PSo16NSObjectProtocol", "userInfo"]
@@ -498,10 +514,12 @@ depends-member:
 - !private ["PSo21UIAppearanceContainer", "rootViewController"]
 - !private ["PSo21UIAppearanceContainer", "selectedIndex"]
 - !private ["PSo21UIAppearanceContainer", "titleTextAttributes"]
+- !private ["CSo13UIApplication", "shared"]
 - !private ["CSo13UIApplication", "statusBarStyle"]
 - !private ["PSo21UIApplicationDelegate", "CustomTabBarController"]
 - !private ["PSo21UIApplicationDelegate", "NSForegroundColorAttributeName"]
 - !private ["PSo21UIApplicationDelegate", "NSPersistentContainer"]
+- !private ["PSo21UIApplicationDelegate", "UIApplication"]
 - !private ["PSo21UIApplicationDelegate", "UIColor"]
 - !private ["PSo21UIApplicationDelegate", "UIInterfaceOrientationMask"]
 - !private ["PSo21UIApplicationDelegate", "UINavigationBar"]
@@ -596,6 +614,7 @@ depends-member:
 - !private ["CSo11UIResponder", "rootViewController"]
 - ["CSo11UIResponder", "saveContext"]
 - !private ["CSo11UIResponder", "selectedIndex"]
+- !private ["CSo11UIResponder", "shared"]
 - !private ["CSo11UIResponder", "statusBarStyle"]
 - !private ["CSo11UIResponder", "titleTextAttributes"]
 - ["CSo11UIResponder", "window"]
@@ -603,6 +622,7 @@ depends-member:
 - !private ["PSo30UIResponderStandardEditActions", "CustomTabBarController"]
 - !private ["PSo30UIResponderStandardEditActions", "NSForegroundColorAttributeName"]
 - !private ["PSo30UIResponderStandardEditActions", "NSPersistentContainer"]
+- !private ["PSo30UIResponderStandardEditActions", "UIApplication"]
 - !private ["PSo30UIResponderStandardEditActions", "UIColor"]
 - !private ["PSo30UIResponderStandardEditActions", "UIInterfaceOrientationMask"]
 - !private ["PSo30UIResponderStandardEditActions", "UINavigationBar"]
@@ -629,6 +649,7 @@ depends-member:
 - !private ["PSo30UIResponderStandardEditActions", "rootViewController"]
 - !private ["PSo30UIResponderStandardEditActions", "saveContext"]
 - !private ["PSo30UIResponderStandardEditActions", "selectedIndex"]
+- !private ["PSo30UIResponderStandardEditActions", "shared"]
 - !private ["PSo30UIResponderStandardEditActions", "statusBarStyle"]
 - !private ["PSo30UIResponderStandardEditActions", "titleTextAttributes"]
 - ["PSo30UIResponderStandardEditActions", "window"]
@@ -680,6 +701,7 @@ depends-member:
 - !private ["Ps9_Hashable", "CustomTabBarController"]
 - !private ["Ps9_Hashable", "NSForegroundColorAttributeName"]
 - !private ["Ps9_Hashable", "NSPersistentContainer"]
+- !private ["Ps9_Hashable", "UIApplication"]
 - !private ["Ps9_Hashable", "UIColor"]
 - !private ["Ps9_Hashable", "UIInterfaceOrientationMask"]
 - !private ["Ps9_Hashable", "UINavigationBar"]
@@ -713,6 +735,7 @@ depends-member:
 - !private ["Ps9_Hashable", "save"]
 - !private ["Ps9_Hashable", "saveContext"]
 - !private ["Ps9_Hashable", "selectedIndex"]
+- !private ["Ps9_Hashable", "shared"]
 - !private ["Ps9_Hashable", "statusBarStyle"]
 - !private ["Ps9_Hashable", "titleTextAttributes"]
 - !private ["Ps9_Hashable", "userInfo"]
@@ -742,6 +765,7 @@ depends-nominal:
 - !private "Ps26ExpressibleByStringLiteral"
 - !private "Ps33ExpressibleByUnicodeScalarLiteral"
 - "Ps8Hashable"
+- !private "P10SwiftyJSON17JSONSubscriptType"
 - !private "Ps25LosslessStringConvertible"
 - !private "Ps10MirrorPath"
 - !private "PSo8NSCoding"
@@ -806,22 +830,31 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Metal.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/AVFoundation.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreText.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/AudioToolbox.apinotesc"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework/Modules/SwiftyJSON.swiftmodule/arm64.swiftmodule"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Modules/QRCode.swiftmodule/arm64.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreMedia.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreData.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreImage.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/QuartzCore.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Dispatch.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Darwin.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/AVFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreAudio.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/CoreGraphics.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/Swift.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/UIKit.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/arm64/SwiftOnoneSupport.swiftmodule"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework/Headers/SwiftyJSON-umbrella.h"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Headers/QRCode-umbrella.h"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework/Headers/SwiftyJSON-Swift.h"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Headers/QRCode-Swift.h"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework/Modules/module.modulemap"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphoneos/QRCode/QRCode.framework/Modules/module.modulemap"
 interface-hash: "1a56bd5546e157da359f911561d671bd"

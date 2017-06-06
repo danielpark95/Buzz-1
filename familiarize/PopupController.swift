@@ -127,14 +127,9 @@ class PopupController: UIViewController {
         popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 160).isActive = true
     }
     func setupText() {
-        nameLabel.numberOfLines = 1
+        //nameLabel.numberOfLines = 1
         
         let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
-        
-        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
         
         nameLabel.attributedText = attributedText
     }
@@ -164,8 +159,12 @@ class PopupController: UIViewController {
 
         self.profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
-        self.profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        self.profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        self.profileImage.heightAnchor.constraint(equalToConstant: 95).isActive = true
+        self.profileImage.widthAnchor.constraint(equalToConstant: 95).isActive = true
         
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
     }
 }

@@ -8,7 +8,10 @@ target 'familiarize' do
   # Pods for familiarize
   pod 'QRCode'
   pod 'SwiftyJSON'
-
+  
+  #These two are for html fetching/scraping
+  pod 'Kanna', '~> 2.1.0'
+  pod 'Alamofire', '~> 4.4'
 
 
 end

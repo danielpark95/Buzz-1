@@ -4,8 +4,12 @@ provides-top-level:
 provides-nominal:
 - "C11familiarize22CustomTabBarController"
 provides-member:
+- ["CSo18UITabBarController", ""]
 - ["C11familiarize22CustomTabBarController", ""]
+- ["CSo18UITabBarController", "childViewControllerForStatusBarStyle"]
 provides-dynamic-lookup:
+- "childViewControllerForStatusBarStyle"
+- "setupCustomTabBar"
 - "viewDidLoad"
 - "viewWillLayoutSubviews"
 depends-top-level:
@@ -26,7 +30,7 @@ depends-top-level:
 - !private "UIImage"
 - !private "UINavigationController"
 - "UITabBarController"
-- !private "UIViewController"
+- "UIViewController"
 depends-member:
 - !private ["Ps9AnyObject", "CALayer"]
 - !private ["Ps9AnyObject", "CGRect"]
@@ -49,6 +53,8 @@ depends-member:
 - !private ["Ps9AnyObject", "isTranslucent"]
 - !private ["Ps9AnyObject", "layer"]
 - !private ["Ps9AnyObject", "navigationItem"]
+- !private ["Ps9AnyObject", "selectedViewController"]
+- !private ["Ps9AnyObject", "setupCustomTabBar"]
 - !private ["Ps9AnyObject", "tabBar"]
 - !private ["Ps9AnyObject", "tabBarItem"]
 - !private ["Ps9AnyObject", "title"]
@@ -95,6 +101,8 @@ depends-member:
 - !private ["Ps7CVarArg", "isTranslucent"]
 - !private ["Ps7CVarArg", "layer"]
 - !private ["Ps7CVarArg", "navigationItem"]
+- !private ["Ps7CVarArg", "selectedViewController"]
+- !private ["Ps7CVarArg", "setupCustomTabBar"]
 - !private ["Ps7CVarArg", "tabBar"]
 - !private ["Ps7CVarArg", "tabBarItem"]
 - !private ["Ps7CVarArg", "title"]
@@ -128,6 +136,8 @@ depends-member:
 - !private ["Ps28CustomDebugStringConvertible", "layer"]
 - !private ["Ps28CustomDebugStringConvertible", "navigationItem"]
 - !private ["Ps28CustomDebugStringConvertible", "origin"]
+- !private ["Ps28CustomDebugStringConvertible", "selectedViewController"]
+- !private ["Ps28CustomDebugStringConvertible", "setupCustomTabBar"]
 - !private ["Ps28CustomDebugStringConvertible", "size"]
 - !private ["Ps28CustomDebugStringConvertible", "tabBar"]
 - !private ["Ps28CustomDebugStringConvertible", "tabBarItem"]
@@ -169,6 +179,8 @@ depends-member:
 - !private ["Ps23CustomStringConvertible", "isTranslucent"]
 - !private ["Ps23CustomStringConvertible", "layer"]
 - !private ["Ps23CustomStringConvertible", "navigationItem"]
+- !private ["Ps23CustomStringConvertible", "selectedViewController"]
+- !private ["Ps23CustomStringConvertible", "setupCustomTabBar"]
 - !private ["Ps23CustomStringConvertible", "tabBar"]
 - !private ["Ps23CustomStringConvertible", "tabBarItem"]
 - !private ["Ps23CustomStringConvertible", "title"]
@@ -189,6 +201,7 @@ depends-member:
 - !private ["C11familiarize22CustomTabBarController", "UIViewController"]
 - ["C11familiarize22CustomTabBarController", "deinit"]
 - ["C11familiarize22CustomTabBarController", "init"]
+- ["C11familiarize22CustomTabBarController", "setupCustomTabBar"]
 - !private ["C11familiarize22CustomTabBarController", "tabBar"]
 - !private ["C11familiarize22CustomTabBarController", "view"]
 - !private ["C11familiarize22CustomTabBarController", "viewControllers"]
@@ -218,6 +231,8 @@ depends-member:
 - !private ["Ps9Equatable", "layer"]
 - !private ["Ps9Equatable", "navigationItem"]
 - !private ["Ps9Equatable", "origin"]
+- !private ["Ps9Equatable", "selectedViewController"]
+- !private ["Ps9Equatable", "setupCustomTabBar"]
 - !private ["Ps9Equatable", "size"]
 - !private ["Ps9Equatable", "tabBar"]
 - !private ["Ps9Equatable", "tabBarItem"]
@@ -254,6 +269,8 @@ depends-member:
 - !private ["Ps8Hashable", "isTranslucent"]
 - !private ["Ps8Hashable", "layer"]
 - !private ["Ps8Hashable", "navigationItem"]
+- !private ["Ps8Hashable", "selectedViewController"]
+- !private ["Ps8Hashable", "setupCustomTabBar"]
 - !private ["Ps8Hashable", "tabBar"]
 - !private ["Ps8Hashable", "tabBarItem"]
 - !private ["Ps8Hashable", "title"]
@@ -262,6 +279,7 @@ depends-member:
 - !private ["Ps8Hashable", "viewDidLoad"]
 - !private ["Ps8Hashable", "withRenderingMode"]
 - ["Ps8Hashable", ""]
+- !private ["P10SwiftyJSON17JSONSubscriptType", "init"]
 - !private ["Ps25LosslessStringConvertible", "init"]
 - !private ["Ps10MirrorPath", "init"]
 - !private ["PSo8NSCoding", "CALayer"]
@@ -285,6 +303,8 @@ depends-member:
 - !private ["PSo8NSCoding", "isTranslucent"]
 - !private ["PSo8NSCoding", "layer"]
 - !private ["PSo8NSCoding", "navigationItem"]
+- !private ["PSo8NSCoding", "selectedViewController"]
+- !private ["PSo8NSCoding", "setupCustomTabBar"]
 - !private ["PSo8NSCoding", "tabBar"]
 - !private ["PSo8NSCoding", "tabBarItem"]
 - !private ["PSo8NSCoding", "title"]
@@ -307,6 +327,8 @@ depends-member:
 - !private ["PSo26NSExtensionRequestHandling", "UIViewController"]
 - !private ["PSo26NSExtensionRequestHandling", "init"]
 - !private ["PSo26NSExtensionRequestHandling", "navigationItem"]
+- !private ["PSo26NSExtensionRequestHandling", "selectedViewController"]
+- !private ["PSo26NSExtensionRequestHandling", "setupCustomTabBar"]
 - !private ["PSo26NSExtensionRequestHandling", "tabBar"]
 - !private ["PSo26NSExtensionRequestHandling", "tabBarItem"]
 - !private ["PSo26NSExtensionRequestHandling", "view"]
@@ -323,10 +345,11 @@ depends-member:
 - !private ["CSo8NSObject", "UIEdgeInsetsMake"]
 - !private ["CSo8NSObject", "UIImage"]
 - !private ["CSo8NSObject", "UINavigationController"]
-- !private ["CSo8NSObject", "UIViewController"]
+- ["CSo8NSObject", "UIViewController"]
 - !private ["CSo8NSObject", "addSublayer"]
 - !private ["CSo8NSObject", "backgroundColor"]
 - !private ["CSo8NSObject", "cgColor"]
+- ["CSo8NSObject", "childViewControllerForStatusBarStyle"]
 - !private ["CSo8NSObject", "clipsToBounds"]
 - !private ["CSo8NSObject", "frame"]
 - !private ["CSo8NSObject", "image"]
@@ -335,6 +358,8 @@ depends-member:
 - !private ["CSo8NSObject", "isTranslucent"]
 - !private ["CSo8NSObject", "layer"]
 - !private ["CSo8NSObject", "navigationItem"]
+- !private ["CSo8NSObject", "selectedViewController"]
+- ["CSo8NSObject", "setupCustomTabBar"]
 - !private ["CSo8NSObject", "tabBar"]
 - !private ["CSo8NSObject", "tabBarItem"]
 - !private ["CSo8NSObject", "title"]
@@ -364,6 +389,8 @@ depends-member:
 - !private ["PSo16NSObjectProtocol", "isTranslucent"]
 - !private ["PSo16NSObjectProtocol", "layer"]
 - !private ["PSo16NSObjectProtocol", "navigationItem"]
+- !private ["PSo16NSObjectProtocol", "selectedViewController"]
+- !private ["PSo16NSObjectProtocol", "setupCustomTabBar"]
 - !private ["PSo16NSObjectProtocol", "tabBar"]
 - !private ["PSo16NSObjectProtocol", "tabBarItem"]
 - !private ["PSo16NSObjectProtocol", "title"]
@@ -410,6 +437,8 @@ depends-member:
 - !private ["PSo21UIAppearanceContainer", "isTranslucent"]
 - !private ["PSo21UIAppearanceContainer", "layer"]
 - !private ["PSo21UIAppearanceContainer", "navigationItem"]
+- !private ["PSo21UIAppearanceContainer", "selectedViewController"]
+- !private ["PSo21UIAppearanceContainer", "setupCustomTabBar"]
 - !private ["PSo21UIAppearanceContainer", "tabBar"]
 - !private ["PSo21UIAppearanceContainer", "tabBarItem"]
 - !private ["PSo21UIAppearanceContainer", "view"]
@@ -438,6 +467,8 @@ depends-member:
 - !private ["PSo18UIContentContainer", "UIViewController"]
 - !private ["PSo18UIContentContainer", "init"]
 - !private ["PSo18UIContentContainer", "navigationItem"]
+- !private ["PSo18UIContentContainer", "selectedViewController"]
+- !private ["PSo18UIContentContainer", "setupCustomTabBar"]
 - !private ["PSo18UIContentContainer", "tabBar"]
 - !private ["PSo18UIContentContainer", "tabBarItem"]
 - !private ["PSo18UIContentContainer", "view"]
@@ -468,6 +499,8 @@ depends-member:
 - !private ["PSo18UIFocusEnvironment", "isTranslucent"]
 - !private ["PSo18UIFocusEnvironment", "layer"]
 - !private ["PSo18UIFocusEnvironment", "navigationItem"]
+- !private ["PSo18UIFocusEnvironment", "selectedViewController"]
+- !private ["PSo18UIFocusEnvironment", "setupCustomTabBar"]
 - !private ["PSo18UIFocusEnvironment", "tabBar"]
 - !private ["PSo18UIFocusEnvironment", "tabBarItem"]
 - !private ["PSo18UIFocusEnvironment", "view"]
@@ -493,13 +526,16 @@ depends-member:
 - !private ["CSo11UIResponder", "UIEdgeInsetsMake"]
 - !private ["CSo11UIResponder", "UIImage"]
 - !private ["CSo11UIResponder", "UINavigationController"]
-- !private ["CSo11UIResponder", "UIViewController"]
+- ["CSo11UIResponder", "UIViewController"]
+- ["CSo11UIResponder", "childViewControllerForStatusBarStyle"]
 - !private ["CSo11UIResponder", "clipsToBounds"]
 - !private ["CSo11UIResponder", "frame"]
 - ["CSo11UIResponder", "init"]
 - !private ["CSo11UIResponder", "isTranslucent"]
 - !private ["CSo11UIResponder", "layer"]
 - !private ["CSo11UIResponder", "navigationItem"]
+- !private ["CSo11UIResponder", "selectedViewController"]
+- ["CSo11UIResponder", "setupCustomTabBar"]
 - !private ["CSo11UIResponder", "tabBar"]
 - !private ["CSo11UIResponder", "tabBarItem"]
 - !private ["CSo11UIResponder", "view"]
@@ -522,6 +558,8 @@ depends-member:
 - !private ["PSo30UIResponderStandardEditActions", "isTranslucent"]
 - !private ["PSo30UIResponderStandardEditActions", "layer"]
 - !private ["PSo30UIResponderStandardEditActions", "navigationItem"]
+- !private ["PSo30UIResponderStandardEditActions", "selectedViewController"]
+- !private ["PSo30UIResponderStandardEditActions", "setupCustomTabBar"]
 - !private ["PSo30UIResponderStandardEditActions", "tabBar"]
 - !private ["PSo30UIResponderStandardEditActions", "tabBarItem"]
 - !private ["PSo30UIResponderStandardEditActions", "view"]
@@ -541,6 +579,8 @@ depends-member:
 - !private ["PSo16UIStateRestoring", "UIViewController"]
 - !private ["PSo16UIStateRestoring", "init"]
 - !private ["PSo16UIStateRestoring", "navigationItem"]
+- !private ["PSo16UIStateRestoring", "selectedViewController"]
+- !private ["PSo16UIStateRestoring", "setupCustomTabBar"]
 - !private ["PSo16UIStateRestoring", "tabBar"]
 - !private ["PSo16UIStateRestoring", "tabBarItem"]
 - !private ["PSo16UIStateRestoring", "view"]
@@ -560,8 +600,11 @@ depends-member:
 - !private ["CSo18UITabBarController", "UIEdgeInsetsMake"]
 - !private ["CSo18UITabBarController", "UIImage"]
 - !private ["CSo18UITabBarController", "UINavigationController"]
-- !private ["CSo18UITabBarController", "UIViewController"]
+- ["CSo18UITabBarController", "UIViewController"]
+- ["CSo18UITabBarController", "childViewControllerForStatusBarStyle"]
 - ["CSo18UITabBarController", "init"]
+- !private ["CSo18UITabBarController", "selectedViewController"]
+- ["CSo18UITabBarController", "setupCustomTabBar"]
 - !private ["CSo18UITabBarController", "tabBar"]
 - !private ["CSo18UITabBarController", "view"]
 - !private ["CSo18UITabBarController", "viewControllers"]
@@ -579,6 +622,8 @@ depends-member:
 - !private ["PSo16UITabBarDelegate", "UINavigationController"]
 - !private ["PSo16UITabBarDelegate", "UIViewController"]
 - !private ["PSo16UITabBarDelegate", "init"]
+- !private ["PSo16UITabBarDelegate", "selectedViewController"]
+- !private ["PSo16UITabBarDelegate", "setupCustomTabBar"]
 - !private ["PSo16UITabBarDelegate", "tabBar"]
 - !private ["PSo16UITabBarDelegate", "view"]
 - !private ["PSo16UITabBarDelegate", "viewControllers"]
@@ -602,6 +647,8 @@ depends-member:
 - !private ["PSo18UITraitEnvironment", "isTranslucent"]
 - !private ["PSo18UITraitEnvironment", "layer"]
 - !private ["PSo18UITraitEnvironment", "navigationItem"]
+- !private ["PSo18UITraitEnvironment", "selectedViewController"]
+- !private ["PSo18UITraitEnvironment", "setupCustomTabBar"]
 - !private ["PSo18UITraitEnvironment", "tabBar"]
 - !private ["PSo18UITraitEnvironment", "tabBarItem"]
 - !private ["PSo18UITraitEnvironment", "view"]
@@ -621,9 +668,12 @@ depends-member:
 - !private ["CSo16UIViewController", "UIEdgeInsetsMake"]
 - !private ["CSo16UIViewController", "UIImage"]
 - !private ["CSo16UIViewController", "UINavigationController"]
-- !private ["CSo16UIViewController", "UIViewController"]
+- ["CSo16UIViewController", "UIViewController"]
+- ["CSo16UIViewController", "childViewControllerForStatusBarStyle"]
 - ["CSo16UIViewController", "init"]
 - !private ["CSo16UIViewController", "navigationItem"]
+- !private ["CSo16UIViewController", "selectedViewController"]
+- ["CSo16UIViewController", "setupCustomTabBar"]
 - !private ["CSo16UIViewController", "tabBar"]
 - !private ["CSo16UIViewController", "tabBarItem"]
 - !private ["CSo16UIViewController", "view"]
@@ -666,6 +716,8 @@ depends-member:
 - !private ["Ps9_Hashable", "isTranslucent"]
 - !private ["Ps9_Hashable", "layer"]
 - !private ["Ps9_Hashable", "navigationItem"]
+- !private ["Ps9_Hashable", "selectedViewController"]
+- !private ["Ps9_Hashable", "setupCustomTabBar"]
 - !private ["Ps9_Hashable", "tabBar"]
 - !private ["Ps9_Hashable", "tabBarItem"]
 - !private ["Ps9_Hashable", "title"]
@@ -701,6 +753,7 @@ depends-nominal:
 - !private "Ps33ExpressibleByUnicodeScalarLiteral"
 - !private "C11familiarize21FamiliarizeController"
 - "Ps8Hashable"
+- !private "P10SwiftyJSON17JSONSubscriptType"
 - !private "Ps25LosslessStringConvertible"
 - !private "Ps10MirrorPath"
 - "PSo8NSCoding"
@@ -763,22 +816,31 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/AVFoundation.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.apinotesc"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreText.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/AudioToolbox.apinotesc"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework/Modules/SwiftyJSON.swiftmodule/x86_64.swiftmodule"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Modules/QRCode.swiftmodule/x86_64.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreMedia.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/AVFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreAudio.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/SwiftOnoneSupport.swiftmodule"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework/Headers/SwiftyJSON-umbrella.h"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Headers/QRCode-umbrella.h"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework/Headers/SwiftyJSON-Swift.h"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Headers/QRCode-Swift.h"
+- "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework/Modules/module.modulemap"
 - "/Users/alexoh/Documents/familiarize/DerivedData2/familiarize/Build/Products/Debug-iphonesimulator/QRCode/QRCode.framework/Modules/module.modulemap"
-interface-hash: "aa5d1c15c0063d6166a96025cc06cacb"
+interface-hash: "eb8b2cb1a06a69c21fa4e6072459dcdc"

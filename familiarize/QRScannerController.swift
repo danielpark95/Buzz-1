@@ -170,7 +170,11 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 let data:NSData? = NSData(contentsOf: url as URL)
                 popupController.profileImage.image = UIImage(data : data! as Data)!
                 popupController.profileImage.clipsToBounds = true
-                popupController.profileImage.layer.cornerRadius = 25.0
+                //popupController.profileImage.layer.borderWidth = 2
+                //popupController.profileImage.layer.borderColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha: 1).cgColor
+                
+                
+                //// Color -- 37 | 60 | 97
             }
     
         }

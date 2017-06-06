@@ -16,9 +16,10 @@
 		1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1435324A1EDA9CC2000507DB /* Assets.xcassets */; };
 		1435324E1EDA9CC2000507DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */; };
 		144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */; };
+		14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */; };
+		14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */; };
+		14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E031EE604D7000D6AA9 /* Extensions.swift */; };
 		14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */; };
-		14A88FAA1EE4BF4D00798638 /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A88FA81EE4BF4D00798638 /* UserProfile+CoreDataClass.swift */; };
-		14A88FAB1EE4BF4D00798638 /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A88FA91EE4BF4D00798638 /* UserProfile+CoreDataProperties.swift */; };
 		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
 		14F35FEB1EE260B5007A2A8D /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */; };
 		14F35FED1EE2A427007A2A8D /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* PopupController.swift */; };
@@ -37,9 +38,10 @@
 		1435324D1EDA9CC2000507DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1435324F1EDA9CC2000507DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeCell.swift; sourceTree = "<group>"; };
+		14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		14773E031EE604D7000D6AA9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellBaseClass.swift; sourceTree = "<group>"; };
-		14A88FA81EE4BF4D00798638 /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		14A88FA91EE4BF4D00798638 /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* PopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				1435324A1EDA9CC2000507DB /* Assets.xcassets */,
 				1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */,
 				1435324F1EDA9CC2000507DB /* Info.plist */,
+				14773E031EE604D7000D6AA9 /* Extensions.swift */,
 			);
 			path = familiarize;
 			sourceTree = "<group>";
@@ -118,9 +121,9 @@
 		144E40FE1EE4CE8D00207F99 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */,
+				14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */,
 				143532471EDA9CC2000507DB /* familiarize.xcdatamodeld */,
-				14A88FA81EE4BF4D00798638 /* UserProfile+CoreDataClass.swift */,
-				14A88FA91EE4BF4D00798638 /* UserProfile+CoreDataProperties.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -274,7 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */,
-				14A88FAB1EE4BF4D00798638 /* UserProfile+CoreDataProperties.swift in Sources */,
+				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* PopupController.swift in Sources */,
 				14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
@@ -282,9 +285,10 @@
 				141CEEBE1EDCD1050068B2B9 /* MenuBar.swift in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
+				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				14F35FEB1EE260B5007A2A8D /* QRScannerController.swift in Sources */,
 				14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */,
-				14A88FAA1EE4BF4D00798638 /* UserProfile+CoreDataClass.swift in Sources */,
+				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

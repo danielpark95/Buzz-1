@@ -6,5 +6,9 @@ target 'familiarize' do
   use_frameworks!
 
   # Pods for familiarize
+  pod 'QRCode'
+  pod 'SwiftyJSON'
+
+
 
 end
