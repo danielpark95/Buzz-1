@@ -17,6 +17,7 @@ import CoreData
 
 class PopupController: UIViewController {
 
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
         print("init nibName style")
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -31,10 +32,11 @@ class PopupController: UIViewController {
         setupBackground()
     }
     var qrJSON: JSON = []
+    var qrScannerController: QRScannerController = QRScannerController()
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
-    let questionLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label =  UILabel()
         label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +65,7 @@ class PopupController: UIViewController {
         button.tag = 1
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectAdd), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
         return button
     }()
     
@@ -75,11 +77,12 @@ class PopupController: UIViewController {
         button.tag = 2
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectAdd), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
         return button
     }()
     
-    func didSelectAdd(sender: UIButton) {
+    func didSelectButton(sender: UIButton) {
+        self.qrScannerController.popupShown = false
         self.dismiss(animated: false, completion: {
             self.setupData(sender.tag)
         })
@@ -105,6 +108,7 @@ class PopupController: UIViewController {
             }
             NotificationCenter.default.post(name: .reload, object: nil)
         }
+
         
     }
     
@@ -120,10 +124,10 @@ class PopupController: UIViewController {
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         popupImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 20).isActive = true
+        popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 160).isActive = true
     }
     func setupText() {
-        questionLabel.numberOfLines = 1
+        nameLabel.numberOfLines = 1
         
         let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         
@@ -132,23 +136,23 @@ class PopupController: UIViewController {
         
         attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
         
-        questionLabel.attributedText = attributedText
+        nameLabel.attributedText = attributedText
     }
     func setupGraphics() {
 
         setupText()
         
         view.addSubview(self.profileImage)
-        view.addSubview(questionLabel)
+        view.addSubview(nameLabel)
         view.addSubview(addFriendButton)
         view.addSubview(dismissFriendButton)
 
-        questionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        questionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: questionLabel.intrinsicContentSize.height).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant:questionLabel.intrinsicContentSize.width).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -10).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
         
-        addFriendButton.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 20).isActive = true
+        addFriendButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 15).isActive = true
         addFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addFriendButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         addFriendButton.widthAnchor.constraint(equalToConstant: 120).isActive = true

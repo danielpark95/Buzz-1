@@ -12,11 +12,13 @@ import SwiftyJSON
 import Alamofire
 import Kanna
 
+
 class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
     var qrJSON: JSON = []
+    var popupShown: Bool = false
     
     let supportedCodeTypes = [AVMetadataObjectTypeQRCode]
     
@@ -127,7 +129,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         // Get the metadata object.
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
-        if supportedCodeTypes.contains(metadataObj.type) {
+        if supportedCodeTypes.contains(metadataObj.type) && popupShown == false {
             // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
@@ -137,15 +139,16 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 let popupController = PopupController()
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 popupController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                popupController.qrScannerController = self
                 
                 setQRJSON(metadataObj.stringValue, popupController: popupController)
-                
                 
                 self.scrapeSocialMedia(popupController)
                 
                 self.present(popupController, animated: true, completion: {
                     popupController.setupGraphics()
                 })
+                popupShown = true
                 
             }
         }
@@ -172,6 +175,8 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
         }
     }
+    
+    
 
 
 }
