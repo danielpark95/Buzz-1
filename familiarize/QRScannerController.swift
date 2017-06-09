@@ -118,8 +118,15 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
 
     func commenceCameraScanning() {
+        self.visualEffectView.removeFromSuperview()
         self.cameraActive = true
     }
+    
+    lazy var visualEffectView: UIVisualEffectView = {
+        var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        visualEffect.frame = self.view.bounds
+        return visualEffect
+    }()
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
@@ -139,11 +146,12 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             qrCodeFrameView?.frame = barCodeObject!.bounds
             if (metadataObj.stringValue != nil  && setAndVerifyQRJSON(metadataObj.stringValue)) {
                 
+                view.addSubview(self.visualEffectView)
                 // Setting up the controller and animations
                 let popupController = PopupController()
                 popupController.qrJSON = self.qrJSON
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                popupController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                popupController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                 popupController.QRScannerDelegate = self
                 
                 self.scrapeSocialMedia(popupController)

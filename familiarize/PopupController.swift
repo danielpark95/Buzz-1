@@ -63,6 +63,17 @@ class PopupController: UIViewController {
         return button
     }()
     
+    
+    lazy var profileButton: UIButton = {
+        let image = UIImage(named: "profile-button") as UIImage?
+        var button = UIButton(type: .custom) as UIButton
+        button.tag = buttonPressed.addFriend.rawValue
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didSelectProfileButton), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var dismissFriendButton: UIButton = {
         let image = UIImage(named: "dismiss-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
@@ -78,6 +89,14 @@ class PopupController: UIViewController {
         self.dismiss(animated: false, completion: {
             self.setupData(sender.tag)
         })
+    }
+    var viewProfileButtonHeightConstraint: NSLayoutConstraint?
+    
+    func didSelectProfileButton() {
+            UIView.animate(withDuration: 0.4, animations: {
+              self.viewProfileButtonHeightConstraint?.constant = 500
+                self.view.layoutIfNeeded()
+            })
     }
     func setupData(_ buttonTag: Int) {
         
@@ -102,19 +121,16 @@ class PopupController: UIViewController {
         }
     }
     
-    lazy var visualEffectView: UIVisualEffectView = {
-        var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        visualEffect.frame = self.view.bounds
-        return visualEffect
-    }()
+
     
     func setupBackground() {
-        view.addSubview(visualEffectView)
+        //view.addSubview(visualEffectView)
         view.addSubview(popupImageView)
-        popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        popupImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        popupImageView.widthAnchor.constraint(equalToConstant: view.frame.width - 160).isActive = true
+        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.viewProfileButtonHeightConstraint = self.popupImageView.heightAnchor.constraint(equalToConstant: 304)
+        self.viewProfileButtonHeightConstraint?.isActive = true
+        self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
     }
     func setupText() {
         let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
@@ -128,27 +144,35 @@ class PopupController: UIViewController {
         view.addSubview(self.profileImage)
         view.addSubview(nameLabel)
         view.addSubview(addFriendButton)
+        view.addSubview(profileButton)
         view.addSubview(dismissFriendButton)
 
+        profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 93).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 93).isActive = true
+        
         nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -10).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 8).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
         
-        addFriendButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 15).isActive = true
+        addFriendButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10).isActive = true
         addFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addFriendButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         addFriendButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         
-        dismissFriendButton.topAnchor.constraint(equalTo: addFriendButton.bottomAnchor, constant: 10).isActive = true
+        profileButton.topAnchor.constraint(equalTo: addFriendButton.bottomAnchor, constant: 10).isActive = true
+        profileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        dismissFriendButton.topAnchor.constraint(equalTo: profileButton.bottomAnchor, constant: 10).isActive = true
         dismissFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dismissFriendButton.heightAnchor.constraint(equalToConstant: 17).isActive = true
         dismissFriendButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
-        self.profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
-        self.profileImage.heightAnchor.constraint(equalToConstant: 95).isActive = true
-        self.profileImage.widthAnchor.constraint(equalToConstant: 95).isActive = true
+
         
     }
     override func viewWillLayoutSubviews() {
