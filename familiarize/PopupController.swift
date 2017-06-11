@@ -14,14 +14,15 @@
 import UIKit
 import SwiftyJSON
 import CoreData
+import M13Checkbox
 
 // https://github.com/Marxon13/M13Checkbox
 // Checkmark animation
 
 class PopupController: UIViewController {
     
-    enum buttonPressed: Int {
-        case addFriend = 1
+    enum buttonTag: Int {
+        case profile = 1
         case dismiss = 2
     }
     override func viewDidLoad() {
@@ -58,24 +59,24 @@ class PopupController: UIViewController {
         return imageView
     }()
     
-    lazy var addFriendButton: UIButton = {
-        let image = UIImage(named: "addfriend-button") as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.tag = buttonPressed.addFriend.rawValue
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
-        return button
-    }()
+//    lazy var addFriendButton: UIButton = {
+//        let image = UIImage(named: "addfriend-button") as UIImage?
+//        var button = UIButton(type: .custom) as UIButton
+//        button.tag = buttonTag.addFriend.rawValue
+//        button.setImage(image, for: .normal)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
+//        return button
+//    }()
+    
+
     
     lazy var dismissFriendButton: UIButton = {
-        let image = UIImage(named: "dismiss-button") as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.tag = buttonPressed.dismiss.rawValue
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
-        return button
+        self.makeButton(imageName: "dismiss-button", tag: buttonTag.dismiss.rawValue)
+    }()
+    
+    lazy var viewProfileButton: UIButton = {
+        self.makeButton(imageName: "viewprofile-button", tag: buttonTag.profile.rawValue)
     }()
     
     lazy var profileButton: UIButton = {
@@ -87,14 +88,6 @@ class PopupController: UIViewController {
         return button
     }()
     
-    var QRScannerDelegate: QRScannerControllerDelegate?
-    func didSelectButton(sender: UIButton) {
-        QRScannerDelegate?.commenceCameraScanning()
-        self.dismiss(animated: false, completion: {
-            self.setupData(sender.tag)
-        })
-    }
-    //var viewProfileButtonHeightConstraint: NSLayoutConstraint?
     
     lazy var fbButton: UIButton = {
         let image = UIImage(named: "fb-button") as UIImage?
@@ -103,6 +96,42 @@ class PopupController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didSelectFBButton), for: .touchUpInside)
         return button
+    }()
+    
+    func makeButton(imageName: String, tag: Int) -> UIButton {
+        let image = UIImage(named: imageName) as UIImage?
+        var button = UIButton(type: .custom) as UIButton
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tag = tag
+        button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+        return button
+    }
+    
+    var QRScannerDelegate: QRScannerControllerDelegate?
+    func buttonClicked(sender: UIButton) {
+        if (sender.tag == buttonTag.dismiss.rawValue) {
+            QRScannerDelegate?.commenceCameraScanning()
+            self.dismiss(animated: false, completion: {
+                //self.setupData(sender.tag)
+            })
+        } else if (sender.tag == buttonTag.profile.rawValue) {
+            // Code for going back to the viewprofile
+        }
+    }
+    
+    let checkBox: M13Checkbox = {
+        let cb = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
+        cb.stateChangeAnimation = .spiral
+        cb.animationDuration = 0.75
+        cb.boxType = .circle
+        cb.checkmarkLineWidth = 2.0
+        cb.secondaryTintColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0)
+        cb.tintColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha: 1.0)
+        cb.secondaryCheckmarkTintColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha: 1.0)
+        cb.translatesAutoresizingMaskIntoConstraints = false
+        
+        return cb
     }()
     
     func didSelectFBButton() {
@@ -152,8 +181,6 @@ class PopupController: UIViewController {
             // Key is key . . . (string)
             // subJson is value . . . (string)
             // Follows key - value concept, like a dictionary.
-//            print(key)
-//            print(subJson)
             if (key == "fb" && !((subJson.string?.isEmpty)!)) {
                 view.addSubview((socialMediaButtons?[key]!)!)
                 (socialMediaButtons?[key]!)!.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 60).isActive = true
@@ -163,39 +190,48 @@ class PopupController: UIViewController {
             }
 
         }
-        
     }
     
-    func setupData(_ buttonTag: Int) {
-        
-        // NSCore data functionalities. -- Persist the data when user clicks add friend.
-        if (buttonTag == buttonPressed.addFriend.rawValue) {
-            let delegate = UIApplication.shared.delegate as! AppDelegate
-            let managedObjectContext = delegate.persistentContainer.viewContext
-            let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
-            newUser.name = self.qrJSON["name"].string
-            newUser.faceBookProfile = self.qrJSON["fb"].string
-            newUser.instagramProfile = self.qrJSON["ig"].string
-            newUser.snapChatProfile = self.qrJSON["sc"].string
-            newUser.phoneNumber = self.qrJSON["pn"].string
-            newUser.date = NSDate()
-            print(newUser)
-            do {
-                try(managedObjectContext.save())
-                NotificationCenter.default.post(name: .reload, object: nil)
-            } catch let err {
-                print(err)
-            }
-        }
-    }
+// Used when add friend is pressed.
+    
+//    func setupData(_ buttonTag: Int) {
+//        
+//        // NSCore data functionalities. -- Persist the data when user clicks add friend.
+//        if (buttonTag == buttonPressed.addFriend.rawValue) {
+//            let delegate = UIApplication.shared.delegate as! AppDelegate
+//            let managedObjectContext = delegate.persistentContainer.viewContext
+//            let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
+//            newUser.name = self.qrJSON["name"].string
+//            newUser.faceBookProfile = self.qrJSON["fb"].string
+//            newUser.instagramProfile = self.qrJSON["ig"].string
+//            newUser.snapChatProfile = self.qrJSON["sc"].string
+//            newUser.phoneNumber = self.qrJSON["pn"].string
+//            newUser.date = NSDate()
+//            print(newUser)
+//            do {
+//                try(managedObjectContext.save())
+//                NotificationCenter.default.post(name: .reload, object: nil)
+//            } catch let err {
+//                print(err)
+//            }
+//        }
+//    }
 
     func setupBackground() {
         //view.addSubview(visualEffectView)
         view.addSubview(popupImageView)
+        view.addSubview(checkBox)
+        
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.popupImageView.heightAnchor.constraint(equalToConstant: 304).isActive = true
         self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
+        
+        self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 25).isActive = true
+        self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
     }
     var addFriendButtonTopAnchor: NSLayoutConstraint?
     
@@ -209,10 +245,12 @@ class PopupController: UIViewController {
         
         view.addSubview(self.profileImage)
         view.addSubview(nameLabel)
-        view.addSubview(addFriendButton)
-        view.addSubview(profileButton)
+        //view.addSubview(addFriendButton)
+        view.addSubview(viewProfileButton)
         view.addSubview(dismissFriendButton)
 
+        checkBox.setCheckState(.checked, animated: true)
+        
         profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 93).isActive = true
@@ -223,16 +261,16 @@ class PopupController: UIViewController {
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
         
-        self.addFriendButtonTopAnchor = addFriendButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 80)
-        self.addFriendButtonTopAnchor?.isActive = true
-        addFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addFriendButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        addFriendButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        
-        profileButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 120).isActive = true
-        profileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        profileButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+//        self.addFriendButtonTopAnchor = addFriendButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 80)
+//        self.addFriendButtonTopAnchor?.isActive = true
+//        addFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        addFriendButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        addFriendButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+//        
+        viewProfileButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 120).isActive = true
+        viewProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        viewProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        viewProfileButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
         
         dismissFriendButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 160).isActive = true
         dismissFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
