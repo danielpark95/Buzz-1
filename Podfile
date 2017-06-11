@@ -13,5 +13,7 @@ target 'familiarize' do
   pod 'Kanna', '~> 2.1.0'
   pod 'Alamofire', '~> 4.4'
 
+  #Add Friend Checkbox animation
+  pod 'M13Checkbox'
 
 end

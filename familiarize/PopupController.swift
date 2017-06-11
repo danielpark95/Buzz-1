@@ -15,6 +15,9 @@ import UIKit
 import SwiftyJSON
 import CoreData
 
+// https://github.com/Marxon13/M13Checkbox
+// Checkmark animation
+
 class PopupController: UIViewController {
     
     enum buttonPressed: Int {
