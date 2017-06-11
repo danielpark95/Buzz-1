@@ -30,8 +30,8 @@ class PopupController: UIViewController {
         setupBackground()
     }
     
+    
     var qrJSON: JSON = []
-    var socialMediaButtons: [String : UIButton]?
     
     
     // Text gets it textual label from QRScannerController
@@ -59,18 +59,6 @@ class PopupController: UIViewController {
         return imageView
     }()
     
-//    lazy var addFriendButton: UIButton = {
-//        let image = UIImage(named: "addfriend-button") as UIImage?
-//        var button = UIButton(type: .custom) as UIButton
-//        button.tag = buttonTag.addFriend.rawValue
-//        button.setImage(image, for: .normal)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(didSelectButton), for: .touchUpInside)
-//        return button
-//    }()
-    
-
-    
     lazy var dismissFriendButton: UIButton = {
         self.makeButton(imageName: "dismiss-button", tag: buttonTag.dismiss.rawValue)
     }()
@@ -79,28 +67,10 @@ class PopupController: UIViewController {
         self.makeButton(imageName: "viewprofile-button", tag: buttonTag.profile.rawValue)
     }()
     
-    lazy var profileButton: UIButton = {
-        let image = UIImage(named: "viewprofile-button") as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectProfileButton), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    lazy var fbButton: UIButton = {
-        let image = UIImage(named: "fb-button") as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectFBButton), for: .touchUpInside)
-        return button
-    }()
     
     func makeButton(imageName: String, tag: Int) -> UIButton {
         let image = UIImage(named: imageName) as UIImage?
-        var button = UIButton(type: .custom) as UIButton
+        let button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = tag
@@ -112,12 +82,13 @@ class PopupController: UIViewController {
     func buttonClicked(sender: UIButton) {
         if (sender.tag == buttonTag.dismiss.rawValue) {
             QRScannerDelegate?.commenceCameraScanning()
-            self.dismiss(animated: false, completion: {
-                //self.setupData(sender.tag)
-            })
+            self.dismiss(animated: false)
         } else if (sender.tag == buttonTag.profile.rawValue) {
+            // Go to different VC
+            self.dismiss(animated: false)
             // Code for going back to the viewprofile
         }
+        setupData()
     }
     
     let checkBox: M13Checkbox = {
@@ -134,89 +105,26 @@ class PopupController: UIViewController {
         return cb
     }()
     
-    func didSelectFBButton() {
-        
-        let fbURL = URL(string: "fb://profile?id=100001667117543")!
-        let safariFBURL = URL(string: "https://www.facebook.com/100001667117543")!
-        
-        if UIApplication.shared.canOpenURL(fbURL)
-        {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(fbURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(fbURL)
-            }
-            
-        } else {
-            //redirect to safari because the user doesn't have facebook application
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(safariFBURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(safariFBURL)
-            }
+    func setupData() {
+        // NSCore data functionalities. -- Persist the data when user scans!
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
+        newUser.name = self.qrJSON["name"].string
+        newUser.faceBookProfile = self.qrJSON["fb"].string
+        newUser.instagramProfile = self.qrJSON["ig"].string
+        newUser.snapChatProfile = self.qrJSON["sc"].string
+        newUser.phoneNumber = self.qrJSON["pn"].string
+        newUser.date = NSDate()
+        print(newUser)
+        do {
+            try(managedObjectContext.save())
+            NotificationCenter.default.post(name: .reload, object: nil)
+        } catch let err {
+            print(err)
         }
     }
-    
-    func didSelectProfileButton() {
-        
-        
-        self.profileButton.removeFromSuperview()
-        
-        self.addFriendButtonTopAnchor?.constant += 40
-        view.layoutIfNeeded()
-        createSocialMediaButtons()
-        presentSocialMediaButtons()
-        
-    }
-    
-    func createSocialMediaButtons() {
-        socialMediaButtons = [
-            "fb" : fbButton
-        ]
-    }
-    
-    func presentSocialMediaButtons() {
-
-        for (key, subJson):(String, JSON) in qrJSON {
-            // Key is key . . . (string)
-            // subJson is value . . . (string)
-            // Follows key - value concept, like a dictionary.
-            if (key == "fb" && !((subJson.string?.isEmpty)!)) {
-                view.addSubview((socialMediaButtons?[key]!)!)
-                (socialMediaButtons?[key]!)!.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 60).isActive = true
-                (socialMediaButtons?[key]!)!.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-                (socialMediaButtons?[key]!)!.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                (socialMediaButtons?[key]!)!.widthAnchor.constraint(equalToConstant: 40).isActive = true
-            }
-
-        }
-    }
-    
-// Used when add friend is pressed.
-    
-//    func setupData(_ buttonTag: Int) {
-//        
-//        // NSCore data functionalities. -- Persist the data when user clicks add friend.
-//        if (buttonTag == buttonPressed.addFriend.rawValue) {
-//            let delegate = UIApplication.shared.delegate as! AppDelegate
-//            let managedObjectContext = delegate.persistentContainer.viewContext
-//            let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
-//            newUser.name = self.qrJSON["name"].string
-//            newUser.faceBookProfile = self.qrJSON["fb"].string
-//            newUser.instagramProfile = self.qrJSON["ig"].string
-//            newUser.snapChatProfile = self.qrJSON["sc"].string
-//            newUser.phoneNumber = self.qrJSON["pn"].string
-//            newUser.date = NSDate()
-//            print(newUser)
-//            do {
-//                try(managedObjectContext.save())
-//                NotificationCenter.default.post(name: .reload, object: nil)
-//            } catch let err {
-//                print(err)
-//            }
-//        }
-//    }
-
+ 
     func setupBackground() {
         //view.addSubview(visualEffectView)
         view.addSubview(popupImageView)
@@ -260,13 +168,7 @@ class PopupController: UIViewController {
         nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
-        
-//        self.addFriendButtonTopAnchor = addFriendButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 80)
-//        self.addFriendButtonTopAnchor?.isActive = true
-//        addFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        addFriendButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-//        addFriendButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
-//        
+
         viewProfileButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 120).isActive = true
         viewProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         viewProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
