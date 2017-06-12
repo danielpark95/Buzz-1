@@ -19,6 +19,9 @@ import M13Checkbox
 // https://github.com/Marxon13/M13Checkbox
 // Checkmark animation
 
+// Also really need to change up the code structure. Everything related to coredata should be moved elsewhere to like coredataManager. 
+
+
 class PopupController: UIViewController {
     
     enum buttonTag: Int {
@@ -32,7 +35,6 @@ class PopupController: UIViewController {
     
     
     var qrJSON: JSON = []
-    
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
@@ -89,6 +91,8 @@ class PopupController: UIViewController {
             // Code for going back to the viewprofile
         }
         setupData()
+        // https://stackoverflow.com/questions/5413538/switching-to-a-tabbar-tab-view-programmatically
+        // This needs to be called so that we skip view controller.
     }
     
     let checkBox: M13Checkbox = {
