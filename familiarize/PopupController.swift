@@ -24,6 +24,9 @@ import M13Checkbox
 
 class PopupController: UIViewController {
     
+    var userProfile: UserProfile?
+    var QRScannerDelegate: QRScannerControllerDelegate?
+    
     enum buttonTag: Int {
         case profile = 1
         case dismiss = 2
@@ -33,55 +36,33 @@ class PopupController: UIViewController {
         setupBackground()
     }
     
-    
-    var qrJSON: JSON = []
-    
     // Text gets it textual label from QRScannerController
     // This is to just define it
     let nameLabel: UILabel = {
-        let label =  UILabel()
-        label.text = ""
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UIManager.makeLabel()
     }()
     
     let popupImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "popup-image")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+        return UIManager.makeImage(imageName: "popup-image")
     }()
     
     var profileImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
+        return UIManager.makeImage()
     }()
     
     lazy var dismissFriendButton: UIButton = {
-        self.makeButton(imageName: "dismiss-button", tag: buttonTag.dismiss.rawValue)
+        let button = UIManager.makeButton(imageName: "dismiss-button", tag: buttonTag.dismiss.rawValue)
+        button.addTarget(self, action: #selector(buttonFunction(sender:)), for: .touchUpInside)
+        return button
     }()
     
     lazy var viewProfileButton: UIButton = {
-        self.makeButton(imageName: "viewprofile-button", tag: buttonTag.profile.rawValue)
-    }()
-    
-    
-    func makeButton(imageName: String, tag: Int) -> UIButton {
-        let image = UIImage(named: imageName) as UIImage?
-        let button = UIButton(type: .custom) as UIButton
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.tag = tag
-        button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+        let button = UIManager.makeButton(imageName: "viewprofile-button", tag: buttonTag.profile.rawValue)
+        button.addTarget(self, action: #selector(buttonFunction(sender:)), for: .touchUpInside)
         return button
-    }
-    
-    var QRScannerDelegate: QRScannerControllerDelegate?
-    func buttonClicked(sender: UIButton) {
+    }()
+
+    func buttonFunction(sender: UIButton) {
         if (sender.tag == buttonTag.dismiss.rawValue) {
             QRScannerDelegate?.commenceCameraScanning()
             self.dismiss(animated: false)
@@ -90,7 +71,6 @@ class PopupController: UIViewController {
             self.dismiss(animated: false)
             // Code for going back to the viewprofile
         }
-        setupData()
         // https://stackoverflow.com/questions/5413538/switching-to-a-tabbar-tab-view-programmatically
         // This needs to be called so that we skip view controller.
     }
@@ -109,28 +89,8 @@ class PopupController: UIViewController {
         return cb
     }()
     
-    func setupData() {
-        // NSCore data functionalities. -- Persist the data when user scans!
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
-        newUser.name = self.qrJSON["name"].string
-        newUser.faceBookProfile = self.qrJSON["fb"].string
-        newUser.instagramProfile = self.qrJSON["ig"].string
-        newUser.snapChatProfile = self.qrJSON["sc"].string
-        newUser.phoneNumber = self.qrJSON["pn"].string
-        newUser.date = NSDate()
-        print(newUser)
-        do {
-            try(managedObjectContext.save())
-            NotificationCenter.default.post(name: .reload, object: nil)
-        } catch let err {
-            print(err)
-        }
-    }
  
     func setupBackground() {
-        //view.addSubview(visualEffectView)
         view.addSubview(popupImageView)
         view.addSubview(checkBox)
         
@@ -145,10 +105,9 @@ class PopupController: UIViewController {
         self.checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
     }
-    var addFriendButtonTopAnchor: NSLayoutConstraint?
     
     func setupText() {
-        let attributedText = NSMutableAttributedString(string: qrJSON["name"].string!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         nameLabel.attributedText = attributedText
     }
     func setupGraphics() {
@@ -157,7 +116,6 @@ class PopupController: UIViewController {
         
         view.addSubview(self.profileImage)
         view.addSubview(nameLabel)
-        //view.addSubview(addFriendButton)
         view.addSubview(viewProfileButton)
         view.addSubview(dismissFriendButton)
 
@@ -183,8 +141,6 @@ class PopupController: UIViewController {
         dismissFriendButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
         dismissFriendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
 
-
-        
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

@@ -11,6 +11,7 @@ import AVFoundation
 import SwiftyJSON
 import Alamofire
 import Kanna
+import CoreData
 
 protocol QRScannerControllerDelegate {
     func commenceCameraScanning()
@@ -22,6 +23,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     var qrCodeFrameView:UIView?
     var qrJSON: JSON = []
     var cameraActive: Bool = true
+    var userProfile: UserProfile?
     
     let supportedCodeTypes = [AVMetadataObjectTypeQRCode]
     
@@ -108,11 +110,11 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
 
     
     
-    func setAndVerifyQRJSON(_ qrCode: String) -> Bool {
+    func verifyAndSave(_ qrCode: String) -> Bool {
         // TODO: Before even moving on, this function should verify that the qr code's JSON is in the format that we need it in.
         
         let data = qrCode.data(using: .utf8)
-        self.qrJSON = JSON(data!)
+        self.userProfile = UserProfile.saveData(JSON(data!))
         return true
     
     }
@@ -144,12 +146,12 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
-            if (metadataObj.stringValue != nil  && setAndVerifyQRJSON(metadataObj.stringValue)) {
+            if (metadataObj.stringValue != nil  && verifyAndSave(metadataObj.stringValue)) {
                 
                 view.addSubview(self.visualEffectView)
                 // Setting up the controller and animations
                 let popupController = PopupController()
-                popupController.qrJSON = self.qrJSON
+                popupController.userProfile = self.userProfile
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 popupController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                 popupController.QRScannerDelegate = self
@@ -167,8 +169,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     func scrapeSocialMedia(_ popupController: PopupController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
-        
-        Alamofire.request("https://www.facebook.com/" + self.qrJSON["fb"].string!).responseString { response in
+        Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
             print("\(response.result.isSuccess)")
             if let html = response.result.value {
                 self.parseHTML(html: html, popupController: popupController)

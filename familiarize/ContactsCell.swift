@@ -27,19 +27,11 @@ class ContactsCell: BaseCell {
     }
     // A quick and easy way to create a uiview. UILabel is a subclass of uiview.
     let nameLabelAndTime: UILabel = {
-        let label =  UILabel()
-        label.numberOfLines = 2
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
+        return UIManager.makeLabel(numberOfLines: 2)
     }()
     
     let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "blank_man")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+        return UIManager.makeImage(imageName: "blank_man")
     }()
     
     // This creates the line in between each of the cells.
@@ -50,7 +42,6 @@ class ContactsCell: BaseCell {
         return view
         
     }()
-    
     
     override func setupViews() {
         backgroundColor = UIColor.white
@@ -73,8 +64,6 @@ class ContactsCell: BaseCell {
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-
-        
     }
     
     
