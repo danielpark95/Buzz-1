@@ -11,7 +11,7 @@ import CoreData
 
 extension Notification.Name {
     static let reload = Notification.Name("reload")
-    static let viewNewProfile = Notification.Name("viewNewProfile")
+    static let viewProfile = Notification.Name("viewProfileNotification")
 }
 
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -25,20 +25,52 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         userProfiles = UserProfile.getData()
         setupRefreshingAndReloading()
         setupCollectionView()
-        NotificationCenter.default.addObserver(self, selector: #selector(viewNewProfile), name: .viewNewProfile, object: nil)
+
     }
     
-    func viewNewProfile() {
+    func viewProfileNotification() {
+        self.viewProfile()
+    }
+    
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+        NotificationCenter.default.addObserver(self, selector: #selector(viewProfileNotification), name: .viewProfile, object: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+
+    lazy var visualEffectView: UIVisualEffectView = {
+        var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+        visualEffect.frame = self.view.bounds
+        return visualEffect
+    }()
+    
+    lazy var overlay: UIImageView = {
+        let image = UIManager.makeImage()
+        image.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        return image
+    }()
+    func viewProfile(_ idx: Int = 0) {
+        
         let viewProfileController = ViewProfileController()
         
-        if let userProfile = userProfiles?[0] {
+        if let userProfile = userProfiles?[idx] {
             viewProfileController.userProfile = userProfile
         }
+        
+        view.addSubview(overlay)
+        overlay.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        overlay.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        overlay.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        overlay.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
         viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         viewProfileController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
-        self.present(viewProfileController, animated: true)
+        self.present(viewProfileController, animated: false)
     }
     func setupRefreshingAndReloading() {
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
@@ -94,16 +126,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewProfileController = ViewProfileController()
-        
-        if let userProfile = userProfiles?[indexPath.item] {
-            viewProfileController.userProfile = userProfile
-        }
-
-        viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        viewProfileController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        
-        self.present(viewProfileController, animated: true)
+        self.viewProfile(indexPath.item)
     }
 
 

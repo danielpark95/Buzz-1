@@ -51,7 +51,21 @@ class ViewProfileController: UIViewController {
         button.addTarget(self, action: #selector(didSelectFBButton), for: .touchUpInside)
         return button
     }()
-
+    
+    lazy var outsideButton: UIButton = {
+        let image = UIImage() as UIImage?
+        var button = UIButton(type: .custom) as UIButton
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        return button
+    }()
+    
+    func dismissClicked() {
+        print("taco!!!!s")
+        self.dismiss(animated: false)
+    }
+    
     func didSelectFBButton() {
         
         // Lmao, in order to get profile id, just scrape the facebook page again. 
@@ -101,11 +115,21 @@ class ViewProfileController: UIViewController {
     }
     
     func setupView() {
-         view.addSubview(popupImageView)
+        
+        view.addSubview(outsideButton)
+        view.addSubview(popupImageView)
+        
+        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.popupImageView.heightAnchor.constraint(equalToConstant: 304).isActive = true
         self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
+        
 
+        view.sendSubview(toBack: outsideButton)
     }
 }

@@ -71,7 +71,7 @@ class PopupController: UIViewController {
         }
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
         print("tacos")
-        NotificationCenter.default.post(name: .viewNewProfile, object: nil)
+        NotificationCenter.default.post(name: .viewProfile, object: nil)
         
 
     }
