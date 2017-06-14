@@ -26,7 +26,6 @@ class CustomTabBarController: UITabBarController {
         navigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         
-        
         let famController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
         let secondNavigationController = UINavigationController(rootViewController: famController)
         secondNavigationController.tabBarItem.image = UIImage(named: "Fam-100-Border-Decrease")?.withRenderingMode(.alwaysOriginal)

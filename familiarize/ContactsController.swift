@@ -11,21 +11,35 @@ import CoreData
 
 extension Notification.Name {
     static let reload = Notification.Name("reload")
+    static let viewNewProfile = Notification.Name("viewNewProfile")
 }
 
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     var userProfiles: [UserProfile]?
     var refresher:UIRefreshControl!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Contacts"
         userProfiles = UserProfile.getData()
         setupRefreshingAndReloading()
         setupCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(viewNewProfile), name: .viewNewProfile, object: nil)
     }
     
+    func viewNewProfile() {
+        let viewProfileController = ViewProfileController()
+        
+        if let userProfile = userProfiles?[0] {
+            viewProfileController.userProfile = userProfile
+        }
+        
+        viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        viewProfileController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        
+        self.present(viewProfileController, animated: true)
+    }
     func setupRefreshingAndReloading() {
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reload, object: nil)

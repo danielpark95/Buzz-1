@@ -27,10 +27,6 @@ class PopupController: UIViewController {
     var userProfile: UserProfile?
     var QRScannerDelegate: QRScannerControllerDelegate?
     
-    enum buttonTag: Int {
-        case profile = 1
-        case dismiss = 2
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
@@ -51,28 +47,33 @@ class PopupController: UIViewController {
     }()
     
     lazy var dismissFriendButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dismiss-button", tag: buttonTag.dismiss.rawValue)
-        button.addTarget(self, action: #selector(buttonFunction(sender:)), for: .touchUpInside)
+        let button = UIManager.makeButton(imageName: "dismiss-button")
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
     
     lazy var viewProfileButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "viewprofile-button", tag: buttonTag.profile.rawValue)
-        button.addTarget(self, action: #selector(buttonFunction(sender:)), for: .touchUpInside)
+        let button = UIManager.makeButton(imageName: "viewprofile-button")
+        button.addTarget(self, action: #selector(viewProfileClicked), for: .touchUpInside)
         return button
     }()
+    
+    func dismissClicked() {
+        QRScannerDelegate?.commenceCameraScanning()
+        self.dismiss(animated: false)
+    }
 
-    func buttonFunction(sender: UIButton) {
-        if (sender.tag == buttonTag.dismiss.rawValue) {
-            QRScannerDelegate?.commenceCameraScanning()
-            self.dismiss(animated: false)
-        } else if (sender.tag == buttonTag.profile.rawValue) {
-            // Go to different VC
-            self.dismiss(animated: false)
-            // Code for going back to the viewprofile
+    func viewProfileClicked() {
+        // Go to different VC
+        if self.view.window?.rootViewController as? CustomTabBarController != nil {
+            let tabBarController = self.view.window!.rootViewController as! CustomTabBarController
+            tabBarController.selectedIndex = 0
         }
-        // https://stackoverflow.com/questions/5413538/switching-to-a-tabbar-tab-view-programmatically
-        // This needs to be called so that we skip view controller.
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
+        print("tacos")
+        NotificationCenter.default.post(name: .viewNewProfile, object: nil)
+        
+
     }
     
     let checkBox: M13Checkbox = {
@@ -106,13 +107,13 @@ class PopupController: UIViewController {
         
     }
     
-    func setupText() {
+    func printName() {
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         nameLabel.attributedText = attributedText
     }
     func setupGraphics() {
 
-        setupText()
+        printName()
         
         view.addSubview(self.profileImage)
         view.addSubview(nameLabel)

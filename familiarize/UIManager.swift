@@ -10,12 +10,11 @@ import Foundation
 import UIKit
 
 class UIManager {
-    static func makeButton(imageName: String, tag: Int) -> UIButton {
+    static func makeButton(imageName: String) -> UIButton {
         let image = UIImage(named: imageName) as UIImage?
         let button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.tag = tag
         return button
     }
 

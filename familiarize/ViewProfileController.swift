@@ -25,7 +25,6 @@ class ViewProfileController: UIViewController {
         
     }
     
-    
     // Text gets it textual label from QRScannerController
     // This is to just define it
     let nameLabel: UILabel = {
