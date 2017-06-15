@@ -22,7 +22,6 @@ class ViewProfileController: UIViewController {
         setupView()
         createSocialMediaButtons()
         presentSocialMediaButtons()
-        
     }
     
     // Text gets it textual label from QRScannerController
@@ -34,14 +33,11 @@ class ViewProfileController: UIViewController {
         return label
     }()
     
-    let popupImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "popup-image")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    let popupImageView: UIButton = {
+        let button = UIManager.makeButton(imageName: "popup-image")
+        button.adjustsImageWhenHighlighted = false
+        return button
     }()
-
 
     lazy var fbButton: UIButton = {
         let image = UIImage(named: "fb-button") as UIImage?
@@ -53,16 +49,18 @@ class ViewProfileController: UIViewController {
     }()
     
     lazy var outsideButton: UIButton = {
-        let image = UIImage() as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = UIManager.makeButton()
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
     
+    lazy var tintOverlay: UIImageView = {
+        let image = UIManager.makeImage()
+        image.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        return image
+    }()
+    
     func dismissClicked() {
-        print("taco!!!!s")
         self.dismiss(animated: false)
     }
     
@@ -118,6 +116,13 @@ class ViewProfileController: UIViewController {
         
         view.addSubview(outsideButton)
         view.addSubview(popupImageView)
+        view.addSubview(tintOverlay)
+        
+        
+        self.tintOverlay.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.tintOverlay.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.tintOverlay.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.tintOverlay.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
