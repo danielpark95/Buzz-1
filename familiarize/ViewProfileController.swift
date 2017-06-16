@@ -23,6 +23,9 @@ class ViewProfileController: UIViewController {
         createSocialMediaButtons()
         presentSocialMediaButtons()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        animatePopup()
+    }
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
@@ -112,29 +115,41 @@ class ViewProfileController: UIViewController {
        // }
     }
     
+    var popupCenterYAnchor: NSLayoutConstraint?
+    
+    func animatePopup() {
+        self.popupCenterYAnchor?.constant = 0
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+    }
+    
     func setupView() {
         
+        view.addSubview(tintOverlay)
         view.addSubview(outsideButton)
         view.addSubview(popupImageView)
-        view.addSubview(tintOverlay)
-        
         
         self.tintOverlay.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.tintOverlay.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.tintOverlay.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         self.tintOverlay.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
+        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        self.popupCenterYAnchor!.isActive = true
+        self.popupImageView.heightAnchor.constraint(equalToConstant: 304).isActive = true
+        self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
+        
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         
-        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        self.popupImageView.heightAnchor.constraint(equalToConstant: 304).isActive = true
-        self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
+
+        
         
 
-        view.sendSubview(toBack: outsideButton)
     }
 }

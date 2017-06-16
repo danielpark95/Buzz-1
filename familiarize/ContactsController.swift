@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 extension Notification.Name {
-    static let reload = Notification.Name("reload")
+    static let reload = Notification.Name("reloadNotification")
     static let viewProfile = Notification.Name("viewProfileNotification")
 }
 
