@@ -80,7 +80,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
 
     
     lazy var backButton: UIButton = {
-        let image = UIImage(named: "delete-button") as UIImage?
+        let image = UIImage(named: "back-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -120,15 +120,8 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
 
     func commenceCameraScanning() {
-        self.visualEffectView.removeFromSuperview()
         self.cameraActive = true
     }
-    
-    lazy var visualEffectView: UIVisualEffectView = {
-        var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        visualEffect.frame = self.view.bounds
-        return visualEffect
-    }()
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
@@ -148,25 +141,23 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             qrCodeFrameView?.frame = barCodeObject!.bounds
             if (metadataObj.stringValue != nil  && verifyAndSave(metadataObj.stringValue)) {
                 
-                view.addSubview(self.visualEffectView)
                 // Setting up the controller and animations
                 let popupController = PopupController()
                 popupController.userProfile = self.userProfile
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                popupController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+                //popupController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                 popupController.QRScannerDelegate = self
                 
                 self.scrapeSocialMedia(popupController)
                 
-                self.present(popupController, animated: true, completion: {
-                    popupController.setupGraphics()
-                })
+                self.present(popupController, animated: false)
                 self.cameraActive = false
                 
             }
         }
     }
     
+    // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     func scrapeSocialMedia(_ popupController: PopupController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
@@ -177,6 +168,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
     }
     
+    // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
     func parseHTML(html: String, popupController: PopupController) {
         if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
             for show in doc.css("img[class^='profilePic img']") {

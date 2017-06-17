@@ -12,13 +12,11 @@ extension UITabBarController {
         return selectedViewController
     }
 }
-class CustomTabBarController: UITabBarController {
+class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // "Search-50", "Fam-100-Border-Decrease", "User-50"
+        self.delegate = self
         
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
         let navigationController = UINavigationController(rootViewController: contactsController)
@@ -42,6 +40,16 @@ class CustomTabBarController: UITabBarController {
         
         setupCustomTabBar()
         
+    }
+    
+
+    
+    func tabBarController(_ didSelecttabBarController: UITabBarController,
+                          didSelect viewController: UIViewController) {
+        print("tortillas")
+        if let vc = viewController as? UINavigationController {
+            vc.dismiss(animated: false)
+        }
     }
 
     func setupCustomTabBar() {

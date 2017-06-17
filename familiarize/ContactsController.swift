@@ -48,10 +48,11 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         if let userProfile = userProfiles?[idx] {
             viewProfileController.userProfile = userProfile
         }
-
-        viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        viewProfileController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
+        viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        
+        // The defines 
+        self.definesPresentationContext = true
         self.present(viewProfileController, animated: false)
     }
     

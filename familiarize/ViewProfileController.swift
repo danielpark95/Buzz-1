@@ -147,9 +147,5 @@ class ViewProfileController: UIViewController {
         self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         
-
-        
-        
-
     }
 }
