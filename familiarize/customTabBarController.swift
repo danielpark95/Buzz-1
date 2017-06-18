@@ -19,34 +19,34 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         self.delegate = self
         
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
-        let navigationController = UINavigationController(rootViewController: contactsController)
-        navigationController.tabBarItem.image = UIImage(named: "Search-50")?.withRenderingMode(.alwaysOriginal)
-        navigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+        let contactsNavigationController = UINavigationController(rootViewController: contactsController)
+        contactsNavigationController.tabBarItem.image = UIImage(named: "contacts")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "contacts-bold")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         
         let famController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
-        let secondNavigationController = UINavigationController(rootViewController: famController)
-        secondNavigationController.tabBarItem.image = UIImage(named: "Fam-100-Border-Decrease")?.withRenderingMode(.alwaysOriginal)
-        secondNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+        let famNavigationController = UINavigationController(rootViewController: famController)
+        famNavigationController.tabBarItem.image = UIImage(named: "fam")?.withRenderingMode(.alwaysOriginal)
+        famNavigationController.tabBarItem.selectedImage = UIImage(named: "fam-bold")?.withRenderingMode(.alwaysOriginal)
+        famNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         
-        let userVC = UIViewController()
-        userVC.navigationItem.title = "Profile"
-        let userNavigationController = UINavigationController(rootViewController: userVC)
-        userNavigationController.tabBarItem.image = UIImage(named: "User-50")?.withRenderingMode(.alwaysOriginal)
+        let userController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
+        let userNavigationController = UINavigationController(rootViewController: userController)
+        userNavigationController.tabBarItem.image = UIImage(named: "user")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.selectedImage = UIImage(named: "user-bold")?.withRenderingMode(.alwaysOriginal)
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
-        viewControllers = [navigationController, secondNavigationController, userNavigationController]
+        viewControllers = [contactsNavigationController, famNavigationController, userNavigationController]
         
         setupCustomTabBar()
-        
     }
     
 
     
     func tabBarController(_ didSelecttabBarController: UITabBarController,
                           didSelect viewController: UIViewController) {
-        print("tortillas")
         if let vc = viewController as? UINavigationController {
             vc.dismiss(animated: false)
         }

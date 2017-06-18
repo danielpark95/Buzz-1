@@ -1,21 +1,24 @@
 PODS:
   - Alamofire (4.4.0)
   - Kanna (2.1.1)
+  - M13Checkbox (3.1.3)
   - QRCode (2.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - Kanna (~> 2.1.0)
+  - M13Checkbox
   - QRCode
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
+  M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 00ad50eb00047c3c4cae99cca4d13dac64b660e4
+PODFILE CHECKSUM: c149c475c03be395f3e2ab88a26934f7aa320e66
 
 COCOAPODS: 1.2.1
