@@ -145,7 +145,6 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 let popupController = PopupController()
                 popupController.userProfile = self.userProfile
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                //popupController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                 popupController.QRScannerDelegate = self
                 
                 self.scrapeSocialMedia(popupController)

@@ -16,6 +16,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         super.viewDidLoad()
         
         navigationItem.title = "Familiarize"
+        self.automaticallyAdjustsScrollViewInsets = false
         
         setupView()
         setupCollectionView()
@@ -87,11 +88,13 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //return CGSize(width: collectionView.frame.width/3, height: collectionView.frame.he)
-        return CGSize(width: view.frame.width, height: view.frame.height)
+        //return CGSize(width: view.frame.width, height: view.frame.height)
+        return self.collectionView!.frame.size;
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
     
 }
 

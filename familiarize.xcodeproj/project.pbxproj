@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A40001EDFC42E00D4539E /* FamiliarizeController.swift */; };
 		140ECD821EF6165800E538E4 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD811EF6165800E538E4 /* UserController.swift */; };
+		140ECD851EF723FD00E538E4 /* PopupBaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD841EF723FD00E538E4 /* PopupBaseClass.swift */; };
 		141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */; };
 		143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143532401EDA9CC2000507DB /* AppDelegate.swift */; };
 		143532431EDA9CC2000507DB /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143532421EDA9CC2000507DB /* ContactsController.swift */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		140A40001EDFC42E00D4539E /* FamiliarizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeController.swift; sourceTree = "<group>"; };
 		140ECD811EF6165800E538E4 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		140ECD841EF723FD00E538E4 /* PopupBaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupBaseClass.swift; sourceTree = "<group>"; };
 		141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		1435323D1EDA9CC2000507DB /* familiarize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = familiarize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		143532401EDA9CC2000507DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		14A3F33E1EE11D4300C97747 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				140ECD841EF723FD00E538E4 /* PopupBaseClass.swift */,
 				14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */,
 			);
 			name = Models;
@@ -303,6 +306,7 @@
 				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* PopupController.swift in Sources */,
+				140ECD851EF723FD00E538E4 /* PopupBaseClass.swift in Sources */,
 				14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
