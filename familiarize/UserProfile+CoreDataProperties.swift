@@ -23,6 +23,7 @@ extension UserProfile {
     @NSManaged public var phoneNumber: String?
     @NSManaged public var snapChatProfile: String?
     @NSManaged public var date: NSDate?
+    @NSManaged public var profileImage: Data?
 
     static func getData() -> [UserProfile]{
         
@@ -57,6 +58,18 @@ extension UserProfile {
             print(err)
         }
         return newUser
+    }
+    
+    static func saveProfileImage(_ profileImage: Data, userObject newUser: UserProfile) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        newUser.profileImage = profileImage as Data
+        do {
+            try(managedObjectContext.save())
+            NotificationCenter.default.post(name: .reload, object: nil)
+        } catch let err {
+            print(err)
+        }
     }
     
     // This is just a test run on how we can utilize clearData within the contactsVC

@@ -43,8 +43,8 @@ class PopupBase: UIViewController {
         return button
     }()
     
-    var profileImage: UIImageView = {
-        return UIManager.makeImage()
+    lazy var profileImage: UIImageView = {
+        return UIManager.makeProfileImage(valueOfCornerRadius: 47)
     }()
     
     lazy var dismissFriendButton: UIButton = {
@@ -105,6 +105,11 @@ class PopupBase: UIViewController {
         
         printName()
         
+        if userProfile?.profileImage != nil {
+            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+            self.profileImage.clipsToBounds = true
+        }
+        
         view.addSubview(self.profileImage)
         view.addSubview(self.nameLabel)
         view.addSubview(self.dismissFriendButton)
@@ -112,8 +117,8 @@ class PopupBase: UIViewController {
         
         profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 93).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 93).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 94).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 94).isActive = true
         
         nameLabel.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 15).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
