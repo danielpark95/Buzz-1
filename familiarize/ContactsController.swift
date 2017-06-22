@@ -61,18 +61,13 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reload, object: nil)
         
-        
         //This is a different signal from the one written in notification center. This signal is fired whenever a user drags down the collection view in contacts.
         if #available(iOS 10.0, *)  {
             self.refresher.addTarget(self, action: #selector(ContactsController.refreshTableData), for: UIControlEvents.valueChanged)
             collectionView?.refreshControl = self.refresher
-
-
         } else {
             collectionView?.addSubview(refresher)
         }
-
-        
     }
     
     func setupCollectionView() {
@@ -87,7 +82,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func refreshTableData() {
-        
         // This is our refresh animator
         //collectionView!.refreshControl?.beginRefreshing()
         
@@ -96,7 +90,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.reloadData()
     }
     
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = self.userProfiles?.count {
             return count
@@ -117,6 +110,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 60)
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

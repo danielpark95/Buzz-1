@@ -61,9 +61,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
         }
-        
         collectionView?.isPagingEnabled = true
-        
     }
     
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:

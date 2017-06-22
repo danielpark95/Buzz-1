@@ -56,14 +56,12 @@ class PopupBase: UIViewController {
     lazy var outsideButton: UIButton = {
         let button = UIManager.makeButton()
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        button.frame = self.view.bounds
         return button
     }()
     
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
     // QRScannerController view controller. And also pops this view controller from the stack.
     func dismissClicked() {
-        //QRScannerDelegate?.commenceCameraScanning()
         self.dismiss(animated: false)
     }
     
@@ -82,8 +80,13 @@ class PopupBase: UIViewController {
     
     // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
     func setupBackground() {
-        view.addSubview(outsideButton)
-        view.addSubview(popupImageView)
+        view.addSubview(self.outsideButton)
+        view.addSubview(self.popupImageView)
+        
+        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
@@ -105,6 +108,7 @@ class PopupBase: UIViewController {
         view.addSubview(self.profileImage)
         view.addSubview(self.nameLabel)
         view.addSubview(self.dismissFriendButton)
+        
         
         profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
