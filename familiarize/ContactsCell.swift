@@ -44,7 +44,6 @@ class ContactsCell: BaseCell {
     }()
     
     override func setupViews() {
-        backgroundColor = UIColor.white
         addSubview(nameLabelAndTime)
         addSubview(profileImageView)
         addSubview(separatorView)

@@ -12,7 +12,6 @@
 
 
 import UIKit
-import SwiftyJSON
 import CoreData
 
 class PopupBase: UIViewController {
@@ -23,6 +22,7 @@ class PopupBase: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBackground()
+        self.addToBackground()
     }
     
     // After all of the views are setups, then animate the motion where the popup image
@@ -47,6 +47,12 @@ class PopupBase: UIViewController {
         return UIManager.makeImage()
     }()
     
+    lazy var dismissFriendButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dismiss-button")
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var outsideButton: UIButton = {
         let button = UIManager.makeButton()
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
@@ -57,6 +63,7 @@ class PopupBase: UIViewController {
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
     // QRScannerController view controller. And also pops this view controller from the stack.
     func dismissClicked() {
+        //QRScannerDelegate?.commenceCameraScanning()
         self.dismiss(animated: false)
     }
     
@@ -69,6 +76,7 @@ class PopupBase: UIViewController {
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.setupGraphics()
+            self.addToGraphics()
         })
     }
     
@@ -84,18 +92,19 @@ class PopupBase: UIViewController {
         self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
     }
     
+    
     // For putting the name on the popup VC
     func printName() {
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         nameLabel.attributedText = attributedText
     }
-    
     func setupGraphics() {
         
         printName()
         
         view.addSubview(self.profileImage)
         view.addSubview(self.nameLabel)
+        view.addSubview(self.dismissFriendButton)
         
         profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
@@ -107,12 +116,25 @@ class PopupBase: UIViewController {
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
         
+        dismissFriendButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 160).isActive = true
+        dismissFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        dismissFriendButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        dismissFriendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
     }
     
-    // This makes the profile image into a circle.
+    func addToGraphics() {
+        
+    }
+    
+    func addToBackground() {
+        
+    }
+    
+    // This makes the profile image into a circle. 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         profileImage.layer.cornerRadius = profileImage.frame.height/2
     }
+
 }

@@ -17,7 +17,7 @@ extension Notification.Name {
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     var userProfiles: [UserProfile]?
-    var refresher:UIRefreshControl!
+    var refresher:UIRefreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         userProfiles = UserProfile.getData()
         setupRefreshingAndReloading()
         setupCollectionView()
-
     }
     
     func viewProfileNotification() {
@@ -43,6 +42,8 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     func viewProfile(_ idx: Int = 0) {
         
+        userProfiles = UserProfile.getData()
+        
         let viewProfileController = ViewProfileController()
         
         if let userProfile = userProfiles?[idx] {
@@ -51,7 +52,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         
         viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         
-        // The defines 
         self.definesPresentationContext = true
         self.present(viewProfileController, animated: false)
     }
@@ -61,16 +61,23 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reload, object: nil)
         
+        
         //This is a different signal from the one written in notification center. This signal is fired whenever a user drags down the collection view in contacts.
-        self.refresher = UIRefreshControl()
-        self.refresher.addTarget(self, action: #selector(refreshTableData), for: UIControlEvents.valueChanged)
-        collectionView?.refreshControl = refresher
+        if #available(iOS 10.0, *)  {
+            self.refresher.addTarget(self, action: #selector(ContactsController.refreshTableData), for: UIControlEvents.valueChanged)
+            collectionView?.refreshControl = self.refresher
+
+
+        } else {
+            collectionView?.addSubview(refresher)
+        }
+
         
     }
     
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
+        collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
     }
     
@@ -80,9 +87,13 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func refreshTableData() {
-        collectionView!.refreshControl?.beginRefreshing()
-        collectionView?.reloadData()
+        
+        // This is our refresh animator
+        //collectionView!.refreshControl?.beginRefreshing()
+        
         collectionView?.refreshControl?.endRefreshing()
+        collectionView?.refreshControl?.isHidden = true
+        collectionView?.reloadData()
     }
     
 

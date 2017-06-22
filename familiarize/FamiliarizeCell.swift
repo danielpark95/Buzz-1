@@ -28,7 +28,7 @@ class FamiliarizeCell: BaseCell {
     
     lazy var qrImageView: UIImageView = {
         var qrCode = QRCode(self.createJSON())
-        qrCode?.backgroundColor = CIColor(red: 242/255, green: 242/255, blue: 242/255)
+        qrCode?.backgroundColor = CIColor.white()
         let imageView = UIImageView()
         imageView.image = qrCode?.image
         imageView.contentMode = .scaleAspectFit

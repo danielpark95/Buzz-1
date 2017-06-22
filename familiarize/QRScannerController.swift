@@ -142,7 +142,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             if (metadataObj.stringValue != nil  && verifyAndSave(metadataObj.stringValue)) {
                 
                 // Setting up the controller and animations
-                let popupController = PopupController()
+                let popupController = ScanProfileController()
                 popupController.userProfile = self.userProfile
                 popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 popupController.QRScannerDelegate = self
@@ -157,7 +157,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
-    func scrapeSocialMedia(_ popupController: PopupController) {
+    func scrapeSocialMedia(_ popupController: ScanProfileController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
             print("\(response.result.isSuccess)")
@@ -168,7 +168,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
-    func parseHTML(html: String, popupController: PopupController) {
+    func parseHTML(html: String, popupController: ScanProfileController) {
         if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
             for show in doc.css("img[class^='profilePic img']") {
                 let url = NSURL(string: show["src"]!)!

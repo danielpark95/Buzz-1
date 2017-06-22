@@ -40,7 +40,8 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         
         viewControllers = [contactsNavigationController, famNavigationController, userNavigationController]
         
-        setupCustomTabBar()
+        createSmallLineOnTabBar()
+        tabBar.backgroundColor = UIColor.white
     }
     
 
@@ -52,7 +53,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         }
     }
 
-    func setupCustomTabBar() {
+    func createSmallLineOnTabBar() {
         tabBar.isTranslucent = false
         let topBorder = CALayer()
         topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0.5)

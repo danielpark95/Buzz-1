@@ -55,7 +55,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     
     func setupCollectionView() {
         collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.backgroundColor = UIColor(white: 0.95, alpha:1)
+        collectionView?.backgroundColor = UIColor.white
         collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -87,8 +87,6 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         return collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //return CGSize(width: collectionView.frame.width/3, height: collectionView.frame.he)
-        //return CGSize(width: view.frame.width, height: view.frame.height)
         return self.collectionView!.frame.size;
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

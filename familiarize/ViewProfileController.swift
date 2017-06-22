@@ -29,9 +29,9 @@ class ViewProfileController: UIViewController {
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
-    let nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label =  UILabel()
-        label.text = ""
+        label.text = self.userProfile?.name
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,15 +39,6 @@ class ViewProfileController: UIViewController {
     let popupImageView: UIButton = {
         let button = UIManager.makeButton(imageName: "popup-image")
         button.adjustsImageWhenHighlighted = false
-        return button
-    }()
-
-    lazy var fbButton: UIButton = {
-        let image = UIImage(named: "fb-button") as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectFBButton), for: .touchUpInside)
         return button
     }()
     
@@ -61,6 +52,15 @@ class ViewProfileController: UIViewController {
         let image = UIManager.makeImage()
         image.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         return image
+    }()
+    
+    lazy var fbButton: UIButton = {
+        let image = UIImage(named: "fb-button") as UIImage?
+        var button = UIButton(type: .custom) as UIButton
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didSelectFBButton), for: .touchUpInside)
+        return button
     }()
     
     func dismissClicked() {
@@ -130,6 +130,9 @@ class ViewProfileController: UIViewController {
         view.addSubview(tintOverlay)
         view.addSubview(outsideButton)
         view.addSubview(popupImageView)
+        view.addSubview(nameLabel)
+        
+        print(nameLabel.text!)
         
         self.tintOverlay.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.tintOverlay.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -147,5 +150,10 @@ class ViewProfileController: UIViewController {
         self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
         
+        
+        self.nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height).isActive = true
+        self.nameLabel.heightAnchor.constraint(equalToConstant: 304).isActive = true
+        self.nameLabel.widthAnchor.constraint(equalToConstant: 265).isActive = true
     }
 }

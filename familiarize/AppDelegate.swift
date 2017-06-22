@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tabBarController.selectedIndex = 1
         }
         
-        UINavigationBar.appearance().barTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha:1)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         //For making the time/wifi signal/ and battery to show white text instead of black text.
