@@ -33,8 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-        UINavigationBar.appearance().barTintColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha:1)
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        //UINavigationBar.appearance().barTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
+        //UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().barStyle = UIBarStyle.black
+        UINavigationBar.appearance().barTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        let navigationTitleFont = UIFont(name: "Avenir", size: 20)!
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont]
+        
+        
+        
+        
+        
         
         //For making the time/wifi signal/ and battery to show white text instead of black text.
         UIApplication.shared.statusBarStyle = .lightContent
