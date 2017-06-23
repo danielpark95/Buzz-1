@@ -24,6 +24,7 @@ extension UserProfile {
     @NSManaged public var snapChatProfile: String?
     @NSManaged public var date: NSDate?
     @NSManaged public var profileImage: Data?
+    @NSManaged public var bio: String?
 
     static func getData() -> [UserProfile]{
         
@@ -50,6 +51,8 @@ extension UserProfile {
         newUser.instagramProfile = qrJSON["ig"].string
         newUser.snapChatProfile = qrJSON["sc"].string
         newUser.phoneNumber = qrJSON["pn"].string
+        newUser.bio = qrJSON["bio"].string
+        
         newUser.date = NSDate()
         do {
             try(managedObjectContext.save())

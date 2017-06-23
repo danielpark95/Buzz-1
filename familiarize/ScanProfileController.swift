@@ -91,12 +91,14 @@ class ScanProfileController: PopupBase {
     
     override func addToGraphics() {
         view.addSubview(self.viewProfileButton)
+       
         
         viewProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         viewProfileButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 70).isActive = true
         viewProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         viewProfileButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
         
+                
         self.checkBox.setCheckState(.checked, animated: true)
     }
 }

@@ -15,6 +15,7 @@ class UIManager {
         let button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+    
         return button
     }
 

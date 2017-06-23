@@ -33,23 +33,28 @@ class PopupBase: UIViewController {
     
     // Text gets it textual label from QRScannerController
     // This is to just define it
-    let nameLabel: UILabel = {
-        return UIManager.makeLabel()
+    let nameAndBioLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 2)
     }()
     
-    let popupImageView: UIButton = {
-        let button = UIManager.makeButton(imageName: "popup-image")
-        button.adjustsImageWhenHighlighted = false
-        return button
+    let popupImageView: UIImageView = {
+        let image =  UIManager.makeImage(imageName: "popup-image")
+        let tap = UITapGestureRecognizer()
+        image.addGestureRecognizer(tap)
+        image.isUserInteractionEnabled = true
+        return image
     }()
     
     lazy var profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 47)
+        return UIManager.makeProfileImage(valueOfCornerRadius: 40)
     }()
     
     lazy var dismissFriendButton: UIButton = {
         let button = UIManager.makeButton(imageName: "dismiss-button")
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.contentMode = .scaleAspectFill
         return button
     }()
     
@@ -69,7 +74,7 @@ class PopupBase: UIViewController {
     var popupCenterYAnchor: NSLayoutConstraint?
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
@@ -86,20 +91,23 @@ class PopupBase: UIViewController {
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
-        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
         self.popupCenterYAnchor?.isActive = true
-        self.popupImageView.heightAnchor.constraint(equalToConstant: 304).isActive = true
-        self.popupImageView.widthAnchor.constraint(equalToConstant: 265).isActive = true
+        
+        self.popupImageView.heightAnchor.constraint(equalToConstant: 222).isActive = true
+        self.popupImageView.widthAnchor.constraint(equalToConstant: 339).isActive = true
     }
     
     
     // For putting the name on the popup VC
     func printName() {
-        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
-        nameLabel.attributedText = attributedText
+        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
+        nameAndBioLabel.attributedText = attributedText
     }
     func setupGraphics() {
         
@@ -111,24 +119,19 @@ class PopupBase: UIViewController {
         }
         
         view.addSubview(self.profileImage)
-        view.addSubview(self.nameLabel)
+        view.addSubview(self.nameAndBioLabel)
         view.addSubview(self.dismissFriendButton)
+
         
-        
-        profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 94).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 94).isActive = true
-        
-        nameLabel.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 15).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
-        
-        dismissFriendButton.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 160).isActive = true
-        dismissFriendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        nameLabel.topAnchor.constraint(equalTo: self.profileImage.bottomAnchor, constant: 15).isActive = true
+//        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
+//        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
+//        
+        dismissFriendButton.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
+        dismissFriendButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         dismissFriendButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        dismissFriendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        dismissFriendButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
         
     }
     
