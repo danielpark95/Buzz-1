@@ -18,7 +18,7 @@ class ViewProfileController: PopupBase {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()

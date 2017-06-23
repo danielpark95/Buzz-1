@@ -44,8 +44,6 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         tabBar.backgroundColor = UIColor.white
     }
     
-
-    
     func tabBarController(_ didSelecttabBarController: UITabBarController,
                           didSelect viewController: UIViewController) {
         if let vc = viewController as? UINavigationController {

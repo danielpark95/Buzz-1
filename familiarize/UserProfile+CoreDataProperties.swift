@@ -77,13 +77,15 @@ extension UserProfile {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         do {
             let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
             for userProfile in userProfiles! {
-                managedObjectContext.delete(userProfile)
+                managedObjectContext.delete(userProfile)                
             }
         } catch let err {
             print(err)
         }
     }
+
 }
