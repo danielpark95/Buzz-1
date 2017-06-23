@@ -19,7 +19,7 @@ class FamiliarizeCell: BaseCell {
         let qrJSON: JSON = [
             "name": "Alex Oh",
             "fb": "alexswoh",
-            "ig": "alexswozi",
+            "ig": "alexswo",
             "sc": "alexoooh",
             "pn": "2136041187",
             "bio": "\"And this is how my life started\"",

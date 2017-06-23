@@ -16,25 +16,8 @@ class ViewProfileController: PopupBase {
         super.viewDidLoad()
     }
     
-    lazy var tintOverlay: UIImageView = {
-        let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
-        visualEffect.frame = self.view.bounds
-        return visualEffect
-    }()
     
-    
-    // FYI the button should be a facebook button
-    lazy var fbButton: UIButton = {
-        let image = UIImage(named: "dan_instagram") as UIImage?
-        var button = UIButton(type: .custom) as UIButton
-        button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didSelectFBButton), for: .touchUpInside)
-        return button
-    }()
-    
-    func didSelectFBButton() {
+    func buttonLink(_ userURL: String) {
         
         // Lmao, in order to get profile id, just scrape the facebook page again.
         // <meta property="al:ios:url" content="fb://profile/100001667117543">
@@ -61,25 +44,87 @@ class ViewProfileController: PopupBase {
         }
     }
     
-    func createSocialMediaButtons() {
-        socialMediaButtons = [
-            "fb" : fbButton
-        ]
+    func didSelectFB() {
+        buttonLink("Kabooya")
     }
     
+    func didSelectIG() {
+        buttonLink("Kabooya")
+    }
+    
+    func didSelectSC() {
+        buttonLink("Kabooya")
+    }
+    
+    func didSelectPN() {
+        buttonLink("Kabooya")
+    }
+    
+    lazy var tintOverlay: UIImageView = {
+        let visualEffect = UIManager.makeImage()
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        visualEffect.frame = self.view.bounds
+        return visualEffect
+    }()
+    
+    
+    // FYI the button should be a facebook button
+    lazy var fbButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_instagram")
+        button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var igButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_instagram")
+        button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var scButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_snapchat")
+        button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var pnButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_phone")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
+
+    func createSocialMediaButtons() {
+        socialMediaButtons = [
+            "fb": fbButton,
+            "ig": igButton,
+            "sc": scButton,
+            "pn": pnButton,
+        ]
+    }
+
+    let socialMedia = [
+        "faceBookProfile": "fb",
+        "instagramProfile": "ig",
+        "snapChatProfile": "sc" ,
+        "phoneNumber": "pn",
+    ]
+
     func presentSocialMediaButtons() {
-        //for (key, subJson):(String, JSON) in qrJSON {
-        // Key is key . . . (string)
-        // subJson is value . . . (string)
-        // Follows key - value concept, like a dictionary.
-        //    if (key == "fb" && !((subJson.string?.isEmpty)!)) {
-        view.addSubview((socialMediaButtons?["fb"]!)!)
-        (socialMediaButtons?["fb"]!)!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 100).isActive = true
-        (socialMediaButtons?["fb"]!)!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: 20).isActive = true
-        (socialMediaButtons?["fb"]!)!.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        (socialMediaButtons?["fb"]!)!.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        //    }
-        // }
+
+        var spacing: CGFloat = 20
+        for key in (self.userProfile?.entity.attributesByName.keys)! {
+            if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
+                let shortHand: String = socialMedia[key]!
+                view.addSubview((socialMediaButtons?[shortHand])!)
+                (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 100).isActive = true
+                (socialMediaButtons?[shortHand])!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: spacing).isActive = true
+                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                
+                spacing += 60
+            }
+        }
+        
     }
     
     override func addToGraphics() {
@@ -102,7 +147,6 @@ class ViewProfileController: PopupBase {
     }
     
     override func printName() {
-
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
 
         if let bio = userProfile?.bio {
