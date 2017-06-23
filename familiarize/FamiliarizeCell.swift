@@ -17,7 +17,7 @@ class FamiliarizeCell: BaseCell {
     
     func createJSON() -> String {
         let qrJSON: JSON = [
-            "name": "Jim Bean",
+            "name": "Alex Oh",
             "fb": "alexswoh",
             "ig": "alexswozi",
             "sc": "alexoooh",
@@ -36,12 +36,10 @@ class FamiliarizeCell: BaseCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-
     
     override func setupViews() {
         
         addSubview(qrImageView)
-        
         qrImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         qrImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         qrImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true

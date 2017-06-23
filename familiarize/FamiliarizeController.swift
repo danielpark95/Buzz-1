@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class FamiliarizeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     private let cellId = "cellId"
@@ -20,7 +19,6 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         
         setupView()
         setupCollectionView()
-
     }
     
     lazy var cameraButton: UIButton = {

@@ -108,8 +108,6 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         // Dispose of any resources that can be recreated.
     }
 
-    
-    
     func verifyAndSave(_ qrCode: String) -> Bool {
         // TODO: Before even moving on, this function should verify that the qr code's JSON is in the format that we need it in.
         
@@ -142,14 +140,14 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             if (metadataObj.stringValue != nil  && verifyAndSave(metadataObj.stringValue)) {
                 
                 // Setting up the controller and animations
-                let popupController = ScanProfileController()
-                popupController.userProfile = self.userProfile
-                popupController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                popupController.QRScannerDelegate = self
+                let scanProfileController = ScanProfileController()
+                scanProfileController.userProfile = self.userProfile
+                scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                scanProfileController.QRScannerDelegate = self
                 
-                self.scrapeSocialMedia(popupController)
+                self.scrapeSocialMedia(scanProfileController)
                 
-                self.present(popupController, animated: false)
+                self.present(scanProfileController, animated: false)
                 self.cameraActive = false
                 
             }
@@ -157,26 +155,26 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
-    func scrapeSocialMedia(_ popupController: ScanProfileController) {
+    func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
+        //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
             print("\(response.result.isSuccess)")
             if let html = response.result.value {
-                self.parseHTML(html: html, popupController: popupController)
+                self.parseHTML(html: html, scanProfileController: scanProfileController)
             }
         }
     }
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
-    func parseHTML(html: String, popupController: ScanProfileController) {
+    func parseHTML(html: String, scanProfileController: ScanProfileController) {
         if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
             for show in doc.css("img[class^='profilePic img']") {
                 let url = NSURL(string: show["src"]!)!
-                let data:NSData? = NSData(contentsOf: url as URL)
-                popupController.profileImage.image = UIImage(data : data! as Data)!
-                popupController.profileImage.clipsToBounds = true
+                print(show["src"]!)
+                let profileImage:NSData? = NSData(contentsOf: url as URL)
+                UserProfile.saveProfileImage(profileImage! as Data, userObject: self.userProfile!)
             }
         }
     }
-
 }

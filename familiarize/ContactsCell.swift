@@ -23,15 +23,21 @@ class ContactsCell: BaseCell {
             attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
             
             nameLabelAndTime.attributedText = attributedText
+            
+            if userProfile?.profileImage != nil {
+                self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+                self.profileImage.clipsToBounds = true
+            }
         }
     }
+    
     // A quick and easy way to create a uiview. UILabel is a subclass of uiview.
     let nameLabelAndTime: UILabel = {
         return UIManager.makeLabel(numberOfLines: 2)
     }()
     
-    let profileImageView: UIImageView = {
-        return UIManager.makeImage(imageName: "blank_man")
+    let profileImage: UIImageView = {
+        return UIManager.makeProfileImage(valueOfCornerRadius: 22)
     }()
     
     // This creates the line in between each of the cells.
@@ -45,17 +51,16 @@ class ContactsCell: BaseCell {
     
     override func setupViews() {
         addSubview(nameLabelAndTime)
-        addSubview(profileImageView)
         addSubview(separatorView)
+        addSubview(profileImage)
         
-        profileImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
+        profileImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        profileImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
         nameLabelAndTime.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        nameLabelAndTime.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+        nameLabelAndTime.leftAnchor.constraint(equalTo: profileImage.rightAnchor, constant: 8).isActive = true
         nameLabelAndTime.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         nameLabelAndTime.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
@@ -64,6 +69,4 @@ class ContactsCell: BaseCell {
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
-    
-    
 }
