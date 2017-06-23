@@ -15,7 +15,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Familiarize"
+        navigationItem.title = ""
         self.automaticallyAdjustsScrollViewInsets = false
         
         setupView()
@@ -24,7 +24,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     }
     
     lazy var cameraButton: UIButton = {
-        let image = UIImage(named: "camera-button") as UIImage?
+        let image = UIImage(named: "dan_camera") as UIImage?
         var button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     
     func setupCollectionView() {
         collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.backgroundColor = UIColor.white
+        collectionView?.backgroundColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
         collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -67,9 +67,9 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     let pageControl: UIPageControl = {
         let pc = UIPageControl()
-        pc.pageIndicatorTintColor = .lightGray
+        //pc.pageIndicatorTintColor = .lightGray
         pc.numberOfPages = 3 // Change the number of pages to something else after you get like the coredata working
-        pc.currentPageIndicatorTintColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha:1)
+        pc.currentPageIndicatorTintColor = UIColor.white
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
     }()

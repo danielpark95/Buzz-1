@@ -14,17 +14,40 @@ extension Notification.Name {
     static let viewProfile = Notification.Name("viewProfileNotification")
 }
 
-class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     private let cellId = "cellId"
     var userProfiles: [UserProfile]?
     var refresher:UIRefreshControl = UIRefreshControl()
+    
+    lazy var searchBar:UISearchBar = UISearchBar()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Contacts"
+        
+        
+        searchBar.searchBarStyle = UISearchBarStyle.prominent
+        searchBar.placeholder = " Search... "
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.delegate = self
+        
+        
+        //navigationItem.titleView = searchBar
+        
+        
+        
         userProfiles = UserProfile.getData()
         setupRefreshingAndReloading()
         setupCollectionView()
+        
+        
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange textSearched: String)
+    {
+        collectionView?.reloadData()
     }
     
     func viewProfileNotification() {
@@ -72,7 +95,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor.white
+        collectionView?.backgroundColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
         collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
     }
     

@@ -20,22 +20,22 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
         let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        contactsNavigationController.tabBarItem.image = UIImage(named: "contacts")?.withRenderingMode(.alwaysOriginal)
-        contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "contacts-bold")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.image = UIImage(named: "dan_contacts_grey")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_contacts_red")?.withRenderingMode(.alwaysOriginal)
         contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         
         let famController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
         let famNavigationController = UINavigationController(rootViewController: famController)
-        famNavigationController.tabBarItem.image = UIImage(named: "fam")?.withRenderingMode(.alwaysOriginal)
-        famNavigationController.tabBarItem.selectedImage = UIImage(named: "fam-bold")?.withRenderingMode(.alwaysOriginal)
+        famNavigationController.tabBarItem.image = UIImage(named: "dan_qr_grey")?.withRenderingMode(.alwaysOriginal)
+        famNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_qr_red")?.withRenderingMode(.alwaysOriginal)
         famNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         
         let userController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavigationController = UINavigationController(rootViewController: userController)
-        userNavigationController.tabBarItem.image = UIImage(named: "user")?.withRenderingMode(.alwaysOriginal)
-        userNavigationController.tabBarItem.selectedImage = UIImage(named: "user-bold")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.image = UIImage(named: "dan_myinfo_grey")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_myinfo_red")?.withRenderingMode(.alwaysOriginal)
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         viewControllers = [contactsNavigationController, famNavigationController, userNavigationController]
