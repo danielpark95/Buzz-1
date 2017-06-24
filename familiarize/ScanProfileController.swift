@@ -119,7 +119,6 @@ class ScanProfileController: PopupBase {
         view.addSubview(self.profileImage)
         view.addSubview(self.nameAndBioLabel)
         
-        
         profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
         

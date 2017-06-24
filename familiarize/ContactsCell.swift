@@ -13,9 +13,11 @@ class ContactsCell: BaseCell {
     var userProfile: UserProfile? {
         didSet {
 
-            let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)])
+            // The name
+            let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)])
             
-            attributedText.append(NSAttributedString(string:"\nAdded " + (userProfile?.date?.getElapsedTime())!, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)]))
+            // The time
+            attributedText.append(NSAttributedString(string:"\nAdded " + (userProfile?.date?.getElapsedTime())!, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red: 146/255, green: 146/255, blue: 146/255, alpha: 1.0)]))
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 10

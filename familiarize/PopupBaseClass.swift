@@ -48,11 +48,6 @@ class PopupBase: UIViewController {
     
     lazy var dismissFriendButton: UIButton = {
         return UIManager.makeButton()
-//        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-//        button.contentVerticalAlignment = .fill
-//        button.contentHorizontalAlignment = .fill
-//        button.contentMode = .scaleAspectFill
-//        return button
     }()
     
     lazy var outsideButton: UIButton = {
