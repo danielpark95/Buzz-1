@@ -127,7 +127,28 @@ class ViewProfileController: PopupBase {
         
     }
     
+    override func dismissClicked() {
+        self.dismiss(animated: false)
+    }
+    
+    override func setDismissButton() {
+        dismissFriendButton = UIManager.makeButton(imageName: "dismiss-button")
+        view.addSubview(self.dismissFriendButton)
+        dismissFriendButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        dismissFriendButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
+        dismissFriendButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissFriendButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        dismissFriendButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
+    }
+    
     override func addToGraphics() {
+        
+
+        
+        view.addSubview(self.profileImage)
+        view.addSubview(self.nameAndBioLabel)
+        
+        
         createSocialMediaButtons()
         presentSocialMediaButtons()
         
@@ -137,16 +158,28 @@ class ViewProfileController: PopupBase {
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
         profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        
-        
+
         nameAndBioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 20).isActive = true
+        
         nameAndBioLabel.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: 120).isActive = true
         nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
         nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
     }
     
-    override func printName() {
+    override func setPopup() {
+        self.popupImageView = UIManager.makeImage(imageName: "scan-profile-popup")
+        
+        view.addSubview(self.popupImageView)
+        
+        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        self.popupCenterYAnchor?.isActive = true
+        self.popupImageView.heightAnchor.constraint(equalToConstant: 222).isActive = true
+        self.popupImageView.widthAnchor.constraint(equalToConstant: 339).isActive = true
+    }
+    
+    override func setNameAndBio() {
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
 
         if let bio = userProfile?.bio {
@@ -154,7 +187,7 @@ class ViewProfileController: PopupBase {
         }
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 7
+        paragraphStyle.lineSpacing = 0
         
         attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
         

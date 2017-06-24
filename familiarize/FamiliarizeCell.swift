@@ -22,7 +22,7 @@ class FamiliarizeCell: BaseCell {
             "ig": "alexswo",
             "sc": "alexoooh",
             "pn": "2136041187",
-            "bio": "\"And this is how my life started\"",
+            "bio": "Software Engineer",
             ]
         return qrJSON.rawString()!
     }
