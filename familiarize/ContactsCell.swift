@@ -30,6 +30,7 @@ class ContactsCell: BaseCell {
                 self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
                 self.profileImage.clipsToBounds = true
             }
+            setupViews()
         }
     }
     
@@ -61,10 +62,10 @@ class ContactsCell: BaseCell {
         profileImage.widthAnchor.constraint(equalToConstant: 44).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
-        nameLabelAndTime.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        nameLabelAndTime.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
         nameLabelAndTime.leftAnchor.constraint(equalTo: profileImage.rightAnchor, constant: 8).isActive = true
-        nameLabelAndTime.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        nameLabelAndTime.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        nameLabelAndTime.heightAnchor.constraint(equalToConstant: nameLabelAndTime.intrinsicContentSize.height).isActive = true
+        nameLabelAndTime.widthAnchor.constraint(equalToConstant:nameLabelAndTime.intrinsicContentSize.width).isActive = true
         
         separatorView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
