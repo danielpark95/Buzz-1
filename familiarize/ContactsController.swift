@@ -142,5 +142,8 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         self.viewProfile(indexPath.item)
     }
 
+    
+   
+
 
 }
