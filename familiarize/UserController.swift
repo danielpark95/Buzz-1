@@ -13,17 +13,24 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     private let cellId = "cellId"
     
     
-    var myUserProfiles: [MyUserProfile]?
+    
+    var myUserProfiles: [MyUserProfile]? {
+        didSet {
+            if let count = self.myUserProfiles?.count {
+                pageControl.numberOfPages = count
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "My Info"
+        
         self.automaticallyAdjustsScrollViewInsets = false
         
+        myUserProfiles = MyUserProfile.getData()
         setupView()
         setupCollectionView()
-        
         
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
         doubleTapGesture.numberOfTapsRequired = 2
@@ -31,13 +38,13 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
     }
     
+    // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 
     func didDoubleTapCollectionView(_ gesture: UITapGestureRecognizer) {
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! FamiliarizeCell
         
         selectedCell.flip()
-        
     }
     
     let profileImage: UIImageView = {
@@ -48,7 +55,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return UIManager.makeImage(imageName: "dan_header_bar")
     }()
 
-    
     let nameLabel: UILabel = {
         return UIManager.makeLabel(numberOfLines: 1)
     }()
@@ -100,10 +106,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
-    let pageControl: UIPageControl = {
+    var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .lightGray
-        pc.numberOfPages = 3 // Change the number of pages to something else after you get like the coredata working
         pc.currentPageIndicatorTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
@@ -116,14 +121,19 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         // Modify this after you saved a user.
-//        if let count = self.myUserProfiles?.count {
-//            return count
-//        }
-//        return 0
-        return 3
+        if let count = self.myUserProfiles?.count {
+            return count
+        }
+        return 0
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! FamiliarizeCell
+        
+        if let myUserProfile = myUserProfiles?[indexPath.item] {
+            cell.myUserProfile = myUserProfile
+        }
+        
+        return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView!.frame.size;
