@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import SwiftyJSON
 
 class FamiliarizeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
@@ -19,6 +21,7 @@ class FamiliarizeController: UICollectionViewController, UICollectionViewDelegat
         
         setupView()
         setupCollectionView()
+        
     }
     
     lazy var cameraButton: UIButton = {
