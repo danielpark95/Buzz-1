@@ -32,7 +32,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         famNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         
-        let userController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
+        let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavigationController = UINavigationController(rootViewController: userController)
         userNavigationController.tabBarItem.image = UIImage(named: "dan_myinfo_grey")?.withRenderingMode(.alwaysOriginal)
         userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_myinfo_red")?.withRenderingMode(.alwaysOriginal)
