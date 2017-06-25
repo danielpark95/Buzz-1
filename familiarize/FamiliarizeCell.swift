@@ -14,7 +14,6 @@ import UIKit
 
 
 class FamiliarizeCell: BaseCell {
-    var socialMediaButtons: [String : UIButton]?
     var onQRImage: Bool = true
     func createJSON() -> String {
         let qrJSON: JSON = [
@@ -40,12 +39,10 @@ class FamiliarizeCell: BaseCell {
     }()
     
     lazy var cardBorder: UIImageView = {
-        
         let image = UIManager.makeImage(imageName: "dan_card_border")
         image.tag = 1
         return image
     }()
-    
     
     let bioLabel: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
@@ -71,7 +68,6 @@ class FamiliarizeCell: BaseCell {
             bioLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30).isActive = true
             bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
             bioLabel.widthAnchor.constraint(equalToConstant:bioLabel.intrinsicContentSize.width).isActive = true
-            createSocialMediaButtons()
             presentSocialMediaButtons()
             
             onQRImage = false
@@ -100,123 +96,27 @@ class FamiliarizeCell: BaseCell {
         cardBorder.widthAnchor.constraint(equalToConstant: 350).isActive = true
     }
     
+
     
-    func buttonLink(_ userURL: String) {
-        
-        // Lmao, in order to get profile id, just scrape the facebook page again.
-        // <meta property="al:ios:url" content="fb://profile/100001667117543">
-        
-        let fbURL = URL(string: "fb://profile?id=100001667117543")!
-        
-        let safariFBURL = URL(string: "https://www.facebook.com/100001667117543")!
-        
-        if UIApplication.shared.canOpenURL(fbURL)
-        {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(fbURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(fbURL)
-            }
-            
-        } else {
-            //redirect to safari because the user doesn't have facebook application
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(safariFBURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(safariFBURL)
-            }
-        }
-    }
-    
-    func didSelectFB() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectIG() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectSC() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectPN() {
-        buttonLink("Kabooya")
-    }
-    
-    
-    // FYI the button should be a facebook button
-    lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_facebook_red")
-        button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram_red")
-        button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchat_red")
-        button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone_red")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_linkedin_red")
-        button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var emButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_email_red")
-        button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
-        return button
-    }()
-    
-    func createSocialMediaButtons() {
-        socialMediaButtons = [
-            "fb": fbButton,
-            "ig": igButton,
-            "sc": scButton,
-            "pn": pnButton,
-            "in": inButton,
-            "em": emButton,
-        ]
-    }
-    
-    let socialMedia = [
-        "faceBookProfile": "fb",
-        "instagramProfile": "ig",
-        "snapChatProfile": "sc" ,
-        "phoneNumber": "pn",
-        "linkedin": "in",
-        "email": "em",
+    lazy var socialMediaImages: [String: UIImageView] = [
+        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_red"),
+        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_red"),
+        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_red"),
+        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_red"),
+        "linkedin": UIManager.makeImage(imageName: "dan_linkedin_red"),
+        "email": UIManager.makeImage(imageName: "dan_email_red"),
         ]
     
     func presentSocialMediaButtons() {
- 
-        
         var spacing: CGFloat = 20
-        for (_, button) in socialMediaButtons! {
-            self.addSubview(button)
-            button.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
-            button.leftAnchor.constraint(equalTo: self.leftAnchor, constant: spacing).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        for (_, image) in socialMediaImages {
+            self.addSubview(image)
+            image.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
+            image.leftAnchor.constraint(equalTo: self.leftAnchor, constant: spacing).isActive = true
+            image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            image.widthAnchor.constraint(equalToConstant: 40).isActive = true
             
             spacing += 60
         }
-        
     }
-    
-    
 }
