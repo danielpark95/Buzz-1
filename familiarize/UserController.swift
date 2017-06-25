@@ -88,7 +88,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupCollectionView() {
-        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.showsHorizontalScrollIndicator = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         

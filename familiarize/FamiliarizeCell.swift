@@ -15,6 +15,8 @@ import UIKit
 
 class FamiliarizeCell: BaseCell {
     var onQRImage: Bool = true
+    
+    
     func createJSON() -> String {
         let qrJSON: JSON = [
             "name": "Alex Oh",
@@ -65,7 +67,7 @@ class FamiliarizeCell: BaseCell {
             bioLabel.attributedText = bio
             
             bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-            bioLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30).isActive = true
+            bioLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -30).isActive = true
             bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
             bioLabel.widthAnchor.constraint(equalToConstant:bioLabel.intrinsicContentSize.width).isActive = true
             presentSocialMediaButtons()
@@ -80,7 +82,6 @@ class FamiliarizeCell: BaseCell {
             
             onQRImage = true
         }
-        
     }
     
     override func setupViews() {
@@ -108,15 +109,126 @@ class FamiliarizeCell: BaseCell {
         ]
     
     func presentSocialMediaButtons() {
-        var spacing: CGFloat = 20
-        for (_, image) in socialMediaImages {
-            self.addSubview(image)
-            image.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
-            image.leftAnchor.constraint(equalTo: self.leftAnchor, constant: spacing).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 40).isActive = true
-            
-            spacing += 60
+        var xSpacing: CGFloat = 50
+        var ySpacing: CGFloat = 10
+    
+        var size = socialMediaImages.count
+        var count = 0
+        size = 3
+        
+        if size == 1 {
+            for (_, image) in socialMediaImages {
+                self.addSubview(image)
+                image.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+                image.centerYAnchor.constraint(equalTo: self.cardBorder.centerYAnchor, constant: ySpacing).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 65).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 65).isActive = true
+
+                count += 1
+                if count == 1{
+                    break
+                }
+            }
+        } else if size == 2 {
+            for (_, image) in socialMediaImages {
+                self.addSubview(image)
+                image.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: xSpacing).isActive = true
+                image.centerYAnchor.constraint(equalTo: self.cardBorder.centerYAnchor, constant: ySpacing).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 65).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 65).isActive = true
+
+                xSpacing = xSpacing * (-1)
+                count += 1
+                if count == 2{
+                    break
+                }
+            }
+        } else if size == 3 {
+            ySpacing = 20
+            for (_, image) in socialMediaImages {
+                if count < 2 {
+                    self.addSubview(image)
+                    image.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: xSpacing).isActive = true
+                    image.centerYAnchor.constraint(equalTo: self.cardBorder.centerYAnchor, constant: -ySpacing).isActive = true
+                    image.heightAnchor.constraint(equalToConstant: 60).isActive = true
+                    image.widthAnchor.constraint(equalToConstant: 60).isActive = true
+                    xSpacing = xSpacing * (-1)
+                }
+                else if count == 2 {
+                    self.addSubview(image)
+                    image.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+                    image.centerYAnchor.constraint(equalTo: self.cardBorder.centerYAnchor, constant: 3*ySpacing).isActive = true
+                    image.heightAnchor.constraint(equalToConstant: 60).isActive = true
+                    image.widthAnchor.constraint(equalToConstant: 60).isActive = true
+                }
+
+                count += 1
+                if count == 3{
+                    break
+                }
+            }
+        } else if size == 4 {
+            for (_, image) in socialMediaImages {
+                self.addSubview(image)
+                image.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
+                image.leftAnchor.constraint(equalTo: self.leftAnchor, constant: xSpacing).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                
+                xSpacing += 60
+                count += 1
+                if count == 4{
+                    break
+                }
+            }
+        } else if size == 5 {
+            for (_, image) in socialMediaImages {
+                self.addSubview(image)
+                image.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
+                image.leftAnchor.constraint(equalTo: self.leftAnchor, constant: xSpacing).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                
+                xSpacing += 60
+                
+                count += 1
+                if count == 5{
+                    break
+                }
+            }
+        } else if size == 6 {
+            for (_, image) in socialMediaImages {
+                self.addSubview(image)
+                image.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
+                image.leftAnchor.constraint(equalTo: self.leftAnchor, constant: xSpacing).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                
+                xSpacing += 60
+                count += 1
+                if count == 6{
+                    break
+                }
+            }
         }
+        else {
+            for (_, image) in socialMediaImages {
+                self.addSubview(image)
+                image.topAnchor.constraint(equalTo: bioLabel.topAnchor, constant: 20).isActive = true
+                image.leftAnchor.constraint(equalTo: self.leftAnchor, constant: xSpacing).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                
+                xSpacing += 60
+                count += 1
+                if count == 6{
+                    break
+                }
+            }
+        }
+        
+        
+        
+
     }
 }

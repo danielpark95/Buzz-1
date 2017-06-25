@@ -219,7 +219,7 @@
 				TargetAttributes = {
 					1435323C1EDA9CC2000507DB = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = YSRLK76L75;
+						DevelopmentTeam = Q8WLRBAD9Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -443,10 +443,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YSRLK76L75;
+				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize12;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
@@ -460,10 +460,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YSRLK76L75;
+				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize12;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
