@@ -95,7 +95,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
+        collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
     }
     

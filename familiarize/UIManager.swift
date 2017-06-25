@@ -15,6 +15,9 @@ class UIManager {
         let button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         return button
     }
 
@@ -23,6 +26,9 @@ class UIManager {
         imageView.image = UIImage(named: imageName)
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        let tap = UITapGestureRecognizer()
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }
     

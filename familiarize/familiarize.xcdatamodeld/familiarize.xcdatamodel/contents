@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MyUserProfile" representedClassName="MyUserProfile" syncable="YES">
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="faceBookProfile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instagramProfile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="profileImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="snapChatProfile" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="UserProfile" representedClassName="UserProfile" syncable="YES">
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="faceBookProfile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="instagramProfile" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,6 +21,7 @@
         <attribute name="snapChatProfile" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UserProfile" positionX="-1422" positionY="-9" width="128" height="150"/>
+        <element name="UserProfile" positionX="-1422" positionY="-9" width="128" height="165"/>
+        <element name="MyUserProfile" positionX="-1422" positionY="54" width="128" height="165"/>
     </elements>
 </model>

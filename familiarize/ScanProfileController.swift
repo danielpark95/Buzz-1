@@ -31,6 +31,7 @@ class ScanProfileController: PopupBase {
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
+    
     // Customized checkbox that is supposed to show the user that another user has been added.
     //https://github.com/Marxon13/M13Checkbox
     let checkBox: M13Checkbox = {
@@ -46,9 +47,8 @@ class ScanProfileController: PopupBase {
         return cb
     }()
     
-    
     lazy var viewProfileButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "viewprofile-button")
+        let button = UIManager.makeButton(imageName: "view-profile-button")
         button.addTarget(self, action: #selector(viewProfileClicked), for: .touchUpInside)
         return button
     }()
@@ -77,25 +77,64 @@ class ScanProfileController: PopupBase {
         self.dismiss(animated: false)
     }
     
+    override func setPopup() {
+        self.popupImageView = UIManager.makeImage(imageName: "view-profile-popup")
+        
+        view.addSubview(self.popupImageView)
+        
+        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        self.popupCenterYAnchor?.isActive = true
+        self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
+        self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
+    }
+    
     override func addToBackground() {
+        
         view.addSubview(backgroundBlur)
         view.sendSubview(toBack: backgroundBlur)
         view.addSubview(self.checkBox)
     
         self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 25).isActive = true
+        self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
         self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
         self.checkBox.hideBox = true
+        
+    }
+
+    override func setDismissButton() {
+        dismissFriendButton = UIManager.makeButton(imageName: "dismiss-button-color")
+        view.addSubview(self.dismissFriendButton)
+        dismissFriendButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        dismissFriendButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
+        dismissFriendButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissFriendButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        dismissFriendButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
     }
     
     override func addToGraphics() {
         view.addSubview(self.viewProfileButton)
+        view.addSubview(self.profileImage)
+        view.addSubview(self.nameAndBioLabel)
         
-        viewProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        viewProfileButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 70).isActive = true
-        viewProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        viewProfileButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
+        
+        // Set to 80 --> Then you also have to change the corner radius to 40 ..
+        profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+
+        nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        nameAndBioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
+        nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
+        nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
+
+        viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
+        viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
+        viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
         self.checkBox.setCheckState(.checked, animated: true)
     }
