@@ -80,7 +80,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         profileImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
-        let name = NSMutableAttributedString(string: "Richard Hendricks", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 20)!, NSForegroundColorAttributeName: UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)])
+        let name = NSMutableAttributedString(string: "Richard Hendricks", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)])
         
         nameLabel.attributedText = name
         nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -97,7 +97,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupCollectionView() {
-        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.showsHorizontalScrollIndicator = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         

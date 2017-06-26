@@ -25,6 +25,9 @@ extension MyUserProfile {
     @NSManaged public var phoneNumber: String?
     @NSManaged public var profileImage: NSData?
     @NSManaged public var snapChatProfile: String?
+    @NSManaged public var linkedInProfile: String?
+    @NSManaged public var email: String?
+    
 
     
     static func getData() -> [MyUserProfile]{
@@ -53,6 +56,8 @@ extension MyUserProfile {
         newUser.snapChatProfile = qrJSON["sc"].string
         newUser.phoneNumber = qrJSON["pn"].string
         newUser.bio = qrJSON["bio"].string
+        newUser.linkedInProfile = qrJSON["in"].string
+        newUser.email = qrJSON["em"].string
         
         newUser.date = NSDate()
         do {
@@ -83,7 +88,7 @@ extension MyUserProfile {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MyUserProfile")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         do {
-            let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
+            let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [MyUserProfile]
             for userProfile in userProfiles! {
                 managedObjectContext.delete(userProfile)
             }
