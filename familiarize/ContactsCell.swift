@@ -8,8 +8,16 @@
 
 import UIKit
 
-class ContactsCell: BaseCell {
+class ContactsCell: UICollectionViewCell {
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var userProfile: UserProfile? {
         didSet {
 
@@ -30,6 +38,8 @@ class ContactsCell: BaseCell {
                 self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
                 self.profileImage.clipsToBounds = true
             }
+            
+            // Views is set after knowing how long the texts are.
             setupViews()
         }
     }
@@ -52,7 +62,7 @@ class ContactsCell: BaseCell {
         
     }()
     
-    override func setupViews() {
+    func setupViews() {
         addSubview(nameLabelAndTime)
         addSubview(separatorView)
         addSubview(profileImage)

@@ -24,7 +24,6 @@
 		14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E031EE604D7000D6AA9 /* Extensions.swift */; };
 		1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A2281EEDCEB600366303 /* ViewProfileController.swift */; };
 		1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A22A1EEF7B2D00366303 /* UIManager.swift */; };
-		14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */; };
 		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
 		14F35FEB1EE260B5007A2A8D /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
@@ -51,7 +50,6 @@
 		14773E031EE604D7000D6AA9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1497A2281EEDCEB600366303 /* ViewProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileController.swift; sourceTree = "<group>"; };
 		1497A22A1EEF7B2D00366303 /* UIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
-		14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellBaseClass.swift; sourceTree = "<group>"; };
 		14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		14F35FEA1EE260B5007A2A8D /* QRScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				140ECD841EF723FD00E538E4 /* PopupBaseClass.swift */,
-				14A3F33C1EE11D2F00C97747 /* CellBaseClass.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -314,7 +311,6 @@
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
 				1443FF6E1EFF4F680032A2E7 /* MyUserProfile+CoreDataProperties.swift in Sources */,
 				140ECD851EF723FD00E538E4 /* PopupBaseClass.swift in Sources */,
-				14A3F33D1EE11D2F00C97747 /* CellBaseClass.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,

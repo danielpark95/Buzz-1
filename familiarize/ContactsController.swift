@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwiftyJSON
 
 extension Notification.Name {
     static let reload = Notification.Name("reloadNotification")
@@ -41,7 +42,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         userProfiles = UserProfile.getData()
         setupRefreshingAndReloading()
         setupCollectionView()
-        
         
     }
     

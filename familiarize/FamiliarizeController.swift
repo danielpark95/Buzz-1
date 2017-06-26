@@ -7,16 +7,42 @@
 //
 
 import UIKit
+import CoreData
+import SwiftyJSON
 
 class FamiliarizeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     private let cellId = "cellId"
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        
+        
+//        let shortHandForQR: JSON = [
+//            "bio": "cool kid",
+//            "fb": "alexoh",
+//            "ig": "alexoh",
+//            "name": "alexoh",
+//            "pn": "alexoh",
+//            "sc": "alexoh",
+//            ]
+        
+        let shortHandForQR: JSON = [
+            "bio": "cool kid",
+            "name": "alexoh",
+            "pn": "alexoh",
+            "sc": "alexoh",
+            "ig": "alexoh",
+            "fb": "alexoh",
+            "in": "alexoh",
+            "em": "alexoh@gmail.com",
+        ]
+
+        
+        MyUserProfile.saveData(shortHandForQR)
+        
+        super.viewDidLoad()
         navigationItem.title = ""
         self.automaticallyAdjustsScrollViewInsets = false
-        
         setupView()
         setupCollectionView()
     }
