@@ -92,6 +92,17 @@ class ViewProfileController: PopupBase {
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
+    
+    lazy var emButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_phone")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
+    lazy var inButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_phone")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
 
     func createSocialMediaButtons() {
         socialMediaButtons = [
@@ -99,6 +110,8 @@ class ViewProfileController: PopupBase {
             "ig": igButton,
             "sc": scButton,
             "pn": pnButton,
+            "in": emButton,
+            "em": inButton,
         ]
     }
 
@@ -107,8 +120,10 @@ class ViewProfileController: PopupBase {
         "instagramProfile": "ig",
         "snapChatProfile": "sc" ,
         "phoneNumber": "pn",
+        "email": "em",
+        "linkedInProfile": "in",
     ]
-
+    
     func presentSocialMediaButtons() {
 
         var spacing: CGFloat = 20
@@ -124,8 +139,8 @@ class ViewProfileController: PopupBase {
                 spacing += 60
             }
         }
-        
     }
+    
     
     override func dismissClicked() {
         self.dismiss(animated: false)

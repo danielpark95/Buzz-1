@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var previousIndex: Int?
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -29,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
         if window?.rootViewController as? CustomTabBarController != nil {
             let tabBarController = window!.rootViewController as! CustomTabBarController
-            tabBarController.selectedIndex = 1
+            tabBarController.selectedIndex = 2
         }
         
         

@@ -12,14 +12,17 @@ import CoreData
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     
-    
-    
     var myUserProfiles: [MyUserProfile]? {
         didSet {
             if let count = self.myUserProfiles?.count {
                 pageControl.numberOfPages = count
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        delegate.previousIndex = 2
     }
     
     override func viewDidLoad() {
