@@ -23,14 +23,11 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         contactsNavigationController.tabBarItem.image = UIImage(named: "dan_contacts_grey")?.withRenderingMode(.alwaysOriginal)
         contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_contacts_red")?.withRenderingMode(.alwaysOriginal)
         contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
-        
-        
-        let famController = FamiliarizeController(collectionViewLayout: UICollectionViewFlowLayout())
+
+        let famController = QRScannerController()
         let famNavigationController = UINavigationController(rootViewController: famController)
-        famNavigationController.tabBarItem.image = UIImage(named: "dan_qr_grey")?.withRenderingMode(.alwaysOriginal)
-        famNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_qr_red")?.withRenderingMode(.alwaysOriginal)
+        famNavigationController.tabBarItem.image = UIImage(named: "dan_camera_round")?.withRenderingMode(.alwaysOriginal)
         famNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
-        
         
         let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavigationController = UINavigationController(rootViewController: userController)
@@ -62,8 +59,8 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
     
     override func viewWillLayoutSubviews() {
         var tabFrame = self.tabBar.frame
-        tabFrame.size.height = 45
-        tabFrame.origin.y = self.view.frame.size.height - 45
+        tabFrame.size.height = 55
+        tabFrame.origin.y = self.view.frame.size.height - 55
         self.tabBar.frame = tabFrame
     }
     

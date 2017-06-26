@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SwiftyJSON
+import Foundation
 
 extension Notification.Name {
     static let reload = Notification.Name("reloadNotification")
@@ -22,7 +23,11 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     lazy var searchBar:UISearchBar = UISearchBar()
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        delegate.previousIndex = 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Contacts"
