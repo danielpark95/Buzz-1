@@ -25,6 +25,8 @@ extension UserProfile {
     @NSManaged public var date: NSDate?
     @NSManaged public var profileImage: Data?
     @NSManaged public var bio: String?
+    @NSManaged public var linkedInProfile: String?
+    @NSManaged public var email: String?
 
     static func getData() -> [UserProfile]{
         
@@ -52,6 +54,8 @@ extension UserProfile {
         newUser.snapChatProfile = qrJSON["sc"].string
         newUser.phoneNumber = qrJSON["pn"].string
         newUser.bio = qrJSON["bio"].string
+        newUser.linkedInProfile = qrJSON["in"].string
+        newUser.email = qrJSON["em"].string
         
         newUser.date = NSDate()
         do {

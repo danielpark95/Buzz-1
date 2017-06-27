@@ -75,6 +75,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         let viewProfileController = ViewProfileController()
         
         if let userProfile = userProfiles?[idx] {
+            
             viewProfileController.userProfile = userProfile
         }
         
@@ -120,6 +121,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = self.userProfiles?.count {
+            print("The number of userprofiles added: \(count)")
             return count
         }
         return 0

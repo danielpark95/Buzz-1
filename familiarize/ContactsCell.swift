@@ -21,6 +21,7 @@ class ContactsCell: UICollectionViewCell {
     var userProfile: UserProfile? {
         didSet {
 
+            print("The current name is: \(userProfile?.name)")
             // The name
             let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)])
             
@@ -72,10 +73,12 @@ class ContactsCell: UICollectionViewCell {
         profileImage.widthAnchor.constraint(equalToConstant: 44).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
-        nameLabelAndTime.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        
+        // TODO: Find a better way to dynamically create the height and width anchor.
+        nameLabelAndTime.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         nameLabelAndTime.leftAnchor.constraint(equalTo: profileImage.rightAnchor, constant: 8).isActive = true
-        nameLabelAndTime.heightAnchor.constraint(equalToConstant: nameLabelAndTime.intrinsicContentSize.height).isActive = true
-        nameLabelAndTime.widthAnchor.constraint(equalToConstant:nameLabelAndTime.intrinsicContentSize.width).isActive = true
+        nameLabelAndTime.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        nameLabelAndTime.widthAnchor.constraint(equalToConstant:400).isActive = true
         
         separatorView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true

@@ -42,7 +42,6 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     
     override func viewDidLoad() {
-        
 
         super.viewDidLoad()
         
@@ -130,6 +129,8 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         
         let data = qrCode.data(using: .utf8)
         self.userProfile = UserProfile.saveData(JSON(data!))
+        print(self.userProfile?.name)
+        print(self.userProfile?.faceBookProfile)
         return true
         
     }
