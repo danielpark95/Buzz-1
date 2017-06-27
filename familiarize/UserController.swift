@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwiftyJSON
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
@@ -26,6 +27,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         navigationItem.title = "My Info"
         

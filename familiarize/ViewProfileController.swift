@@ -14,6 +14,7 @@ class ViewProfileController: PopupBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     
@@ -195,6 +196,7 @@ class ViewProfileController: PopupBase {
     }
     
     override func setNameAndBio() {
+        
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
 
         if let bio = userProfile?.bio {
