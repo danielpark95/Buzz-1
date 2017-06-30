@@ -20,8 +20,6 @@ class ContactsCell: UICollectionViewCell {
     
     var userProfile: UserProfile? {
         didSet {
-
-            print("The current name is: \(userProfile?.name)")
             // The name
             let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)])
             
@@ -72,7 +70,6 @@ class ContactsCell: UICollectionViewCell {
         profileImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 44).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
         
         // TODO: Find a better way to dynamically create the height and width anchor.
         nameLabelAndTime.topAnchor.constraint(equalTo: self.topAnchor).isActive = true

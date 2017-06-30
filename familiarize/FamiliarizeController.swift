@@ -95,7 +95,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     
     lazy var backButton: UIButton = {
-        let image = UIImage(named: "back-button") as UIImage?
+        let image = UIImage(named: "cancel-button") as UIImage?
         var button = UIButton(type: .custom) as UIButton
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false

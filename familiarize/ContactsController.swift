@@ -39,11 +39,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         searchBar.isTranslucent = false
         searchBar.delegate = self
         
-        
-        //navigationItem.titleView = searchBar
-        
-        
-        
         userProfiles = UserProfile.getData()
         setupRefreshingAndReloading()
         setupCollectionView()

@@ -23,7 +23,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         contactsNavigationController.tabBarItem.image = UIImage(named: "dan_contacts_grey")?.withRenderingMode(.alwaysOriginal)
         contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_contacts_red")?.withRenderingMode(.alwaysOriginal)
         contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
-
+        
         let famController = QRScannerController()
         let famNavigationController = UINavigationController(rootViewController: famController)
         famNavigationController.tabBarItem.image = UIImage(named: "dan_camera_round")?.withRenderingMode(.alwaysOriginal)
@@ -35,10 +35,20 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_myinfo_red")?.withRenderingMode(.alwaysOriginal)
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
+        let tabBackground = UIManager.makeImage(imageName: "dan_orange_bar")
+        self.tabBar.addSubview(tabBackground)
+        tabBackground.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor).isActive = true
+        tabBackground.centerYAnchor.constraint(equalTo: tabBar.centerYAnchor).isActive = true
+        
+        tabBackground.widthAnchor.constraint(equalToConstant: tabBar.frame.width - 20).isActive = true
+        tabBackground.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        tabBackground.contentMode = .scaleAspectFill
+
         viewControllers = [contactsNavigationController, famNavigationController, userNavigationController]
         
         createSmallLineOnTabBar()
         tabBar.backgroundColor = UIColor.white
+ 
     }
     
     func tabBarController(_ didSelecttabBarController: UITabBarController,
@@ -51,7 +61,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
     func createSmallLineOnTabBar() {
         tabBar.isTranslucent = false
         let topBorder = CALayer()
-        topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0.5)
+        topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0)
         topBorder.backgroundColor = UIColor(red: 229/255, green: 231/255, blue: 235/255, alpha: 1.0).cgColor
         tabBar.layer.addSublayer(topBorder)
         tabBar.clipsToBounds = true
