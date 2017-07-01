@@ -12,8 +12,37 @@ class SettingsCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
-
+        
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            nameLabel.textColor = isHighlighted ? UIColor.darkGray : UIColor.black
+            iconImageView.tintColor = isHighlighted ? UIColor.darkGray : UIColor.black
+        }
+    }
+    
+    var setting: Setting? {
+        didSet {
+            nameLabel.text = setting?.name
+            iconImageView.image = UIImage(named: (setting?.imageName)!)?.withRenderingMode(.alwaysTemplate)
+            iconImageView.tintColor = UIColor.black
+            
+            addSubview(iconImageView)
+            if (nameLabel.text == "") {
+                iconImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+                iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+                iconImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+                iconImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+                self.layoutIfNeeded()
+            } else {
+                iconImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+                iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+                iconImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+                iconImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            }
+            setupViews()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -21,47 +50,41 @@ class SettingsCell: UICollectionViewCell {
     }
     
     let nameLabel: UILabel = {
-        let label = UIManager.makeLabel()
-        label.text = "Whatthe"
-        return label
+        return UIManager.makeLabel()
     }()
     
-    let settingsButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "settings-button")
-        button.addTarget(self, action: #selector(didSelectSettings), for: .touchUpInside)
-        return button
+    let iconImageView: UIImageView = {
+        return UIManager.makeImage()
     }()
     
-    // This creates the line in between each of the cells.
-    let separatorView: UIView = {
-        let view = UIManager.makeImage()
-        view.backgroundColor = UIColor(white: 0.95, alpha:1)
-        return view
-    }()
+//    // This creates the line in between each of the cells.
+//    let separatorView: UIView = {
+//        let view = UIManager.makeImage()
+//        view.backgroundColor = UIColor(white: 0.95, alpha:1)
+//        return view
+//    }()
     
     func didSelectSettings() {
         
     }
     
     func setupViews() {
+        
+        
         addSubview(nameLabel)
-        addSubview(settingsButton)
-        addSubview(separatorView)
+//        addSubview(separatorView)
         
         nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 45).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
         
-        settingsButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
-        settingsButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        settingsButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        settingsButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+
         
-        separatorView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+//        separatorView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+//        separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+//        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+//        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     

@@ -55,23 +55,47 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"hamburger-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"settings")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
         navigationItem.rightBarButtonItem = hamburgerButton
     }
     
+//    func handleHamburger() {
+//        let transition = CATransition()
+//        transition.duration = 0.2
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        
+//        let layout = UICollectionViewFlowLayout()
+//        let controller = SettingsController(collectionViewLayout: layout)
+//        let navigationController = UINavigationController.init(rootViewController: controller)
+//        self.present(navigationController, animated: false)
+//    }
+    
+    lazy var settingsLauncher: SettingsController = {
+        let launcher = SettingsController()
+        launcher.userController = self
+        return launcher
+    }()
+    
     func handleHamburger() {
+        settingsLauncher.showSettings()
+    }
+    
+    func showControllerForSetting(setting: Setting) {
         let transition = CATransition()
         transition.duration = 0.2
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        
-        let layout = UICollectionViewFlowLayout()
-        let controller = SettingsController(collectionViewLayout: layout)
-        let navigationController = UINavigationController.init(rootViewController: controller)
-        self.present(navigationController, animated: false)
+//
+//        let layout = UICollectionViewFlowLayout()
+//        let controller = SettingsController(collectionViewLayout: layout)
+//        let navigationController = UINavigationController.init(rootViewController: controller)
+//        self.present(navigationController, animated: false)
     }
-
+    
+    
     let profileImage: UIImageView = {
         return UIManager.makeProfileImage(valueOfCornerRadius: 30)
     }()
