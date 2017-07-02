@@ -36,6 +36,7 @@ class UIManager {
         let label =  UILabel()
         label.numberOfLines = numberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = " "
         return label
     }
     

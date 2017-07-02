@@ -17,7 +17,6 @@ class ViewProfileController: PopupBase {
         
     }
     
-    
     func buttonLink(_ userURL: String) {
         
         // Lmao, in order to get profile id, just scrape the facebook page again.
