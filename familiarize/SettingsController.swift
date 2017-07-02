@@ -18,14 +18,16 @@
 //import UIKit
 //
 class Setting: NSObject {
-    let name: String
+    let name: SettingName
     let imageName: String
     
-    init(name: String, imageName: String) {
+    init(name: SettingName, imageName: String) {
         self.name = name
         self.imageName = imageName
     }
 }
+
+
 //
 //
 //class SettingsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -101,6 +103,15 @@ class Setting: NSObject {
 //    
 //    
 //}
+
+enum SettingName: String {
+    case Blank = ""
+    case TermsPrivacy = "Terms & privacy policy"
+    case Contact = "Contact"
+    case Help = "Help"
+    case Feedback = "Feedback"
+}
+
 import UIKit
 class SettingsController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -113,7 +124,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }()
     
     let settings: [Setting] = {
-        return [Setting(name: "", imageName: "privacy"),Setting(name: "Terms & privacy policy", imageName: "privacy"),Setting(name: "Contact", imageName: "contact"),Setting(name: "Help", imageName: "help"), Setting(name: "Feedback", imageName: "feedback")]
+        return [Setting(name: .Blank, imageName: "privacy"),Setting(name: .TermsPrivacy, imageName: "privacy"),Setting(name: .Contact, imageName: "contact"),Setting(name: .Help, imageName: "help"), Setting(name: .Feedback, imageName: "feedback")]
     }()
     
     let collectionView: UICollectionView = {
@@ -138,26 +149,23 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             tintOverlay.frame = window.frame
             tintOverlay.alpha = 0
             
-            
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
                 self.collectionView.frame = CGRect(x: x, y: 0, width: width, height: window.frame.height)
-
                 
             }, completion: nil)
-            
         }
-        
     }
-    
+
     func handleDismiss(setting: Setting) {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.tintOverlay.alpha = 0
             if let window = UIApplication.shared.keyWindow {
                 self.collectionView.frame = CGRect(x: window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
             }
+
         }, completion: { _ in
-            if setting.name != "" {
+            if setting.name != .Blank {
                 self.userController?.showControllerForSetting(setting: setting)
             }
         })

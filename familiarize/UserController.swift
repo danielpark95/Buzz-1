@@ -82,17 +82,34 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         settingsLauncher.showSettings()
     }
     
+    
+    /*
+ 
+ case Blank = ""
+ case TermsPrivacy = "Terms & privacy policy"
+ case Contact = "Contact"
+ case Help = "Help"
+ case Feedback = "Feedback"
+ */
     func showControllerForSetting(setting: Setting) {
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-//
-//        let layout = UICollectionViewFlowLayout()
-//        let controller = SettingsController(collectionViewLayout: layout)
-//        let navigationController = UINavigationController.init(rootViewController: controller)
-//        self.present(navigationController, animated: false)
+
+        let layout = UICollectionViewFlowLayout()
+        let controller: UIViewController
+        
+        if setting.name == .TermsPrivacy {
+            controller = TermsPrivacySettingController(collectionViewLayout: layout)
+        } else if setting.name == .Contact {
+            controller = ContactSettingController(collectionViewLayout: layout)
+        } else if setting.name == .Help {
+            controller = HelpSettingController(collectionViewLayout: layout)
+        } else { // It is the feedback controller
+            controller = FeedbackSettingController(collectionViewLayout: layout)
+        }
+        
+        
+        controller.hidesBottomBarWhenPushed = true
+
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     
