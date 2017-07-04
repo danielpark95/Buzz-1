@@ -18,22 +18,23 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         super.viewDidLoad()
         self.delegate = self
         
-        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
-        let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        contactsNavigationController.tabBarItem.image = UIImage(named: "dan_contacts_grey")?.withRenderingMode(.alwaysOriginal)
-        contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_contacts_red")?.withRenderingMode(.alwaysOriginal)
-        contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+        let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
+        let userNavigationController = UINavigationController(rootViewController: userController)
+        userNavigationController.tabBarItem.image = UIImage(named: "dan_myinfo_grey")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_myinfo_red")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         let famController = QRScannerController()
         let famNavigationController = UINavigationController(rootViewController: famController)
         famNavigationController.tabBarItem.image = UIImage(named: "dan_camera_round")?.withRenderingMode(.alwaysOriginal)
         famNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
-        let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
-        let userNavigationController = UINavigationController(rootViewController: userController)
-        userNavigationController.tabBarItem.image = UIImage(named: "dan_myinfo_grey")?.withRenderingMode(.alwaysOriginal)
-        userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_myinfo_red")?.withRenderingMode(.alwaysOriginal)
-        userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+        
+        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let contactsNavigationController = UINavigationController(rootViewController: contactsController)
+        contactsNavigationController.tabBarItem.image = UIImage(named: "dan_contacts_grey")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_contacts_red")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
         
         let tabBackground = UIManager.makeImage(imageName: "dan_orange_bar")
         self.tabBar.addSubview(tabBackground)
@@ -44,7 +45,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
         tabBackground.heightAnchor.constraint(equalToConstant: 45).isActive = true
         tabBackground.contentMode = .scaleAspectFill
 
-        viewControllers = [contactsNavigationController, famNavigationController, userNavigationController]
+        viewControllers = [userNavigationController, famNavigationController,contactsNavigationController ]
         
         createSmallLineOnTabBar()
         tabBar.backgroundColor = UIColor.white

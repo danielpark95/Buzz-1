@@ -56,7 +56,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func setupNavBarButton() {
         let hamburgerButton = UIBarButtonItem(image: UIImage(named:"settings")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        navigationItem.rightBarButtonItem = hamburgerButton
+        navigationItem.leftBarButtonItem = hamburgerButton
     }
     
 //    func handleHamburger() {
@@ -83,14 +83,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     
-    /*
- 
- case Blank = ""
- case TermsPrivacy = "Terms & privacy policy"
- case Contact = "Contact"
- case Help = "Help"
- case Feedback = "Feedback"
- */
     func showControllerForSetting(setting: Setting) {
 
         let layout = UICollectionViewFlowLayout()

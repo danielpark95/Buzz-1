@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
         if window?.rootViewController as? CustomTabBarController != nil {
             let tabBarController = window!.rootViewController as! CustomTabBarController
-            tabBarController.selectedIndex = 2
+            tabBarController.selectedIndex = 0
         }
         
         

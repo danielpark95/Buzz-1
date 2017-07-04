@@ -145,13 +145,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             window.addSubview(collectionView)
             let width: CGFloat = (window.frame.width)*(2/3)
             let x = window.frame.width - width
-            collectionView.frame = CGRect(x: window.frame.width, y: 0, width: width, height: window.frame.height)
+            collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: width, height: window.frame.height)
             tintOverlay.frame = window.frame
             tintOverlay.alpha = 0
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
-                self.collectionView.frame = CGRect(x: x, y: 0, width: width, height: window.frame.height)
+                self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
                 
             }, completion: nil)
         }
@@ -161,7 +161,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.tintOverlay.alpha = 0
             if let window = UIApplication.shared.keyWindow {
-                self.collectionView.frame = CGRect(x: window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
+                self.collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
             }
 
         }, completion: { _ in
