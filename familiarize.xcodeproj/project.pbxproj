@@ -33,6 +33,17 @@
 		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
+		F6926F861F0A5F01006E312C /* ExampleAnimateTipsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F7F1F0A5F01006E312C /* ExampleAnimateTipsContentView.swift */; };
+		F6926F871F0A5F01006E312C /* ExampleBackgroundContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F801F0A5F01006E312C /* ExampleBackgroundContentView.swift */; };
+		F6926F881F0A5F01006E312C /* ExampleBasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F811F0A5F01006E312C /* ExampleBasicContentView.swift */; };
+		F6926F891F0A5F01006E312C /* ExampleBouncesContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F821F0A5F01006E312C /* ExampleBouncesContentView.swift */; };
+		F6926F8A1F0A5F01006E312C /* ExampleHighlightableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F831F0A5F01006E312C /* ExampleHighlightableContentView.swift */; };
+		F6926F8B1F0A5F01006E312C /* ExampleIrregularityContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F841F0A5F01006E312C /* ExampleIrregularityContentView.swift */; };
+		F6926F8C1F0A5F01006E312C /* ExampleTipsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F851F0A5F01006E312C /* ExampleTipsContentView.swift */; };
+		F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6926F8D1F0A5FBA006E312C /* pop.framework */; };
+		F6926F901F0A6CEE006E312C /* ExampleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F8F1F0A6CEE006E312C /* ExampleNavigationController.swift */; };
+		F6926F921F0A6EA7006E312C /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F911F0A6EA7006E312C /* ExampleViewController.swift */; };
+		F6926F941F0A6EBE006E312C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F931F0A6EBE006E312C /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +77,17 @@
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.debug.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.release.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.release.xcconfig"; sourceTree = "<group>"; };
+		F6926F7F1F0A5F01006E312C /* ExampleAnimateTipsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleAnimateTipsContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleAnimateTipsContentView.swift; sourceTree = "<group>"; };
+		F6926F801F0A5F01006E312C /* ExampleBackgroundContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleBackgroundContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleBackgroundContentView.swift; sourceTree = "<group>"; };
+		F6926F811F0A5F01006E312C /* ExampleBasicContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleBasicContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleBasicContentView.swift; sourceTree = "<group>"; };
+		F6926F821F0A5F01006E312C /* ExampleBouncesContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleBouncesContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleBouncesContentView.swift; sourceTree = "<group>"; };
+		F6926F831F0A5F01006E312C /* ExampleHighlightableContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleHighlightableContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleHighlightableContentView.swift; sourceTree = "<group>"; };
+		F6926F841F0A5F01006E312C /* ExampleIrregularityContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleIrregularityContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleIrregularityContentView.swift; sourceTree = "<group>"; };
+		F6926F851F0A5F01006E312C /* ExampleTipsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleTipsContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleTipsContentView.swift; sourceTree = "<group>"; };
+		F6926F8D1F0A5FBA006E312C /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = ../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework; sourceTree = "<group>"; };
+		F6926F8F1F0A6CEE006E312C /* ExampleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleNavigationController.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/ExampleNavigationController.swift; sourceTree = "<group>"; };
+		F6926F911F0A6EA7006E312C /* ExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleViewController.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/ExampleViewController.swift; sourceTree = "<group>"; };
+		F6926F931F0A6EBE006E312C /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Me/WebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */,
 				245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +130,16 @@
 		141CEEBC1EDCD03C0068B2B9 /* TabController */ = {
 			isa = PBXGroup;
 			children = (
+				F6926F931F0A6EBE006E312C /* WebViewController.swift */,
+				F6926F911F0A6EA7006E312C /* ExampleViewController.swift */,
+				F6926F8F1F0A6CEE006E312C /* ExampleNavigationController.swift */,
+				F6926F7F1F0A5F01006E312C /* ExampleAnimateTipsContentView.swift */,
+				F6926F801F0A5F01006E312C /* ExampleBackgroundContentView.swift */,
+				F6926F811F0A5F01006E312C /* ExampleBasicContentView.swift */,
+				F6926F821F0A5F01006E312C /* ExampleBouncesContentView.swift */,
+				F6926F831F0A5F01006E312C /* ExampleHighlightableContentView.swift */,
+				F6926F841F0A5F01006E312C /* ExampleIrregularityContentView.swift */,
+				F6926F851F0A5F01006E312C /* ExampleTipsContentView.swift */,
 				14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */,
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
 				140A40001EDFC42E00D4539E /* FamiliarizeController.swift */,
@@ -182,6 +215,7 @@
 		840416BE49CDD194FA4AE151 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6926F8D1F0A5FBA006E312C /* pop.framework */,
 				7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */,
 			);
 			name = Frameworks;
@@ -231,7 +265,7 @@
 				TargetAttributes = {
 					1435323C1EDA9CC2000507DB = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = YSRLK76L75;
+						DevelopmentTeam = Q8WLRBAD9Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -319,28 +353,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6926F8B1F0A5F01006E312C /* ExampleIrregularityContentView.swift in Sources */,
+				F6926F941F0A6EBE006E312C /* WebViewController.swift in Sources */,
+				F6926F921F0A6EA7006E312C /* ExampleViewController.swift in Sources */,
 				14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */,
+				F6926F891F0A5F01006E312C /* ExampleBouncesContentView.swift in Sources */,
 				140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */,
 				1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */,
 				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
 				1443FF6E1EFF4F680032A2E7 /* MyUserProfile+CoreDataProperties.swift in Sources */,
+				F6926F861F0A5F01006E312C /* ExampleAnimateTipsContentView.swift in Sources */,
 				140ECD851EF723FD00E538E4 /* PopupBaseClass.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
+				F6926F8A1F0A5F01006E312C /* ExampleHighlightableContentView.swift in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
 				1443FF6D1EFF4F680032A2E7 /* MyUserProfile+CoreDataClass.swift in Sources */,
+				F6926F8C1F0A5F01006E312C /* ExampleTipsContentView.swift in Sources */,
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
+				F6926F901F0A6CEE006E312C /* ExampleNavigationController.swift in Sources */,
 				14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
+				F6926F871F0A5F01006E312C /* ExampleBackgroundContentView.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
 				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
+				F6926F881F0A5F01006E312C /* ExampleBasicContentView.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,10 +503,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YSRLK76L75;
+				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ESTabBarController-swift\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Kanna\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/M13Checkbox\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/QRCode\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON\"",
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework\"",
+				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize126;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
@@ -476,10 +531,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YSRLK76L75;
+				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ESTabBarController-swift\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Kanna\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/M13Checkbox\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/QRCode\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON\"",
+					"\"$(SRCROOT)/../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework\"",
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/\"",
+				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize126;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;

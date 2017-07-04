@@ -11,49 +11,69 @@
 
 import UIKit
 import CoreData
-
+import ESTabBarController_swift
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
 
     var window: UIWindow?
 
     var previousIndex: Int?
-    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = CustomTabBarController()
         
         
-        // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
-        if window?.rootViewController as? CustomTabBarController != nil {
-            let tabBarController = window!.rootViewController as! CustomTabBarController
-            tabBarController.selectedIndex = 2
-        }
+        let tabBarController = ESTabBarController()
+        tabBarController.delegate = self
+        tabBarController.tabBar.shadowImage = UIImage(named: "dan_transparent")
+        tabBarController.tabBar.backgroundImage = UIImage(named: "dan_background")
+//        tabBarController.shouldHijackHandler = {
+//            tabbarController, viewController, index in
+//            if index == 1 {
+//                return true
+//            }
+//            return false
+//        }
+//        tabBarController.didHijackHandler = {
+//            [weak tabBarController] tabbarController, viewController, index in
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                let alertController = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+//                let takePhotoAction = UIAlertAction(title: "Take a photo", style: .default, handler: nil)
+//                alertController.addAction(takePhotoAction)
+//                let selectFromAlbumAction = UIAlertAction(title: "Select from album", style: .default, handler: nil)
+//                alertController.addAction(selectFromAlbumAction)
+//                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//                alertController.addAction(cancelAction)
+//                tabBarController?.present(alertController, animated: true, completion: nil)
+//            }
+//        }
+//        
+        let v1 = UserController(collectionViewLayout: UICollectionViewFlowLayout())
+        let v3 = QRScannerController()
+        let v5 = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "My Info", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_red"))
+        v3.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: "Hello", image: UIImage(named: "dan_camera_round"), selectedImage: UIImage(named: "dan_camera_round"))
+        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Contacts", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_red"))
         
+        tabBarController.viewControllers = [v1, v3, v5]
+        let navigationController = ExampleNavigationController.init(rootViewController: tabBarController)
+        self.window?.rootViewController = navigationController
         
-        //UINavigationBar.appearance().barTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
-        //UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barStyle = UIBarStyle.black
-        UINavigationBar.appearance().barTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
-        UINavigationBar.appearance().tintColor = UIColor.white
-        let navigationTitleFont = UIFont(name: "Avenir", size: 20)!
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont]
-        
-        
-        
-        
-        
-        
-        //For making the time/wifi signal/ and battery to show white text instead of black text.
-        UIApplication.shared.statusBarStyle = .lightContent
-        
+        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.black
+        let navigationTitleFont = UIFont(name: "Avenir", size: 17)!
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
+        UIApplication.shared.statusBarStyle = .default
         return true
     }
+    
     
     // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {

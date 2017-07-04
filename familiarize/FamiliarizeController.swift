@@ -31,6 +31,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.tabBarController?.tabBar.isHidden = false
+        
     }
     
     

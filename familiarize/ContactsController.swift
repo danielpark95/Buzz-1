@@ -30,8 +30,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Contacts"
-        
+        tabBarController?.title = "Contacts"
         
         searchBar.searchBarStyle = UISearchBarStyle.prominent
         searchBar.placeholder = " Search... "

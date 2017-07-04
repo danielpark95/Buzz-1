@@ -16,4 +16,9 @@ target 'familiarize' do
   #Add Friend Checkbox animation
   pod 'M13Checkbox'
 
+  #ESTabBarController
+  pod 'ESTabBarController-swift'
+
+  pod 'pop'
+
 end
