@@ -96,12 +96,13 @@ class PopupBase: UIViewController {
         
         setNameAndBio()
         setDismissButton()
-        
+    }
+    
+    func setImage() {
         if userProfile?.profileImage != nil {
             self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
             self.profileImage.clipsToBounds = true
         }
-
     }
     
     func setDismissButton() {

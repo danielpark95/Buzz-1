@@ -14,7 +14,7 @@ class ViewProfileController: PopupBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.setImage()
     }
     
     func buttonLink(_ userURL: String) {

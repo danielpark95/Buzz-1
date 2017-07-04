@@ -62,11 +62,14 @@ class ScanProfileController: PopupBase {
     func viewProfileClicked() {
         // Go to different VC
         if self.view.window?.rootViewController as? CustomTabBarController != nil {
+            // Must get access to the original tab bar controller.
             let tabBarController = self.view.window!.rootViewController as! CustomTabBarController
-            tabBarController.selectedIndex = 0
+            // Switch to the third page, which is the contacts page.
+            tabBarController.selectedIndex = 2
+            // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
+            tabBarController.tabBar.isHidden = false
         }
-        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
-        
+        self.dismiss(animated: false, completion: nil)
         NotificationCenter.default.post(name: .viewProfile, object: nil)
     }
     

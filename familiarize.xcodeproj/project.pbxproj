@@ -108,9 +108,9 @@
 			isa = PBXGroup;
 			children = (
 				14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */,
-				143532421EDA9CC2000507DB /* ContactsController.swift */,
-				140A40001EDFC42E00D4539E /* FamiliarizeController.swift */,
 				140ECD811EF6165800E538E4 /* UserController.swift */,
+				140A40001EDFC42E00D4539E /* FamiliarizeController.swift */,
+				143532421EDA9CC2000507DB /* ContactsController.swift */,
 			);
 			name = TabController;
 			sourceTree = "<group>";

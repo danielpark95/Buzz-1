@@ -139,6 +139,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         self.cameraActive = true
     }
     
+    let scanProfileController = ScanProfileController()
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         
@@ -158,7 +159,6 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             if (metadataObj.stringValue != nil  && verifyAndSave(metadataObj.stringValue)) {
                 
                 // Setting up the controller and animations
-                let scanProfileController = ScanProfileController()
                 scanProfileController.userProfile = self.userProfile
                 scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 scanProfileController.QRScannerDelegate = self
@@ -175,7 +175,15 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
-        Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
+//        Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
+//            //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
+//            print("\(response.result.isSuccess)")
+//            if let html = response.result.value {
+//                print("\(html)")
+//                self.parseHTML(html: html, scanProfileController: scanProfileController)
+//            }
+//        }
+        Alamofire.request("https://www.facebook.com/" + "alexswoh").responseString { response in
             //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
             print("\(response.result.isSuccess)")
             if let html = response.result.value {
@@ -189,9 +197,9 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
             for show in doc.css("img[class^='profilePic img']") {
                 let url = NSURL(string: show["src"]!)!
-                print(show["src"]!)
                 let profileImage:NSData? = NSData(contentsOf: url as URL)
                 UserProfile.saveProfileImage(profileImage! as Data, userObject: self.userProfile!)
+                scanProfileController.setImage()
             }
         }
     }
