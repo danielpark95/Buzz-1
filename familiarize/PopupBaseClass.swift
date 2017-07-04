@@ -61,18 +61,29 @@ class PopupBase: UIViewController {
     func dismissClicked() {
         
     }
-    
+
     // Slides up the popup from the bottom of the screen to the middle
     var popupCenterYAnchor: NSLayoutConstraint?
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+//        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+//            self.view.layoutIfNeeded()
+//        }, completion: { _ in
+//            // After moving the background up to the middle, then load the name and buttons.
+//            self.setupGraphics()
+//            self.addToGraphics()
+//        })
+
+
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.setupGraphics()
             self.addToGraphics()
+            
         })
+
     }
     
     // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background

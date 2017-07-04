@@ -77,6 +77,10 @@ class ScanProfileController: PopupBase {
     // QRScannerController view controller. And also pops this view controller from the stack.
     override func dismissClicked() {
         QRScannerDelegate?.commenceCameraScanning()
+        // Brings the popup image to the bottom again.
+        self.popupCenterYAnchor?.constant = self.view.frame.size.height
+        // Unchecks the animation, so that on rescan, it does the animation again.
+        self.checkBox.setCheckState(.unchecked, animated: false)
         self.dismiss(animated: false)
     }
     
