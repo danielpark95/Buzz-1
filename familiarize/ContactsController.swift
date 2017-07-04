@@ -25,7 +25,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.previousIndex = 0
+        delegate.previousIndex = 2
     }
     
     override func viewDidLoad() {

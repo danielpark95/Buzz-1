@@ -66,14 +66,6 @@ class PopupBase: UIViewController {
     var popupCenterYAnchor: NSLayoutConstraint?
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
-//        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-//            self.view.layoutIfNeeded()
-//        }, completion: { _ in
-//            // After moving the background up to the middle, then load the name and buttons.
-//            self.setupGraphics()
-//            self.addToGraphics()
-//        })
-
 
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()

@@ -23,10 +23,38 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.previousIndex = 2
+        delegate.previousIndex = 0
     }
     
     override func viewDidLoad() {
+        
+        
+        
+        let stuff: JSON = [
+            "name": "alex",
+            "fb": "alexswoh",
+            "ig": "l",
+            "sc": "s",
+            "pn": "123123",
+            "bio": "Hello",
+            "in": "hi",
+            "em": "ell"
+        ]
+        
+        let pika: JSON = [
+            "name": "eric chung",
+            "fb": "eric.chung.5680",
+            "ig": "l",
+            "sc": "s",
+            "pn": "123123",
+            "bio": "Hello",
+            "in": "hi",
+            "em": "ell"
+        ]
+        MyUserProfile.clearData()
+        MyUserProfile.saveData(stuff)
+        MyUserProfile.saveData(pika)
+        
         
         super.viewDidLoad()
         
@@ -158,7 +186,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupCollectionView() {
-        collectionView?.showsHorizontalScrollIndicator = true
+        collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         

@@ -69,19 +69,24 @@ class ScanProfileController: PopupBase {
             // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
             tabBarController.tabBar.isHidden = false
         }
-        self.dismiss(animated: false, completion: nil)
+        setupDismiss()
         NotificationCenter.default.post(name: .viewProfile, object: nil)
+    }
+    
+    func setupDismiss() {
+        self.dismiss(animated: false, completion: {
+            // Brings the popup image to the bottom again.
+            self.popupCenterYAnchor?.constant = self.view.frame.size.height
+            // Unchecks the animation, so that on rescan, it does the animation again.
+            self.checkBox.setCheckState(.unchecked, animated: false)
+            self.QRScannerDelegate?.commenceCameraScanning()
+        })
     }
     
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
     // QRScannerController view controller. And also pops this view controller from the stack.
     override func dismissClicked() {
-        QRScannerDelegate?.commenceCameraScanning()
-        // Brings the popup image to the bottom again.
-        self.popupCenterYAnchor?.constant = self.view.frame.size.height
-        // Unchecks the animation, so that on rescan, it does the animation again.
-        self.checkBox.setCheckState(.unchecked, animated: false)
-        self.dismiss(animated: false)
+        setupDismiss()
     }
     
     override func setPopup() {

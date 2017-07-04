@@ -175,21 +175,20 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
-//        Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
-//            //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
-//            print("\(response.result.isSuccess)")
-//            if let html = response.result.value {
-//                print("\(html)")
-//                self.parseHTML(html: html, scanProfileController: scanProfileController)
-//            }
-//        }
-        Alamofire.request("https://www.facebook.com/" + "alexswoh").responseString { response in
+        Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
             //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
             print("\(response.result.isSuccess)")
             if let html = response.result.value {
                 self.parseHTML(html: html, scanProfileController: scanProfileController)
             }
         }
+//        Alamofire.request("https://www.facebook.com/" + "alexswoh").responseString { response in
+//            //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
+//            print("\(response.result.isSuccess)")
+//            if let html = response.result.value {
+//                self.parseHTML(html: html, scanProfileController: scanProfileController)
+//            }
+//        }
     }
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
