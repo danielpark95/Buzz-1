@@ -128,11 +128,8 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         // TODO: Before even moving on, this function should verify that the qr code's JSON is in the format that we need it in.
         
         let data = qrCode.data(using: .utf8)
-        self.userProfile = UserProfile.saveData(JSON(data!))
-        print(self.userProfile?.name)
-        print(self.userProfile?.faceBookProfile)
+        self.userProfile = UserProfile.saveProfile(JSON(data!))
         return true
-        
     }
     
     func commenceCameraScanning() {
@@ -176,19 +173,11 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
-            //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
             print("\(response.result.isSuccess)")
             if let html = response.result.value {
                 self.parseHTML(html: html, scanProfileController: scanProfileController)
             }
         }
-//        Alamofire.request("https://www.facebook.com/" + "alexswoh").responseString { response in
-//            //Alamofire.request("https://www.facebook.com/" + "100004830645669").responseString { response in
-//            print("\(response.result.isSuccess)")
-//            if let html = response.result.value {
-//                self.parseHTML(html: html, scanProfileController: scanProfileController)
-//            }
-//        }
     }
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.

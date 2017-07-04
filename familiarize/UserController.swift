@@ -29,31 +29,31 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         
         
-        
-        let stuff: JSON = [
-            "name": "alex",
-            "fb": "alexswoh",
-            "ig": "l",
-            "sc": "s",
-            "pn": "123123",
-            "bio": "Hello",
-            "in": "hi",
-            "em": "ell"
-        ]
-        
-        let pika: JSON = [
-            "name": "eric chung",
-            "fb": "eric.chung.5680",
-            "ig": "l",
-            "sc": "s",
-            "pn": "123123",
-            "bio": "Hello",
-            "in": "hi",
-            "em": "ell"
-        ]
-        MyUserProfile.clearData()
-        MyUserProfile.saveData(stuff)
-        MyUserProfile.saveData(pika)
+// Uncomment this if you want to add some qrcodes into your core data.
+//        let stuff: JSON = [
+//            "name": "alex",
+//            "fb": "alexswoh",
+//            "ig": "l",
+//            "sc": "s",
+//            "pn": "123123",
+//            "bio": "Hello",
+//            "in": "hi",
+//            "em": "ell"
+//        ]
+//        
+//        let pika: JSON = [
+//            "name": "eric chung",
+//            "fb": "eric.chung.5680",
+//            "ig": "l",
+//            "sc": "s",
+//            "pn": "123123",
+//            "bio": "Hello",
+//            "in": "hi",
+//            "em": "ell"
+//        ]
+//        MyUserProfile.clearData() // Clears all of the core data.
+//        MyUserProfile.saveProfile(stuff)
+//        MyUserProfile.saveProfile(pika)
         
         
         super.viewDidLoad()

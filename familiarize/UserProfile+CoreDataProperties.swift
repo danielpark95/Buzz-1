@@ -43,7 +43,7 @@ extension UserProfile {
         return []
     }
     
-    static func saveData(_ qrJSON: JSON) -> UserProfile {
+    static func saveProfile(_ qrJSON: JSON) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
@@ -79,12 +79,17 @@ extension UserProfile {
         }
     }
     
+    static func deleteProfile(user: UserProfile) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        managedObjectContext.delete(user)
+    }
+    
     // This is just a test run on how we can utilize clearData within the contactsVC
     static func clearData() {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         do {
             let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
             for userProfile in userProfiles! {
