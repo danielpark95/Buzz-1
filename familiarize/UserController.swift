@@ -41,6 +41,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         myUserProfiles = MyUserProfile.getData()
         setupView()
         setupCollectionView()
+        //createSmallLineOnTabBar()
         
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
         doubleTapGesture.numberOfTapsRequired = 2
@@ -116,64 +117,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     
-    let profileImage: UIImageView = {
-        //return UIManager.makeProfileImage(valueOfCornerRadius: 30)
-        return UIManager.makeImage(imageName: "tjmiller6")
-    }()
-    
-    let headerBar: UIImageView = {
-        return UIManager.makeImage(imageName: "dan_circle_bar")
-    }()
 
-    let nameLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 1)
-    }()
-    
-    let bioLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 1)
-    }()
-    
     func setupView() {
         // Add the dots that animate your current location with the qrcodes into the view
         view.addSubview(pageControl)
-        view.addSubview(profileImage)
-        view.addSubview(nameLabel)
-        view.addSubview(bioLabel)
-        view.addSubview(headerBar)
-    
-        
-        
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -160).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 350).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 350).isActive = true
-        
-        let name = NSMutableAttributedString(string: "T.J. Miller", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
-        
-        nameLabel.attributedText = name
-        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -103).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
-        
-        let bio = NSMutableAttributedString(string: "Miller the professional chiller.", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
 
-        bioLabel.attributedText = bio
-        bioLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -40).isActive = true
-        bioLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 185).isActive = true
-        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
-        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
-        
-        headerBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        headerBar.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
-        headerBar.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        headerBar.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        
     }
     
     func setupCollectionView() {
@@ -192,7 +144,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .lightGray
-        pc.currentPageIndicatorTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
     }()
@@ -202,7 +154,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         pageControl.currentPage = pageNumber
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         // Modify this after you saved a user.
         if let count = self.myUserProfiles?.count {
             return count
@@ -226,12 +177,12 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func createSmallLineOnTabBar() {
-        //tabBar.isTranslucent = false
         let topBorder = CALayer()
         topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0)
-        topBorder.backgroundColor = UIColor(red: 229/255, green: 231/255, blue: 235/255, alpha: 1.0).cgColor
-        //tabBar.layer.addSublayer(topBorder)
-        //tabBar.clipsToBounds = true
+        topBorder.backgroundColor = UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0).cgColor
+        tabBarController?.tabBar.layer.addSublayer(topBorder)
+        tabBarController?.tabBar.isTranslucent = false
+        tabBarController?.tabBar.clipsToBounds = true
     }
 
     
