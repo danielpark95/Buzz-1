@@ -25,6 +25,7 @@ class UIManager {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)
         imageView.contentMode = .scaleAspectFit
+        //imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         let tap = UITapGestureRecognizer()
         imageView.addGestureRecognizer(tap)

@@ -84,7 +84,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func setupNavBarButton() {
         let hamburgerButton = UIBarButtonItem(image: UIImage(named:"settings-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAdd))
+        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
         navigationItem.rightBarButtonItem = addButton
@@ -112,8 +112,12 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func handleHamburger() {
         settingsLauncher.showSettings()
     }
-    func handleAdd() {
-        
+    
+    func handleNewCard() {
+            let layout = UICollectionViewFlowLayout()
+            let controller = NewCardController(collectionViewLayout: layout)
+            let navigationController = UINavigationController.init(rootViewController: controller)
+            self.present(navigationController, animated: true)
     }
     
     
