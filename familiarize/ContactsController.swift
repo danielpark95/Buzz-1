@@ -14,6 +14,7 @@ import Foundation
 extension Notification.Name {
     static let reload = Notification.Name("reloadNotification")
     static let viewProfile = Notification.Name("viewProfileNotification")
+    static let changeBrightness = Notification.Name("UIScreenBrightnessDidChangeNotification")
 }
 
 class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
@@ -26,6 +27,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         delegate.previousIndex = 2
+        UIScreen.main.brightness = delegate.userBrightnessLevel
     }
     
     override func viewDidLoad() {

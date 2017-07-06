@@ -16,8 +16,8 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     var previousIndex: Int?
+    var userBrightnessLevel: CGFloat!
     
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = CustomTabBarController()
         
+        
+        userBrightnessLevel = UIScreen.main.brightness
         
         // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
         if window?.rootViewController as? CustomTabBarController != nil {

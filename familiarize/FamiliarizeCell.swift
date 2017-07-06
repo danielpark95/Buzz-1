@@ -14,7 +14,28 @@ import UIKit
 
 
 class FamiliarizeCell: UICollectionViewCell {
-
+    
+    
+    
+    var fullBrightness: Bool = false
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
+    }
+    
+    func manageBrightness() {
+        if (self.fullBrightness == true) {
+            UIScreen.main.brightness = 1.0
+        } else {
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            UIScreen.main.brightness = delegate.userBrightnessLevel
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
@@ -83,6 +104,7 @@ class FamiliarizeCell: UICollectionViewCell {
         }
         
         if onQRImage == true {
+            self.fullBrightness = false
             addSubview(bioLabel)
             
             let bio = NSMutableAttributedString(string: "Palo Alto, 29, Coffee Enthusiast", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 20)!, NSForegroundColorAttributeName: UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)])
@@ -97,6 +119,8 @@ class FamiliarizeCell: UICollectionViewCell {
             
             onQRImage = false
         } else {
+            UIScreen.main.brightness = 1.0
+            self.fullBrightness = true
             addSubview(qrImageView!)
             qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
             qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 50).isActive = true
@@ -105,6 +129,7 @@ class FamiliarizeCell: UICollectionViewCell {
             onQRImage = true
         }
     }
+    
     
     func setupViews() {
         addSubview(cardBorder)

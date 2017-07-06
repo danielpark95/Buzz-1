@@ -27,7 +27,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-        
+         
         
 // Uncomment this if you want to add some qrcodes into your core data.
 //        let stuff: JSON = [
