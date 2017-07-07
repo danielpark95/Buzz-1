@@ -13,6 +13,7 @@
 		141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */; };
 		14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14323B7E1F04DF33004694A6 /* SettingsController.swift */; };
 		14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14323B801F04EBAD004694A6 /* SettingsCell.swift */; };
+		1432D9E31F0F40A400B2BF88 /* SocialMediaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1432D9E21F0F40A400B2BF88 /* SocialMediaController.swift */; };
 		143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143532401EDA9CC2000507DB /* AppDelegate.swift */; };
 		143532431EDA9CC2000507DB /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143532421EDA9CC2000507DB /* ContactsController.swift */; };
 		143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 143532471EDA9CC2000507DB /* familiarize.xcdatamodeld */; };
@@ -44,6 +45,7 @@
 		141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		14323B7E1F04DF33004694A6 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		14323B801F04EBAD004694A6 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		1432D9E21F0F40A400B2BF88 /* SocialMediaController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaController.swift; sourceTree = "<group>"; };
 		1435323D1EDA9CC2000507DB /* familiarize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = familiarize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		143532401EDA9CC2000507DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		143532421EDA9CC2000507DB /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
@@ -87,14 +89,10 @@
 		140ECD831EF6167700E538E4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */,
-				1497A2281EEDCEB600366303 /* ViewProfileController.swift */,
-				14323B7E1F04DF33004694A6 /* SettingsController.swift */,
-				1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */,
-				1458B51A1F0979DD00F173DE /* ContactSettingController.swift */,
-				1458B51C1F097A1400F173DE /* HelpSettingController.swift */,
-				1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */,
+				1432D9E41F0F40B200B2BF88 /* ProfilePopUpVC */,
+				1432D9E51F0F40C500B2BF88 /* SettingsVC */,
 				14AF10EE1F0DD691004E0CEB /* NewCardController.swift */,
+				1432D9E21F0F40A400B2BF88 /* SocialMediaController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -119,6 +117,27 @@
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
 			);
 			name = TabController;
+			sourceTree = "<group>";
+		};
+		1432D9E41F0F40B200B2BF88 /* ProfilePopUpVC */ = {
+			isa = PBXGroup;
+			children = (
+				14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */,
+				1497A2281EEDCEB600366303 /* ViewProfileController.swift */,
+			);
+			name = ProfilePopUpVC;
+			sourceTree = "<group>";
+		};
+		1432D9E51F0F40C500B2BF88 /* SettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				14323B7E1F04DF33004694A6 /* SettingsController.swift */,
+				1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */,
+				1458B51A1F0979DD00F173DE /* ContactSettingController.swift */,
+				1458B51C1F097A1400F173DE /* HelpSettingController.swift */,
+				1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */,
+			);
+			name = SettingsVC;
 			sourceTree = "<group>";
 		};
 		143532341EDA9CC2000507DB = {
@@ -340,6 +359,7 @@
 				14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
+				1432D9E31F0F40A400B2BF88 /* SocialMediaController.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
 				1443FF6D1EFF4F680032A2E7 /* MyUserProfile+CoreDataClass.swift in Sources */,
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,

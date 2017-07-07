@@ -15,8 +15,6 @@ import UIKit
 
 class FamiliarizeCell: UICollectionViewCell {
     
-    
-    
     var fullBrightness: Bool = false
     override init(frame: CGRect) {
         super.init(frame: frame)

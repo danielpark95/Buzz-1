@@ -76,6 +76,19 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         return UIEdgeInsetsMake(0, 14, 0, 14)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let socialMediaController = SocialMediaController()
+        
+
+        socialMediaController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        
+        //self.definesPresentationContext = true
+        //UINavigationController.present(socialMediaController, animated: false)
+    }
+
+    
+    
 }
 
 class SocialMediaCell: UICollectionViewCell {
