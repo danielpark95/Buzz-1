@@ -16,7 +16,6 @@ class SocialMediaController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupInputComponents()
-        self.view.isUserInteractionEnabled = true
 
     }
     
@@ -31,6 +30,16 @@ class SocialMediaController: UIViewController {
         
         // Makes the inputTextField show up immendiately when the social media icon is pressed.
         inputTextField.becomeFirstResponder()
+    }
+    
+    lazy var addButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "addfriend-button")
+        button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
+        return button
+    }()
+    
+    func addClicked() {
+        print(inputTextField.text!)
     }
     
     var popupImageView: UIImageView = {
@@ -49,10 +58,6 @@ class SocialMediaController: UIViewController {
         return visualEffect
     }()
 
-    
-    lazy var dismissButton: UIButton = {
-        return UIManager.makeButton()
-    }()
     
     lazy var outsideButton: UIButton = {
         let button = UIManager.makeButton()
@@ -84,11 +89,12 @@ class SocialMediaController: UIViewController {
     }
 
     func setupViews() {
+        
+        view.addSubview(self.tintOverlay)
         view.addSubview(self.outsideButton)
         view.addSubview(self.popupImageView)
-        view.addSubview(tintOverlay)
-        view.sendSubview(toBack: tintOverlay)
-        
+        view.addSubview(self.addButton)
+
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
@@ -100,6 +106,12 @@ class SocialMediaController: UIViewController {
         self.popupCenterYAnchor?.isActive = true
         self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
         self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
+        
+        self.addButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        self.addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
+        self.addButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
+        self.addButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
     }
     
     let inputTextField : UITextField = {

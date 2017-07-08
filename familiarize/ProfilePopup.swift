@@ -40,9 +40,7 @@ class ProfilePopupBase: UIViewController {
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-        let tap = UITapGestureRecognizer()
-        imageView.addGestureRecognizer(tap)
-        imageView.isUserInteractionEnabled = true
+
         return imageView
     }()
     

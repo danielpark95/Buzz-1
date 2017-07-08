@@ -53,7 +53,7 @@ class FamiliarizeCell: UICollectionViewCell {
         "email": "em",
         ]
     
-    var myUserProfile: MyUserProfile? {
+    var myUserProfile: UserProfile? {
         didSet {
             // Views is set after knowing how long the texts are.
             
@@ -63,7 +63,7 @@ class FamiliarizeCell: UICollectionViewCell {
         }
     }
     
-    func createJSON(_ profile: MyUserProfile) -> String {
+    func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
             if (profile.value(forKey: key) != nil && shortHandForQR[key] != nil) {
@@ -73,7 +73,7 @@ class FamiliarizeCell: UICollectionViewCell {
         return JSON(jsonDict).rawString()!
     }
     
-    func createQR(_ profile: MyUserProfile) {
+    func createQR(_ profile: UserProfile) {
         var qrCode = QRCode(self.createJSON(profile))
         qrCode?.color = CIColor.white()
         qrCode?.backgroundColor = CIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)

@@ -91,10 +91,12 @@ class ScanProfileController: ProfilePopupBase {
     }
     
     override func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "view-profile-popup")
+        self.popupImageView = UIManager.makeImage(imageName: "scan-profile-popup")
+        let tap = UITapGestureRecognizer()
+        self.popupImageView.addGestureRecognizer(tap)
+        self.popupImageView.isUserInteractionEnabled = true
         
         view.addSubview(self.popupImageView)
-        
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)

@@ -13,7 +13,7 @@ import SwiftyJSON
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     
-    var myUserProfiles: [MyUserProfile]? {
+    var myUserProfiles: [UserProfile]? {
         didSet {
             if let count = self.myUserProfiles?.count {
                 pageControl.numberOfPages = count
@@ -28,19 +28,16 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
          
-        
+        //MyUserProfile.clearData()
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.clearData(forProfile: .otherUser)
 // Uncomment this if you want to add some qrcodes into your core data.
 //        let stuff: JSON = [
 //            "name": "alex",
 //            "fb": "alexswoh",
-//            "ig": "l",
-//            "sc": "s",
 //            "pn": "123123",
-//            "bio": "Hello",
-//            "in": "hi",
-//            "em": "ell"
 //        ]
-//        
+//
 //        let pika: JSON = [
 //            "name": "eric chung",
 //            "fb": "eric.chung.5680",
@@ -52,7 +49,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
 //            "em": "ell"
 //        ]
 //        MyUserProfile.clearData() // Clears all of the core data.
-//        MyUserProfile.saveProfile(stuff)
+//        UserProfile.saveProfile(stuff, forProfile: .myUser)
 //        MyUserProfile.saveProfile(pika)
         
         
@@ -63,7 +60,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         self.automaticallyAdjustsScrollViewInsets = false
         
-        myUserProfiles = MyUserProfile.getData()
+        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
         setupCollectionView()
         

@@ -128,7 +128,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         // TODO: Before even moving on, this function should verify that the qr code's JSON is in the format that we need it in.
         
         let data = qrCode.data(using: .utf8)
-        self.userProfile = UserProfile.saveProfile(JSON(data!))
+        self.userProfile = UserProfile.saveProfile(JSON(data!), forProfile: .otherUser)
         return true
     }
     
