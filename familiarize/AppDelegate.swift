@@ -55,9 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         let v1 = UserController(collectionViewLayout: UICollectionViewFlowLayout())
         let v3 = QRScannerController()
         let v5 = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
-        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "My Info", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_red"))
+        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_red"))
         v3.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: "Hello", image: UIImage(named: "dan_camera_round"), selectedImage: UIImage(named: "dan_camera_round"))
-        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Contacts", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_red"))
+        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Friends", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_red"))
         
         tabBarController.viewControllers = [v1, v3, v5]
         let navigationController = ExampleNavigationController.init(rootViewController: tabBarController)

@@ -33,7 +33,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        tabBarController?.title = "My Info"
+        tabBarController?.title = "Me"
         
         setupNavBarButton()
         self.automaticallyAdjustsScrollViewInsets = false

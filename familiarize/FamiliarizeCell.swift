@@ -140,31 +140,54 @@ class FamiliarizeCell: UICollectionViewCell {
         "email": UIManager.makeImage(imageName: "dan_email_black"),
         ]
     
-    func autoSpaceButtons(r: Double, theta_1: Double, theta_2: Double){
-        var imagesToPresent = [UIImageView]()
-        for key in (myUserProfile?.entity.attributesByName.keys)! {
-            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                print(key)
-                imagesToPresent.append(socialMediaImages[key]!)
-            }
-        }
-        var size = imagesToPresent.count
+    func autoSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
         var count = 0
-        size = 6
-        if size == 6 {
-            count = 0
-            for image in imagesToPresent{
-                self.addSubview(image)
-                image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta_1 + Double(count) * theta_2))).isActive = true
-                image.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor, constant: CGFloat(r * sin(theta_1 + Double(count) * theta_2))).isActive = true
-                image.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                image.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                count += 1
-            }
+        for image in imagesToPresent{
+            self.addSubview(image)
+            image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2))).isActive = true
+            image.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor, constant: CGFloat(r * sin(theta1 + Double(count) * theta2))).isActive = true
+            image.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            count += 1
         }
     }
     
     func presentSocialMediaButtons() {
-        autoSpaceButtons(r: 200.0, theta_1: 80 / 57.2958, theta_2: 25 / 57.2958)
+        var my_imagesToPresent = [UIImageView]()
+        for key in (myUserProfile?.entity.attributesByName.keys)! {
+            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
+                print(key)
+                my_imagesToPresent.append(socialMediaImages[key]!)
+            }
+        }
+        var size = my_imagesToPresent.count
+        size = 4
+        var my_theta1 = 0.0
+        var my_theta2 = 0.0
+        let rad = 57.2958
+        
+        if size == 1 {
+            
+        } else if size == 2 {
+            
+        } else if size == 3 {
+            print("size = 3")
+            my_theta1 = 145.0
+            my_theta2 = 35.0
+        } else if size == 4 {
+            //looks good
+            my_theta1 = 110.0
+            my_theta2 = 30.0
+        } else if size == 5 {
+            my_theta1 = 95.0
+            my_theta2 = 25.0
+        } else if size == 6 {
+            //looks good
+            my_theta1 = 80.0
+            my_theta2 = 25.0
+        } else {
+            
+        }
+        autoSpaceButtons(r: 200.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
     }
 }
