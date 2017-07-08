@@ -29,6 +29,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! SocialMediaSelectionCell
+        cell.newCardController = self
         
         return cell
     }
@@ -51,8 +52,12 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         self.dismiss(animated: true, completion: nil)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("taco")
+    func presentSocialMediaPopup(socialMedia: SocialMedia) {
+        let socialMediaController = SocialMediaController()
+        socialMediaController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        //navigationController?.definesPresentationContext = true
+        //navigationController?.pushViewController(socialMediaController, animated: false)
+        navigationController?.present(socialMediaController, animated: false)
     }
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewProfileController: PopupBase {
+class ViewProfileController: ProfilePopupBase {
     var socialMediaButtons: [String : UIButton]?
     
     override func viewDidLoad() {
@@ -149,13 +149,13 @@ class ViewProfileController: PopupBase {
     }
     
     override func setDismissButton() {
-        dismissFriendButton = UIManager.makeButton(imageName: "dismiss-button")
-        view.addSubview(self.dismissFriendButton)
-        dismissFriendButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissFriendButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
-        dismissFriendButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissFriendButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        dismissFriendButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
+        dismissButton = UIManager.makeButton(imageName: "dismiss-button")
+        view.addSubview(self.dismissButton)
+        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
     }
     
     override func addToGraphics() {

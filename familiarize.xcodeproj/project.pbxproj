@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A40001EDFC42E00D4539E /* FamiliarizeController.swift */; };
 		140ECD821EF6165800E538E4 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD811EF6165800E538E4 /* UserController.swift */; };
-		140ECD851EF723FD00E538E4 /* PopupBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD841EF723FD00E538E4 /* PopupBase.swift */; };
+		140ECD851EF723FD00E538E4 /* ProfilePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD841EF723FD00E538E4 /* ProfilePopup.swift */; };
 		141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */; };
 		14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14323B7E1F04DF33004694A6 /* SettingsController.swift */; };
 		14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14323B801F04EBAD004694A6 /* SettingsCell.swift */; };
@@ -29,7 +29,6 @@
 		14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */; };
 		14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */; };
 		14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E031EE604D7000D6AA9 /* Extensions.swift */; };
-		148E1DE91F107C63002A1338 /* SocialMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148E1DE81F107C63002A1338 /* SocialMedia.swift */; };
 		1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A2281EEDCEB600366303 /* ViewProfileController.swift */; };
 		1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A22A1EEF7B2D00366303 /* UIManager.swift */; };
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
@@ -42,7 +41,7 @@
 /* Begin PBXFileReference section */
 		140A40001EDFC42E00D4539E /* FamiliarizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeController.swift; sourceTree = "<group>"; };
 		140ECD811EF6165800E538E4 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
-		140ECD841EF723FD00E538E4 /* PopupBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupBase.swift; sourceTree = "<group>"; };
+		140ECD841EF723FD00E538E4 /* ProfilePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePopup.swift; sourceTree = "<group>"; };
 		141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		14323B7E1F04DF33004694A6 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		14323B801F04EBAD004694A6 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -64,7 +63,6 @@
 		14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14773E031EE604D7000D6AA9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		148E1DE81F107C63002A1338 /* SocialMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMedia.swift; sourceTree = "<group>"; };
 		1497A2281EEDCEB600366303 /* ViewProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileController.swift; sourceTree = "<group>"; };
 		1497A22A1EEF7B2D00366303 /* UIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
@@ -201,8 +199,7 @@
 		14A3F33E1EE11D4300C97747 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				148E1DE81F107C63002A1338 /* SocialMedia.swift */,
-				140ECD841EF723FD00E538E4 /* PopupBase.swift */,
+				140ECD841EF723FD00E538E4 /* ProfilePopup.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -354,7 +351,7 @@
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
 				1443FF6E1EFF4F680032A2E7 /* MyUserProfile+CoreDataProperties.swift in Sources */,
-				140ECD851EF723FD00E538E4 /* PopupBase.swift in Sources */,
+				140ECD851EF723FD00E538E4 /* ProfilePopup.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
@@ -364,7 +361,6 @@
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				1432D9E31F0F40A400B2BF88 /* SocialMediaController.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
-				148E1DE91F107C63002A1338 /* SocialMedia.swift in Sources */,
 				1443FF6D1EFF4F680032A2E7 /* MyUserProfile+CoreDataClass.swift in Sources */,
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,

@@ -14,7 +14,7 @@
 import UIKit
 import CoreData
 
-class PopupBase: UIViewController {
+class ProfilePopupBase: UIViewController {
     
     var userProfile: UserProfile?
     
@@ -50,7 +50,7 @@ class PopupBase: UIViewController {
         return UIManager.makeProfileImage(valueOfCornerRadius: 40)
     }()
     
-    lazy var dismissFriendButton: UIButton = {
+    lazy var dismissButton: UIButton = {
         return UIManager.makeButton()
     }()
     
