@@ -15,7 +15,8 @@ import CoreData
 import M13Checkbox
 
 class ScanProfileController: ProfilePopupBase {
-    var QRScannerDelegate: QRScannerControllerDelegate?
+    
+    var QRScannerControllerDelegate: QRScannerControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +80,7 @@ class ScanProfileController: ProfilePopupBase {
             self.popupCenterYAnchor?.constant = self.view.frame.size.height
             // Unchecks the animation, so that on rescan, it does the animation again.
             self.checkBox.setCheckState(.unchecked, animated: false)
-            self.QRScannerDelegate?.commenceCameraScanning()
+            self.QRScannerControllerDelegate?.commenceCameraScanning()
         })
     }
     

@@ -15,13 +15,22 @@ class SocialMediaController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupInputComponents()
+        self.view.isUserInteractionEnabled = true
 
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true) //This will hide the keyboard
     }
     
     // After all of the views are setups, then animate the motion where the popup image
     // starts to rise up from the bottom of the screen to the middle.
     override func viewDidAppear(_ animated: Bool) {
         self.animatePopup()
+        
+        // Makes the inputTextField show up immendiately when the social media icon is pressed.
+        inputTextField.becomeFirstResponder()
     }
     
     var popupImageView: UIImageView = {
@@ -57,8 +66,11 @@ class SocialMediaController: UIViewController {
     
     // Slides up the popup from the bottom of the screen to the middle
     var popupCenterYAnchor: NSLayoutConstraint?
+    var inputTextFieldCenterYAnchor: NSLayoutConstraint?
+    
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
+        inputTextFieldCenterYAnchor?.constant = 0
         
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
@@ -72,11 +84,15 @@ class SocialMediaController: UIViewController {
     }
 
     func setupViews() {
-        
-        view.addSubview(self.popupImageView)
         view.addSubview(self.outsideButton)
+        view.addSubview(self.popupImageView)
         view.addSubview(tintOverlay)
         view.sendSubview(toBack: tintOverlay)
+        
+        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
@@ -84,12 +100,26 @@ class SocialMediaController: UIViewController {
         self.popupCenterYAnchor?.isActive = true
         self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
         self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
+    }
+    
+    let inputTextField : UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "username"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = .no
+        textField.tintColor = UIColor(white: 0.55, alpha: 1)
+        textField.textAlignment = NSTextAlignment.center
         
-        
-        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
-        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
+        return textField
+    }()
+    
+    func setupInputComponents() {
+        view.addSubview(inputTextField)
+        inputTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        inputTextFieldCenterYAnchor = inputTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        inputTextFieldCenterYAnchor?.isActive = true
+        inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
     }
     
 }

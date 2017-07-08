@@ -10,7 +10,8 @@ import UIKit
 
 class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var newCardController: NewCardController?
+    var newCardControllerDelegate: NewCardControllerDelegate?
+    
     
     private let cellId = "cellId"
     
@@ -89,7 +90,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("taco")
-        newCardController?.presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+        self.newCardControllerDelegate?.presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
     }
     
 }

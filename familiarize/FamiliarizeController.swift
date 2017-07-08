@@ -14,7 +14,7 @@ import Kanna
 import CoreData
 
 protocol QRScannerControllerDelegate {
-    func commenceCameraScanning()
+    func commenceCameraScanning() -> Void
 }
 
 class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, QRScannerControllerDelegate {
@@ -158,7 +158,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 // Setting up the controller and animations
                 scanProfileController.userProfile = self.userProfile
                 scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                scanProfileController.QRScannerDelegate = self
+                scanProfileController.QRScannerControllerDelegate = self
                 
                 self.scrapeSocialMedia(scanProfileController)
                 

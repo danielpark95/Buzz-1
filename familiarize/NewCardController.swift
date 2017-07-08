@@ -7,42 +7,40 @@
 //
 
 import UIKit
-class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    private let cellId = "cellId"
+
+protocol NewCardControllerDelegate {
+    func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
+}
+
+class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout,NewCardControllerDelegate {
+
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationItem.title = "New Card"
-    }
+    private let socialMediaSelectionCellId = "socialMediaSelectionCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: cellId)
+        navigationItem.title = "New Card"
+        collectionView?.register(SocialMediaSelectionCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: socialMediaSelectionCellId)
         collectionView?.backgroundColor = UIColor.white
         setupNavBarButton()
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! SocialMediaSelectionCell
-        cell.newCardController = self
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         return CGSize(width: view.frame.width, height: 100)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 100)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: socialMediaSelectionCellId, for: indexPath) as! SocialMediaSelectionCell
+        cell.newCardControllerDelegate = self
+        return cell
+    }
+    
     func setupNavBarButton() {
-        
         // TODO: Add a save button on the top right.
         let backButton = UIBarButtonItem(image: UIImage(named:"back-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
         navigationItem.leftBarButtonItem = backButton
@@ -55,7 +53,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     func presentSocialMediaPopup(socialMedia: SocialMedia) {
         let socialMediaController = SocialMediaController()
         socialMediaController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        //navigationController?.definesPresentationContext = true
+        navigationController?.definesPresentationContext = true
         //navigationController?.pushViewController(socialMediaController, animated: false)
         navigationController?.present(socialMediaController, animated: false)
     }
