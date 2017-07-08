@@ -29,8 +29,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
          
         //MyUserProfile.clearData()
-        UserProfile.clearData(forProfile: .myUser)
-        UserProfile.clearData(forProfile: .otherUser)
+//        UserProfile.clearData(forProfile: .myUser)
+//        UserProfile.clearData(forProfile: .otherUser)
 // Uncomment this if you want to add some qrcodes into your core data.
 //        let stuff: JSON = [
 //            "name": "alex",
