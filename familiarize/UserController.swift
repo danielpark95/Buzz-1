@@ -144,11 +144,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     let profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 30)
+        let image = UIManager.makeProfileImage(valueOfCornerRadius: 30)
+        image.contentMode = .scaleAspectFill
+        return image
     }()
     
     let headerBar: UIImageView = {
-        return UIManager.makeImage(imageName: "dan_header_bar")
+        let image = UIManager.makeImage(imageName: "dan_header_bar")
+        image.contentMode = .scaleAspectFit
+        return image
     }()
 
     let nameLabel: UILabel = {

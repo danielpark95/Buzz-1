@@ -35,6 +35,7 @@ class ContactsCell: UICollectionViewCell {
             
             if userProfile?.profileImage != nil {
                 self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+                self.profileImage.contentMode = .scaleAspectFill
                 self.profileImage.clipsToBounds = true
             }
             

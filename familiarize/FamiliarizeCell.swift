@@ -84,6 +84,7 @@ class FamiliarizeCell: UICollectionViewCell {
     lazy var cardBorder: UIImageView = {
         let image = UIManager.makeImage(imageName: "dan_card_border")
         image.tag = borderTag.val.rawValue
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -248,7 +249,6 @@ class FamiliarizeCell: UICollectionViewCell {
         } else if size == 5 {
             count = 0
             xSpacing = 80
-            print("size = 5")
             ySpacing = 15
             for image in imagesToPresent {
                 if count == 0 || count == 2 {
@@ -291,7 +291,6 @@ class FamiliarizeCell: UICollectionViewCell {
         } else if size == 6 {
             count = 0
             xSpacing = 80
-            print("size = 6")
             ySpacing = 15
             for image in imagesToPresent {
                 if count == 0 || count == 2 {

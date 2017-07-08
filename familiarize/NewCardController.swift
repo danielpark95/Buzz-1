@@ -50,5 +50,9 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     func handleBack() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("taco")
+    }
 }
 

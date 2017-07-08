@@ -127,20 +127,22 @@ class ViewProfileController: PopupBase {
     func presentSocialMediaButtons() {
 
         var spacing: CGFloat = 20
-        for key in (self.userProfile?.entity.attributesByName.keys)! {
-            if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
-                let shortHand: String = socialMedia[key]!
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 100).isActive = true
-                (socialMediaButtons?[shortHand])!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: spacing).isActive = true
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 40).isActive = true
-                
-                spacing += 60
+        
+        if self.userProfile != nil {
+            for key in (self.userProfile?.entity.attributesByName.keys)! {
+                if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
+                    let shortHand: String = socialMedia[key]!
+                    view.addSubview((socialMediaButtons?[shortHand])!)
+                    (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 100).isActive = true
+                    (socialMediaButtons?[shortHand])!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: spacing).isActive = true
+                    (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                    (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                    
+                    spacing += 60
+                }
             }
         }
     }
-    
     
     override func dismissClicked() {
         self.dismiss(animated: false)
@@ -195,8 +197,11 @@ class ViewProfileController: PopupBase {
     }
     
     override func setNameAndBio() {
+        var attributedText = NSMutableAttributedString()
         
-        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
+        if let name = userProfile?.name {
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
+        }
 
         if let bio = userProfile?.bio {
             attributedText.append(NSAttributedString(string:"\n\(bio)" , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.white]))
@@ -205,7 +210,7 @@ class ViewProfileController: PopupBase {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 0
         
-        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.characters.count))
+        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, (attributedText.string.characters.count)))
         
         nameAndBioLabel.attributedText = attributedText
     }

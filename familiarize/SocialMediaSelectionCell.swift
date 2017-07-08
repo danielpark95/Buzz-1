@@ -9,6 +9,14 @@
 import UIKit
 
 class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    private let cellId = "cellId"
+    
+    let socialMediaChoices: [SocialMedia] = [
+        SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Facebook"),
+        SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Facebook")
+    ]
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -26,8 +34,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         return view
         
     }()
-    
-    private let cellId = "cellId"
+
     let socialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -61,11 +68,13 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return socialMediaChoices.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SocialMediaCell
+        cell.socialMedia = socialMediaChoices[indexPath.item]
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -77,24 +86,28 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let socialMediaController = SocialMediaController()
-        
-
-        socialMediaController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        
-        //self.definesPresentationContext = true
-        //UINavigationController.present(socialMediaController, animated: false)
+        print("hello")
     }
-
-    
     
 }
 
 class SocialMediaCell: UICollectionViewCell {
+    
+    var socialMedia: SocialMedia? {
+        didSet {
+            if let name = socialMedia?.name {
+                socialMediaName.text = name
+            }
+            if let imageName = socialMedia?.imageName {
+                socialMediaImage.image = UIImage(named: imageName)
+            }
+            setupViews()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -102,35 +115,32 @@ class SocialMediaCell: UICollectionViewCell {
     }
     
     let socialMediaImage: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "dan_facebook_red")
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+        let image = UIManager.makeImage()
+        image.contentMode = .scaleAspectFill
+        return image
     }()
     
-    let socialMediaLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Facebook"
+    let socialMediaName: UILabel = {
+        let label = UIManager.makeLabel()
         label.font = UIFont.systemFont(ofSize: 7)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     func setupViews() {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
-        addSubview(socialMediaLabel)
+        addSubview(socialMediaName)
         
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
         socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        socialMediaLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        socialMediaLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
-        socialMediaLabel.heightAnchor.constraint(equalToConstant: socialMediaLabel.intrinsicContentSize.height).isActive = true
-        socialMediaLabel.widthAnchor.constraint(equalToConstant: socialMediaLabel.intrinsicContentSize.width).isActive = true
+        socialMediaName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        socialMediaName.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
+        socialMediaName.heightAnchor.constraint(equalToConstant: socialMediaName.intrinsicContentSize.height).isActive = true
+        socialMediaName.widthAnchor.constraint(equalToConstant: socialMediaName.intrinsicContentSize.width).isActive = true
         
     }
 }
+

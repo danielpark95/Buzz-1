@@ -24,12 +24,7 @@ class UIManager {
     static func makeImage(imageName: String = "") -> UIImageView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)
-        imageView.contentMode = .scaleAspectFit
-        //imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let tap = UITapGestureRecognizer()
-        imageView.addGestureRecognizer(tap)
-        imageView.isUserInteractionEnabled = true
         return imageView
     }
     

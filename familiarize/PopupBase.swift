@@ -39,7 +39,11 @@ class PopupBase: UIViewController {
     }()
     
     var popupImageView: UIImageView = {
-        return UIManager.makeImage()
+        let imageView = UIManager.makeImage()
+        let tap = UITapGestureRecognizer()
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     
     lazy var profileImage: UIImageView = {
