@@ -11,12 +11,21 @@ import CoreData
 import UIKit
 import SwiftyJSON
 
-extension UserProfile {
 
+
+
+extension UserProfile {
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserProfile> {
         return NSFetchRequest<UserProfile>(entityName: "UserProfile")
     }
-
+    
+    @objc enum userProfileSelection: Int32 {
+        case myUser
+        case otherUser
+        case tempUser
+    }
+    
     @NSManaged public var faceBookProfile: String?
     @NSManaged public var instagramProfile: String?
     @NSManaged public var name: String?
@@ -27,37 +36,57 @@ extension UserProfile {
     @NSManaged public var bio: String?
     @NSManaged public var linkedInProfile: String?
     @NSManaged public var email: String?
-
-    static func getData() -> [UserProfile]{
+    @NSManaged var userProfileSelection: userProfileSelection
+    
+    static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
         
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         do {
             return try(managedObjectContext.fetch(fetchRequest)) as! [UserProfile]
-            
         } catch let err {
             print(err)
         }
         return []
     }
     
-    static func saveData(_ qrJSON: JSON) -> UserProfile {
+    static func saveProfile(_ qrJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
-        newUser.name = qrJSON["name"].string
-        newUser.faceBookProfile = qrJSON["fb"].string
-        newUser.instagramProfile = qrJSON["ig"].string
-        newUser.snapChatProfile = qrJSON["sc"].string
-        newUser.phoneNumber = qrJSON["pn"].string
-        newUser.bio = qrJSON["bio"].string
-        newUser.linkedInProfile = qrJSON["in"].string
-        newUser.email = qrJSON["em"].string
         
+        if (qrJSON["name"].exists()) {
+            newUser.name = qrJSON["name"].string
+        }
+        if (qrJSON["fb"].exists()) {
+            newUser.faceBookProfile = qrJSON["fb"].string
+        }
+        if (qrJSON["ig"].exists()) {
+            newUser.instagramProfile = qrJSON["ig"].string
+        }
+        if (qrJSON["sc"].exists()) {
+            newUser.snapChatProfile = qrJSON["sc"].string
+        }
+        if (qrJSON["pn"].exists()) {
+            newUser.phoneNumber = qrJSON["pn"].string
+        }
+        if (qrJSON["bio"].exists()) {
+            newUser.bio = qrJSON["bio"].string
+        }
+        if (qrJSON["in"].exists()) {
+            newUser.linkedInProfile = qrJSON["in"].string
+        }
+        if (qrJSON["em"].exists()) {
+            newUser.email = qrJSON["em"].string
+        }
+        
+        newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
+        
         do {
             try(managedObjectContext.save())
             NotificationCenter.default.post(name: .reload, object: nil)
@@ -79,20 +108,27 @@ extension UserProfile {
         }
     }
     
+    static func deleteProfile(user: UserProfile) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        managedObjectContext.delete(user)
+    }
+    
     // This is just a test run on how we can utilize clearData within the contactsVC
-    static func clearData() {
+    static func clearData(forProfile userProfile: userProfileSelection) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
+        
         do {
             let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
             for userProfile in userProfiles! {
-                managedObjectContext.delete(userProfile)                
+                managedObjectContext.delete(userProfile)
             }
         } catch let err {
             print(err)
         }
     }
-
+    
 }

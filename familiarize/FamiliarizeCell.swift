@@ -10,14 +10,12 @@ import QRCode
 import SwiftyJSON
 import UIKit
 
-// You need to convert the JSON string to a data and then intialize it to create a json object! 
-
-
+// You need to convert the JSON string to a data and then intialize it to create a json object!
 class FamiliarizeCell: UICollectionViewCell {
-
     
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
+    
     
     let shortHandForQR = [
         "bio": "bio",
@@ -30,7 +28,7 @@ class FamiliarizeCell: UICollectionViewCell {
         "email": "em",
         ]
     
-    var myUserProfile: MyUserProfile? {
+    var myUserProfile: UserProfile? {
         didSet {
             // Views is set after knowing how long the texts are.
             
@@ -39,8 +37,9 @@ class FamiliarizeCell: UICollectionViewCell {
             setupViews()
         }
     }
+
     
-    func createJSON(_ profile: MyUserProfile) -> String {
+    func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
             if (profile.value(forKey: key) != nil && shortHandForQR[key] != nil) {
@@ -50,7 +49,7 @@ class FamiliarizeCell: UICollectionViewCell {
         return JSON(jsonDict).rawString()!
     }
     
-    func createQR(_ profile: MyUserProfile) {
+    func createQR(_ profile: UserProfile) {
         var qrCode = QRCode(self.createJSON(profile))
         qrCode?.color = CIColor.white()
         qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
@@ -60,8 +59,7 @@ class FamiliarizeCell: UICollectionViewCell {
     
     
     let profileImage: UIImageView = {
-        //return UIManager.makeProfileImage(valueOfCornerRadius: 30)
-        return UIManager.makeImage(imageName: "tjmiller6")
+        return UIManager.makeProfileImage(valueOfCornerRadius: 30)
     }()
     
     let bioLabel: UILabel = {
@@ -81,46 +79,53 @@ class FamiliarizeCell: UICollectionViewCell {
         }
         
         if onQRImage == true {
+            
+            if (myUserProfile?.name) == "T.J. Miller" {
+                profileImage.image = UIImage(named: "tjmiller6")
+            }
+            else {
+                profileImage.image = UIImage(named: "tjmiller7")
+            }
+            
+            
             addSubview(profileImage)
-            
-            
             profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 100).isActive = true
             profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
             profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
             profileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
             
+            
+            
+            //Namelabel position upated using NSLayoutConstraint -dan
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            let name_topConstraint = NSLayoutConstraint(item: nameLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
+            let name_bottomConstraint = NSLayoutConstraint(item: nameLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 300)
+            let name_leadingConstraint = NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 35)
+            let name_trailingConstraint = NSLayoutConstraint(item: nameLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
             addSubview(nameLabel)
-            addSubview(bioLabel)
-            
-            let name = NSMutableAttributedString(string: "T.J. Miller", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
-            
+            addConstraints([name_topConstraint, name_bottomConstraint, name_leadingConstraint, name_trailingConstraint])
+            layoutIfNeeded()
+            let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
             nameLabel.attributedText = name
-            nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -103).isActive = true
-            nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 150).isActive = true
-            nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-            nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
             
-            let bio = NSMutableAttributedString(string: "Miller the professional chiller.", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
-            
+            //Biolabel position updated using NSLayoutConstraint -dan
+            bioLabel.translatesAutoresizingMaskIntoConstraints = false
+            let bio_topConstraint = NSLayoutConstraint(item: bioLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
+            let bio_bottomConstraint = NSLayoutConstraint(item: bioLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 360)
+            let bio_leadingConstraint = NSLayoutConstraint(item: bioLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 35)
+            let bio_trailingConstraint = NSLayoutConstraint(item: bioLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
+            addSubview(bioLabel)
+            addConstraints([bio_topConstraint, bio_bottomConstraint, bio_leadingConstraint, bio_trailingConstraint])
+            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
             bioLabel.attributedText = bio
-            bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -40).isActive = true
-            bioLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 185).isActive = true
-            bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
-            bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
+            
             
             presentSocialMediaButtons()
-            
             onQRImage = false
         } else {
-            addSubview(profileImage)
-            profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 100).isActive = true
-            profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
-            profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
-            profileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            
             addSubview(qrImageView!)
             qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-            qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 100).isActive = true
+            qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -10).isActive = true
             qrImageView?.heightAnchor.constraint(equalToConstant: 150).isActive = true
             qrImageView?.widthAnchor.constraint(equalToConstant: 150).isActive = true
             onQRImage = true
@@ -140,6 +145,7 @@ class FamiliarizeCell: UICollectionViewCell {
         "email": UIManager.makeImage(imageName: "dan_email_black"),
         ]
     
+    //Helper function to space out social media icons - dan
     func autoSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
         var count = 0
         for image in imagesToPresent{
@@ -152,27 +158,26 @@ class FamiliarizeCell: UICollectionViewCell {
         }
     }
     
+    //Function to space out social media icons evenly around the profile picture at an equal distance -dan
     func presentSocialMediaButtons() {
         var my_imagesToPresent = [UIImageView]()
         for key in (myUserProfile?.entity.attributesByName.keys)! {
             if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
                 print(key)
-                my_imagesToPresent.append(socialMediaImages[key]!)
+                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
             }
         }
-        var size = my_imagesToPresent.count
-        size = 4
+        let size = my_imagesToPresent.count
+        print(size)
         var my_theta1 = 0.0
         var my_theta2 = 0.0
         let rad = 57.2958
-        
         if size == 1 {
             
         } else if size == 2 {
             
         } else if size == 3 {
-            print("size = 3")
-            my_theta1 = 145.0
+            my_theta1 = 110.0
             my_theta2 = 35.0
         } else if size == 4 {
             //looks good

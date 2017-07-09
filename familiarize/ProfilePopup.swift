@@ -14,7 +14,7 @@
 import UIKit
 import CoreData
 
-class PopupBase: UIViewController {
+class ProfilePopupBase: UIViewController {
     
     var userProfile: UserProfile?
     
@@ -39,14 +39,16 @@ class PopupBase: UIViewController {
     }()
     
     var popupImageView: UIImageView = {
-        return UIManager.makeImage()
+        let imageView = UIManager.makeImage()
+        
+        return imageView
     }()
     
     lazy var profileImage: UIImageView = {
         return UIManager.makeProfileImage(valueOfCornerRadius: 40)
     }()
     
-    lazy var dismissFriendButton: UIButton = {
+    lazy var dismissButton: UIButton = {
         return UIManager.makeButton()
     }()
     
@@ -66,18 +68,21 @@ class PopupBase: UIViewController {
     var popupCenterYAnchor: NSLayoutConstraint?
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+        
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.setupGraphics()
             self.addToGraphics()
+            
         })
+        
     }
     
     // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
     func setupBackground() {
-
+        
         view.addSubview(self.outsideButton)
         
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -96,12 +101,13 @@ class PopupBase: UIViewController {
         
         setNameAndBio()
         setDismissButton()
-        
+    }
+    
+    func setImage() {
         if userProfile?.profileImage != nil {
             self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
             self.profileImage.clipsToBounds = true
         }
-
     }
     
     func setDismissButton() {
@@ -120,10 +126,10 @@ class PopupBase: UIViewController {
         
     }
     
-    // This makes the profile image into a circle. 
+    // This makes the profile image into a circle.
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         profileImage.layer.cornerRadius = profileImage.frame.height/2
     }
-
+    
 }

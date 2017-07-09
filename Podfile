@@ -19,6 +19,11 @@ target 'familiarize' do
   #ESTabBarController
   pod 'ESTabBarController-swift'
 
+  #fb effects for tabbar
   pod 'pop'
+
+  #textfield effects
+  pod 'TextFieldEffects'
+  
 
 end

@@ -11,19 +11,15 @@ import CoreData
 import SwiftyJSON
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    private let cellId = "cellId"
+    private let cellId = "cellId3"
     
-    var myUserProfiles: [MyUserProfile]? {
+    var myUserProfiles: [UserProfile]? {
         didSet {
             if let count = self.myUserProfiles?.count {
                 pageControl.numberOfPages = count
             }
         }
     }
-    
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -32,13 +28,37 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         
+        let stuff: JSON = [
+            "name": "T.J. Miller",
+            "pn": "pn",
+            "fb": "fb",
+            "sc": "sc",
+            "ig": "ig",
+            "bio": "Miller the professional chiller."
+            ]
+        
+        let pika: JSON = [
+            "name": "Todd Joseph Miller",
+            "pn": "pn",
+            "in": "in",
+            "em": "em",
+            "bio": "Founder & CEO, Aviato.",
+        ]
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.saveProfile(pika, forProfile: .myUser)
+        UserProfile.saveProfile(stuff, forProfile: .myUser)
+        
+        
+        
+        
         super.viewDidLoad()
         tabBarController?.title = "Me"
+        
         
         setupNavBarButton()
         self.automaticallyAdjustsScrollViewInsets = false
         
-        myUserProfiles = MyUserProfile.getData()
+        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
         setupCollectionView()
         //createSmallLineOnTabBar()
@@ -129,7 +149,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupCollectionView() {
-        collectionView?.showsHorizontalScrollIndicator = true
+        collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
         

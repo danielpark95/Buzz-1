@@ -14,8 +14,9 @@ import UIKit
 import CoreData
 import M13Checkbox
 
-class ScanProfileController: PopupBase {
-    var QRScannerDelegate: QRScannerControllerDelegate?
+class ScanProfileController: ProfilePopupBase {
+    
+    var QRScannerControllerDelegate: QRScannerControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,7 @@ class ScanProfileController: PopupBase {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-
+    
     // The effect for making a blurry background
     lazy var backgroundBlur: UIVisualEffectView = {
         var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
@@ -62,26 +63,41 @@ class ScanProfileController: PopupBase {
     func viewProfileClicked() {
         // Go to different VC
         if self.view.window?.rootViewController as? CustomTabBarController != nil {
+            // Must get access to the original tab bar controller.
             let tabBarController = self.view.window!.rootViewController as! CustomTabBarController
-            tabBarController.selectedIndex = 0
+            // Switch to the third page, which is the contacts page.
+            tabBarController.selectedIndex = 2
+            // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
+            tabBarController.tabBar.isHidden = false
         }
-        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
-        
+        self.QRScannerControllerDelegate?.startCameraScanning()
+        setupDismiss()
         NotificationCenter.default.post(name: .viewProfile, object: nil)
+    }
+    
+    func setupDismiss() {
+        self.dismiss(animated: false, completion: {
+            // Brings the popup image to the bottom again.
+            self.popupCenterYAnchor?.constant = self.view.frame.size.height
+            // Unchecks the animation, so that on rescan, it does the animation again.
+            self.checkBox.setCheckState(.unchecked, animated: false)
+        })
     }
     
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
     // QRScannerController view controller. And also pops this view controller from the stack.
     override func dismissClicked() {
-        QRScannerDelegate?.commenceCameraScanning()
-        self.dismiss(animated: false)
+        self.QRScannerControllerDelegate?.startCameraScanning()
+        setupDismiss()
     }
     
     override func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "view-profile-popup")
+        self.popupImageView = UIManager.makeImage(imageName: "scan-profile-popup")
+        let tap = UITapGestureRecognizer()
+        self.popupImageView.addGestureRecognizer(tap)
+        self.popupImageView.isUserInteractionEnabled = true
         
         view.addSubview(self.popupImageView)
-        
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
@@ -95,7 +111,7 @@ class ScanProfileController: PopupBase {
         view.addSubview(backgroundBlur)
         view.sendSubview(toBack: backgroundBlur)
         view.addSubview(self.checkBox)
-    
+        
         self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
         self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -103,15 +119,15 @@ class ScanProfileController: PopupBase {
         self.checkBox.hideBox = true
         
     }
-
+    
     override func setDismissButton() {
-        dismissFriendButton = UIManager.makeButton(imageName: "dismiss-button-color")
-        view.addSubview(self.dismissFriendButton)
-        dismissFriendButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissFriendButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
-        dismissFriendButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissFriendButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        dismissFriendButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
+        dismissButton = UIManager.makeButton(imageName: "dismiss-button-color")
+        view.addSubview(self.dismissButton)
+        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
     }
     
     override func addToGraphics() {
@@ -125,12 +141,12 @@ class ScanProfileController: PopupBase {
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
         profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-
+        
         nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         nameAndBioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
         nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
         nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
-
+        
         viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
         viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true

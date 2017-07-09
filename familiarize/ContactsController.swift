@@ -38,13 +38,13 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         searchBar.isTranslucent = false
         searchBar.delegate = self
         
-        userProfiles = UserProfile.getData()
+        userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         setupRefreshingAndReloading()
         setupCollectionView()
         
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange textSearched: String)
+    func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
     {
         collectionView?.reloadData()
     }
@@ -64,7 +64,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     func viewProfile(_ idx: Int = 0) {
         
-        userProfiles = UserProfile.getData()
+        userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         
         let viewProfileController = ViewProfileController()
         
@@ -100,7 +100,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func reloadTableData() {
-        userProfiles = UserProfile.getData()
+        userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         collectionView?.reloadData()
     }
     
