@@ -118,7 +118,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = self.userProfiles?.count {
-            print("The number of userprofiles added: \(count)")
             return count
         }
         return 0
@@ -145,9 +144,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.viewProfile(indexPath.item)
     }
-
-    
-   
 
 
 }

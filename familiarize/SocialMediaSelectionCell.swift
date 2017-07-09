@@ -17,7 +17,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Facebook"),
-        SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Facebook")
+        SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Snapchat")
     ]
 
     override init(frame: CGRect) {
@@ -98,6 +98,8 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
 class SocialMedia: NSObject {
     var imageName: String?
     var name: String?
+    var inputName: String?
+    
     init(nameOfSocialMediaImage imageName: String,nameOfSocialMedia name: String) {
         self.imageName = imageName
         self.name = name

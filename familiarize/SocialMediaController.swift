@@ -11,12 +11,18 @@ import CoreData
 
 class SocialMediaController: UIViewController {
     
+    var newCardControllerDelegate: NewCardController?
+    var socialMedia: SocialMedia? {
+        didSet {
+            
+        }
+    }
+    
     // When everything is done loading, do this shabang.
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupInputComponents()
-
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -39,12 +45,14 @@ class SocialMediaController: UIViewController {
     }()
     
     func addClicked() {
-        print(inputTextField.text!)
+        socialMedia?.inputName = inputTextField.text!
+        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
+        self.dismiss(animated: false, completion: nil)
     }
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-        imageView.image = UIImage(named: "view-profile-popup")
+        imageView.image = UIImage(named: "scan-profile-popup")
         let tap = UITapGestureRecognizer()
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -58,7 +66,6 @@ class SocialMediaController: UIViewController {
         return visualEffect
     }()
 
-    
     lazy var outsideButton: UIButton = {
         let button = UIManager.makeButton()
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
@@ -85,7 +92,6 @@ class SocialMediaController: UIViewController {
             //self.addToGraphics()
             
         })
-        
     }
 
     func setupViews() {
