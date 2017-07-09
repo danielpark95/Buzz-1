@@ -62,7 +62,7 @@ class ViewProfileController: ProfilePopupBase {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
@@ -70,36 +70,36 @@ class ViewProfileController: ProfilePopupBase {
     
     // FYI the button should be a facebook button
     lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram")
+        let button = UIManager.makeButton(imageName: "dan_facebook_black")
         button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
         return button
     }()
     
     lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram")
+        let button = UIManager.makeButton(imageName: "dan_instagram_black")
         button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
         return button
     }()
     
     lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchat")
+        let button = UIManager.makeButton(imageName: "dan_snapchat_black")
         button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
         return button
     }()
     
     lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone")
+        let button = UIManager.makeButton(imageName: "dan_phone_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     lazy var emButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone")
+        let button = UIManager.makeButton(imageName: "dan_email_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone")
+        let button = UIManager.makeButton(imageName: "dan_linkedin_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
@@ -184,7 +184,7 @@ class ViewProfileController: ProfilePopupBase {
     }
     
     override func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "view-profile-popup")
+        self.popupImageView = UIManager.makeImage(imageName: "dan_view_profile_popup")
         
         let tap = UITapGestureRecognizer()
         self.popupImageView.addGestureRecognizer(tap)
@@ -203,11 +203,11 @@ class ViewProfileController: ProfilePopupBase {
         var attributedText = NSMutableAttributedString()
         
         if let name = userProfile?.name {
-            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
         }
         
         if let bio = userProfile?.bio {
-            attributedText.append(NSAttributedString(string:"\n\(bio)" , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.white]))
+            attributedText.append(NSAttributedString(string:"\n\(bio)" , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)]))
         }
         
         let paragraphStyle = NSMutableParagraphStyle()
