@@ -34,6 +34,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "fb": "fb",
             "sc": "sc",
             "ig": "ig",
+            "so": "so",
+            "tw": "tw",
             "bio": "Miller the professional chiller."
             ]
         
@@ -47,7 +49,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UserProfile.clearData(forProfile: .myUser)
         UserProfile.saveProfile(pika, forProfile: .myUser)
         UserProfile.saveProfile(stuff, forProfile: .myUser)
-        
         
         
         

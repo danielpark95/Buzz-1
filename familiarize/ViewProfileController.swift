@@ -104,6 +104,17 @@ class ViewProfileController: ProfilePopupBase {
         return button
     }()
     
+    lazy var soButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_soundcloud_black")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
+    lazy var twButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_twitter_black")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
+    
     func createSocialMediaButtons() {
         socialMediaButtons = [
             "fb": fbButton,
@@ -112,6 +123,8 @@ class ViewProfileController: ProfilePopupBase {
             "pn": pnButton,
             "in": emButton,
             "em": inButton,
+            "so": soButton,
+            "tw": twButton,
         ]
     }
     
@@ -122,6 +135,8 @@ class ViewProfileController: ProfilePopupBase {
         "phoneNumber": "pn",
         "email": "em",
         "linkedInProfile": "in",
+        "soundcloudProfile": "so",
+        "twitterProfile": "tw",
         ]
     
     func presentSocialMediaButtons() {

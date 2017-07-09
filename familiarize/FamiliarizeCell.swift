@@ -26,6 +26,8 @@ class FamiliarizeCell: UICollectionViewCell {
         "snapChatProfile": "sc" ,
         "linkedIn": "in",
         "email": "em",
+        "soundcloudProfile": "so",
+        "twitterProfile": "tw",
         ]
     
     var myUserProfile: UserProfile? {
@@ -143,6 +145,8 @@ class FamiliarizeCell: UICollectionViewCell {
         "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_black"),
         "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
         "email": UIManager.makeImage(imageName: "dan_email_black"),
+        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
+        "soundcloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
     
     //Helper function to space out social media icons - dan

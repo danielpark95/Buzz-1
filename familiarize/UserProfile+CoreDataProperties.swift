@@ -36,6 +36,9 @@ extension UserProfile {
     @NSManaged public var bio: String?
     @NSManaged public var linkedInProfile: String?
     @NSManaged public var email: String?
+    @NSManaged public var soundcloudProfile: String?
+    @NSManaged public var twitterProfile: String?
+    
     @NSManaged var userProfileSelection: userProfileSelection
     
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
@@ -82,6 +85,12 @@ extension UserProfile {
         }
         if (qrJSON["em"].exists()) {
             newUser.email = qrJSON["em"].string
+        }
+        if (qrJSON["so"].exists()) {
+            newUser.soundcloudProfile = qrJSON["so"].string
+        }
+        if (qrJSON["tw"].exists()) {
+            newUser.twitterProfile = qrJSON["tw"].string
         }
         
         newUser.userProfileSelection = userProfile
