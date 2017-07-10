@@ -23,7 +23,6 @@ extension UserProfile {
     @objc enum userProfileSelection: Int32 {
         case myUser
         case otherUser
-        case tempUser
     }
     
     @NSManaged public var faceBookProfile: String?
