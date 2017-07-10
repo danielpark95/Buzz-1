@@ -45,6 +45,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceHorizontal = true
         
         return collectionView
     }()

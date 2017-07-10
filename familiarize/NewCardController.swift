@@ -9,20 +9,23 @@
 import UIKit
 import SwiftyJSON
 import CoreData
+
 protocol NewCardControllerDelegate {
     func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
     func addSocialMediaInput(socialMedia: SocialMedia) -> Void
 }
 
-class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout,NewCardControllerDelegate {
+class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NewCardControllerDelegate {
 
-    var socialMediaInputs: [(key: String, value: String)] = []
+    var socialMediaInputs: [(appName: String, imageName: String, inputName: String)] = []
     
     private let socialMediaSelectionCellId = "socialMediaSelectionCell"
-    private let socialMediaSelectedCell = "socialMediaSelectedCell"
+    private let socialMediaUnfixedSelectedCellId = "socialMediaUnfixedSelectedCell"
+    private let socialMediaFixedSelectedCellId = "socialMediaFixedSelectedCell"
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "New Card"
+        socialMediaInputs.append(("pika", "dan_email_red", "Required"))
         setupCollectionView()
         setupNavBarButton()
     }
@@ -42,9 +45,16 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaSelectedCell, for: indexPath) as! SocialMediaSelectedCell
-        cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
-        return cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaFixedSelectedCellId, for: indexPath) as! SocialMediaFixedSelectedCell
+            cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaUnfixedSelectedCellId, for: indexPath) as! SocialMediaUnfixedSelectedCell
+            cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
+            return cell
+        }
+
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -59,7 +69,8 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
-        collectionView?.register(SocialMediaSelectedCell.self, forCellWithReuseIdentifier: socialMediaSelectedCell)
+        collectionView?.register(SocialMediaUnfixedSelectedCell.self, forCellWithReuseIdentifier: socialMediaUnfixedSelectedCellId)
+        collectionView?.register(SocialMediaFixedSelectedCell.self, forCellWithReuseIdentifier: socialMediaFixedSelectedCellId)
         collectionView?.register(SocialMediaSelectionCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: socialMediaSelectionCellId)
         collectionView?.backgroundColor = UIColor.white
     }
@@ -80,7 +91,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         print("tacos")
     }
     
-    
     func presentSocialMediaPopup(socialMedia: SocialMedia) {
         let socialMediaController = SocialMediaController()
         socialMediaController.socialMedia = socialMedia
@@ -92,7 +102,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     
     func addSocialMediaInput(socialMedia: SocialMedia) {
         if let inputName = socialMedia.inputName {
-            socialMediaInputs.append((socialMedia.name!, inputName))
+            socialMediaInputs.append((socialMedia.name!, socialMedia.imageName!, inputName))
             collectionView?.reloadData()
         }
     }

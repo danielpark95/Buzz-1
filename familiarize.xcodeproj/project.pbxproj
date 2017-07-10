@@ -31,7 +31,8 @@
 		1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A22A1EEF7B2D00366303 /* UIManager.swift */; };
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
-		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
+		14CE963D1F1360DD008C39E5 /* SocialMediaFixedSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE963C1F1360DD008C39E5 /* SocialMediaFixedSelectedCell.swift */; };
+		14EFB1191F11A74800B7FE08 /* SocialMediaUnfixedSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaUnfixedSelectedCell.swift */; };
 		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
@@ -64,7 +65,8 @@
 		1497A22A1EEF7B2D00366303 /* UIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
-		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
+		14CE963C1F1360DD008C39E5 /* SocialMediaFixedSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaFixedSelectedCell.swift; sourceTree = "<group>"; };
+		14EFB1181F11A74800B7FE08 /* SocialMediaUnfixedSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaUnfixedSelectedCell.swift; sourceTree = "<group>"; };
 		14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +103,8 @@
 				144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */,
 				14323B801F04EBAD004694A6 /* SettingsCell.swift */,
 				14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */,
-				14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */,
+				14EFB1181F11A74800B7FE08 /* SocialMediaUnfixedSelectedCell.swift */,
+				14CE963C1F1360DD008C39E5 /* SocialMediaFixedSelectedCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -353,7 +356,8 @@
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */,
-				14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */,
+				14EFB1191F11A74800B7FE08 /* SocialMediaUnfixedSelectedCell.swift in Sources */,
+				14CE963D1F1360DD008C39E5 /* SocialMediaFixedSelectedCell.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				1432D9E31F0F40A400B2BF88 /* SocialMediaController.swift in Sources */,
