@@ -11,7 +11,7 @@ import CoreData
 import SwiftyJSON
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    private let cellId = "cellId3"
+    private let cellId = "cellId"
     
     var myUserProfiles: [UserProfile]? {
         didSet {
@@ -51,9 +51,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UserProfile.saveProfile(stuff, forProfile: .myUser)
         
         
-        
         super.viewDidLoad()
-        tabBarController?.title = "Me"
+        navigationItem.title = "Me"
         
         
         setupNavBarButton()
@@ -67,7 +66,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
         doubleTapGesture.numberOfTapsRequired = 2
         collectionView?.addGestureRecognizer(doubleTapGesture)
-        
     }
     
     // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 
@@ -144,7 +142,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         view.addSubview(pageControl)
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
     }
@@ -164,8 +162,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     var pageControl: UIPageControl = {
         let pc = UIPageControl()
-        pc.pageIndicatorTintColor = .lightGray
-        pc.currentPageIndicatorTintColor = UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
     }()
@@ -200,7 +198,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func createSmallLineOnTabBar() {
         let topBorder = CALayer()
         topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0)
-        topBorder.backgroundColor = UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0).cgColor
+        topBorder.backgroundColor = UIColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0).cgColor
         tabBarController?.tabBar.layer.addSublayer(topBorder)
         tabBarController?.tabBar.isTranslucent = false
         tabBarController?.tabBar.clipsToBounds = true

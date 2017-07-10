@@ -30,12 +30,9 @@
 		1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A22A1EEF7B2D00366303 /* UIManager.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
-		F6926F881F0A5F01006E312C /* ExampleBasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F811F0A5F01006E312C /* ExampleBasicContentView.swift */; };
-		F6926F891F0A5F01006E312C /* ExampleBouncesContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F821F0A5F01006E312C /* ExampleBouncesContentView.swift */; };
-		F6926F8B1F0A5F01006E312C /* ExampleIrregularityContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F841F0A5F01006E312C /* ExampleIrregularityContentView.swift */; };
+		F60E91061F12FD170036078A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60E91051F12FD170036078A /* TabBarController.swift */; };
+		F6926F8B1F0A5F01006E312C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F841F0A5F01006E312C /* TabBar.swift */; };
 		F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6926F8D1F0A5FBA006E312C /* pop.framework */; };
-		F6926F901F0A6CEE006E312C /* ExampleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F8F1F0A6CEE006E312C /* ExampleNavigationController.swift */; };
-		F6926F921F0A6EA7006E312C /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F911F0A6EA7006E312C /* ExampleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,12 +63,9 @@
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.debug.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.release.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.release.xcconfig"; sourceTree = "<group>"; };
-		F6926F811F0A5F01006E312C /* ExampleBasicContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleBasicContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleBasicContentView.swift; sourceTree = "<group>"; };
-		F6926F821F0A5F01006E312C /* ExampleBouncesContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleBouncesContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleBouncesContentView.swift; sourceTree = "<group>"; };
-		F6926F841F0A5F01006E312C /* ExampleIrregularityContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleIrregularityContentView.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/ExampleIrregularityContentView.swift; sourceTree = "<group>"; };
+		F60E91051F12FD170036078A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		F6926F841F0A5F01006E312C /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBar.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Content/TabBar.swift; sourceTree = "<group>"; };
 		F6926F8D1F0A5FBA006E312C /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = ../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework; sourceTree = "<group>"; };
-		F6926F8F1F0A6CEE006E312C /* ExampleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleNavigationController.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/ExampleNavigationController.swift; sourceTree = "<group>"; };
-		F6926F911F0A6EA7006E312C /* ExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExampleViewController.swift; path = ../../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/ExampleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,14 +108,10 @@
 		141CEEBC1EDCD03C0068B2B9 /* TabController */ = {
 			isa = PBXGroup;
 			children = (
-				F6926F911F0A6EA7006E312C /* ExampleViewController.swift */,
-				F6926F8F1F0A6CEE006E312C /* ExampleNavigationController.swift */,
-				F6926F811F0A5F01006E312C /* ExampleBasicContentView.swift */,
-				F6926F821F0A5F01006E312C /* ExampleBouncesContentView.swift */,
-				F6926F841F0A5F01006E312C /* ExampleIrregularityContentView.swift */,
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
 				140A40001EDFC42E00D4539E /* FamiliarizeController.swift */,
 				140ECD811EF6165800E538E4 /* UserController.swift */,
+				F60E91051F12FD170036078A /* TabBarController.swift */,
 			);
 			name = TabController;
 			sourceTree = "<group>";
@@ -183,6 +173,7 @@
 		14A3F33E1EE11D4300C97747 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F6926F841F0A5F01006E312C /* TabBar.swift */,
 				140ECD841EF723FD00E538E4 /* ProfilePopup.swift */,
 			);
 			name = Models;
@@ -345,10 +336,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6926F8B1F0A5F01006E312C /* ExampleIrregularityContentView.swift in Sources */,
-				F6926F921F0A6EA7006E312C /* ExampleViewController.swift in Sources */,
+				F6926F8B1F0A5F01006E312C /* TabBar.swift in Sources */,
+				F60E91061F12FD170036078A /* TabBarController.swift in Sources */,
 				14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */,
-				F6926F891F0A5F01006E312C /* ExampleBouncesContentView.swift in Sources */,
 				140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */,
 				1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */,
 				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
@@ -363,12 +353,10 @@
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
-				F6926F901F0A6CEE006E312C /* ExampleNavigationController.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
 				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
-				F6926F881F0A5F01006E312C /* ExampleBasicContentView.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

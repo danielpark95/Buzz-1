@@ -24,53 +24,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
+        window?.rootViewController = TabBarController()
         
+        let tabBarController = window!.rootViewController as! TabBarController
+        tabBarController.selectedIndex = 0
         
-        let tabBarController = ESTabBarController()
-        tabBarController.delegate = self
-        tabBarController.tabBar.shadowImage = UIImage(named: "dan_transparent")
-        tabBarController.tabBar.backgroundImage = UIImage(named: "dan_background")
-//        tabBarController.shouldHijackHandler = {
-//            tabbarController, viewController, index in
-//            if index == 1 {
-//                return true
-//            }
-//            return false
-//        }
-//        tabBarController.didHijackHandler = {
-//            [weak tabBarController] tabbarController, viewController, index in
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                let alertController = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
-//                let takePhotoAction = UIAlertAction(title: "Take a photo", style: .default, handler: nil)
-//                alertController.addAction(takePhotoAction)
-//                let selectFromAlbumAction = UIAlertAction(title: "Select from album", style: .default, handler: nil)
-//                alertController.addAction(selectFromAlbumAction)
-//                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//                alertController.addAction(cancelAction)
-//                tabBarController?.present(alertController, animated: true, completion: nil)
-//            }
-//        }
 //        
-        let v1 = UserController(collectionViewLayout: UICollectionViewFlowLayout())
-        let v3 = QRScannerController()
-        let v5 = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
-        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_red"))
-        v3.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: "Hello", image: UIImage(named: "dan_camera_round"), selectedImage: UIImage(named: "dan_camera_round"))
-        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Friends", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_red"))
-        
-        tabBarController.viewControllers = [v1, v3, v5]
-        let navigationController = ExampleNavigationController.init(rootViewController: tabBarController)
-        self.window?.rootViewController = navigationController
-        
-        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+//        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
-        UINavigationBar.appearance().tintColor = UIColor.black
-        let navigationTitleFont = UIFont(name: "Avenir", size: 17)!
+//        UINavigationBar.appearance().tintColor = UIColor.black
+        let navigationTitleFont = UIFont(name: "Avenir", size: 17)
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-        UIApplication.shared.statusBarStyle = .default
+//        UIApplication.shared.statusBarStyle = .default
+        
+        
         return true
     }
     

@@ -101,7 +101,7 @@ class FamiliarizeCell: UICollectionViewCell {
             //Namelabel position upated using NSLayoutConstraint -dan
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             let name_topConstraint = NSLayoutConstraint(item: nameLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
-            let name_bottomConstraint = NSLayoutConstraint(item: nameLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 300)
+            let name_bottomConstraint = NSLayoutConstraint(item: nameLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 290)
             let name_leadingConstraint = NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 35)
             let name_trailingConstraint = NSLayoutConstraint(item: nameLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
             addSubview(nameLabel)
@@ -113,7 +113,7 @@ class FamiliarizeCell: UICollectionViewCell {
             //Biolabel position updated using NSLayoutConstraint -dan
             bioLabel.translatesAutoresizingMaskIntoConstraints = false
             let bio_topConstraint = NSLayoutConstraint(item: bioLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
-            let bio_bottomConstraint = NSLayoutConstraint(item: bioLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 360)
+            let bio_bottomConstraint = NSLayoutConstraint(item: bioLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 350)
             let bio_leadingConstraint = NSLayoutConstraint(item: bioLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 35)
             let bio_trailingConstraint = NSLayoutConstraint(item: bioLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
             addSubview(bioLabel)
