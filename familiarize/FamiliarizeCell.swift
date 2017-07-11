@@ -10,9 +10,6 @@ import QRCode
 import SwiftyJSON
 import UIKit
 
-// You need to convert the JSON string to a data and then intialize it to create a json object! 
-
-
 class FamiliarizeCell: UICollectionViewCell {
     
     var fullBrightness: Bool = false
@@ -34,7 +31,6 @@ class FamiliarizeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
     
@@ -42,16 +38,6 @@ class FamiliarizeCell: UICollectionViewCell {
         case val = 999
     }
     
-    let shortHandForQR = [
-        "bio": "bio",
-        "faceBookProfile": "fb",
-        "instagramProfile": "ig",
-        "name": "name",
-        "phoneNumber": "pn",
-        "snapChatProfile": "sc" ,
-        "linkedIn": "in",
-        "email": "em",
-        ]
     
     var myUserProfile: UserProfile? {
         didSet {
@@ -62,18 +48,6 @@ class FamiliarizeCell: UICollectionViewCell {
             setupViews()
         }
     }
-    
-    
-    let shortHandForQRQ = [
-        "bio": "bio",
-        "faceBookProfile": "fb",
-        "instagramProfile": "ig",
-        "name": "name",
-        "phoneNumber": "pn",
-        "snapChatProfile": "sc" ,
-        "linkedIn": "in",
-        "email": "em",
-        ]
     
     func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
@@ -357,9 +331,6 @@ class FamiliarizeCell: UICollectionViewCell {
                 }
             }
         }
-        
-        
-        
 
     }
 }
