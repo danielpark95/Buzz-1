@@ -119,8 +119,9 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         // TODO: Valid name checker. 
         // i.e. no blank usernames.
         if socialMedia.inputName != "" && socialMedia.isSet == false {
-            socialMedia.isSet = true
-            optionalSocialMediaInputs.append(SocialMedia(copyFrom: socialMedia))
+            let newSocialMediaInput = SocialMedia(copyFrom: socialMedia)
+            newSocialMediaInput.isSet = true
+            optionalSocialMediaInputs.append(newSocialMediaInput)
         }
         collectionView?.reloadData()
     }
@@ -136,7 +137,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         var currentSocialMediaName: String = ""
         for eachSocialInput in requiredSocialMediaInputs {
             if eachSocialInput.name == currentSocialMediaName {
-                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ", \(eachSocialInput.inputName!)"
+                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ",\(eachSocialInput.inputName!)"
             } else {
                 currentSocialMediaName = eachSocialInput.name!
                 concantenatedSocialMediaInputs.append((eachSocialInput.name!, eachSocialInput.inputName!))
