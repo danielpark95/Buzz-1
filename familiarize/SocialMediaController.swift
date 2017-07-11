@@ -14,7 +14,6 @@ class SocialMediaController: UIViewController {
     var newCardControllerDelegate: NewCardController?
     var socialMedia: SocialMedia? {
         didSet {
-            
         }
     }
     

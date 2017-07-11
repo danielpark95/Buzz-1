@@ -10,18 +10,10 @@
 
 import UIKit
 
-class SocialMediaUnfixedSelectedCell: UICollectionViewCell {
-
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+class SocialMediaSelectedCell: UICollectionViewCell {
     
     // TODO: Do we need the AppName?
-    var selectedSocialMedia: (appName: String, imageName: String, inputName: String)? {
+    var selectedSocialMedia: SocialMedia? {
         didSet {
             if let selectedSocialMediaInputName = selectedSocialMedia?.inputName {
                 socialMediaInputName.text = selectedSocialMediaInputName

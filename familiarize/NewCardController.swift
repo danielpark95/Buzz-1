@@ -17,49 +17,56 @@ protocol NewCardControllerDelegate {
 
 class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NewCardControllerDelegate {
 
-    var socialMediaInputs: [(appName: String, imageName: String, inputName: String)] = []
+    var optionalSocialMediaInputs: [SocialMedia] = []
+    var userControllerDelegate: UserControllerDelegate?
+
+    var requiredSocialMediaInputs: [SocialMedia] = [
+        SocialMedia(withSocialMedia: "name", withImageName: "dan_facebook_red", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withSocialMedia: "bio", withImageName: "dan_facebook_red", withInputName: "Optional", withAlreadySet: true)
+    ]
     
-    private let socialMediaSelectionCellId = "socialMediaSelectionCell"
-    private let socialMediaUnfixedSelectedCellId = "socialMediaUnfixedSelectedCell"
-    private let socialMediaFixedSelectedCellId = "socialMediaFixedSelectedCell"
+    
+    private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
+    private let socialMediaSelectedCellId = "socialMediaSelectedCellId"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "New Card"
-        socialMediaInputs.append(("pika", "dan_email_red", "Required"))
         setupCollectionView()
         setupNavBarButton()
     }
     
+    //# MARK: - Header Collection View
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    // This is our header. Independent of the social media inputs. 
+    // This calls the SocialMediaSelectionCell class.
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: socialMediaSelectionCellId, for: indexPath) as! SocialMediaSelectionCell
+        cell.newCardControllerDelegate = self
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 100)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+
+    //# MARK: - Body Collection View
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return socialMediaInputs.count
+        return optionalSocialMediaInputs.count + requiredSocialMediaInputs.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaFixedSelectedCellId, for: indexPath) as! SocialMediaFixedSelectedCell
-            cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaUnfixedSelectedCellId, for: indexPath) as! SocialMediaUnfixedSelectedCell
-            cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
-            return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaSelectedCellId, for: indexPath) as! SocialMediaSelectedCell
+        if indexPath.item < requiredSocialMediaInputs.count {
+            cell.selectedSocialMedia = requiredSocialMediaInputs[indexPath.item]
+        } else { //if indexPath.item >= optionalSocialMediaInputs.count
+            cell.selectedSocialMedia = optionalSocialMediaInputs[indexPath.item - requiredSocialMediaInputs.count]
         }
-
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: socialMediaSelectionCellId, for: indexPath) as! SocialMediaSelectionCell
-        cell.newCardControllerDelegate = self
         return cell
     }
     
@@ -67,28 +74,33 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         return CGSize(width: view.frame.width, height: 60)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item < requiredSocialMediaInputs.count {
+            self.presentSocialMediaPopup(socialMedia: requiredSocialMediaInputs[indexPath.item])
+        } else {
+            self.presentSocialMediaPopup(socialMedia: optionalSocialMediaInputs[indexPath.item - requiredSocialMediaInputs.count])
+        }
+    }
+    
+    //# MARK: - Setup Views
+    
     func setupCollectionView() {
         collectionView?.alwaysBounceVertical = true
-        collectionView?.register(SocialMediaUnfixedSelectedCell.self, forCellWithReuseIdentifier: socialMediaUnfixedSelectedCellId)
-        collectionView?.register(SocialMediaFixedSelectedCell.self, forCellWithReuseIdentifier: socialMediaFixedSelectedCellId)
+        collectionView?.register(SocialMediaSelectedCell.self, forCellWithReuseIdentifier: socialMediaSelectedCellId)
         collectionView?.register(SocialMediaSelectionCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: socialMediaSelectionCellId)
         collectionView?.backgroundColor = UIColor.white
     }
     
     func setupNavBarButton() {
         let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
-        let saveButton = UIBarButtonItem.init(title: "save", style: .plain, target: self, action: #selector(saveClicked))
+        let nextButton = UIBarButtonItem.init(title: "next", style: .plain, target: self, action: #selector(nextClicked))
         
         navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.rightBarButtonItem = nextButton
     }
     
     func cancelClicked() {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    func saveClicked() {
-        print("tacos")
     }
     
     func presentSocialMediaPopup(socialMedia: SocialMedia) {
@@ -100,11 +112,46 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         navigationController?.present(socialMediaController, animated: false)
     }
     
+    //# Mark: - Stored Info
+    
+    // For adding it to the collection view.
     func addSocialMediaInput(socialMedia: SocialMedia) {
-        if let inputName = socialMedia.inputName {
-            socialMediaInputs.append((socialMedia.name!, socialMedia.imageName!, inputName))
-            collectionView?.reloadData()
+        // TODO: Valid name checker. 
+        // i.e. no blank usernames.
+        if socialMedia.inputName != "" && socialMedia.isSet == false {
+            socialMedia.isSet = true
+            optionalSocialMediaInputs.append(SocialMedia(copyFrom: socialMedia))
         }
+        collectionView?.reloadData()
+    }
+    
+    // For adding it to the coredata
+    func nextClicked() {
+        requiredSocialMediaInputs.append(contentsOf: optionalSocialMediaInputs)
+        requiredSocialMediaInputs.sort(by: { $0.name! < $1.name! })
+        
+        
+        var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
+        
+        var currentSocialMediaName: String = ""
+        for eachSocialInput in requiredSocialMediaInputs {
+            if eachSocialInput.name == currentSocialMediaName {
+                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ", \(eachSocialInput.inputName!)"
+            } else {
+                currentSocialMediaName = eachSocialInput.name!
+                concantenatedSocialMediaInputs.append((eachSocialInput.name!, eachSocialInput.inputName!))
+                print(concantenatedSocialMediaInputs.count)
+            }
+        }
+        
+        var toSaveCard: JSON = [:]
+        for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
+            let currentSocialMediaName = UIManager.makeShortHandForQR(eachConcantenatedSocialMediaInput.socialMediaName)
+            toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
+        }
+        
+        UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
+        userControllerDelegate?.reloadCard()
     }
 }
 

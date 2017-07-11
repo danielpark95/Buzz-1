@@ -63,11 +63,23 @@ class FamiliarizeCell: UICollectionViewCell {
         }
     }
     
+    
+    let shortHandForQRQ = [
+        "bio": "bio",
+        "faceBookProfile": "fb",
+        "instagramProfile": "ig",
+        "name": "name",
+        "phoneNumber": "pn",
+        "snapChatProfile": "sc" ,
+        "linkedIn": "in",
+        "email": "em",
+        ]
+    
     func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
-            if (profile.value(forKey: key) != nil && shortHandForQR[key] != nil) {
-                    jsonDict[shortHandForQR[key]!] = profile.value(forKey: key) as? String
+            if (profile.value(forKey: key) != nil && UIManager.makeShortHandForQR(key) != nil) {
+                    jsonDict[UIManager.makeShortHandForQR(key)!] = profile.value(forKey: key) as? String
             }
         }
         return JSON(jsonDict).rawString()!

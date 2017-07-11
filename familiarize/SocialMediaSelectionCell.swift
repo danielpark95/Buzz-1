@@ -15,9 +15,10 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     
     private let cellId = "cellId"
     
+    
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Facebook"),
-        SocialMedia(nameOfSocialMediaImage: "dan_facebook_red", nameOfSocialMedia: "Snapchat")
+        SocialMedia(withSocialMedia: "faceBookProfile", withImageName: "dan_facebook_red", withInputName: "", withAlreadySet: false),
+        SocialMedia(withSocialMedia: "snapChatProfile", withImageName: "dan_snapchat_red", withInputName: "", withAlreadySet: false)
     ]
 
     override init(frame: CGRect) {
@@ -90,7 +91,6 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("taco")
         self.newCardControllerDelegate?.presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
     }
     
@@ -100,10 +100,20 @@ class SocialMedia: NSObject {
     var imageName: String?
     var name: String?
     var inputName: String?
+    var isSet: Bool?
     
-    init(nameOfSocialMediaImage imageName: String,nameOfSocialMedia name: String) {
+    init(withSocialMedia name: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName
         self.name = name
+        self.inputName = inputName
+        self.isSet = isSet
+    }
+    
+    init(copyFrom: SocialMedia) {
+        self.imageName = copyFrom.imageName
+        self.name = copyFrom.name
+        self.inputName = copyFrom.inputName
+        self.isSet = copyFrom.isSet
     }
 }
 

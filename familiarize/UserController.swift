@@ -10,7 +10,11 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
-class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+protocol UserControllerDelegate {
+    func reloadCard() -> Void
+}
+
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserControllerDelegate {
     private let cellId = "cellId"
     
     var myUserProfiles: [UserProfile]? {
@@ -20,6 +24,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
         }
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -87,19 +92,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItem = addButton
     }
     
-//    func handleHamburger() {
-//        let transition = CATransition()
-//        transition.duration = 0.2
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        
-//        let layout = UICollectionViewFlowLayout()
-//        let controller = SettingsController(collectionViewLayout: layout)
-//        let navigationController = UINavigationController.init(rootViewController: controller)
-//        self.present(navigationController, animated: false)
-//    }
-    
     lazy var settingsLauncher: SettingsController = {
         let launcher = SettingsController()
         launcher.userController = self
@@ -111,12 +103,12 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func handleNewCard() {
-            let layout = UICollectionViewFlowLayout()
-            let controller = NewCardController(collectionViewLayout: layout)
-            let navigationController = UINavigationController.init(rootViewController: controller)
-            self.present(navigationController, animated: true)
+        let layout = UICollectionViewFlowLayout()
+        let newCardController = NewCardController(collectionViewLayout: layout)
+        newCardController.userControllerDelegate = self
+        let navigationController = UINavigationController.init(rootViewController: newCardController)
+        self.present(navigationController, animated: true)
     }
-    
     
     func showControllerForSetting(setting: Setting) {
 
@@ -132,7 +124,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } else { // It is the feedback controller
             controller = FeedbackSettingController(collectionViewLayout: layout)
         }
-        
         
         controller.hidesBottomBarWhenPushed = true
 
@@ -238,7 +229,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
     
+    func reloadCard() {
+        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
+        collectionView?.reloadData()
+    }
+
 }
 

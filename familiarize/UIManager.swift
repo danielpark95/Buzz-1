@@ -43,4 +43,24 @@ class UIManager {
         image.layer.masksToBounds = true
         return image
     }
+    
+    static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
+        let shortHandForQR = [
+            "bio": "bio",
+            "faceBookProfile": "fb",
+            "instagramProfile": "ig",
+            "name": "name",
+            "phoneNumber": "pn",
+            "snapChatProfile": "sc" ,
+            "linkedIn": "in",
+            "email": "em",
+            ]
+        if let shortName = shortHandForQR[longSocialMediaName] {
+            return shortName
+        } else {
+            return nil
+        }
+    }
+    
+
 }
