@@ -128,19 +128,19 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     
     // For adding it to the coredata
     func nextClicked() {
-        requiredSocialMediaInputs.append(contentsOf: optionalSocialMediaInputs)
-        requiredSocialMediaInputs.sort(by: { $0.name! < $1.name! })
         
+        requiredSocialMediaInputs.append(contentsOf: optionalSocialMediaInputs)
+        requiredSocialMediaInputs.sort(by: { $0.appName! < $1.appName! })
         
         var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
         
         var currentSocialMediaName: String = ""
         for eachSocialInput in requiredSocialMediaInputs {
-            if eachSocialInput.name == currentSocialMediaName {
+            if eachSocialInput.appName == currentSocialMediaName {
                 concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ",\(eachSocialInput.inputName!)"
             } else {
-                currentSocialMediaName = eachSocialInput.name!
-                concantenatedSocialMediaInputs.append((eachSocialInput.name!, eachSocialInput.inputName!))
+                currentSocialMediaName = eachSocialInput.appName!
+                concantenatedSocialMediaInputs.append((eachSocialInput.appName!, eachSocialInput.inputName!))
                 print(concantenatedSocialMediaInputs.count)
             }
         }
@@ -151,8 +151,30 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
             toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
         }
         
-        UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
+        //# Mark: - Remember to uncomment this out...
+        UserProfile.clearData(forProfile: .myUser)
+        
+        let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
         userControllerDelegate?.reloadCard()
+        
+        //# MARK: - Presenting ProfileImageSelectionController
+        
+        let loadingProfileImageSelectionController = LoadingProfileImageSelectionController()
+        loadingProfileImageSelectionController.userProfile = userProfile
+        loadingProfileImageSelectionController.socialMediaInputs = massageSocialMediaInputsData(requiredSocialMediaInputs: requiredSocialMediaInputs)
+        navigationController?.pushViewController(loadingProfileImageSelectionController, animated: true)
+    }
+    
+    func massageSocialMediaInputsData(requiredSocialMediaInputs: [SocialMedia]) -> [SocialMedia] {
+        var socialMediaInputs: [SocialMedia] = []
+        let socialMediaAppsWithRetrievableProfileImages: Set<String> = ["faceBookProfile", "instagramProfile"]
+        
+        for eachSocialMediaInput in requiredSocialMediaInputs {
+            if socialMediaAppsWithRetrievableProfileImages.contains(eachSocialMediaInput.appName!) {
+                socialMediaInputs.append(eachSocialMediaInput)
+            }
+        }
+        return socialMediaInputs
     }
 }
 

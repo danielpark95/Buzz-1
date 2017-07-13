@@ -18,7 +18,8 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withSocialMedia: "faceBookProfile", withImageName: "dan_facebook_red", withInputName: "", withAlreadySet: false),
-        SocialMedia(withSocialMedia: "snapChatProfile", withImageName: "dan_snapchat_red", withInputName: "", withAlreadySet: false)
+        SocialMedia(withSocialMedia: "snapChatProfile", withImageName: "dan_snapchat_red", withInputName: "", withAlreadySet: false),
+        SocialMedia(withSocialMedia: "instagramProfile", withImageName: "dan_instagram_red", withInputName: "", withAlreadySet: false)
     ]
 
     override init(frame: CGRect) {
@@ -98,20 +99,20 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
 
 class SocialMedia: NSObject {
     var imageName: String?
-    var name: String?
+    var appName: String?
     var inputName: String?
     var isSet: Bool?
     
     init(withSocialMedia name: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName
-        self.name = name
+        self.appName = name
         self.inputName = inputName
         self.isSet = isSet
     }
     
     init(copyFrom: SocialMedia) {
         self.imageName = copyFrom.imageName
-        self.name = copyFrom.name
+        self.appName = copyFrom.appName
         self.inputName = copyFrom.inputName
         self.isSet = copyFrom.isSet
     }
@@ -122,8 +123,8 @@ class SocialMediaCell: UICollectionViewCell {
     
     var socialMedia: SocialMedia? {
         didSet {
-            if let name = socialMedia?.name {
-                socialMediaName.text = name
+            if let appName = socialMedia?.appName {
+                socialMediaName.text = appName
             }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)

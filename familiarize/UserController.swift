@@ -126,7 +126,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         controller.hidesBottomBarWhenPushed = true
-
         navigationController?.pushViewController(controller, animated: true)
     }
     

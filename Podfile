@@ -16,4 +16,7 @@ target 'familiarize' do
   #Add Friend Checkbox animation
   pod 'M13Checkbox'
 
+  #Loading Screen for fetching profile pictures
+  pod 'NVActivityIndicatorView'
+
 end

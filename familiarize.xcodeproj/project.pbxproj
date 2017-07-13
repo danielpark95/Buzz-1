@@ -19,6 +19,7 @@
 		143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 143532471EDA9CC2000507DB /* familiarize.xcdatamodeld */; };
 		1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1435324A1EDA9CC2000507DB /* Assets.xcassets */; };
 		1435324E1EDA9CC2000507DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */; };
+		144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144372AC1F1710840052C544 /* ImageFetchingManager.swift */; };
 		144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */; };
 		1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */; };
 		1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51A1F0979DD00F173DE /* ContactSettingController.swift */; };
@@ -31,6 +32,7 @@
 		1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497A22A1EEF7B2D00366303 /* UIManager.swift */; };
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
+		14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */; };
 		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
 		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
@@ -52,6 +54,7 @@
 		1435324A1EDA9CC2000507DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1435324D1EDA9CC2000507DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1435324F1EDA9CC2000507DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		144372AC1F1710840052C544 /* ImageFetchingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFetchingManager.swift; sourceTree = "<group>"; };
 		144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeCell.swift; sourceTree = "<group>"; };
 		1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsPrivacySettingController.swift; sourceTree = "<group>"; };
 		1458B51A1F0979DD00F173DE /* ContactSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSettingController.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		1497A22A1EEF7B2D00366303 /* UIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
+		14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
 		14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
@@ -89,7 +93,7 @@
 			children = (
 				1432D9E41F0F40B200B2BF88 /* PopUpVC */,
 				1432D9E51F0F40C500B2BF88 /* SettingsVC */,
-				14AF10EE1F0DD691004E0CEB /* NewCardController.swift */,
+				14DD43DE1F15AB030093DDB4 /* NewCardVC */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -189,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				1497A22A1EEF7B2D00366303 /* UIManager.swift */,
+				144372AC1F1710840052C544 /* ImageFetchingManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -199,6 +204,15 @@
 				140ECD841EF723FD00E538E4 /* ProfilePopup.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		14DD43DE1F15AB030093DDB4 /* NewCardVC */ = {
+			isa = PBXGroup;
+			children = (
+				14AF10EE1F0DD691004E0CEB /* NewCardController.swift */,
+				14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */,
+			);
+			name = NewCardVC;
 			sourceTree = "<group>";
 		};
 		840416BE49CDD194FA4AE151 /* Frameworks */ = {
@@ -349,6 +363,7 @@
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
 				140ECD851EF723FD00E538E4 /* ProfilePopup.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
+				14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
@@ -360,6 +375,7 @@
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
+				144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */,
 				14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
