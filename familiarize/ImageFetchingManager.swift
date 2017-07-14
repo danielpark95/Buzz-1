@@ -9,13 +9,12 @@
 import Foundation
 import Alamofire
 import Kanna
-import UIKit
 
 class ImageFetchingManager {
 
-    static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([UIImage]) -> Void) {
+    static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
         let asyncDispatchGroup = DispatchGroup()
-        var socialMediaProfileImages: [UIImage] = []
+        var socialMediaProfileImages: [SocialMediaProfileImage] = []
         for eachSocialMediaInput in socialMediaInputs {
             asyncDispatchGroup.enter()
             scrapeSocialMedia(withSocialMediaInput: eachSocialMediaInput, completionHandlerForScrape: { profileImage in
@@ -32,12 +31,12 @@ class ImageFetchingManager {
     }
     
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
-    static func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (UIImage) -> Void) {
+    static func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage) -> Void) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         if socialMediaInput.appName == "faceBookProfile" {
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
                 if let html = response.result.value {
-                    self.parseHTML(html: html, forSocialMediaApp: socialMediaInput.appName!, completionHandlerForParse: { profileImage in
+                    self.parseHTML(html: html, withSocialMediaInput: socialMediaInput, completionHandlerForParse: { profileImage in
                         completionHandlerForScrape(profileImage)
                     })
                 }
@@ -46,8 +45,8 @@ class ImageFetchingManager {
     }
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
-    static func parseHTML(html: String, forSocialMediaApp socialMediaAppName: String, completionHandlerForParse: @escaping (UIImage) -> Void) {
-        if socialMediaAppName == "faceBookProfile" {
+    static func parseHTML(html: String, withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForParse: @escaping (SocialMediaProfileImage) -> Void) {
+        if socialMediaInput.appName == "faceBookProfile" {
             if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
                 for show in doc.css("img[class^='profilePic img']") {
                     let profileImageUrl = URL(string: show["src"]!)
@@ -58,7 +57,8 @@ class ImageFetchingManager {
                         }
                         
                         if let profileImageData = data {
-                            completionHandlerForParse(UIImage(data: profileImageData)!)
+                            let newSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: socialMediaInput, withImage: UIImage(data: profileImageData)!)
+                            completionHandlerForParse(newSocialMediaProfileImage)
                         }
 
                     }).resume()

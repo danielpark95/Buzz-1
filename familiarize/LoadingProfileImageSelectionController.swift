@@ -10,6 +10,15 @@ import UIKit
 import NVActivityIndicatorView
 import Foundation
 
+class SocialMediaProfileImage: SocialMedia {
+    var profileImage: UIImage?
+    
+    init(copyFrom: SocialMedia, withImage profileImage: UIImage) {
+        super.init(copyFrom: copyFrom)
+        self.profileImage = profileImage
+    }
+}
+
 class LoadingProfileImageSelectionController: UIViewController {
 
     
@@ -30,7 +39,7 @@ class LoadingProfileImageSelectionController: UIViewController {
 
     var userProfile: UserProfile?
     var socialMediaInputs: [SocialMedia]?
-    var socialMediaProfileImages: [UIImage]?
+    var socialMediaProfileImages: [SocialMediaProfileImage]?
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -131,7 +140,7 @@ class LoadingProfileImageSelectionController: UIViewController {
         var counter = -200
         for eachProfileImage in self.socialMediaProfileImages! {
             let newImage2 = UIManager.makeImage()
-            newImage2.image = eachProfileImage
+            newImage2.image = eachProfileImage.profileImage
             self.view.addSubview(newImage2)
             newImage2.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
             newImage2.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: CGFloat(counter)).isActive = true
@@ -142,12 +151,4 @@ class LoadingProfileImageSelectionController: UIViewController {
     }
 }
 
-class socialMediaProfileImage: NSObject {
-    // It should be URL -- TINY URL
-    let profileImage: UIImage
-    
-    
-    init(profileImage: UIImage) {
-        self.profileImage = profileImage
-    }
-}
+

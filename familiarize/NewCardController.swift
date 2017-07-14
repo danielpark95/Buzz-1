@@ -165,6 +165,8 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         navigationController?.pushViewController(loadingProfileImageSelectionController, animated: true)
     }
     
+    
+    // Only fetch images from social media that has profile images.
     func massageSocialMediaInputsData(requiredSocialMediaInputs: [SocialMedia]) -> [SocialMedia] {
         var socialMediaInputs: [SocialMedia] = []
         let socialMediaAppsWithRetrievableProfileImages: Set<String> = ["faceBookProfile", "instagramProfile"]
