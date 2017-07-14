@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Foundation
+import UPCarouselFlowLayout
 
 class SocialMediaProfileImage: SocialMedia {
     var profileImage: UIImage?
@@ -20,22 +21,6 @@ class SocialMediaProfileImage: SocialMedia {
 }
 
 class LoadingProfileImageSelectionController: UIViewController {
-
-    
-    // In order to change the speed of the image expanding,
-    // MAKE SURE TO UPDATE THIS EVERYTIME YOU DO A PODINSTALL.
-    // THIS WILL GET MESSY.
-    // TODO: CREATE OUR OWN CIRCLE
-    // Go to :NSActivityIndicatorView.swift
-    // and play with :
-        /*
-        public final func startAnimating() {
-        isHidden = false
-        isAnimating = true
-        layer.speed = 0.4
-        setUpAnimation()
-        }
-        */
 
     var userProfile: UserProfile?
     var socialMediaInputs: [SocialMedia]?
@@ -63,7 +48,7 @@ class LoadingProfileImageSelectionController: UIViewController {
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
-        actIndicator.padding = 500
+        actIndicator.layer.speed = 0.3
         return actIndicator
     }()
     
@@ -74,6 +59,7 @@ class LoadingProfileImageSelectionController: UIViewController {
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
+        actIndicator.layer.speed = 0.3
         return actIndicator
     }()
     
@@ -84,6 +70,7 @@ class LoadingProfileImageSelectionController: UIViewController {
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
+        actIndicator.layer.speed = 0.3
         return actIndicator
     }()
     
@@ -94,6 +81,7 @@ class LoadingProfileImageSelectionController: UIViewController {
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
+        actIndicator.layer.speed = 0.3
         return actIndicator
     }()
     
@@ -130,8 +118,10 @@ class LoadingProfileImageSelectionController: UIViewController {
     func fetchImage() {
         if socialMediaInputs != nil {
             ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
-                self.socialMediaProfileImages = fetchedSocialMediaProfileImages
-                self.setupProfileImages()
+
+                let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
+                profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
+                self.present(profileImageSelectionController, animated: false, completion: nil)
             })
         }
     }

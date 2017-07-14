@@ -44,13 +44,19 @@ class ImageFetchingManager {
         }
     }
     
+//https://www.techuntold.com/view-instagram-profile-picture-full-size/
+    //https://gist.github.com/jcsrb/1081548
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
     static func parseHTML(html: String, withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForParse: @escaping (SocialMediaProfileImage) -> Void) {
         if socialMediaInput.appName == "faceBookProfile" {
             if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
-                for show in doc.css("img[class^='profilePic img']") {
-                    let profileImageUrl = URL(string: show["src"]!)
-                    URLSession.shared.dataTask(with: profileImageUrl!, completionHandler: { data, response, error in
+                for show in doc.css("meta[property^='al:ios:url']") {
+                    let facebook_url = show["content"]?.components(separatedBy: "/")
+                    let facebook_id = facebook_url?[3]
+                    let profileImageUrl = "http://graph.facebook.com/\(facebook_id!)/picture?width=1080&height=1080"
+                    
+                    let formattedProfileImageUrl  = URL(string: profileImageUrl)
+                    URLSession.shared.dataTask(with: formattedProfileImageUrl!, completionHandler: { data, response, error in
                         if error != nil {
                             print(error!)
                             return

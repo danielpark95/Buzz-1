@@ -19,4 +19,7 @@ target 'familiarize' do
   #Loading Screen for fetching profile pictures
   pod 'NVActivityIndicatorView'
 
+  #Carousel Layout for selecting profile image
+  pod "UPCarouselFlowLayout"
+
 end

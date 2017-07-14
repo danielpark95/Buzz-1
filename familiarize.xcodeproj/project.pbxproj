@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A40001EDFC42E00D4539E /* FamiliarizeController.swift */; };
+		140B2E3A1F185EDC009A2B32 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B2E391F185EDC009A2B32 /* ProfileImageSelectionController.swift */; };
 		140ECD821EF6165800E538E4 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD811EF6165800E538E4 /* UserController.swift */; };
 		140ECD851EF723FD00E538E4 /* ProfilePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD841EF723FD00E538E4 /* ProfilePopup.swift */; };
+		1414A1201F1862CD00289EEB /* ProfileImageSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */; };
 		141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */; };
 		14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14323B7E1F04DF33004694A6 /* SettingsController.swift */; };
 		14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14323B801F04EBAD004694A6 /* SettingsCell.swift */; };
@@ -41,8 +43,10 @@
 
 /* Begin PBXFileReference section */
 		140A40001EDFC42E00D4539E /* FamiliarizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeController.swift; sourceTree = "<group>"; };
+		140B2E391F185EDC009A2B32 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		140ECD811EF6165800E538E4 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		140ECD841EF723FD00E538E4 /* ProfilePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePopup.swift; sourceTree = "<group>"; };
+		1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionCell.swift; sourceTree = "<group>"; };
 		141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		14323B7E1F04DF33004694A6 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		14323B801F04EBAD004694A6 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 				14323B801F04EBAD004694A6 /* SettingsCell.swift */,
 				14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */,
 				14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */,
+				1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 			children = (
 				14AF10EE1F0DD691004E0CEB /* NewCardController.swift */,
 				14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */,
+				140B2E391F185EDC009A2B32 /* ProfileImageSelectionController.swift */,
 			);
 			name = NewCardVC;
 			sourceTree = "<group>";
@@ -365,8 +371,10 @@
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
 				14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
+				140B2E3A1F185EDC009A2B32 /* ProfileImageSelectionController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
+				1414A1201F1862CD00289EEB /* ProfileImageSelectionCell.swift in Sources */,
 				14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */,
 				14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
