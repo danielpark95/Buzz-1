@@ -12,11 +12,10 @@ import UIKit
 
 // You need to convert the JSON string to a data and then intialize it to create a json object!
 class FamiliarizeCell: UICollectionViewCell {
-    
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
     
-    
+
     let shortHandForQR = [
         "bio": "bio",
         "faceBookProfile": "fb",
@@ -57,12 +56,13 @@ class FamiliarizeCell: UICollectionViewCell {
         qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         qrImageView = UIManager.makeImage()
         qrImageView?.image = qrCode?.image
+        qrImageView?.image = UIImage(named: "familiarize_website_qr-1")
     }
     
-    
     let profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 30)
+        return UIManager.makeProfileImage(valueOfCornerRadius: 350.0 / 2.0)
     }()
+    
     
     let bioLabel: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
@@ -83,20 +83,23 @@ class FamiliarizeCell: UICollectionViewCell {
         if onQRImage == true {
             
             if (myUserProfile?.name) == "T.J. Miller" {
+                profileImage.layer.masksToBounds = true
                 profileImage.image = UIImage(named: "tjmiller6")
             }
             else {
                 profileImage.image = UIImage(named: "tjmiller7")
             }
-            
-            
             addSubview(profileImage)
             profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 100).isActive = true
             profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
-            profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
-            profileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            
-            
+            profileImage.heightAnchor.constraint(equalToConstant: 350.0).isActive = true
+            profileImage.widthAnchor.constraint(equalToConstant: 350.0).isActive = true
+            //profileImage.bounds.size.width = (self.qrImageView?.bounds.width)!
+            print("profileImage frame size = ", profileImage.frame.size)
+            print("profileImage frame width = ", profileImage.frame.size.width)
+            print("profileimage bounds = ", profileImage.bounds.size.width)
+            print("next = " , self.qrImageView?.bounds.width)
+            profileImage.clipsToBounds = true
             
             //Namelabel position upated using NSLayoutConstraint -dan
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,9 +130,9 @@ class FamiliarizeCell: UICollectionViewCell {
         } else {
             addSubview(qrImageView!)
             qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-            qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -10).isActive = true
-            qrImageView?.heightAnchor.constraint(equalToConstant: 150).isActive = true
-            qrImageView?.widthAnchor.constraint(equalToConstant: 150).isActive = true
+            qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
+            qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
+            qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
             onQRImage = true
         }
     }
@@ -197,6 +200,6 @@ class FamiliarizeCell: UICollectionViewCell {
         } else {
             
         }
-        autoSpaceButtons(r: 200.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
+        autoSpaceButtons(r: 220.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
     }
 }

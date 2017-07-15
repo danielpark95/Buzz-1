@@ -76,24 +76,26 @@ class ExampleIrregularityBasicContentView: ExampleBouncesContentView {
 }
 
 class ExampleIrregularityContentView: ESTabBarItemContentView {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.imageView.backgroundColor = UIColor.init(red: 228/255.0, green: 228/255.0, blue: 228/255.0, alpha: 1.0)
-        self.imageView.layer.borderWidth = 2
-        self.imageView.layer.borderColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0).cgColor
-        self.imageView.layer.cornerRadius = 30
-        self.insets = UIEdgeInsetsMake(-32, 0, 0, 0)
-        let transform = CGAffineTransform.identity
-        self.imageView.transform = transform
+        //self.imageView.image = UIImage(named: "dan_camera_round")
+        //self.imageView.backgroundColor = UIColor.white
+//        self.imageView.layer.borderWidth = 2
+//        self.imageView.layer.borderColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0).cgColor
+//        self.imageView.layer.cornerRadius = 60
+        self.insets = UIEdgeInsetsMake(-16, 0, 0, 0)
         self.superview?.bringSubview(toFront: self)
+        //let transform = CGAffineTransform.identity
+        //self.imageView.transform = transform
+        //self.superview?.bringSubview(toFront: self)
         
-        textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        highlightTextColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        iconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        highlightIconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        backdropColor = .clear
-        highlightBackdropColor = .clear
+        //textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
+        //highlightTextColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
+        //iconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
+        //highlightIconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
+        //backdropColor = .clear
+        //highlightBackdropColor = .clear
+        
     }
     
     public required init?(coder aDecoder: NSCoder) {

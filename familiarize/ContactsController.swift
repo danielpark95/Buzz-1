@@ -41,7 +41,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         setupRefreshingAndReloading()
         setupCollectionView()
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
@@ -94,6 +93,9 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func setupCollectionView() {
+        
+        
+        
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
@@ -132,7 +134,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
+        return CGSize(width: view.frame.width, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -143,8 +145,6 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         self.viewProfile(indexPath.item)
     }
 
-    
-   
 
 
 }

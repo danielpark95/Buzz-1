@@ -26,23 +26,19 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //User Controller
         let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavigationController = UINavigationController(rootViewController: userController)
-        //userNavigationController.tabBarItem.image = UIImage(named: "dan_me_grey")?.withRenderingMode(.alwaysOriginal)
-        //userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_me_black")?.withRenderingMode(.alwaysOriginal)
         userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_grey"))
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0 )
         
         //Scanner Controller
         let scannerController = QRScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        //scannerNavigationController.tabBarItem.image = UIImage(named: "dan_camera_round")?.withRenderingMode(.alwaysOriginal)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: "Camera", image: UIImage(named: "dan_camera_round"), selectedImage: UIImage(named: "dan_camera_round"))
-        scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: "", image: UIImage(named: "dan_camera_84"), selectedImage: UIImage(named: "dan_camera_84"))
+        
+        //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
         
         //Contacts Controller
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
         let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        //contactsNavigationController.tabBarItem.image = UIImage(named: "dan_friends_grey")?.withRenderingMode(.alwaysOriginal)
-        //contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_friends_black")?.withRenderingMode(.alwaysOriginal)
         contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Friends", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_grey"))
         contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
         

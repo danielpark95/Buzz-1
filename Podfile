@@ -25,5 +25,10 @@ target 'familiarize' do
   #textfield effects
   pod 'TextFieldEffects'
   
+  #Loading screen for fetching profile pictures
+  pod 'NVActivityIndicatorView'
+  
+  #Carousel layout for selecting profile image
+  pod 'UPCarouselFlowLayout'
 
 end

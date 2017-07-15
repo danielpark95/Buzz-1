@@ -10,7 +10,11 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
-class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+protocol UserControllerDelegate {
+    func reloadCard() -> Void
+}
+
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserControllerDelegate {
     private let cellId = "cellId"
     
     var myUserProfiles: [UserProfile]? {
@@ -23,7 +27,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.previousIndex = 2
+        delegate.previousIndex = 0
     }
     
     override func viewDidLoad() {
@@ -50,10 +54,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UserProfile.saveProfile(pika, forProfile: .myUser)
         UserProfile.saveProfile(stuff, forProfile: .myUser)
         
-        
         super.viewDidLoad()
         navigationItem.title = "Me"
-        
         
         setupNavBarButton()
         self.automaticallyAdjustsScrollViewInsets = false
@@ -61,6 +63,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
         setupCollectionView()
+        //crop()
+        
         //createSmallLineOnTabBar()
         
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
@@ -73,13 +77,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! FamiliarizeCell
-        
         selectedCell.flip()
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"settings")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        navigationItem.rightBarButtonItem = hamburgerButton
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        
+        navigationItem.leftBarButtonItem = hamburgerButton
+        navigationItem.rightBarButtonItem = addButton
     }
     
 //    func handleHamburger() {
@@ -106,14 +112,13 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     
-    /*
- 
- case Blank = ""
- case TermsPrivacy = "Terms & privacy policy"
- case Contact = "Contact"
- case Help = "Help"
- case Feedback = "Feedback"
- */
+    func handleNewCard() {
+        let layout = UICollectionViewFlowLayout()
+        let newCardController = NewCardController(collectionViewLayout: layout)
+        newCardController.userControllerDelegate = self
+        let navigationController = UINavigationController.init(rootViewController: newCardController)
+        self.present(navigationController, animated: true)
+    }
     func showControllerForSetting(setting: Setting) {
 
         let layout = UICollectionViewFlowLayout()
@@ -144,7 +149,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
-
     }
     
     func setupCollectionView() {
@@ -156,7 +160,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             flowLayout.scrollDirection = .horizontal
         }
         collectionView?.isPagingEnabled = true
-        
     }
     
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
@@ -188,6 +191,19 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         return cell
     }
+    
+    func crop() {
+        //print("crop" , collectionView?.backgroundView?.layer.bounds.size.width!)
+        //print("crop", collectionView?.collectionViewLayout.collectionView?.bounds)
+        
+        //cell.profileImage.layer.bounds.size.width = view.frame.width
+        //print("crop" , view.layer.bounds.size.width)
+        //print("crop",  view.frame.width)
+        //view.layer.masksToBounds = true
+        //cell.profileImage.layer.masksToBounds = true
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView!.frame.size;
     }
@@ -205,5 +221,10 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
 
     
+    func reloadCard() {
+        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
+        collectionView?.reloadData()
+    }
+
 }
 

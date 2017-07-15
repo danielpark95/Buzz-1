@@ -33,6 +33,14 @@
 		F60E91061F12FD170036078A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60E91051F12FD170036078A /* TabBarController.swift */; };
 		F6926F8B1F0A5F01006E312C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6926F841F0A5F01006E312C /* TabBar.swift */; };
 		F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6926F8D1F0A5FBA006E312C /* pop.framework */; };
+		F6A9812F1F188F5600898799 /* ImageFetchingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A9812E1F188F5600898799 /* ImageFetchingManager.swift */; };
+		F6A981311F188FA100898799 /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A981301F188FA100898799 /* SocialMediaSelectionCell.swift */; };
+		F6A981331F188FB400898799 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A981321F188FB400898799 /* SocialMediaSelectedCell.swift */; };
+		F6A981351F188FC700898799 /* ProfileImageSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A981341F188FC700898799 /* ProfileImageSelectionCell.swift */; };
+		F6A981381F18903400898799 /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A981371F18903400898799 /* NewCardController.swift */; };
+		F6A9813A1F18904600898799 /* LoadingProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A981391F18904600898799 /* LoadingProfileImageSelectionController.swift */; };
+		F6A9813C1F18905600898799 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A9813B1F18905600898799 /* ProfileImageSelectionController.swift */; };
+		F6A9813E1F18919100898799 /* SocialMediaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A9813D1F18919100898799 /* SocialMediaController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +74,14 @@
 		F60E91051F12FD170036078A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F6926F841F0A5F01006E312C /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		F6926F8D1F0A5FBA006E312C /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = ../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework; sourceTree = "<group>"; };
+		F6A9812E1F188F5600898799 /* ImageFetchingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFetchingManager.swift; sourceTree = "<group>"; };
+		F6A981301F188FA100898799 /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
+		F6A981321F188FB400898799 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
+		F6A981341F188FC700898799 /* ProfileImageSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionCell.swift; sourceTree = "<group>"; };
+		F6A981371F18903400898799 /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
+		F6A981391F18904600898799 /* LoadingProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingProfileImageSelectionController.swift; sourceTree = "<group>"; };
+		F6A9813B1F18905600898799 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
+		F6A9813D1F18919100898799 /* SocialMediaController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,13 +100,9 @@
 		140ECD831EF6167700E538E4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F672C5601F12109700B082D8 /* SettingsVC */,
-				F672C55F1F12108A00B082D8 /* PopUpVC */,
-				14323B7E1F04DF33004694A6 /* SettingsController.swift */,
-				1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */,
-				1458B51A1F0979DD00F173DE /* ContactSettingController.swift */,
-				1458B51C1F097A1400F173DE /* HelpSettingController.swift */,
-				1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */,
+				F6A981361F18902000898799 /* NewCardVC */,
+				F672C5601F12109700B082D8 /* PopUpVC */,
+				F672C55F1F12108A00B082D8 /* SettingsVC */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -101,6 +113,9 @@
 				141CEEB71EDCCFB60068B2B9 /* ContactsCell.swift */,
 				144F19291EE0FD1300A9250E /* FamiliarizeCell.swift */,
 				14323B801F04EBAD004694A6 /* SettingsCell.swift */,
+				F6A981301F188FA100898799 /* SocialMediaSelectionCell.swift */,
+				F6A981321F188FB400898799 /* SocialMediaSelectedCell.swift */,
+				F6A981341F188FC700898799 /* ProfileImageSelectionCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -166,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				1497A22A1EEF7B2D00366303 /* UIManager.swift */,
+				F6A9812E1F188F5600898799 /* ImageFetchingManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -197,20 +213,36 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F672C55F1F12108A00B082D8 /* PopUpVC */ = {
+		F672C55F1F12108A00B082D8 /* SettingsVC */ = {
 			isa = PBXGroup;
 			children = (
+				1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */,
+				1458B51A1F0979DD00F173DE /* ContactSettingController.swift */,
+				1458B51C1F097A1400F173DE /* HelpSettingController.swift */,
+				1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */,
+				14323B7E1F04DF33004694A6 /* SettingsController.swift */,
 			);
-			name = PopUpVC;
+			name = SettingsVC;
 			sourceTree = "<group>";
 		};
-		F672C5601F12109700B082D8 /* SettingsVC */ = {
+		F672C5601F12109700B082D8 /* PopUpVC */ = {
 			isa = PBXGroup;
 			children = (
 				14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */,
 				1497A2281EEDCEB600366303 /* ViewProfileController.swift */,
+				F6A9813D1F18919100898799 /* SocialMediaController.swift */,
 			);
-			name = SettingsVC;
+			name = PopUpVC;
+			sourceTree = "<group>";
+		};
+		F6A981361F18902000898799 /* NewCardVC */ = {
+			isa = PBXGroup;
+			children = (
+				F6A981371F18903400898799 /* NewCardController.swift */,
+				F6A981391F18904600898799 /* LoadingProfileImageSelectionController.swift */,
+				F6A9813B1F18905600898799 /* ProfileImageSelectionController.swift */,
+			);
+			name = NewCardVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,20 +375,28 @@
 				1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */,
 				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
+				F6A9813A1F18904600898799 /* LoadingProfileImageSelectionController.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
+				F6A9813E1F18919100898799 /* SocialMediaController.swift in Sources */,
 				140ECD851EF723FD00E538E4 /* ProfilePopup.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
+				F6A981311F188FA100898799 /* SocialMediaSelectionCell.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* FamiliarizeCell.swift in Sources */,
+				F6A981331F188FB400898799 /* SocialMediaSelectedCell.swift in Sources */,
+				F6A9812F1F188F5600898799 /* ImageFetchingManager.swift in Sources */,
+				F6A981351F188FC700898799 /* ProfileImageSelectionCell.swift in Sources */,
+				F6A981381F18903400898799 /* NewCardController.swift in Sources */,
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
 				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
+				F6A9813C1F18905600898799 /* ProfileImageSelectionController.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

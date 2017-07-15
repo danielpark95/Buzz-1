@@ -175,8 +175,6 @@ class ViewProfileController: ProfilePopupBase {
     
     override func addToGraphics() {
         
-        
-        
         view.addSubview(self.profileImage)
         view.addSubview(self.nameAndBioLabel)
         
@@ -205,7 +203,16 @@ class ViewProfileController: ProfilePopupBase {
         self.popupImageView.addGestureRecognizer(tap)
         self.popupImageView.isUserInteractionEnabled = true
         
+        
         view.addSubview(self.popupImageView)
+        
+        if let window = UIApplication.shared.keyWindow {
+            tintOverlay.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            view.addSubview(tintOverlay)
+            tintOverlay.frame = window.frame
+            tintOverlay.alpha = 1
+        }
+        
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)

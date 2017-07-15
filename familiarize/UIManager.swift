@@ -20,15 +20,11 @@ class UIManager {
         button.contentHorizontalAlignment = .fill
         return button
     }
-
+    
     static func makeImage(imageName: String = "") -> UIImageView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)
-        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let tap = UITapGestureRecognizer()
-        imageView.addGestureRecognizer(tap)
-        imageView.isUserInteractionEnabled = true
         return imageView
     }
     
@@ -47,4 +43,22 @@ class UIManager {
         image.layer.masksToBounds = true
         return image
     }
+    
+    static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
+        let shortHandForQR = [
+            "bio": "bio",
+            "faceBookProfile": "fb",
+            "instagramProfile": "ig",
+            "name": "name",
+            "phoneNumber": "pn",
+            "snapChatProfile": "sc" ,
+            "linkedIn": "in",
+            "email": "em",
+            ]
+        if let shortName = shortHandForQR[longSocialMediaName] {
+            return shortName
+        } else {
+            return nil
+        }
+    }    
 }

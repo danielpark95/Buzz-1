@@ -29,12 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         let tabBarController = window!.rootViewController as! TabBarController
         tabBarController.selectedIndex = 0
         
-//        
-//        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
-//        UINavigationBar.appearance().tintColor = UIColor.black
+    
+        //Change navigation font
         let navigationTitleFont = UIFont(name: "Avenir", size: 17)
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
 //        UIApplication.shared.statusBarStyle = .default
