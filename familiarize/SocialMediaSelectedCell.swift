@@ -11,8 +11,7 @@
 import UIKit
 
 class SocialMediaSelectedCell: UICollectionViewCell {
-    
-    // TODO: Do we need the AppName?
+
     var selectedSocialMedia: SocialMedia? {
         didSet {
             if let selectedSocialMediaInputName = selectedSocialMedia?.inputName {

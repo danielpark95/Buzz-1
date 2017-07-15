@@ -14,14 +14,20 @@ class SocialMediaController: UIViewController {
     var newCardControllerDelegate: NewCardController?
     var socialMedia: SocialMedia? {
         didSet {
+            if let socialMediaImageName = socialMedia?.imageName {
+                socialMediaImageView.image = UIImage(named: socialMediaImageName)
+                
+                // Do we need this?
+                //socialMediaImageView.clipsToBounds = true
+            }
+            setupViews()
         }
     }
     
     // When everything is done loading, do this shabang.
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupInputComponents()
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -37,9 +43,19 @@ class SocialMediaController: UIViewController {
         inputTextField.becomeFirstResponder()
     }
     
+    
     lazy var addButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "addfriend-button")
+        let button = UIManager.makeButton()
+        button.backgroundColor = UIColor.black
+        button.layer.cornerRadius = 13
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        let attributedText = NSAttributedString(string: "save", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor.white])
+        button.setAttributedTitle(attributedText, for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
         button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
+        button.reversesTitleShadowWhenHighlighted = true
         return button
     }()
     
@@ -49,6 +65,8 @@ class SocialMediaController: UIViewController {
         self.dismiss(animated: false, completion: nil)
     }
     
+    
+    
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
         imageView.image = UIImage(named: "scan-profile-popup")
@@ -56,6 +74,10 @@ class SocialMediaController: UIViewController {
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
         return imageView
+    }()
+    
+    let socialMediaImageView: UIImageView = {
+        return UIManager.makeImage()
     }()
     
     lazy var tintOverlay: UIImageView = {
@@ -77,19 +99,13 @@ class SocialMediaController: UIViewController {
     
     // Slides up the popup from the bottom of the screen to the middle
     var popupCenterYAnchor: NSLayoutConstraint?
-    var inputTextFieldCenterYAnchor: NSLayoutConstraint?
     
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
-        inputTextFieldCenterYAnchor?.constant = 0
         
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
-            // After moving the background up to the middle, then load the name and buttons.
-            //self.setupGraphics()
-            //self.addToGraphics()
-            
         })
     }
 
@@ -99,6 +115,8 @@ class SocialMediaController: UIViewController {
         view.addSubview(self.outsideButton)
         view.addSubview(self.popupImageView)
         view.addSubview(self.addButton)
+        view.addSubview(self.socialMediaImageView)
+        view.addSubview(self.inputTextField)
 
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -116,6 +134,17 @@ class SocialMediaController: UIViewController {
         self.addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
         self.addButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
         self.addButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+
+        
+        self.socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        self.socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
+        self.socialMediaImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        self.socialMediaImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor).isActive = true
+        inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
         
     }
     
@@ -130,13 +159,5 @@ class SocialMediaController: UIViewController {
         return textField
     }()
     
-    func setupInputComponents() {
-        view.addSubview(inputTextField)
-        inputTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        inputTextFieldCenterYAnchor = inputTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        inputTextFieldCenterYAnchor?.isActive = true
-        inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
-    }
     
 }
