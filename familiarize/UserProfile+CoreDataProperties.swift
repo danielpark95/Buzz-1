@@ -15,7 +15,7 @@ import SwiftyJSON
 
 
 extension UserProfile {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserProfile> {
         return NSFetchRequest<UserProfile>(entityName: "UserProfile")
     }
@@ -46,7 +46,6 @@ extension UserProfile {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         do {
             return try(managedObjectContext.fetch(fetchRequest)) as! [UserProfile]
-            
         } catch let err {
             print(err)
         }
@@ -154,7 +153,7 @@ extension UserProfile {
         do {
             let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
             for userProfile in userProfiles! {
-                managedObjectContext.delete(userProfile)                
+                managedObjectContext.delete(userProfile)
             }
         } catch let err {
             print(err)

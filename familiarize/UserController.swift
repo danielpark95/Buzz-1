@@ -57,20 +57,21 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         
         super.viewDidLoad()
+        navigationItem.title = "Me"
         
         setupNavBarButton()
-        navigationItem.title = "My Info"
-        
         self.automaticallyAdjustsScrollViewInsets = false
         
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
         setupCollectionView()
+        //crop()
+        
+        //createSmallLineOnTabBar()
         
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
         doubleTapGesture.numberOfTapsRequired = 2
         collectionView?.addGestureRecognizer(doubleTapGesture)
-        
     }
     
     // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 
@@ -78,7 +79,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! FamiliarizeCell
-        
         selectedCell.flip()
     }
     
@@ -139,42 +139,13 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return image
     }()
 
-    let nameLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 1)
-    }()
-    
     func setupView() {
         // Add the dots that animate your current location with the qrcodes into the view
         view.addSubview(pageControl)
-        view.addSubview(profileImage)
-        view.addSubview(nameLabel)
-        view.addSubview(headerBar)
-        
-        
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -220).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        let name = NSMutableAttributedString(string: "Richard Hendricks", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)])
-        
-        nameLabel.attributedText = name
-        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
-
-        
-        headerBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        headerBar.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -110).isActive = true
-        headerBar.heightAnchor.constraint(equalToConstant: 130).isActive = true
-        headerBar.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        
     }
     
     func setupCollectionView() {
@@ -186,14 +157,13 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             flowLayout.scrollDirection = .horizontal
         }
         collectionView?.isPagingEnabled = true
-        
     }
     
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     var pageControl: UIPageControl = {
         let pc = UIPageControl()
-        pc.pageIndicatorTintColor = .lightGray
-        pc.currentPageIndicatorTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
     }()
@@ -203,7 +173,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         pageControl.currentPage = pageNumber
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         // Modify this after you saved a user.
         if let count = self.myUserProfiles?.count {
             return count
@@ -219,6 +188,19 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         return cell
     }
+    
+    func crop() {
+        //print("crop" , collectionView?.backgroundView?.layer.bounds.size.width!)
+        //print("crop", collectionView?.collectionViewLayout.collectionView?.bounds)
+        
+        //cell.profileImage.layer.bounds.size.width = view.frame.width
+        //print("crop" , view.layer.bounds.size.width)
+        //print("crop",  view.frame.width)
+        //view.layer.masksToBounds = true
+        //cell.profileImage.layer.masksToBounds = true
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView!.frame.size;
     }

@@ -21,10 +21,10 @@ class ContactsCell: UICollectionViewCell {
     var userProfile: UserProfile? {
         didSet {
             // The name
-            let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)])
+            let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
             
             // The time
-            attributedText.append(NSAttributedString(string:"\nAdded " + (userProfile?.date?.getElapsedTime())!, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red: 146/255, green: 146/255, blue: 146/255, alpha: 1.0)]))
+            attributedText.append(NSAttributedString(string:"\nAdded " + (userProfile?.date?.getElapsedTime())!, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)]))
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 10
@@ -37,6 +37,7 @@ class ContactsCell: UICollectionViewCell {
                 self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
                 self.profileImage.contentMode = .scaleAspectFill
                 self.profileImage.clipsToBounds = true
+                
             }
             
             // Views is set after knowing how long the texts are.
@@ -56,7 +57,7 @@ class ContactsCell: UICollectionViewCell {
     // This creates the line in between each of the cells.
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0.95, alpha:1)
+        //view.backgroundColor = UIColor(white: 0.95, alpha:1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
         

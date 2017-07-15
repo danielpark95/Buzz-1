@@ -11,9 +11,9 @@
 
 import UIKit
 import CoreData
-
+import ESTabBarController_swift
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
 
     var window: UIWindow?
     var previousIndex: Int?
@@ -25,37 +25,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = CustomTabBarController()
+        window?.rootViewController = TabBarController()
         
+        let tabBarController = window!.rootViewController as! TabBarController
+        tabBarController.selectedIndex = 0
         
-        userBrightnessLevel = UIScreen.main.brightness
-        
-        // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
-        if window?.rootViewController as? CustomTabBarController != nil {
-            let tabBarController = window!.rootViewController as! CustomTabBarController
-            tabBarController.selectedIndex = 0
-        }
-        
-        
-        //UINavigationBar.appearance().barTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
-        //UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barStyle = UIBarStyle.black
-        UINavigationBar.appearance().barTintColor = UIColor(red:1.00, green: 0.52, blue: 0.52, alpha: 1.0)
-        UINavigationBar.appearance().tintColor = UIColor.white
-        let navigationTitleFont = UIFont(name: "Avenir", size: 20)!
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont]
+        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+    
+        //Change navigation font
+        let navigationTitleFont = UIFont(name: "Avenir", size: 17)
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
+//        UIApplication.shared.statusBarStyle = .default
         
-        
-        
-        
-        
-        
-        //For making the time/wifi signal/ and battery to show white text instead of black text.
-        UIApplication.shared.statusBarStyle = .lightContent
         
         return true
     }
+    
     
     // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {

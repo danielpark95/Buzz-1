@@ -82,7 +82,7 @@ class ProfilePopupBase: UIViewController {
     
     // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
     func setupBackground() {
-
+        
         view.addSubview(self.outsideButton)
         
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -126,10 +126,10 @@ class ProfilePopupBase: UIViewController {
         
     }
     
-    // This makes the profile image into a circle. 
+    // This makes the profile image into a circle.
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         profileImage.layer.cornerRadius = profileImage.frame.height/2
     }
-
+    
 }

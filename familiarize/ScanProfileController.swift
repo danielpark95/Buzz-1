@@ -25,7 +25,7 @@ class ScanProfileController: ProfilePopupBase {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-
+    
     // The effect for making a blurry background
     lazy var backgroundBlur: UIVisualEffectView = {
         var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
@@ -62,9 +62,9 @@ class ScanProfileController: ProfilePopupBase {
     // tells the contacts page to open up the very first cell and to display the user's information.
     func viewProfileClicked() {
         // Go to different VC
-        if self.view.window?.rootViewController as? CustomTabBarController != nil {
+        if self.view.window?.rootViewController as? TabBarController != nil {
             // Must get access to the original tab bar controller.
-            let tabBarController = self.view.window!.rootViewController as! CustomTabBarController
+            let tabBarController = self.view.window!.rootViewController as! TabBarController
             // Switch to the third page, which is the contacts page.
             tabBarController.selectedIndex = 2
             // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
@@ -111,7 +111,7 @@ class ScanProfileController: ProfilePopupBase {
         view.addSubview(backgroundBlur)
         view.sendSubview(toBack: backgroundBlur)
         view.addSubview(self.checkBox)
-    
+        
         self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
         self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -119,7 +119,7 @@ class ScanProfileController: ProfilePopupBase {
         self.checkBox.hideBox = true
         
     }
-
+    
     override func setDismissButton() {
         dismissButton = UIManager.makeButton(imageName: "dismiss-button-color")
         view.addSubview(self.dismissButton)
@@ -141,12 +141,12 @@ class ScanProfileController: ProfilePopupBase {
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
         profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-
+        
         nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         nameAndBioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
         nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
         nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
-
+        
         viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
         viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true

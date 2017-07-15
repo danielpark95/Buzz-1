@@ -20,7 +20,7 @@ class UIManager {
         button.contentHorizontalAlignment = .fill
         return button
     }
-
+    
     static func makeImage(imageName: String = "") -> UIImageView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)

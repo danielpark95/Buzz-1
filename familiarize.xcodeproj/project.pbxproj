@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140A40001EDFC42E00D4539E /* FamiliarizeController.swift */; };
-		140B2E3A1F185EDC009A2B32 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140B2E391F185EDC009A2B32 /* ProfileImageSelectionController.swift */; };
 		140ECD821EF6165800E538E4 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD811EF6165800E538E4 /* UserController.swift */; };
 		140ECD851EF723FD00E538E4 /* ProfilePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140ECD841EF723FD00E538E4 /* ProfilePopup.swift */; };
 		1414A1201F1862CD00289EEB /* ProfileImageSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */; };
@@ -36,14 +35,16 @@
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
 		14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */; };
 		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
-		14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
+		F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96231F1ACE05009F6EF8 /* TabBar.swift */; };
+		F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96251F1ACE25009F6EF8 /* TabBarController.swift */; };
+		F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */; };
+		F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6926F8D1F0A5FBA006E312C /* pop.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		140A40001EDFC42E00D4539E /* FamiliarizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamiliarizeController.swift; sourceTree = "<group>"; };
-		140B2E391F185EDC009A2B32 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		140ECD811EF6165800E538E4 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		140ECD841EF723FD00E538E4 /* ProfilePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePopup.swift; sourceTree = "<group>"; };
 		1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionCell.swift; sourceTree = "<group>"; };
@@ -73,11 +74,14 @@
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
 		14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
-		14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.debug.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.release.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.release.xcconfig"; sourceTree = "<group>"; };
+		F67D96231F1ACE05009F6EF8 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		F67D96251F1ACE25009F6EF8 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
+		F6926F8D1F0A5FBA006E312C /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = ../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */,
 				245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,7 +123,7 @@
 		141CEEBC1EDCD03C0068B2B9 /* TabController */ = {
 			isa = PBXGroup;
 			children = (
-				14F0F4111EDCB81300537BE9 /* CustomTabBarController.swift */,
+				F67D96251F1ACE25009F6EF8 /* TabBarController.swift */,
 				140ECD811EF6165800E538E4 /* UserController.swift */,
 				140A40001EDFC42E00D4539E /* FamiliarizeController.swift */,
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
@@ -207,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				140ECD841EF723FD00E538E4 /* ProfilePopup.swift */,
+				F67D96231F1ACE05009F6EF8 /* TabBar.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -216,7 +222,7 @@
 			children = (
 				14AF10EE1F0DD691004E0CEB /* NewCardController.swift */,
 				14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */,
-				140B2E391F185EDC009A2B32 /* ProfileImageSelectionController.swift */,
+				F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */,
 			);
 			name = NewCardVC;
 			sourceTree = "<group>";
@@ -224,6 +230,7 @@
 		840416BE49CDD194FA4AE151 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6926F8D1F0A5FBA006E312C /* pop.framework */,
 				7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */,
 			);
 			name = Frameworks;
@@ -273,7 +280,7 @@
 				TargetAttributes = {
 					1435323C1EDA9CC2000507DB = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = YSRLK76L75;
+						DevelopmentTeam = Q8WLRBAD9Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -362,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */,
+				F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */,
 				140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */,
 				1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */,
 				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
@@ -371,7 +379,6 @@
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
 				14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
-				140B2E3A1F185EDC009A2B32 /* ProfileImageSelectionController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				1414A1201F1862CD00289EEB /* ProfileImageSelectionCell.swift in Sources */,
@@ -384,12 +391,13 @@
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
 				144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */,
-				14F0F4121EDCB81300537BE9 /* CustomTabBarController.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
 				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
+				F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */,
+				F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,12 +513,24 @@
 			baseConfigurationReference = 83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YSRLK76L75;
+				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ESTabBarController-swift\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Kanna\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/M13Checkbox\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/QRCode\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON\"",
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework\"",
+				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize126;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
@@ -522,12 +542,25 @@
 			baseConfigurationReference = 9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YSRLK76L75;
+				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ESTabBarController-swift\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Kanna\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/M13Checkbox\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/QRCode\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON\"",
+					"\"$(SRCROOT)/../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework\"",
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/\"",
+				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize126;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;

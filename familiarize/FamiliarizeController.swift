@@ -50,7 +50,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
         
         // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video as the media type parameter.

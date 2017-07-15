@@ -1,0 +1,296 @@
+//
+//  UserController.swift
+//  familiarize
+//
+//  Created by Alex Oh on 6/17/17.
+//  Copyright © 2017 nosleep. All rights reserved.
+//
+
+import UIKit
+import CoreData
+import SwiftyJSON
+
+<<<<<<< HEAD
+protocol UserControllerDelegate {
+    func reloadCard() -> Void
+}
+
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserControllerDelegate {
+=======
+
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+    private let cellId = "cellId"
+    
+    var myUserProfiles: [UserProfile]? {
+        didSet {
+            if let count = self.myUserProfiles?.count {
+                pageControl.numberOfPages = count
+            }
+        }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+<<<<<<< HEAD
+=======
+        self.reloadCard()
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+        delegate.previousIndex = 0
+    }
+    
+    override func viewDidLoad() {
+         
+        //MyUserProfile.clearData()
+//        UserProfile.clearData(forProfile: .myUser)
+//        UserProfile.clearData(forProfile: .otherUser)
+// Uncomment this if you want to add some qrcodes into your core data.
+//        let stuff: JSON = [
+//            "name": "alex",
+//            "fb": "alexswoh",
+//            "pn": "123123",
+//        ]
+//
+//        let pika: JSON = [
+//            "name": "eric chung",
+//            "fb": "eric.chung.5680",
+//            "ig": "l",
+//            "sc": "s",
+//            "pn": "123123",
+//            "bio": "Hello",
+//            "in": "hi",
+//            "em": "ell"
+//        ]
+//        MyUserProfile.clearData() // Clears all of the core data.
+//        UserProfile.saveProfile(stuff, forProfile: .myUser)
+//        MyUserProfile.saveProfile(pika)
+        
+        
+        let stuff: JSON = [
+            "name": "T.J. Miller",
+            "pn": "pn",
+            "fb": "fb",
+            "sc": "sc",
+            "ig": "ig",
+            "so": "so",
+            "tw": "tw",
+            "bio": "Miller the professional chiller."
+            ]
+        
+        let pika: JSON = [
+            "name": "Todd Joseph Miller",
+            "pn": "pn",
+            "in": "in",
+            "em": "em",
+            "bio": "Founder & CEO, Aviato.",
+        ]
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.saveProfile(pika, forProfile: .myUser)
+        UserProfile.saveProfile(stuff, forProfile: .myUser)
+        
+        super.viewDidLoad()
+        navigationItem.title = "Me"
+        
+        setupNavBarButton()
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
+        setupView()
+        setupCollectionView()
+        //crop()
+        
+        //createSmallLineOnTabBar()
+        
+        let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
+        doubleTapGesture.numberOfTapsRequired = 2
+        collectionView?.addGestureRecognizer(doubleTapGesture)
+    }
+    
+    // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 
+    func didDoubleTapCollectionView(_ gesture: UITapGestureRecognizer) {
+        let pointInCollectionView = gesture.location(in: collectionView)
+        let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
+        let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! FamiliarizeCell
+        selectedCell.flip()
+    }
+    
+    func setupNavBarButton() {
+<<<<<<< HEAD
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+=======
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"settings-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        
+        navigationItem.leftBarButtonItem = hamburgerButton
+        navigationItem.rightBarButtonItem = addButton
+    }
+<<<<<<< HEAD
+    
+//    func handleHamburger() {
+//        let transition = CATransition()
+//        transition.duration = 0.2
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        
+//        let layout = UICollectionViewFlowLayout()
+//        let controller = SettingsController(collectionViewLayout: layout)
+//        let navigationController = UINavigationController.init(rootViewController: controller)
+//        self.present(navigationController, animated: false)
+//    }
+=======
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+    
+    lazy var settingsLauncher: SettingsController = {
+        let launcher = SettingsController()
+        launcher.userController = self
+        return launcher
+    }()
+    
+    func handleHamburger() {
+        settingsLauncher.showSettings()
+    }
+    
+    func handleNewCard() {
+        let layout = UICollectionViewFlowLayout()
+        let newCardController = NewCardController(collectionViewLayout: layout)
+        let navigationController = UINavigationController.init(rootViewController: newCardController)
+        self.present(navigationController, animated: true)
+    }
+    
+<<<<<<< HEAD
+    func handleNewCard() {
+        let layout = UICollectionViewFlowLayout()
+        let newCardController = NewCardController(collectionViewLayout: layout)
+        newCardController.userControllerDelegate = self
+        let navigationController = UINavigationController.init(rootViewController: newCardController)
+        self.present(navigationController, animated: true)
+    }
+=======
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+    func showControllerForSetting(setting: Setting) {
+
+        let layout = UICollectionViewFlowLayout()
+        let controller: UIViewController
+        
+        if setting.name == .TermsPrivacy {
+            controller = TermsPrivacySettingController(collectionViewLayout: layout)
+        } else if setting.name == .Contact {
+            controller = ContactSettingController(collectionViewLayout: layout)
+        } else if setting.name == .Help {
+            controller = HelpSettingController(collectionViewLayout: layout)
+        } else { // It is the feedback controller
+            controller = FeedbackSettingController(collectionViewLayout: layout)
+        }
+        
+        controller.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
+<<<<<<< HEAD
+=======
+    let profileImage: UIImageView = {
+        let image = UIManager.makeProfileImage(valueOfCornerRadius: 30)
+        image.contentMode = .scaleAspectFill
+        return image
+    }()
+    
+    let headerBar: UIImageView = {
+        let image = UIManager.makeImage(imageName: "dan_header_bar")
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+
+    func setupView() {
+        // Add the dots that animate your current location with the qrcodes into the view
+        view.addSubview(pageControl)
+        pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+    
+    func setupCollectionView() {
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
+        
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+        }
+        collectionView?.isPagingEnabled = true
+    }
+    
+    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
+    var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        return pc
+    }()
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
+        pageControl.currentPage = pageNumber
+    }
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // Modify this after you saved a user.
+        if let count = self.myUserProfiles?.count {
+            return count
+        }
+        return 0
+    }
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! FamiliarizeCell
+        
+        if let myUserProfile = myUserProfiles?[indexPath.item] {
+            cell.myUserProfile = myUserProfile
+        }
+        
+        return cell
+    }
+    
+    func crop() {
+        //print("crop" , collectionView?.backgroundView?.layer.bounds.size.width!)
+        //print("crop", collectionView?.collectionViewLayout.collectionView?.bounds)
+        
+        //cell.profileImage.layer.bounds.size.width = view.frame.width
+        //print("crop" , view.layer.bounds.size.width)
+        //print("crop",  view.frame.width)
+        //view.layer.masksToBounds = true
+        //cell.profileImage.layer.masksToBounds = true
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return self.collectionView!.frame.size;
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+<<<<<<< HEAD
+    
+    func createSmallLineOnTabBar() {
+        let topBorder = CALayer()
+        topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0)
+        topBorder.backgroundColor = UIColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0).cgColor
+        tabBarController?.tabBar.layer.addSublayer(topBorder)
+        tabBarController?.tabBar.isTranslucent = false
+        tabBarController?.tabBar.clipsToBounds = true
+    }
+
+=======
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
+    
+    func reloadCard() {
+        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
+        collectionView?.reloadData()
+    }
+
+}
+

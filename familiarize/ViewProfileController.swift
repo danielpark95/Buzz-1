@@ -62,7 +62,7 @@ class ViewProfileController: ProfilePopupBase {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
@@ -70,40 +70,51 @@ class ViewProfileController: ProfilePopupBase {
     
     // FYI the button should be a facebook button
     lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram")
+        let button = UIManager.makeButton(imageName: "dan_facebook_black")
         button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
         return button
     }()
     
     lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram")
+        let button = UIManager.makeButton(imageName: "dan_instagram_black")
         button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
         return button
     }()
     
     lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchat")
+        let button = UIManager.makeButton(imageName: "dan_snapchat_black")
         button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
         return button
     }()
     
     lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone")
+        let button = UIManager.makeButton(imageName: "dan_phone_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     lazy var emButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone")
+        let button = UIManager.makeButton(imageName: "dan_email_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone")
+        let button = UIManager.makeButton(imageName: "dan_linkedin_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
-
+    
+    lazy var soButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_soundcloud_black")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
+    lazy var twButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_twitter_black")
+        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
+        return button
+    }()
+    
     func createSocialMediaButtons() {
         socialMediaButtons = [
             "fb": fbButton,
@@ -112,9 +123,11 @@ class ViewProfileController: ProfilePopupBase {
             "pn": pnButton,
             "in": emButton,
             "em": inButton,
+            "so": soButton,
+            "tw": twButton,
         ]
     }
-
+    
     let socialMedia = [
         "faceBookProfile": "fb",
         "instagramProfile": "ig",
@@ -122,10 +135,12 @@ class ViewProfileController: ProfilePopupBase {
         "phoneNumber": "pn",
         "email": "em",
         "linkedInProfile": "in",
-    ]
+        "soundcloudProfile": "so",
+        "twitterProfile": "tw",
+        ]
     
     func presentSocialMediaButtons() {
-
+        
         var spacing: CGFloat = 20
         
         if self.userProfile != nil {
@@ -160,8 +175,6 @@ class ViewProfileController: ProfilePopupBase {
     
     override func addToGraphics() {
         
-
-        
         view.addSubview(self.profileImage)
         view.addSubview(self.nameAndBioLabel)
         
@@ -175,7 +188,7 @@ class ViewProfileController: ProfilePopupBase {
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
         profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-
+        
         nameAndBioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 20).isActive = true
         
         nameAndBioLabel.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: 120).isActive = true
@@ -207,7 +220,7 @@ class ViewProfileController: ProfilePopupBase {
         }
 
         if let bio = userProfile?.bio {
-            attributedText.append(NSAttributedString(string:"\n\(bio)" , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.white]))
+            attributedText.append(NSAttributedString(string:"\n\(bio)" , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)]))
         }
         
         let paragraphStyle = NSMutableParagraphStyle()

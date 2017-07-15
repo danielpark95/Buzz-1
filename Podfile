@@ -16,10 +16,19 @@ target 'familiarize' do
   #Add Friend Checkbox animation
   pod 'M13Checkbox'
 
-  #Loading Screen for fetching profile pictures
-  pod 'NVActivityIndicatorView'
+  #ESTabBarController
+  pod 'ESTabBarController-swift'
 
-  #Carousel Layout for selecting profile image
-  pod "UPCarouselFlowLayout"
+  #fb effects for tabbar
+  pod 'pop'
+
+  #textfield effects
+  pod 'TextFieldEffects'
+  
+  #Loading screen for fetching profile pictures
+  pod 'NVActivityIndicatorView'
+  
+  #Carousel layout for selecting profile image
+  pod 'UPCarouselFlowLayout'
 
 end
