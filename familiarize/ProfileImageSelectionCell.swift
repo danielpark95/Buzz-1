@@ -38,7 +38,7 @@ class ProfileImageSelectionCell: UICollectionViewCell {
     }()
 
     func setupViews() {
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         addSubview(profileImage)
         
         profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

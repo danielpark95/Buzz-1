@@ -15,10 +15,13 @@ class ImageFetchingManager {
     static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
-        for eachSocialMediaInput in socialMediaInputs {
+        let massagedSocialMediaInputs = massageSocialMediaInputsData(socialMediaInputs)
+        for each in massagedSocialMediaInputs {
+            print("This is each massaged data: \(each.inputName)")
+        }
+        for eachSocialMediaInput in massagedSocialMediaInputs {
             asyncDispatchGroup.enter()
             scrapeSocialMedia(withSocialMediaInput: eachSocialMediaInput, completionHandlerForScrape: { profileImage in
-                
                     // TODO: Handle cases for when a profile image is not retrievable.
                     socialMediaProfileImages.append(profileImage)
                     asyncDispatchGroup.leave()
@@ -31,7 +34,7 @@ class ImageFetchingManager {
     }
     
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
-    static func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage) -> Void) {
+    static fileprivate func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage) -> Void) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         if socialMediaInput.appName == "faceBookProfile" {
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
@@ -47,14 +50,14 @@ class ImageFetchingManager {
 //https://www.techuntold.com/view-instagram-profile-picture-full-size/
     //https://gist.github.com/jcsrb/1081548
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
-    static func parseHTML(html: String, withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForParse: @escaping (SocialMediaProfileImage) -> Void) {
+    static fileprivate func parseHTML(html: String, withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForParse: @escaping (SocialMediaProfileImage) -> Void) {
         if socialMediaInput.appName == "faceBookProfile" {
             if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
                 for show in doc.css("meta[property^='al:ios:url']") {
                     let facebook_url = show["content"]?.components(separatedBy: "/")
                     let facebook_id = facebook_url?[3]
                     let profileImageUrl = "http://graph.facebook.com/\(facebook_id!)/picture?width=1080&height=1080"
-                    
+                    print("SUHHHHHH")
                     let formattedProfileImageUrl  = URL(string: profileImageUrl)
                     URLSession.shared.dataTask(with: formattedProfileImageUrl!, completionHandler: { data, response, error in
                         if error != nil {
@@ -71,6 +74,22 @@ class ImageFetchingManager {
                 }
             }
         }
+    }
+    
+    // Only fetch images from social media that has profile images.
+    static fileprivate func massageSocialMediaInputsData(_ socialMediaInputs: [SocialMedia]) -> [SocialMedia] {
+        var massagedSocialMediaInputs: [SocialMedia] = []
+        
+        // TODO: Include all social media that supports profile images.
+        let socialMediaAppsWithRetrievableProfileImages: Set<String> = ["faceBookProfile", "instagramProfile"]
+        
+        for eachSocialMediaInput in socialMediaInputs {
+            
+            if socialMediaAppsWithRetrievableProfileImages.contains(eachSocialMediaInput.appName!) {
+                massagedSocialMediaInputs.append(eachSocialMediaInput)
+            }
+        }
+        return massagedSocialMediaInputs
     }
 }
 

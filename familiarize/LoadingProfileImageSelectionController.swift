@@ -22,9 +22,11 @@ class SocialMediaProfileImage: SocialMedia {
 
 class LoadingProfileImageSelectionController: UIViewController {
 
-    var userProfile: UserProfile?
-    var socialMediaInputs: [SocialMedia]?
-    var socialMediaProfileImages: [SocialMediaProfileImage]?
+    var socialMediaInputs: [SocialMedia]? {
+        didSet {
+            setupViews()
+        }
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -38,7 +40,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor.white
-        setupViews()
+        //setupViews()
     }
     
     lazy var activityIndicator1: NVActivityIndicatorView = {
@@ -117,28 +119,22 @@ class LoadingProfileImageSelectionController: UIViewController {
     
     func fetchImage() {
         if socialMediaInputs != nil {
+            for each in socialMediaInputs! {
+                print(each.inputName)
+            }
             ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
 
                 let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
                 profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
+                for each in fetchedSocialMediaProfileImages {
+                    print(each.inputName)
+                }
                 self.present(profileImageSelectionController, animated: false, completion: nil)
             })
         }
     }
     
-    func setupProfileImages() {
-        var counter = -200
-        for eachProfileImage in self.socialMediaProfileImages! {
-            let newImage2 = UIManager.makeImage()
-            newImage2.image = eachProfileImage.profileImage
-            self.view.addSubview(newImage2)
-            newImage2.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-            newImage2.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: CGFloat(counter)).isActive = true
-            newImage2.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            newImage2.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            counter = counter + 50
-        }
-    }
+    
 }
 
 

@@ -10,11 +10,8 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
-protocol UserControllerDelegate {
-    func reloadCard() -> Void
-}
 
-class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserControllerDelegate {
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     
     var myUserProfiles: [UserProfile]? {
@@ -28,6 +25,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
+        self.reloadCard()
         delegate.previousIndex = 0
     }
     
@@ -105,7 +103,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func handleNewCard() {
         let layout = UICollectionViewFlowLayout()
         let newCardController = NewCardController(collectionViewLayout: layout)
-        newCardController.userControllerDelegate = self
         let navigationController = UINavigationController.init(rootViewController: newCardController)
         self.present(navigationController, animated: true)
     }

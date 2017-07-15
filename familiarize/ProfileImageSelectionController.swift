@@ -8,6 +8,7 @@
 
 import UIKit
 import UPCarouselFlowLayout
+import SwiftyJSON
 
 class ProfileImageSelectionController: UICollectionViewController {
     
@@ -38,6 +39,7 @@ class ProfileImageSelectionController: UICollectionViewController {
         layout.scrollDirection = .horizontal
         collectionView?.collectionViewLayout = layout
         collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.alwaysBounceHorizontal = true
         collectionView?.register(ProfileImageSelectionCell.self, forCellWithReuseIdentifier: cellId)
     }
     
@@ -65,6 +67,33 @@ class ProfileImageSelectionController: UICollectionViewController {
         }
         
         return cell
+    }
+    
+    func saveSocialMediaInputs(_ socialMediaInputs: [SocialMedia]) {
+        var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
+        
+        var currentSocialMediaName: String = ""
+        for eachSocialInput in socialMediaInputs {
+            if eachSocialInput.appName == currentSocialMediaName {
+                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ",\(eachSocialInput.inputName!)"
+            } else {
+                currentSocialMediaName = eachSocialInput.appName!
+                concantenatedSocialMediaInputs.append((eachSocialInput.appName!, eachSocialInput.inputName!))
+                print(concantenatedSocialMediaInputs.count)
+            }
+        }
+        
+        var toSaveCard: JSON = [:]
+        for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
+            let currentSocialMediaName = UIManager.makeShortHandForQR(eachConcantenatedSocialMediaInput.socialMediaName)
+            toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
+        }
+        
+        //# Mark: - Remember to uncomment this out...
+        UserProfile.clearData(forProfile: .myUser)
+        
+        let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
+        
     }
     
     
