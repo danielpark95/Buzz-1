@@ -62,5 +62,23 @@ class UIManager {
         }
     }
     
+    static func makeRegularHandForDisplay(_ longSocialMediaName: String) -> String? {
+        let shortHandForQR = [
+            "bio": "Bio",
+            "faceBookProfile": "Facebook",
+            "instagramProfile": "Instagram",
+            "name": "Name",
+            "phoneNumber": "Phone Number",
+            "snapChatProfile": "Snapchat" ,
+            "linkedIn": "LinkedIn",
+            "email": "Email",
+            ]
+        if let shortName = shortHandForQR[longSocialMediaName] {
+            return shortName
+        } else {
+            return nil
+        }
+    }
+    
 
 }

@@ -25,18 +25,28 @@ class ProfileImageSelectionController: UICollectionViewController {
     
     lazy var selectButton: UIButton = {
        let button = UIManager.makeButton()
-        //button.frame = CGRect(x: view.frame.width, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
         button.backgroundColor = UIColor.black
         button.layer.cornerRadius = 5
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
-        button.titleEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: 10, right: 10)
-        let attributedText = NSAttributedString(string: "Select", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.white])
         
+        let attributedText = NSAttributedString(string: "Confirm", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 20), NSForegroundColorAttributeName: UIColor.white])
         button.setAttributedTitle(attributedText, for: .normal)
+
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        button.addTarget(self, action: #selector(selectClicked), for: .touchUpInside)
         return button
     }()
     
+    func selectClicked() {
+        let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
+        
+        let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
+        
+        // Error can occur right here for right now when there's no profile image to choose from
+        UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: (socialMediaProfileImages?[(selectedIndexPath?.item)!])!)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,8 +76,8 @@ class ProfileImageSelectionController: UICollectionViewController {
         
         selectButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
-        selectButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        selectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        selectButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        selectButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
     }
     
@@ -87,35 +97,5 @@ class ProfileImageSelectionController: UICollectionViewController {
         
         return cell
     }
-    
-    func saveSocialMediaInputs(_ socialMediaInputs: [SocialMedia]) {
-        var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
-        
-        var currentSocialMediaName: String = ""
-        for eachSocialInput in socialMediaInputs {
-            if eachSocialInput.appName == currentSocialMediaName {
-                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ",\(eachSocialInput.inputName!)"
-            } else {
-                currentSocialMediaName = eachSocialInput.appName!
-                concantenatedSocialMediaInputs.append((eachSocialInput.appName!, eachSocialInput.inputName!))
-                print(concantenatedSocialMediaInputs.count)
-            }
-        }
-        
-        var toSaveCard: JSON = [:]
-        for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
-            let currentSocialMediaName = UIManager.makeShortHandForQR(eachConcantenatedSocialMediaInput.socialMediaName)
-            toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
-        }
-        
-        //# Mark: - Remember to uncomment this out...
-        UserProfile.clearData(forProfile: .myUser)
-        
-        let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
-        
-    }
-    
-    
- 
     
 }

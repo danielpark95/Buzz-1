@@ -53,6 +53,36 @@ extension UserProfile {
         return []
     }
     
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) {
+        var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
+        
+        var currentSocialMediaName: String = ""
+        for eachSocialInput in socialMediaInputs {
+            if eachSocialInput.appName == currentSocialMediaName {
+                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ",\(eachSocialInput.inputName!)"
+            } else {
+                currentSocialMediaName = eachSocialInput.appName!
+                concantenatedSocialMediaInputs.append((eachSocialInput.appName!, eachSocialInput.inputName!))
+                print(concantenatedSocialMediaInputs.count)
+            }
+        }
+        
+        // There's always going to be a profile image. Either default or not.
+        var toSaveCard: JSON = ["pi": ["an":"", "in":""]]
+        for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
+            let currentSocialMediaName = UIManager.makeShortHandForQR(eachConcantenatedSocialMediaInput.socialMediaName)
+            toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
+        }
+        
+        toSaveCard["pi"]["an"].string = UIManager.makeShortHandForQR(socialMediaProfileImage.appName!)
+        toSaveCard["pi"]["in"].string = socialMediaProfileImage.inputName
+
+        print(toSaveCard)
+        
+        let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
+        UserProfile.saveProfileImage(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)!, userObject: userProfile)
+    }
+    
     static func saveProfile(_ qrJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -130,5 +160,7 @@ extension UserProfile {
             print(err)
         }
     }
+    
+
 
 }

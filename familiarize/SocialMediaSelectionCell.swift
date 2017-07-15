@@ -124,7 +124,7 @@ class SocialMediaCell: UICollectionViewCell {
     var socialMedia: SocialMedia? {
         didSet {
             if let appName = socialMedia?.appName {
-                socialMediaName.text = appName
+                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
             }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)
