@@ -22,11 +22,7 @@ class SocialMediaProfileImage: SocialMedia {
 
 class LoadingProfileImageSelectionController: UIViewController {
 
-    var socialMediaInputs: [SocialMedia]? {
-        didSet {
-            setupViews()
-        }
-    }
+    var socialMediaInputs: [SocialMedia]?
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -40,7 +36,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor.white
-        //setupViews()
+        setupViews()
     }
     
     lazy var activityIndicator1: NVActivityIndicatorView = {
@@ -119,16 +115,10 @@ class LoadingProfileImageSelectionController: UIViewController {
     
     func fetchImage() {
         if socialMediaInputs != nil {
-            for each in socialMediaInputs! {
-                print(each.inputName)
-            }
             ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
-
                 let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
                 profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
-                for each in fetchedSocialMediaProfileImages {
-                    print(each.inputName)
-                }
+                profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
                 self.present(profileImageSelectionController, animated: false, completion: nil)
             })
         }

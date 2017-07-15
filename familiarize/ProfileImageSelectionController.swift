@@ -14,11 +14,8 @@ class ProfileImageSelectionController: UICollectionViewController {
     
     private let cellId = "cellId"
     
-    var socialMediaProfileImages: [SocialMediaProfileImage]? {
-        didSet {
-            collectionView?.reloadData()
-        }
-    }
+    var socialMediaProfileImages: [SocialMediaProfileImage]?
+    var socialMediaInputs: [SocialMedia]?
     
     let selectProfileInstruction: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
@@ -26,6 +23,21 @@ class ProfileImageSelectionController: UICollectionViewController {
         return label
     }()
     
+    lazy var selectButton: UIButton = {
+       let button = UIManager.makeButton()
+        //button.frame = CGRect(x: view.frame.width, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+        button.backgroundColor = UIColor.black
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        button.titleEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: 10, right: 10)
+        let attributedText = NSAttributedString(string: "Select", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.white])
+        
+        button.setAttributedTitle(attributedText, for: .normal)
+        return button
+    }()
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -45,10 +57,17 @@ class ProfileImageSelectionController: UICollectionViewController {
     
     func setupViews() {
         view.addSubview(selectProfileInstruction)
+        view.addSubview(selectButton)
+        
         selectProfileInstruction.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         selectProfileInstruction.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         selectProfileInstruction.widthAnchor.constraint(equalToConstant: selectProfileInstruction.intrinsicContentSize.width).isActive = true
         selectProfileInstruction.heightAnchor.constraint(equalToConstant: selectProfileInstruction.intrinsicContentSize.height).isActive = true
+        
+        selectButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        selectButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        selectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
     }
     

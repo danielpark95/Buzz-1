@@ -16,9 +16,6 @@ class ImageFetchingManager {
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
         let massagedSocialMediaInputs = massageSocialMediaInputsData(socialMediaInputs)
-        for each in massagedSocialMediaInputs {
-            print("This is each massaged data: \(each.inputName)")
-        }
         for eachSocialMediaInput in massagedSocialMediaInputs {
             asyncDispatchGroup.enter()
             scrapeSocialMedia(withSocialMediaInput: eachSocialMediaInput, completionHandlerForScrape: { profileImage in
@@ -57,7 +54,6 @@ class ImageFetchingManager {
                     let facebook_url = show["content"]?.components(separatedBy: "/")
                     let facebook_id = facebook_url?[3]
                     let profileImageUrl = "http://graph.facebook.com/\(facebook_id!)/picture?width=1080&height=1080"
-                    print("SUHHHHHH")
                     let formattedProfileImageUrl  = URL(string: profileImageUrl)
                     URLSession.shared.dataTask(with: formattedProfileImageUrl!, completionHandler: { data, response, error in
                         if error != nil {
