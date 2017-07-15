@@ -12,13 +12,21 @@ class ProfileImageSelectionCell: UICollectionViewCell {
     
     var socialMediaProfileImage: SocialMediaProfileImage? {
         didSet {
+<<<<<<< HEAD
+            
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
             if socialMediaProfileImage?.profileImage != nil {
                 self.profileImage.image = socialMediaProfileImage?.profileImage
                 self.profileImage.contentMode = .scaleAspectFill
                 self.profileImage.clipsToBounds = true
             }
+<<<<<<< HEAD
+            
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
             
             // Views is set after knowing how long the texts are.
             setupViews()
@@ -36,9 +44,15 @@ class ProfileImageSelectionCell: UICollectionViewCell {
     let profileImage: UIImageView = {
         return UIManager.makeProfileImage(valueOfCornerRadius: 100)
     }()
+<<<<<<< HEAD
+    
+    func setupViews() {
+        self.backgroundColor = UIColor.white
+=======
 
     func setupViews() {
         self.backgroundColor = UIColor.clear
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         addSubview(profileImage)
         
         profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

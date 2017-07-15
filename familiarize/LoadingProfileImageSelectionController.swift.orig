@@ -21,8 +21,15 @@ class SocialMediaProfileImage: SocialMedia {
 }
 
 class LoadingProfileImageSelectionController: UIViewController {
+<<<<<<< HEAD
+    
+    var userProfile: UserProfile?
+    var socialMediaInputs: [SocialMedia]?
+    var socialMediaProfileImages: [SocialMediaProfileImage]?
+=======
 
     var socialMediaInputs: [SocialMedia]?
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -103,7 +110,11 @@ class LoadingProfileImageSelectionController: UIViewController {
         view.addSubview(activityIndicator4)
         activityIndicator4.center.x = view.center.x
         activityIndicator4.center.y = view.center.y
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         view.addSubview(loadingName)
         loadingName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loadingName.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -116,16 +127,39 @@ class LoadingProfileImageSelectionController: UIViewController {
     func fetchImage() {
         if socialMediaInputs != nil {
             ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
+<<<<<<< HEAD
+                
+                let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
+                profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
+                self.present(profileImageSelectionController, animated: false, completion: nil)
+=======
                 let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
                 profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
                 profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
                 self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
                 //self.present(profileImageSelectionController, animated: false, completion: nil)
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
             })
         }
     }
     
+<<<<<<< HEAD
+    func setupProfileImages() {
+        var counter = -200
+        for eachProfileImage in self.socialMediaProfileImages! {
+            let newImage2 = UIManager.makeImage()
+            newImage2.image = eachProfileImage.profileImage
+            self.view.addSubview(newImage2)
+            newImage2.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+            newImage2.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: CGFloat(counter)).isActive = true
+            newImage2.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            newImage2.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            counter = counter + 50
+        }
+    }
+=======
     
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
 }
 
 

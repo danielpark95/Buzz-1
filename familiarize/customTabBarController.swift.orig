@@ -67,10 +67,35 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate  {
 //        //self.window?.rootViewController = navigationController
 
         
+<<<<<<< HEAD
+=======
+        let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
+        let userNavigationController = UINavigationController(rootViewController: userController)
+        userNavigationController.tabBarItem.image = UIImage(named: "dan_myinfo_grey")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_myinfo_red")?.withRenderingMode(.alwaysOriginal)
+        userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         
         
+<<<<<<< HEAD
+=======
+        
+        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let contactsNavigationController = UINavigationController(rootViewController: contactsController)
+        contactsNavigationController.tabBarItem.image = UIImage(named: "dan_contacts_grey")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.selectedImage = UIImage(named: "dan_contacts_red")?.withRenderingMode(.alwaysOriginal)
+        contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6,0,-6,0)
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         
         
+<<<<<<< HEAD
+=======
+        tabBackground.widthAnchor.constraint(equalToConstant: tabBar.frame.width - 20).isActive = true
+        tabBackground.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        tabBackground.contentMode = .scaleAspectFill
+
+        viewControllers = [userNavigationController, famNavigationController,contactsNavigationController ]
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         
 //        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
 //        let contactsNavigationController = UINavigationController(rootViewController: contactsController)

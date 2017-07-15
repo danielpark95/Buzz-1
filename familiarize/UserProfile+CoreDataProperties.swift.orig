@@ -11,6 +11,13 @@ import CoreData
 import UIKit
 import SwiftyJSON
 
+<<<<<<< HEAD
+=======
+
+
+
+extension UserProfile {
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
 
 
 
@@ -19,10 +26,18 @@ extension UserProfile {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserProfile> {
         return NSFetchRequest<UserProfile>(entityName: "UserProfile")
     }
+<<<<<<< HEAD
+    
+    @objc enum userProfileSelection: Int32 {
+        case myUser
+        case otherUser
+        case tempUser
+=======
 
     @objc enum userProfileSelection: Int32 {
         case myUser
         case otherUser
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     }
     
     @NSManaged public var faceBookProfile: String?
@@ -35,8 +50,16 @@ extension UserProfile {
     @NSManaged public var bio: String?
     @NSManaged public var linkedInProfile: String?
     @NSManaged public var email: String?
+<<<<<<< HEAD
+    @NSManaged public var soundcloudProfile: String?
+    @NSManaged public var twitterProfile: String?
+    
+    @NSManaged var userProfileSelection: userProfileSelection
+    
+=======
     @NSManaged var userProfileSelection: userProfileSelection
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
         
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -52,6 +75,8 @@ extension UserProfile {
         return []
     }
     
+<<<<<<< HEAD
+=======
     static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) {
         var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
         
@@ -82,6 +107,7 @@ extension UserProfile {
         UserProfile.saveProfileImage(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)!, userObject: userProfile)
     }
     
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     static func saveProfile(_ qrJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -112,7 +138,17 @@ extension UserProfile {
         if (qrJSON["em"].exists()) {
             newUser.email = qrJSON["em"].string
         }
+<<<<<<< HEAD
+        if (qrJSON["so"].exists()) {
+            newUser.soundcloudProfile = qrJSON["so"].string
+        }
+        if (qrJSON["tw"].exists()) {
+            newUser.twitterProfile = qrJSON["tw"].string
+        }
+        
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
         
@@ -160,6 +196,9 @@ extension UserProfile {
         }
     }
     
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
 }

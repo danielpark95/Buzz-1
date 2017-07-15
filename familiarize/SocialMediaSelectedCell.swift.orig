@@ -11,7 +11,12 @@
 import UIKit
 
 class SocialMediaSelectedCell: UICollectionViewCell {
+<<<<<<< HEAD
+    
+    // TODO: Do we need the AppName?
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     var selectedSocialMedia: SocialMedia? {
         didSet {
             if let selectedSocialMediaInputName = selectedSocialMedia?.inputName {
@@ -29,7 +34,11 @@ class SocialMediaSelectedCell: UICollectionViewCell {
     }
     
     let socialMediaImageView: UIImageView = {
+<<<<<<< HEAD
+        return UIManager.makeImage()
+=======
        return UIManager.makeImage()
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     }()
     
     let socialMediaInputName: UILabel = {
@@ -66,5 +75,9 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
     }
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
 }

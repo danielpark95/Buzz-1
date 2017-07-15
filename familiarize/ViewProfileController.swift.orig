@@ -197,6 +197,24 @@ class ViewProfileController: ProfilePopupBase {
     }
     
     override func setPopup() {
+<<<<<<< HEAD
+        self.popupImageView = UIManager.makeImage(imageName: "dan_view_profile_popup")
+        
+        let tap = UITapGestureRecognizer()
+        self.popupImageView.addGestureRecognizer(tap)
+        self.popupImageView.isUserInteractionEnabled = true
+        
+        
+        view.addSubview(self.popupImageView)
+        
+        if let window = UIApplication.shared.keyWindow {
+            tintOverlay.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            view.addSubview(tintOverlay)
+            tintOverlay.frame = window.frame
+            tintOverlay.alpha = 1
+        }
+        
+=======
         self.popupImageView = UIManager.makeImage(imageName: "view-profile-popup")
 
         let tap = UITapGestureRecognizer()
@@ -204,6 +222,7 @@ class ViewProfileController: ProfilePopupBase {
         self.popupImageView.isUserInteractionEnabled = true
         
         view.addSubview(self.popupImageView)
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
@@ -214,11 +233,19 @@ class ViewProfileController: ProfilePopupBase {
     
     override func setNameAndBio() {
         var attributedText = NSMutableAttributedString()
+<<<<<<< HEAD
+        
+        if let name = userProfile?.name {
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
+        }
+        
+=======
         
         if let name = userProfile?.name {
             attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
         }
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         if let bio = userProfile?.bio {
             attributedText.append(NSAttributedString(string:"\n\(bio)" , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)]))
         }

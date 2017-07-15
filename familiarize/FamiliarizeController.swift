@@ -39,7 +39,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+
         if captureSession != nil {
             captureSession?.startRunning()
         }
@@ -152,6 +152,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     let scanProfileController = ScanProfileController()
     // MARK: - AVCaptureMetadataOutputObjectsDelegate Methods
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+        
         
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {

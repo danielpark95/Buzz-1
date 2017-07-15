@@ -10,24 +10,34 @@ import QRCode
 import SwiftyJSON
 import UIKit
 
-// You need to convert the JSON string to a data and then intialize it to create a json object!
 class FamiliarizeCell: UICollectionViewCell {
+    
+    var fullBrightness: Bool = false
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
+    }
+    
+    func manageBrightness() {
+        if (self.fullBrightness == true) {
+            UIScreen.main.brightness = 1.0
+        } else {
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            UIScreen.main.brightness = delegate.userBrightnessLevel
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
     
-
-    let shortHandForQR = [
-        "bio": "bio",
-        "faceBookProfile": "fb",
-        "instagramProfile": "ig",
-        "name": "name",
-        "phoneNumber": "pn",
-        "snapChatProfile": "sc" ,
-        "linkedIn": "in",
-        "email": "em",
-        "soundcloudProfile": "so",
-        "twitterProfile": "tw",
-        ]
+    enum borderTag: Int {
+        case val = 999
+    }
+    
     
     var myUserProfile: UserProfile? {
         didSet {
@@ -43,8 +53,8 @@ class FamiliarizeCell: UICollectionViewCell {
     func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
-            if (profile.value(forKey: key) != nil && shortHandForQR[key] != nil) {
-                    jsonDict[shortHandForQR[key]!] = profile.value(forKey: key) as? String
+            if (profile.value(forKey: key) != nil && UIManager.makeShortHandForQR(key) != nil) {
+                    jsonDict[UIManager.makeShortHandForQR(key)!] = profile.value(forKey: key) as? String
             }
         }
         return JSON(jsonDict).rawString()!
@@ -81,6 +91,8 @@ class FamiliarizeCell: UICollectionViewCell {
         }
         
         if onQRImage == true {
+            self.fullBrightness = false
+            addSubview(bioLabel)
             
             if (myUserProfile?.name) == "T.J. Miller" {
                 profileImage.layer.masksToBounds = true
@@ -128,6 +140,8 @@ class FamiliarizeCell: UICollectionViewCell {
             presentSocialMediaButtons()
             onQRImage = false
         } else {
+            UIScreen.main.brightness = 1.0
+            self.fullBrightness = true
             addSubview(qrImageView!)
             qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
             qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
@@ -136,6 +150,7 @@ class FamiliarizeCell: UICollectionViewCell {
             onQRImage = true
         }
     }
+    
     
     func setupViews() {
         flip()

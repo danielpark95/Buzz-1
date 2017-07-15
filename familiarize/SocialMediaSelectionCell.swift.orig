@@ -17,11 +17,19 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     
     
     let socialMediaChoices: [SocialMedia] = [
+<<<<<<< HEAD
+        SocialMedia(withSocialMedia: "faceBookProfile", withImageName: "dan_facebook_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withSocialMedia: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withSocialMedia: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false)
+    ]
+    
+=======
         SocialMedia(withSocialMedia: "faceBookProfile", withImageName: "dan_facebook_red", withInputName: "", withAlreadySet: false),
         SocialMedia(withSocialMedia: "snapChatProfile", withImageName: "dan_snapchat_red", withInputName: "", withAlreadySet: false),
         SocialMedia(withSocialMedia: "instagramProfile", withImageName: "dan_instagram_red", withInputName: "", withAlreadySet: false)
     ]
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -39,7 +47,11 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         return view
         
     }()
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
     let socialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -124,7 +136,11 @@ class SocialMediaCell: UICollectionViewCell {
     var socialMedia: SocialMedia? {
         didSet {
             if let appName = socialMedia?.appName {
+<<<<<<< HEAD
+                socialMediaName.text = appName
+=======
                 socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
             }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)

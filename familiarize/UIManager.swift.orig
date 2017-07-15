@@ -60,6 +60,9 @@ class UIManager {
         } else {
             return nil
         }
+<<<<<<< HEAD
+    }    
+=======
     }
     
     static func makeRegularHandForDisplay(_ longSocialMediaName: String) -> String? {
@@ -81,4 +84,5 @@ class UIManager {
     }
     
 
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
 }

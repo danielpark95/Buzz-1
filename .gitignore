@@ -1,4 +1,8 @@
+## Build generated
 .DS_Store
 DerivedData/
 DerivedData2/
 Pods/
+
+## Other
+*.xcuserstate

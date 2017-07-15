@@ -17,15 +17,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
 
     var window: UIWindow?
     var previousIndex: Int?
+<<<<<<< HEAD
+=======
     var userBrightnessLevel: CGFloat!
     
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
+<<<<<<< HEAD
         window?.rootViewController = TabBarController()
+=======
+        window?.rootViewController = CustomTabBarController()
+        
+        
+        userBrightnessLevel = UIScreen.main.brightness
+        
+        // Downcasting so that I choose the "Fam" view controller to be the first thing when app is opened.
+        if window?.rootViewController as? CustomTabBarController != nil {
+            let tabBarController = window!.rootViewController as! CustomTabBarController
+            tabBarController.selectedIndex = 0
+        }
+>>>>>>> 827c30be80a1e34ad19aaffe3f941981654d2dcd
         
         let tabBarController = window!.rootViewController as! TabBarController
         tabBarController.selectedIndex = 0
