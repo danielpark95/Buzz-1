@@ -17,6 +17,17 @@ class ProfileImageSelectionController: UICollectionViewController {
     var socialMediaProfileImages: [SocialMediaProfileImage]?
     var socialMediaInputs: [SocialMedia]?
     
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
     let selectProfileInstruction: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
         label.text = "Select profile image"
@@ -46,6 +57,9 @@ class ProfileImageSelectionController: UICollectionViewController {
         
         // Error can occur right here for right now when there's no profile image to choose from
         UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: (socialMediaProfileImages?[(selectedIndexPath?.item)!])!)
+
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+
     }
 
     override func viewDidLoad() {

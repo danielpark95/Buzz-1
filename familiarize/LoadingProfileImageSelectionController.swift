@@ -119,7 +119,8 @@ class LoadingProfileImageSelectionController: UIViewController {
                 let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
                 profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
                 profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
-                self.present(profileImageSelectionController, animated: false, completion: nil)
+                self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
+                //self.present(profileImageSelectionController, animated: false, completion: nil)
             })
         }
     }
