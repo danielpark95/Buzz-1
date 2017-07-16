@@ -45,7 +45,6 @@ class HelpSettingController: UICollectionViewController, UICollectionViewDelegat
         return 0
     }
     
-    
     func setupNavBarButton() {
         let backButton = UIBarButtonItem(image: UIImage(named:"back-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
         navigationItem.leftBarButtonItem = backButton

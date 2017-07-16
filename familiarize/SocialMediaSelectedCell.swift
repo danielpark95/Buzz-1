@@ -11,7 +11,7 @@
 import UIKit
 
 class SocialMediaSelectedCell: UICollectionViewCell {
-
+    
     var selectedSocialMedia: SocialMedia? {
         didSet {
             if let selectedSocialMediaInputName = selectedSocialMedia?.inputName {
@@ -28,6 +28,15 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         }
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let socialMediaImageView: UIImageView = {
        return UIManager.makeImage()
     }()
@@ -42,13 +51,19 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         view.backgroundColor = UIColor(white: 0.95, alpha:1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-        
     }()
     
+    let deleteButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_help")
+        return button
+    }()
+    
+
     func setupViews() {
         addSubview(separatorView)
         addSubview(socialMediaInputName)
         addSubview(socialMediaImageView)
+        addSubview(deleteButton)
         
         separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
@@ -64,6 +79,11 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
         socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
         socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        
+        deleteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -50).isActive = true
+        deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
+        deleteButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
     }
 

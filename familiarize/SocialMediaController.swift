@@ -46,10 +46,8 @@ class SocialMediaController: UIViewController {
     
     lazy var addButton: UIButton = {
         let button = UIManager.makeButton()
-        button.backgroundColor = UIColor.black
+        button.backgroundColor = UIColor(white: 0.4, alpha: 0.3)
         button.layer.cornerRadius = 13
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
         let attributedText = NSAttributedString(string: "save", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor.white])
         button.setAttributedTitle(attributedText, for: .normal)
         button.contentHorizontalAlignment = .center
@@ -64,8 +62,6 @@ class SocialMediaController: UIViewController {
         newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
         self.dismiss(animated: false, completion: nil)
     }
-    
-    
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
