@@ -38,6 +38,14 @@ class ProfilePopupBase: UIViewController {
         return UIManager.makeLabel(numberOfLines: 2)
     }()
     
+    let nameLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1)
+    }()
+    
+    let bioLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1)
+    }()
+    
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
 
@@ -45,7 +53,7 @@ class ProfilePopupBase: UIViewController {
     }()
     
     lazy var profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 40)
+        return UIManager.makeProfileImage(valueOfCornerRadius: 50)
     }()
     
     lazy var dismissButton: UIButton = {
@@ -97,9 +105,21 @@ class ProfilePopupBase: UIViewController {
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         nameAndBioLabel.attributedText = attributedText
     }
+    
+    func setName() {
+        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        nameLabel.attributedText = attributedText
+    }
+    
+    func setBio() {
+        let attributedText = NSMutableAttributedString(string: (userProfile?.bio)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        bioLabel.attributedText = attributedText
+    }
     func setupGraphics() {
         
-        setNameAndBio()
+        //setNameAndBio()
+        setName()
+        setBio()
         setDismissButton()
     }
     

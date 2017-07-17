@@ -23,8 +23,8 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     var optionalSocialMediaInputs: [SocialMedia] = []
 
     var requiredSocialMediaInputs: [SocialMedia] = [
-        SocialMedia(withSocialMedia: "name", withImageName: "dan_facebook_red", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withSocialMedia: "bio", withImageName: "dan_facebook_red", withInputName: "Optional", withAlreadySet: true)
+        SocialMedia(withSocialMedia: "name", withImageName: "dan_facebook_black", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withSocialMedia: "bio", withImageName: "dan_facebook_black", withInputName: "Optional", withAlreadySet: true)
     ]
     
     
@@ -186,7 +186,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     //# Mark: - Delete Info
-    
     func deleteSocialMediaInput(socialMedia: SocialMedia) {
         for index in 0...optionalSocialMediaInputs.count {
             if (optionalSocialMediaInputs[index] == socialMedia) {

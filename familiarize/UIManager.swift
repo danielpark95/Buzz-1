@@ -50,14 +50,16 @@ class UIManager {
     
     static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
         let shortHandForQR = [
-            "bio": "bio",
-            "faceBookProfile": "fb",
-            "instagramProfile": "ig",
             "name": "name",
-            "phoneNumber": "pn",
-            "snapChatProfile": "sc" ,
-            "linkedIn": "in",
+            "bio": "bio",
             "email": "em",
+            "phoneNumber": "pn",
+            "faceBookProfile": "fb",
+            "snapChatProfile": "sc" ,
+            "instagramProfile": "ig",
+            "linkedInProfile": "in",
+            "soundCloudProfile": "so",
+            "twitterProfile": "tw",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName
@@ -68,14 +70,16 @@ class UIManager {
     
     static func makeRegularHandForDisplay(_ longSocialMediaName: String) -> String? {
         let shortHandForQR = [
-            "bio": "Bio",
-            "faceBookProfile": "Facebook",
-            "instagramProfile": "Instagram",
             "name": "Name",
-            "phoneNumber": "Phone Number",
-            "snapChatProfile": "Snapchat" ,
-            "linkedIn": "LinkedIn",
+            "bio": "Bio",
             "email": "Email",
+            "phoneNumber": "Phone Number",
+            "faceBookProfile": "Facebook",
+            "snapChatProfile": "Snapchat" ,
+            "instagramProfile": "Instagram",
+            "linkedInProfile": "LinkedIn",
+            "soundCloudProfile": "Soundcloud",
+            "twitterProfile": "Twitter",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName

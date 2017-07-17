@@ -25,16 +25,18 @@ extension UserProfile {
         case otherUser
     }
     
+    @NSManaged public var name: String?
+    @NSManaged public var bio: String?
+    @NSManaged public var date: NSDate?
+    @NSManaged public var email: String?
+    @NSManaged public var phoneNumber: String?
     @NSManaged public var faceBookProfile: String?
     @NSManaged public var instagramProfile: String?
-    @NSManaged public var name: String?
-    @NSManaged public var phoneNumber: String?
     @NSManaged public var snapChatProfile: String?
-    @NSManaged public var date: NSDate?
     @NSManaged public var profileImage: Data?
-    @NSManaged public var bio: String?
     @NSManaged public var linkedInProfile: String?
-    @NSManaged public var email: String?
+    @NSManaged public var soundCloudProfile: String?
+    @NSManaged public var twitterProfile: String?
     @NSManaged var userProfileSelection: userProfileSelection
 
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
@@ -91,26 +93,32 @@ extension UserProfile {
         if (qrJSON["name"].exists()) {
             newUser.name = qrJSON["name"].string
         }
+        if (qrJSON["bio"].exists()) {
+            newUser.bio = qrJSON["bio"].string
+        }
         if (qrJSON["fb"].exists()) {
             newUser.faceBookProfile = qrJSON["fb"].string
-        }
-        if (qrJSON["ig"].exists()) {
-            newUser.instagramProfile = qrJSON["ig"].string
         }
         if (qrJSON["sc"].exists()) {
             newUser.snapChatProfile = qrJSON["sc"].string
         }
+        if (qrJSON["ig"].exists()) {
+            newUser.instagramProfile = qrJSON["ig"].string
+        }
+        if (qrJSON["em"].exists()) {
+            newUser.email = qrJSON["em"].string
+        }
         if (qrJSON["pn"].exists()) {
             newUser.phoneNumber = qrJSON["pn"].string
-        }
-        if (qrJSON["bio"].exists()) {
-            newUser.bio = qrJSON["bio"].string
         }
         if (qrJSON["in"].exists()) {
             newUser.linkedInProfile = qrJSON["in"].string
         }
-        if (qrJSON["em"].exists()) {
-            newUser.email = qrJSON["em"].string
+        if (qrJSON["tw"].exists()) {
+            newUser.twitterProfile = qrJSON["tw"].string
+        }
+        if (qrJSON["so"].exists()) {
+            newUser.soundCloudProfile = qrJSON["so"].string
         }
 
         newUser.userProfileSelection = userProfile

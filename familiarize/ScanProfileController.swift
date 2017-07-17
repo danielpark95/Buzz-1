@@ -133,7 +133,9 @@ class ScanProfileController: ProfilePopupBase {
     override func addToGraphics() {
         view.addSubview(self.viewProfileButton)
         view.addSubview(self.profileImage)
-        view.addSubview(self.nameAndBioLabel)
+        view.addSubview(self.nameLabel)
+        view.addSubview(self.bioLabel)
+        //view.addSubview(self.nameAndBioLabel)
         
         profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
@@ -142,11 +144,25 @@ class ScanProfileController: ProfilePopupBase {
         profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
-        nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        nameAndBioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
-        nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
-        nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
         
+        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
+        
+        bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        bioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -10).isActive = true
+        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
+        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
+        
+        
+        
+//        
+//        nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+//        nameAndBioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
+//        nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
+//        nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
+//        
         viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
         viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
