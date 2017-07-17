@@ -79,20 +79,23 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         //self.imageView.image = UIImage(named: "dan_camera_round")
-        //self.imageView.backgroundColor = UIColor.white
-//        self.imageView.layer.borderWidth = 2
-//        self.imageView.layer.borderColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0).cgColor
-//        self.imageView.layer.cornerRadius = 60
-        self.insets = UIEdgeInsetsMake(-16, 0, 0, 0)
+        print("width = ",         self.imageView.frame.size.width)
+        print("height = " ,         self.imageView.frame.size.height)
+
+        self.imageView.backgroundColor = UIColor.white
+        self.imageView.layer.borderWidth = 1
+        self.imageView.layer.borderColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0).cgColor
+        self.imageView.layer.cornerRadius = 33
+        self.insets = UIEdgeInsetsMake(-32, 0, 0, 0)
+        let transform = CGAffineTransform.identity
+        self.imageView.transform = transform
         self.superview?.bringSubview(toFront: self)
-        //let transform = CGAffineTransform.identity
-        //self.imageView.transform = transform
-        //self.superview?.bringSubview(toFront: self)
+        self.imageView.layer.masksToBounds = true
         
         //textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
         //highlightTextColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        //iconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        //highlightIconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
+        iconColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
+        highlightIconColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
         //backdropColor = .clear
         //highlightBackdropColor = .clear
         
@@ -110,7 +113,7 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
     public override func selectAnimation(animated: Bool, completion: (() -> ())?) {
         let view = UIView.init(frame: CGRect.init(origin: CGPoint.zero, size: CGSize(width: 2.0, height: 2.0)))
         view.layer.cornerRadius = 1.0
-        //view.layer.opacity = 0.5
+        view.layer.opacity = 0.5
         view.backgroundColor = UIColor.init(red: 243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
         self.addSubview(view)
         playMaskAnimation(animateView: view, target: self.imageView, completion: {

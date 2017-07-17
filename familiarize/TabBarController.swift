@@ -36,7 +36,12 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //Scanner Controller
         let scannerController = QRScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: "", image: UIImage(named: "dan_camera_84"), selectedImage: UIImage(named: "dan_camera_84"))
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_camera_84"), selectedImage: UIImage(named: "dan_camera_84"))
+        
+        let img = UIImage(named: "dan_camera_84")
+        print("width = ", img?.size.width)
+        print("height = ", img?.size.height)
+        
         
         //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
         
