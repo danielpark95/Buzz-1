@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+class UIButtonWithIndexPath: UIButton {
+    var indexPathItem: Int?
+}
+
 class UIManager {
     static func makeButton(imageName: String = "") -> UIButton {
         let image = UIImage(named: imageName) as UIImage?
@@ -84,5 +88,11 @@ class UIManager {
         }
     }
     
-
+    static func makeDeleteButton(_ indexPathItem: Int) -> UIButtonWithIndexPath {
+        let button = UIButtonWithIndexPath(frame: CGRect(x: 0, y: 20, width: 40, height: 40))
+        button.setImage(UIImage(named: "dan_camera_91"), for: .normal)
+        button.indexPathItem = indexPathItem
+        return button
+    }
+    
 }
