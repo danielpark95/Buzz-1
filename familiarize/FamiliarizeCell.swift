@@ -20,10 +20,10 @@ class FamiliarizeCell: UICollectionViewCell {
     
     func manageBrightness() {
         if (self.fullBrightness == true) {
-            UIScreen.main.brightness = 1.0
+            //UIScreen.main.brightness = 1.0
         } else {
-            let delegate = UIApplication.shared.delegate as! AppDelegate
-            UIScreen.main.brightness = delegate.userBrightnessLevel
+            //let delegate = UIApplication.shared.delegate as! AppDelegate
+            //UIScreen.main.brightness = delegate.userBrightnessLevel
         }
     }
     
@@ -91,7 +91,7 @@ class FamiliarizeCell: UICollectionViewCell {
         }
         
         if onQRImage == true {
-            self.fullBrightness = false
+            //self.fullBrightness = false
             addSubview(bioLabel)
             
             if (myUserProfile?.name) == "T.J. Miller" {
@@ -140,8 +140,8 @@ class FamiliarizeCell: UICollectionViewCell {
             presentSocialMediaButtons()
             onQRImage = false
         } else {
-            UIScreen.main.brightness = 1.0
-            self.fullBrightness = true
+            //UIScreen.main.brightness = 1.0
+            //self.fullBrightness = true
             addSubview(qrImageView!)
             qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
             qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
@@ -164,7 +164,7 @@ class FamiliarizeCell: UICollectionViewCell {
         "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
         "email": UIManager.makeImage(imageName: "dan_email_black"),
         "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
-        "soundcloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
     
     //Helper function to space out social media icons - dan
@@ -197,7 +197,8 @@ class FamiliarizeCell: UICollectionViewCell {
         if size == 1 {
             
         } else if size == 2 {
-            
+            my_theta1 = 110.0
+            my_theta2 = 35.0
         } else if size == 3 {
             my_theta1 = 110.0
             my_theta2 = 35.0

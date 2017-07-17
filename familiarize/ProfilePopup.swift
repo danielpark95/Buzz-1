@@ -45,7 +45,7 @@ class ProfilePopupBase: UIViewController {
     }()
     
     lazy var profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 40)
+        return UIManager.makeProfileImage(valueOfCornerRadius: 50)
     }()
     
     lazy var dismissButton: UIButton = {

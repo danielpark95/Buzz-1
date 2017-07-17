@@ -135,7 +135,7 @@ class ViewProfileController: ProfilePopupBase {
         "phoneNumber": "pn",
         "email": "em",
         "linkedInProfile": "in",
-        "soundcloudProfile": "so",
+        "soundCloudProfile": "so",
         "twitterProfile": "tw",
         ]
     
@@ -148,7 +148,7 @@ class ViewProfileController: ProfilePopupBase {
                 if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
                     let shortHand: String = socialMedia[key]!
                     view.addSubview((socialMediaButtons?[shortHand])!)
-                    (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 100).isActive = true
+                    (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 200).isActive = true
                     (socialMediaButtons?[shortHand])!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: spacing).isActive = true
                     (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 40).isActive = true
                     (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 40).isActive = true
@@ -164,13 +164,20 @@ class ViewProfileController: ProfilePopupBase {
     }
     
     override func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dismiss-button")
+        dismissButton = UIManager.makeButton(imageName: "dan_close")
         view.addSubview(self.dismissButton)
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 200).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
+        //dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        //dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
+    }
+    
+    func drawMiddleLine() {
+        let middleLine = UIManager.makeImage(imageName: "dan_popup_middle_bar")
+        view.addSubview(middleLine)
+        middleLine.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        middleLine.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -20).isActive = true
     }
     
     override func addToGraphics() {
@@ -178,26 +185,27 @@ class ViewProfileController: ProfilePopupBase {
         view.addSubview(self.profileImage)
         view.addSubview(self.nameAndBioLabel)
         
-        
+        drawMiddleLine()
         createSocialMediaButtons()
         presentSocialMediaButtons()
         
-        profileImage.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: 20).isActive = true
-        profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 20).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 10).isActive = true
         
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
-        profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
-        nameAndBioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 20).isActive = true
+        nameAndBioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 120).isActive = true
         
-        nameAndBioLabel.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: 120).isActive = true
+        //nameAndBioLabel.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: 120).isActive = true
+        nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
         nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
     }
     
     override func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "view-profile-popup")
+        self.popupImageView = UIManager.makeImage(imageName: "dan_popup")
 
         let tap = UITapGestureRecognizer()
         self.popupImageView.addGestureRecognizer(tap)
@@ -208,15 +216,15 @@ class ViewProfileController: ProfilePopupBase {
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
         self.popupCenterYAnchor?.isActive = true
-        self.popupImageView.heightAnchor.constraint(equalToConstant: 222).isActive = true
-        self.popupImageView.widthAnchor.constraint(equalToConstant: 339).isActive = true
+        //self.popupImageView.heightAnchor.constraint(equalToConstant: 222).isActive = true
+        //self.popupImageView.widthAnchor.constraint(equalToConstant: 339).isActive = true
     }
     
     override func setNameAndBio() {
         var attributedText = NSMutableAttributedString()
         
         if let name = userProfile?.name {
-            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor.white])
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
         }
 
         if let bio = userProfile?.bio {

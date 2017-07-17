@@ -30,31 +30,29 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-         
-        //MyUserProfile.clearData()
-//        UserProfile.clearData(forProfile: .myUser)
-//        UserProfile.clearData(forProfile: .otherUser)
-// Uncomment this if you want to add some qrcodes into your core data.
-//        let stuff: JSON = [
-//            "name": "alex",
-//            "fb": "alexswoh",
-//            "pn": "123123",
-//        ]
-//
-//        let pika: JSON = [
-//            "name": "eric chung",
-//            "fb": "eric.chung.5680",
-//            "ig": "l",
-//            "sc": "s",
-//            "pn": "123123",
-//            "bio": "Hello",
-//            "in": "hi",
-//            "em": "ell"
-//        ]
-//        MyUserProfile.clearData() // Clears all of the core data.
-//        UserProfile.saveProfile(stuff, forProfile: .myUser)
-//        MyUserProfile.saveProfile(pika)
+
+        let user1: JSON = [
+            "name": "T.J. Miller",
+            "pn": "pn",
+            "fb": "fb",
+            "sc": "sc",
+            "ig": "ig",
+            "so": "so",
+            "tw": "tw",
+            "bio": "Miller the professional chiller."
+        ]
         
+        let user2: JSON = [
+            "name": "Todd Joseph Miller",
+            "bio": "Founder & CEO, Aviato.",
+            "pn": "pn",
+            "in": "in",
+            "em": "em",
+            ]
+        
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.saveProfile(user2, forProfile: .myUser)
+        UserProfile.saveProfile(user1, forProfile: .myUser)
         
         super.viewDidLoad()
         navigationItem.title = "Me"
@@ -83,7 +81,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"settings-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
         let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
