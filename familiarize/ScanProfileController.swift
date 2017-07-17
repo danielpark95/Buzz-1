@@ -167,7 +167,10 @@ class ScanProfileController: ProfilePopupBase {
         viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
         viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
         viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        
+
+    }
+    
+    override func animateAfterPopup() {
         self.checkBox.setCheckState(.checked, animated: true)
     }
 }

@@ -283,7 +283,7 @@
 				TargetAttributes = {
 					1435323C1EDA9CC2000507DB = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = Q8WLRBAD9Z;
+						DevelopmentTeam = YSRLK76L75;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -520,7 +520,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
+				DEVELOPMENT_TEAM = YSRLK76L75;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -534,7 +534,7 @@
 				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize126;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
@@ -549,7 +549,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q8WLRBAD9Z;
+				DEVELOPMENT_TEAM = YSRLK76L75;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -564,7 +564,7 @@
 				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize124;
+				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize126;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;

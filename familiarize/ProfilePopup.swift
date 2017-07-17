@@ -24,6 +24,8 @@ class ProfilePopupBase: UIViewController {
         self.setPopup()
         self.setupBackground()
         self.addToBackground()
+        self.setupGraphics()
+        self.addToGraphics()
     }
     
     // After all of the views are setups, then animate the motion where the popup image
@@ -81,8 +83,7 @@ class ProfilePopupBase: UIViewController {
             self.view.layoutIfNeeded()
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
-            self.setupGraphics()
-            self.addToGraphics()
+            self.animateAfterPopup()
             
         })
 
@@ -128,6 +129,10 @@ class ProfilePopupBase: UIViewController {
             self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
             self.profileImage.clipsToBounds = true
         }
+    }
+    
+    func animateAfterPopup() {
+        
     }
     
     func setDismissButton() {

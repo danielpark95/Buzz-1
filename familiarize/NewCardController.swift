@@ -139,7 +139,8 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     func setupNavBarButton() {
         let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
         let nextButton = UIBarButtonItem.init(title: "next", style: .plain, target: self, action: #selector(nextClicked))
-        
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = nextButton
     }
@@ -189,7 +190,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     func deleteSocialMediaInput(socialMedia: SocialMedia) {
         for index in 0...optionalSocialMediaInputs.count {
             if (optionalSocialMediaInputs[index] == socialMedia) {
-                print("hello")
                 optionalSocialMediaInputs.remove(at: index)
                 collectionView?.reloadData()
                 return
