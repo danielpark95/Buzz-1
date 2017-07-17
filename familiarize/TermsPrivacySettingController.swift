@@ -17,9 +17,7 @@ class TermsPrivacySettingController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+
         collectionView?.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = UIColor.white
         

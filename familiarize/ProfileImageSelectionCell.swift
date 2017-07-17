@@ -19,7 +19,6 @@ class ProfileImageSelectionCell: UICollectionViewCell {
                 self.profileImage.clipsToBounds = true
             }
 
-            
             // Views is set after knowing how long the texts are.
             setupViews()
         }
