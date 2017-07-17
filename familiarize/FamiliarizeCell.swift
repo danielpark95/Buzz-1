@@ -66,7 +66,7 @@ class FamiliarizeCell: UICollectionViewCell {
         qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         qrImageView = UIManager.makeImage()
         qrImageView?.image = qrCode?.image
-        qrImageView?.image = UIImage(named: "familiarize_website_qr-1")
+        //qrImageView?.image = UIImage(named: "familiarize_website_qr-1")
     }
     
     let profileImage: UIImageView = {

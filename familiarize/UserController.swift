@@ -34,7 +34,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let user1: JSON = [
             "name": "T.J. Miller",
             "pn": "pn",
-            "fb": "fb",
+            "fb": "alexswo",
             "sc": "sc",
             "ig": "ig",
             "so": "so",

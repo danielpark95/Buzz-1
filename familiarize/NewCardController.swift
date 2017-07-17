@@ -186,7 +186,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     //# Mark: - Delete Info
-    
     func deleteSocialMediaInput(socialMedia: SocialMedia) {
         for index in 0...optionalSocialMediaInputs.count {
             if (optionalSocialMediaInputs[index] == socialMedia) {
