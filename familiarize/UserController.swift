@@ -77,6 +77,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! FamiliarizeCell
+        selectedCell.onQRImage = !selectedCell.onQRImage
         selectedCell.flip()
     }
     
@@ -110,8 +111,10 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let layout = UICollectionViewFlowLayout()
         let controller: UIViewController
         
+        
         if setting.name == .TermsPrivacy {
             controller = TermsPrivacySettingController(collectionViewLayout: layout)
+            navigationItem.title = "PRIVACY"
         } else if setting.name == .Contact {
             controller = ContactSettingController(collectionViewLayout: layout)
         } else if setting.name == .Help {
@@ -121,6 +124,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         controller.hidesBottomBarWhenPushed = true
+        
+        
+//      how to change the font?
+//        let navigationTitleFont = UIFont(name: "Avenir", size: 30)
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: navigationTitleFont!,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         navigationController?.pushViewController(controller, animated: true)
     }
     

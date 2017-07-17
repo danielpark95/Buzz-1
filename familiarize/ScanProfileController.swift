@@ -131,6 +131,7 @@ class ScanProfileController: ProfilePopupBase {
     }
     
     override func addToGraphics() {
+        
         view.addSubview(self.viewProfileButton)
         view.addSubview(self.profileImage)
         view.addSubview(self.nameLabel)

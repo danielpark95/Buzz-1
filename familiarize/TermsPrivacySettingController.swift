@@ -12,7 +12,17 @@ class TermsPrivacySettingController: UICollectionViewController, UICollectionVie
     
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationItem.title = "Terms & Privacy Policy"
+//        let navigationTitleFont = UIFont(name: "Avenir", size: 17)
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: navigationTitleFont!,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
+//        
+//        //UINavigationBar.appearance().tintColor = color
+//        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
+//        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0), NSFontAttributeName: navigationTitleFont!], forState: UIControlState.Normal)
+//
+//        
+//        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0), NSFontAttributeName: UIFont(name: "Avenir", size: 30)!]
+        //navigationItem.title = "Terms & Privacy Policy"
+        
     }
     
     override func viewDidLoad() {

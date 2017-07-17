@@ -18,10 +18,14 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         
+        
+        
         let tabBarController = ESTabBarController()
         //tabBarController.delegate = self
         tabBarController.tabBar.shadowImage = UIImage(named: "dan_transparent")
         tabBarController.tabBar.backgroundImage = UIImage(named: "dan_background")
+        
+        tabBarController.tabBar.isTranslucent = false
         
         //User Controller
         let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())

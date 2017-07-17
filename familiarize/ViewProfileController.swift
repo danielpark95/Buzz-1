@@ -62,11 +62,10 @@ class ViewProfileController: ProfilePopupBase {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
-    
     
     // FYI the button should be a facebook button
     lazy var fbButton: UIButton = {
@@ -142,6 +141,7 @@ class ViewProfileController: ProfilePopupBase {
     func presentSocialMediaButtons() {
         var xSpacing: CGFloat = 50
         var ySpacing: CGFloat = 10
+        let yConstant: CGFloat = 50
         var shortHandArray = [String]()
         for key in (self.userProfile?.entity.attributesByName.keys)! {
             if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
@@ -158,7 +158,7 @@ class ViewProfileController: ProfilePopupBase {
                 (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + 50).isActive = true
+                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
                 count += 1
                 if count == 1{
                     break
@@ -171,7 +171,7 @@ class ViewProfileController: ProfilePopupBase {
                 (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + 50).isActive = true
+                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
                 xSpacing = xSpacing * (-1)
                 count += 1
                 if count == 2{
@@ -192,11 +192,11 @@ class ViewProfileController: ProfilePopupBase {
                 (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 if count < 2 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
                     xSpacing = xSpacing * (-1)
                 } else if count == 2 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + yConstant).isActive = true
                 }
                 
                 count += 1
@@ -213,12 +213,12 @@ class ViewProfileController: ProfilePopupBase {
                 (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 if count < 2 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
                     xSpacing = xSpacing * (-1)
                 }
                 else if count < 4 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + yConstant).isActive = true
                     xSpacing = xSpacing * (-1)
                 }
                 count += 1
@@ -226,7 +226,7 @@ class ViewProfileController: ProfilePopupBase {
                     break
                 }
             }
-        } else if size == 5 {
+        } else if size == 5 { //5 looks good
             count = 0
             xSpacing = 80
             ySpacing = 15
@@ -237,27 +237,27 @@ class ViewProfileController: ProfilePopupBase {
                 (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 if count == 0 || count == 2 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
                     xSpacing = xSpacing * (-1)
                 } else if count == 1 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
                 } else if count == 3 {
                     xSpacing = 45
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
                 } else if count == 4 {
                     xSpacing = 45
                     xSpacing = xSpacing * (-1)
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
                 }
                 count += 1
                 if count == 5 {
                     break
                 }
             }
-        } else if size == 6 {
+        } else if size == 6 { //6 looks good
             count = 0
             xSpacing = 80
             ySpacing = 15
@@ -268,18 +268,18 @@ class ViewProfileController: ProfilePopupBase {
                 (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 if count == 0 || count == 2 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
                     xSpacing = xSpacing * (-1)
                 } else if count == 1 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
                 } else if count == 3 || count == 5 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
                     xSpacing = xSpacing * (-1)
                 } else if count == 4 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + 50).isActive = true
+                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
                 }
                 count += 1
                 if count == 6 {
@@ -289,27 +289,6 @@ class ViewProfileController: ProfilePopupBase {
         } else {
             //write code for when there are more than 6 linked accounts
         }
-        
-        
-        
-        
-        
-//        var spacing: CGFloat = 20
-//        
-//        if self.userProfile != nil {
-//            for key in (self.userProfile?.entity.attributesByName.keys)! {
-//                if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
-//                    let shortHand: String = socialMedia[key]!
-//                    view.addSubview((socialMediaButtons?[shortHand])!)
-//                    (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 200).isActive = true
-//                    (socialMediaButtons?[shortHand])!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: spacing).isActive = true
-//                    (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 40).isActive = true
-//                    (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 40).isActive = true
-//                    
-//                    spacing += 60
-//                }
-//            }
-//        }
     }
     
     override func dismissClicked() {
@@ -317,10 +296,10 @@ class ViewProfileController: ProfilePopupBase {
     }
     
     override func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dan_close")
+        dismissButton = UIManager.makeButton(imageName: "dan_close_text")
         view.addSubview(self.dismissButton)
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 190).isActive = true
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 160).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
     }
     
@@ -328,16 +307,15 @@ class ViewProfileController: ProfilePopupBase {
         let middleLine = UIManager.makeImage(imageName: "dan_popup_middle_bar")
         view.addSubview(middleLine)
         middleLine.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        middleLine.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -10).isActive = true
+        middleLine.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 0).isActive = true
     }
     
     override func addToGraphics() {
-        
         view.addSubview(self.profileImage)
         view.addSubview(self.nameLabel)
         view.addSubview(self.bioLabel)
         
-        drawMiddleLine()
+        //drawMiddleLine()
         createSocialMediaButtons()
         presentSocialMediaButtons()
         
@@ -353,24 +331,23 @@ class ViewProfileController: ProfilePopupBase {
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.width).isActive = true
         
-        bioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 150).isActive = true
+        bioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 155).isActive = true
         bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
         bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
     }
     
     override func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "dan_popup")
-
+        view.addSubview(self.tintOverlay)
+        self.popupImageView = UIManager.makeImage(imageName: "dan_popup_small")
         let tap = UITapGestureRecognizer()
         self.popupImageView.addGestureRecognizer(tap)
         self.popupImageView.isUserInteractionEnabled = true
-        
         view.addSubview(self.popupImageView)
         self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        self.popupCenterYAnchor?.isActive = true
+        self.popupCenterYAnchor?.isActive = true        
     }
     
     override func setName(){
@@ -389,7 +366,9 @@ class ViewProfileController: ProfilePopupBase {
         bioLabel.attributedText = attributedText
     }
     override func addToBackground() {
-        view.addSubview(tintOverlay)
-        view.sendSubview(toBack: tintOverlay)
+//        view.sendSubview(toBack: tintOverlay)
+        //self.tintOverlay.sendSubview(toBack: popupImageView)
+        //view.sendSubview(toBack: self.tintOverlay)
+        view.bringSubview(toFront: popupImageView)
     }
 }

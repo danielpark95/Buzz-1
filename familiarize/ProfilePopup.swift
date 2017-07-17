@@ -32,12 +32,6 @@ class ProfilePopupBase: UIViewController {
         self.animatePopup()
     }
     
-    // Text gets it textual label from QRScannerController
-    // This is to just define it
-    let nameAndBioLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 2)
-    }()
-    
     let nameLabel: UILabel = {
         return UIManager.makeLabel(numberOfLines: 1)
     }()
@@ -48,7 +42,6 @@ class ProfilePopupBase: UIViewController {
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-
         return imageView
     }()
     
@@ -79,6 +72,7 @@ class ProfilePopupBase: UIViewController {
 
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
+            
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.setupGraphics()
@@ -99,13 +93,6 @@ class ProfilePopupBase: UIViewController {
         self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
     }
     
-    
-    // For putting the name on the popup VC
-    func setNameAndBio() {
-        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
-        nameAndBioLabel.attributedText = attributedText
-    }
-    
     func setName() {
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         nameLabel.attributedText = attributedText
@@ -115,9 +102,8 @@ class ProfilePopupBase: UIViewController {
         let attributedText = NSMutableAttributedString(string: (userProfile?.bio)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         bioLabel.attributedText = attributedText
     }
+    
     func setupGraphics() {
-        
-        //setNameAndBio()
         setName()
         setBio()
         setDismissButton()
