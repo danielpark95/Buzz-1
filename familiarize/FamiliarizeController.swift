@@ -35,11 +35,9 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         if captureSession != nil {
             captureSession?.stopRunning()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
         if captureSession != nil {
             captureSession?.startRunning()
         }
