@@ -289,31 +289,16 @@ class ViewProfileController: ProfilePopupBase {
         } else {
             //write code for when there are more than 6 linked accounts
         }
-        
-        
-        
-        
-        
-//        var spacing: CGFloat = 20
-//        
-//        if self.userProfile != nil {
-//            for key in (self.userProfile?.entity.attributesByName.keys)! {
-//                if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
-//                    let shortHand: String = socialMedia[key]!
-//                    view.addSubview((socialMediaButtons?[shortHand])!)
-//                    (socialMediaButtons?[shortHand])!.topAnchor.constraint(equalTo: profileImage.topAnchor, constant: 200).isActive = true
-//                    (socialMediaButtons?[shortHand])!.leftAnchor.constraint(equalTo: popupImageView.leftAnchor, constant: spacing).isActive = true
-//                    (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 40).isActive = true
-//                    (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 40).isActive = true
-//                    
-//                    spacing += 60
-//                }
-//            }
-//        }
     }
     
     override func dismissClicked() {
-        self.dismiss(animated: false)
+        self.popupCenterYAnchor?.constant = view.frame.size.height
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            // After moving the background up to the middle, then load the name and buttons.
+            self.dismiss(animated: false)
+        })
     }
     
     override func setDismissButton() {
@@ -389,16 +374,7 @@ class ViewProfileController: ProfilePopupBase {
         bioLabel.attributedText = attributedText
     }
     override func addToBackground() {
-
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.window?.addSubview(tintOverlay)
-        delegate.window?.insertSubview(tintOverlay, at: 0)
-        
-
-//        self.tabBarController?.view.addSubview(tintOverlay)
-//        self.tabBarController?.view.bringSubview(toFront: tintOverlay)
-//        self.tabBarController.addSubview(tintOverlay)
-//        self.tabBarController.sendSubview(toBack: tintOverlay)
+        view.addSubview(tintOverlay)
+        view.sendSubview(toBack: tintOverlay)
     }
 }

@@ -77,7 +77,8 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         
         self.definesPresentationContext = true
-        self.present(viewProfileController, animated: false)
+        self.tabBarController?.present(viewProfileController, animated: false, completion: nil)
+        //self.present(viewProfileController, animated: false)
     }
     
     
