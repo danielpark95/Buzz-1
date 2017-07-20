@@ -149,6 +149,7 @@ class ViewProfileController: UIViewController {
         self.popupCenterYAnchor?.constant = view.frame.size.height
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.dismiss(animated: false)
@@ -160,6 +161,7 @@ class ViewProfileController: UIViewController {
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.10)
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -244,7 +246,7 @@ class ViewProfileController: UIViewController {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         let delegate = UIApplication.shared.delegate as! AppDelegate
         visualEffect.frame = (delegate.window?.bounds)!
         return visualEffect

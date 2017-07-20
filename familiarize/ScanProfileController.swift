@@ -75,7 +75,7 @@ class ScanProfileController: UIViewController {
     }()
     // The effect for making a blurry background
     lazy var backgroundBlur: UIVisualEffectView = {
-        var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        let visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
@@ -120,7 +120,8 @@ class ScanProfileController: UIViewController {
     
     // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
     func setupBackground() {
-        
+        self.view.addSubview(self.backgroundBlur)
+        self.view.sendSubview(toBack: self.backgroundBlur)
         view.addSubview(self.outsideButton)
         
         self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -130,8 +131,6 @@ class ScanProfileController: UIViewController {
     }
     
     func addToBackground() {
-        view.addSubview(backgroundBlur)
-        view.sendSubview(toBack: backgroundBlur)
         view.addSubview(self.checkBox)
         
         self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -170,12 +169,7 @@ class ScanProfileController: UIViewController {
         viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
-    // Function handles what happens when user clicks on the "view profile" button.
-    // Basically, it unstacks all of the view controllers upto the rootview controller.
-    // The root view controller is the tabview controller.
-    // And then it selects the first tab of the rootview controller, which is the contacts page.
-    // After making the contacts page open, then a notification is passed. The notification
-    // tells the contacts page to open up the very first cell and to display the user's information.
+
     func viewProfileClicked() {
         // Go to different VC
         if self.view.window?.rootViewController as? TabBarController != nil {
@@ -190,7 +184,6 @@ class ScanProfileController: UIViewController {
         setupDismiss()
         NotificationCenter.default.post(name: .viewProfile, object: nil)
     }
-    
     
     // MARK: - Animating popup display
     
