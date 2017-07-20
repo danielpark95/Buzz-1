@@ -14,18 +14,65 @@ import UIKit
 import CoreData
 import M13Checkbox
 
-class ScanProfileController: ProfilePopupBase {
+class ScanProfileController: UIViewController {
     
     var QRScannerControllerDelegate: QRScannerControllerDelegate?
+    var userProfile: UserProfile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setPopup()
+        self.setupBackground()
+        self.addToBackground()
+        self.setupGraphics()
+        self.addToGraphics()
         
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.animatePopup()
+    }
+    // This makes the profile image into a circle.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
     }
     
+    // MARK: - UI Properties
+    
+    // Text gets it textual label from QRScannerController
+    // This is to just define it
+    let nameAndBioLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 2)
+    }()
+    
+    let nameLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1)
+    }()
+    
+    let bioLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1)
+    }()
+    
+    var popupImageView: UIImageView = {
+        let imageView = UIManager.makeImage()
+        
+        return imageView
+    }()
+    
+    lazy var profileImage: UIImageView = {
+        return UIManager.makeProfileImage(valueOfCornerRadius: 50)
+    }()
+    
+    lazy var dismissButton: UIButton = {
+        return UIManager.makeButton()
+    }()
+    
+    lazy var outsideButton: UIButton = {
+        let button = UIManager.makeButton()
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        return button
+    }()
     // The effect for making a blurry background
     lazy var backgroundBlur: UIVisualEffectView = {
         var visualEffect = UIVisualEffectView(effect: UIBlurEffect(style: .light))
@@ -54,6 +101,75 @@ class ScanProfileController: ProfilePopupBase {
         return button
     }()
     
+    // MARK: - Setting up views
+    
+    func setPopup() {
+        self.popupImageView = UIManager.makeImage(imageName: "scan-profile-popup")
+        let tap = UITapGestureRecognizer()
+        self.popupImageView.addGestureRecognizer(tap)
+        self.popupImageView.isUserInteractionEnabled = true
+        
+        view.addSubview(self.popupImageView)
+        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        self.popupCenterYAnchor?.isActive = true
+        self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
+        self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
+    }
+    
+    // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
+    func setupBackground() {
+        
+        view.addSubview(self.outsideButton)
+        
+        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
+    }
+    
+    func addToBackground() {
+        view.addSubview(backgroundBlur)
+        view.sendSubview(toBack: backgroundBlur)
+        view.addSubview(self.checkBox)
+        
+        self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
+        self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        self.checkBox.hideBox = true
+    }
+    
+    func setupGraphics() {
+        setName()
+        setDismissButton()
+    }
+    
+    func addToGraphics() {
+        view.addSubview(self.viewProfileButton)
+        view.addSubview(self.profileImage)
+        view.addSubview(self.nameLabel)
+        
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
+        
+        // Set to 80 --> Then you also have to change the corner radius to 40 ..
+        profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        
+        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
+        
+        viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
+        viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
+        viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+    }
+    
     // Function handles what happens when user clicks on the "view profile" button.
     // Basically, it unstacks all of the view controllers upto the rootview controller.
     // The root view controller is the tabview controller.
@@ -75,6 +191,9 @@ class ScanProfileController: ProfilePopupBase {
         NotificationCenter.default.post(name: .viewProfile, object: nil)
     }
     
+    
+    // MARK: - Animating popup display
+    
     func setupDismiss() {
         self.dismiss(animated: false, completion: {
             // Brings the popup image to the bottom again.
@@ -84,43 +203,31 @@ class ScanProfileController: ProfilePopupBase {
         })
     }
     
+    // Slides up the popup from the bottom of the screen to the middle
+    var popupCenterYAnchor: NSLayoutConstraint?
+    func animatePopup() {
+        self.popupCenterYAnchor?.constant = 0
+        
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            // After moving the background up to the middle, then load the name and buttons.
+            self.animateAfterPopup()
+            
+        })
+        
+    }
+    
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
     // QRScannerController view controller. And also pops this view controller from the stack.
-    override func dismissClicked() {
+    func dismissClicked() {
         self.QRScannerControllerDelegate?.startCameraScanning()
         setupDismiss()
     }
     
-    override func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "scan-profile-popup")
-        let tap = UITapGestureRecognizer()
-        self.popupImageView.addGestureRecognizer(tap)
-        self.popupImageView.isUserInteractionEnabled = true
-        
-        view.addSubview(self.popupImageView)
-        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // Initially set all the way at the bottom so that it animates up.
-        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        self.popupCenterYAnchor?.isActive = true
-        self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
-        self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
-    }
+    // MARK: - Assigning UI Properties (Label, Button, Lines)
     
-    override func addToBackground() {
-        
-        view.addSubview(backgroundBlur)
-        view.sendSubview(toBack: backgroundBlur)
-        view.addSubview(self.checkBox)
-        
-        self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
-        self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        self.checkBox.hideBox = true
-        
-    }
-    
-    override func setDismissButton() {
+    func setDismissButton() {
         dismissButton = UIManager.makeButton(imageName: "dismiss-button-color")
         view.addSubview(self.dismissButton)
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
@@ -130,47 +237,20 @@ class ScanProfileController: ProfilePopupBase {
         dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
     }
     
-    override func addToGraphics() {
-        view.addSubview(self.viewProfileButton)
-        view.addSubview(self.profileImage)
-        view.addSubview(self.nameLabel)
-        view.addSubview(self.bioLabel)
-        //view.addSubview(self.nameAndBioLabel)
-        
-        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
-        
-        // Set to 80 --> Then you also have to change the corner radius to 40 ..
-        profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        
-        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
-        
-        bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        bioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -10).isActive = true
-        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
-        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
-        
-        
-        
-//        
-//        nameAndBioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-//        nameAndBioLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
-//        nameAndBioLabel.heightAnchor.constraint(equalToConstant: nameAndBioLabel.intrinsicContentSize.height).isActive = true
-//        nameAndBioLabel.widthAnchor.constraint(equalToConstant:nameAndBioLabel.intrinsicContentSize.width).isActive = true
-//        
-        viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
-        viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
-        viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-
+    
+    func setName() {
+        let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        nameLabel.attributedText = attributedText
     }
     
-    override func animateAfterPopup() {
+    func setImage() {
+        if userProfile?.profileImage != nil {
+            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+            self.profileImage.clipsToBounds = true
+        }
+    }
+    
+    func animateAfterPopup() {
         self.checkBox.setCheckState(.checked, animated: true)
     }
 }
