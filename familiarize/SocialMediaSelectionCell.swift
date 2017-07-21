@@ -11,8 +11,7 @@ import UIKit
 class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var newCardControllerDelegate: NewCardControllerDelegate?
-    
-    
+
     private let cellId = "cellId"
     
     

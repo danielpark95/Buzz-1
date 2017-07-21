@@ -62,8 +62,9 @@ class ViewProfileController: ProfilePopupBase {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        visualEffect.frame = self.view.bounds
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        visualEffect.frame = (delegate.window?.bounds)!
         return visualEffect
     }()
     
@@ -366,9 +367,15 @@ class ViewProfileController: ProfilePopupBase {
         bioLabel.attributedText = attributedText
     }
     override func addToBackground() {
-//        view.sendSubview(toBack: tintOverlay)
-        //self.tintOverlay.sendSubview(toBack: popupImageView)
-        //view.sendSubview(toBack: self.tintOverlay)
-        view.bringSubview(toFront: popupImageView)
+        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        delegate.window?.addSubview(tintOverlay)
+        delegate.window?.insertSubview(tintOverlay, at: 0)
+        
+
+//        self.tabBarController?.view.addSubview(tintOverlay)
+//        self.tabBarController?.view.bringSubview(toFront: tintOverlay)
+//        self.tabBarController.addSubview(tintOverlay)
+//        self.tabBarController.sendSubview(toBack: tintOverlay)
     }
 }

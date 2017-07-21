@@ -20,12 +20,10 @@ class ProfileImageSelectionController: UICollectionViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        UIApplication.shared.statusBarStyle = .default
     }
     
     let selectProfileInstruction: UILabel = {

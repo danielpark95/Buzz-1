@@ -116,16 +116,17 @@ import UIKit
 class SettingsController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     private let cellId = "cellId"
+    private let footerCellId = "footerCellId"
+    
     
     var userController: UserController?
     
-    let topImage: UIImageView = {
-        return UIManager.makeImage(imageName: "privacy")
-    }()
     
     let settings: [Setting] = {
-        return [Setting(name: .Blank, imageName: ""),Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
     }()
+    
+    let websiteQRCode: Setting = Setting(name: .Blank, imageName: "familiarize_website_qr")
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -181,19 +182,24 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if (indexPath.item == 0) {
-            return CGSize(width: 0, height: 0)
-        }
         return CGSize(width: collectionView.frame.width, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let setting = self.settings[indexPath.item]
         handleDismiss(setting: setting)
-        
-        
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerCellId, for: indexPath) as! SettingsCell
+        //cell.setting = websiteQRCode
+        return cell
+    }
+    
     
     override init() {
         super.init()
@@ -201,6 +207,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(SettingsCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: footerCellId)
     }
     
     

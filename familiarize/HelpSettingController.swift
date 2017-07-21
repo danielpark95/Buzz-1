@@ -18,8 +18,6 @@ class HelpSettingController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         collectionView?.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = UIColor.white
         

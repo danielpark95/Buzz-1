@@ -45,15 +45,17 @@ class SocialMediaController: UIViewController {
     
     
     lazy var addButton: UIButton = {
-        let button = UIManager.makeButton()
-        //button.backgroundColor = UIColor(white: 0.4, alpha: 0.3)
-        //button.layer.cornerRadius = 13
-        let attributedText = NSAttributedString(string: "save", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
-        button.setAttributedTitle(attributedText, for: .normal)
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
+//<<<<<<< HEAD
+//        let button = UIManager.makeButton()
+//        //button.backgroundColor = UIColor(white: 0.4, alpha: 0.3)
+//        //button.layer.cornerRadius = 13
+//        let attributedText = NSAttributedString(string: "save", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
+//        button.setAttributedTitle(attributedText, for: .normal)
+//        button.contentHorizontalAlignment = .center
+//        button.contentVerticalAlignment = .center
+//=======
+        let button = UIManager.makeButton(imageName: "dan_close")
         button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
-        button.reversesTitleShadowWhenHighlighted = true
         return button
     }()
     
