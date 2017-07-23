@@ -5,7 +5,6 @@
 //  Created by Julian Gruber on 06/03/2017.
 //  Copyright © 2017 Quikkly Ltd. All rights reserved.
 //
-
 import UIKit
 import Quikkly
 
@@ -37,32 +36,29 @@ class GenerateViewController: UIViewController {
         
         // Generate scannable
         let skin = ScannableSkin()
-        skin.backgroundColor = "#d93289"
-        skin.maskColor = "#d93289"
-        skin.dotColor = "#ffffff"
-        skin.borderColor = "#ffffff"
-        skin.overlayColor = "#ffffff"
-        skin.imageUri = "https://s3-eu-west-1.amazonaws.com/qkly-service-albums/temp_icons/squiddy.png"
-        skin.imageFit = .templateDefault
-        skin.logoUri = ""
-        //let scannable = Scannable(withValue: 92974833, template: "template0004style8", skin: skin)
+        skin.backgroundColor = "#3299FF"
+        skin.dotColor = "#FFFFFF"
+        skin.borderColor = "#444444"
+        skin.imageUri = "https://s3-eu-west-1.amazonaws.com/docs.quikkly.io/img/1481647718.png"
+        //let scannable = Scannable(withValue: 123456789, template:nil, skin: skin)
         
-        
-        
-        
-        let dict:[String:Any] = ["actionId":92974833,
-                                 "actionData":"This string could be displayed when the scannable gets detected"]
-        let scannable = Scannable(withMappedData: dict, template: "template0004style8", skin: skin) { (success, scannable) in
+        let dict:[String:Any] = ["id" : 1567567756567,
+                                 "url": "this string could be displayed when the scannable gets detected"]
+        Scannable(withMappedData: dict, template: nil, skin: skin, completion: { (success, scannable) in
             if success {
-                print ("success")
+                self.scannableView.scannable = scannable
+                print(scannable.value)
             } else {
-                print ("failure")
-                
+                print ("generate failure")
             }
-        }
+            
+        })
         
         
-        self.scannableView.scannable = scannable
+        
+        
+        
+        //self.scannableView.scannable = scannable
     }
     
     override func viewDidLayoutSubviews() {

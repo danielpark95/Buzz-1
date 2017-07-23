@@ -12,13 +12,12 @@ class SettingsCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     override var isHighlighted: Bool {
         didSet {
-            nameLabel.textColor = isHighlighted ? UIColor.darkGray : UIColor.black
-//            iconImageView.tintColor = isHighlighted ? UIColor.darkGray : UIColor.clear
+            nameLabel.textColor = isHighlighted ? UIColor.white : UIColor.white
+            iconImageView.tintColor = isHighlighted ? UIColor.white : UIColor.white
         }
     }
     
@@ -44,21 +43,19 @@ class SettingsCell: UICollectionViewCell {
     
     func setupViews() {
         
-        addSubview(iconImageView)
-        if (nameLabel.text == "") {
-            iconImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-            iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-            iconImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-            iconImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        } else {
+
+        if (nameLabel.text != "") {
+
+            addSubview(iconImageView)
+            addSubview(nameLabel)
             
-            iconImageView.tintColor = UIColor.black
+            iconImageView.tintColor = UIColor.white
             iconImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
             iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
             iconImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
             iconImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
             
-            addSubview(nameLabel)
+            nameLabel.textColor = UIColor.white
             nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 45).isActive = true
             nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
             nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true

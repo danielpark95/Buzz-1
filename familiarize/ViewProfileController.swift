@@ -9,14 +9,199 @@
 import UIKit
 import CoreData
 
-class ViewProfileController: ProfilePopupBase {
+class ViewProfileController: UIViewController {
     var socialMediaButtons: [String : UIButton]?
+    var userProfile: UserProfile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setPopup()
+        self.setupBackground()
+        self.addToBackground()
+        self.setupGraphics()
+        self.addToGraphics()
         self.setImage()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.animatePopup()
+    }
+    
+    // This makes the profile image into a circle.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+    }
+    
+    // MARK: - UI Properties
+    
+    // Text gets it textual label from QRScannerController
+    // This is to just define it
+    let nameAndBioLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 2)
+    }()
+    
+    let nameLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1)
+    }()
+    
+    let bioLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1)
+    }()
+    
+    var popupImageView: UIImageView = {
+        let imageView = UIManager.makeImage()
+        
+        return imageView
+    }()
+    
+    lazy var profileImage: UIImageView = {
+        return UIManager.makeProfileImage(valueOfCornerRadius: 50)
+    }()
+    
+    lazy var dismissButton: UIButton = {
+        return UIManager.makeButton()
+    }()
+    
+    lazy var outsideButton: UIButton = {
+        let button = UIManager.makeButton()
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Setting up views
+    
+    func setPopup() {
+        view.addSubview(self.tintOverlay)
+        self.popupImageView = UIManager.makeImage(imageName: "dan_popup_small")
+        
+        let tap = UITapGestureRecognizer()
+        self.popupImageView.addGestureRecognizer(tap)
+        self.popupImageView.isUserInteractionEnabled = true
+        
+        view.addSubview(self.popupImageView)
+        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        self.popupCenterYAnchor?.isActive = true
+    }
+    
+    // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
+    func setupBackground() {
+        
+        view.addSubview(self.outsideButton)
+        
+        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
+    }
+    
+    func addToBackground() {
+        view.addSubview(tintOverlay)
+        view.sendSubview(toBack: tintOverlay)
+    }
+    
+    func setupGraphics() {
+        setName()
+        setBio()
+        setDismissButton()
+    }
+    
+    func addToGraphics() {
+        
+        view.addSubview(self.profileImage)
+        view.addSubview(self.nameLabel)
+        view.addSubview(self.bioLabel)
+        
+        //drawMiddleLine()
+        createSocialMediaButtons()
+        presentSocialMediaButtons()
+        
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 10).isActive = true
+        
+        // Set to 80 --> Then you also have to change the corner radius to 40 ..
+        profileImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        nameLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 120).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.width).isActive = true
+        
+        bioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 155).isActive = true
+        bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
+        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
+    }
+    
+    func setImage() {
+        if userProfile?.profileImage != nil {
+            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+            self.profileImage.clipsToBounds = true
+        }
+    }
+    
+    // MARK: - Animating popup display
+    
+    func dismissClicked() {
+        self.popupCenterYAnchor?.constant = view.frame.size.height
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        }, completion: { _ in
+            // After moving the background up to the middle, then load the name and buttons.
+            self.dismiss(animated: false)
+        })
+    }
+    
+    // Slides up the popup from the bottom of the screen to the middle
+    var popupCenterYAnchor: NSLayoutConstraint?
+    func animatePopup() {
+        self.popupCenterYAnchor?.constant = 0
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.10)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    // MARK: - Assigning UI Properties (Label, Button, Lines)
+    
+    func setDismissButton() {
+        dismissButton = UIManager.makeButton(imageName: "dan_close_text")
+        view.addSubview(self.dismissButton)
+        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 160).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+    }
+    
+    func drawMiddleLine() {
+        let middleLine = UIManager.makeImage(imageName: "dan_popup_middle_bar")
+        view.addSubview(middleLine)
+        middleLine.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        middleLine.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -10).isActive = true
+    }
+    
+    func setName(){
+        var attributedText = NSMutableAttributedString()
+        if let name = userProfile?.name {
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
+        }
+        nameLabel.attributedText = attributedText
+    }
+    
+    func setBio() {
+        var attributedText = NSMutableAttributedString()
+        if let bio = userProfile?.bio {
+            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
+        }
+        bioLabel.attributedText = attributedText
+    }
+    
+    // MARK: - Button Properties
+    
     func buttonLink(_ userURL: String) {
         
         // Lmao, in order to get profile id, just scrape the facebook page again.
@@ -178,7 +363,7 @@ class ViewProfileController: ProfilePopupBase {
                 if count == 2{
                     break
                 }
-
+                
             }
             
         } else if size == 3 {
@@ -290,92 +475,5 @@ class ViewProfileController: ProfilePopupBase {
         } else {
             //write code for when there are more than 6 linked accounts
         }
-    }
-    
-    override func dismissClicked() {
-        self.dismiss(animated: false)
-    }
-    
-    override func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dan_close_text")
-        view.addSubview(self.dismissButton)
-        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 160).isActive = true
-        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-    }
-    
-    func drawMiddleLine() {
-        let middleLine = UIManager.makeImage(imageName: "dan_popup_middle_bar")
-        view.addSubview(middleLine)
-        middleLine.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        middleLine.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 0).isActive = true
-    }
-    
-    override func addToGraphics() {
-        view.addSubview(self.profileImage)
-        view.addSubview(self.nameLabel)
-        view.addSubview(self.bioLabel)
-        
-        //drawMiddleLine()
-        createSocialMediaButtons()
-        presentSocialMediaButtons()
-        
-        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 10).isActive = true
-        
-        // Set to 80 --> Then you also have to change the corner radius to 40 ..
-        profileImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        nameLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 120).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.width).isActive = true
-        
-        bioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 155).isActive = true
-        bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
-        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
-    }
-    
-    override func setPopup() {
-        view.addSubview(self.tintOverlay)
-        self.popupImageView = UIManager.makeImage(imageName: "dan_popup_small")
-        let tap = UITapGestureRecognizer()
-        self.popupImageView.addGestureRecognizer(tap)
-        self.popupImageView.isUserInteractionEnabled = true
-        view.addSubview(self.popupImageView)
-        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // Initially set all the way at the bottom so that it animates up.
-        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        self.popupCenterYAnchor?.isActive = true        
-    }
-    
-    override func setName(){
-        var attributedText = NSMutableAttributedString()
-        if let name = userProfile?.name {
-            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
-        }
-        nameLabel.attributedText = attributedText
-    }
-    
-    override func setBio(){
-        var attributedText = NSMutableAttributedString()
-        if let bio = userProfile?.bio {
-            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
-        }
-        bioLabel.attributedText = attributedText
-    }
-    override func addToBackground() {
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.window?.addSubview(tintOverlay)
-        delegate.window?.insertSubview(tintOverlay, at: 0)
-        
-
-//        self.tabBarController?.view.addSubview(tintOverlay)
-//        self.tabBarController?.view.bringSubview(toFront: tintOverlay)
-//        self.tabBarController.addSubview(tintOverlay)
-//        self.tabBarController.sendSubview(toBack: tintOverlay)
     }
 }

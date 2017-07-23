@@ -27,83 +27,6 @@ class Setting: NSObject {
     }
 }
 
-
-//
-//
-//class SettingsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-//    private let cellId = "cellId"
-//
-//    let settings: [Setting] = {
-//        return [Setting(name: "", imageName: ""),Setting(name: "Terms & privacy policy", imageName: "privacy"),Setting(name: "Contact", imageName: "contact"),Setting(name: "Help", imageName: "help"), Setting(name: "Feedback", imageName: "feedback")]
-//    }()
-//
-//    let whatImage: UIImageView = {
-//       return UIManager.makeImage(imageName: "privacy")
-//    }()
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        navigationItem.title = "Settings"
-//    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        view.addSubview(whatImage)
-//
-//        whatImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        whatImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        whatImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
-//        whatImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
-//
-//
-//        collectionView?.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
-//        collectionView?.backgroundColor = UIColor.white
-//
-//        setupNavBarButton()
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return settings.count
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! SettingsCell
-//
-//        let setting = settings[indexPath.item]
-//        cell.setting = setting
-//
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if (indexPath.item == 0) {
-//            return CGSize(width: view.frame.width, height: 100)
-//        }
-//        return CGSize(width: view.frame.width, height: 50)
-//    }
-//
-//
-//    func setupNavBarButton() {
-//        let backButton = UIBarButtonItem(image: UIImage(named:"back-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
-//        navigationItem.leftBarButtonItem = backButton
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    func handleBack() {
-//        let transition = CATransition()
-//        transition.duration = 0.2
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromLeft
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//
-//        self.dismiss(animated: false, completion: nil)
-//    }
-//
-//
-//}
-
 enum SettingName: String {
     case Blank = ""
     case TermsPrivacy = "Terms & Privacy Policy"
@@ -123,7 +46,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     
     
     let settings: [Setting] = {
-        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
     }()
     
     let websiteQRCode: Setting = Setting(name: .Blank, imageName: "familiarize_website_qr")
@@ -131,8 +54,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.white
+        cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
         return cv
+    }()
+    
+    let websiteQRCodeImage: UIImageView = {
+        let imageView = UIManager.makeImage(imageName: "familiarize_website_qr")
+        return imageView
     }()
     
     let tintOverlay = UIView()
@@ -140,6 +68,12 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     func showSettings() {
         
         if let window = UIApplication.shared.keyWindow {
+            
+            collectionView.addSubview(websiteQRCodeImage)
+            collectionView.bringSubview(toFront: websiteQRCodeImage)
+            
+
+            
             tintOverlay.backgroundColor = UIColor(white: 0, alpha: 0.5)
             tintOverlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
             window.addSubview(tintOverlay)
@@ -149,12 +83,21 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: width, height: window.frame.height)
             tintOverlay.frame = window.frame
             tintOverlay.alpha = 0
+
+            collectionView.addSubview(websiteQRCodeImage)
+            websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
+            websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor, constant: -100).isActive = true
+            
+            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: 230).isActive = true
+            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: 230).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
                 self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
                 
             }, completion: nil)
+            
+
         }
     }
     
@@ -190,16 +133,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         handleDismiss(setting: setting)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 50)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerCellId, for: indexPath) as! SettingsCell
-        //cell.setting = websiteQRCode
-        return cell
-    }
-    
     
     override init() {
         super.init()
@@ -207,8 +140,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(SettingsCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: footerCellId)
+
     }
-    
-    
+
 }
