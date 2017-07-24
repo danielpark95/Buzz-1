@@ -67,8 +67,9 @@ class ExampleIrregularityBasicContentView: ExampleBouncesContentView {
         
         textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
         highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
+        highlightIconColor = UIColor.init(red: 247/255.0, green: 169/255.0, blue:169/255.0, alpha: 1.0)
+        //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         backdropColor = .clear
         
         highlightBackdropColor = .clear

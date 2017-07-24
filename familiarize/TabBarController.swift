@@ -24,14 +24,14 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //User Controller
         let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavigationController = UINavigationController(rootViewController: userController)
-        userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_black"))
+        userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_salmon"))
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0 )
         
         
         //Scanner Controller
         let scannerController = QRScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_blue"), selectedImage: UIImage(named: "dan_tabbarcircle_blue"))
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_teal"), selectedImage: UIImage(named: "dan_tabbarcircle_teal"))
         
         
         //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
@@ -39,7 +39,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //Contacts Controller
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
         let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Friends", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_black"))
+        contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Friends", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_salmon"))
         contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
         
         viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
