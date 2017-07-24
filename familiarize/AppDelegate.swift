@@ -12,6 +12,8 @@
 import UIKit
 import CoreData
 import ESTabBarController_swift
+import Quikkly
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
 
@@ -25,20 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
-        
+        UITabBar.appearance().layer.borderWidth = 1.0
+        UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
+        //UITabBar.appearance().clipsToBounds = true
         let tabBarController = window!.rootViewController as! TabBarController
         tabBarController.selectedIndex = 0
-        
-        UINavigationBar.appearance().isTranslucent = false
+
+       UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barStyle = UIBarStyle.black
-        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1)
     
         //Change navigation font
         let navigationTitleFont = UIFont(name: "Avenir", size: 17)
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-//        UIApplication.shared.statusBarStyle = .default
-        
-        
+        UIApplication.shared.statusBarStyle = .default
         return true
     }
     
@@ -73,7 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     }
     
     // MARK: - Core Data stack
-
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation

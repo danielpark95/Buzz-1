@@ -30,5 +30,8 @@ target 'familiarize' do
   
   #Carousel layout for selecting profile image
   pod 'UPCarouselFlowLayout'
+  
+  #Quikkly QR Code
+  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
 end

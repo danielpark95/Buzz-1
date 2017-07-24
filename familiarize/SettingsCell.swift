@@ -23,8 +23,8 @@ class SettingsCell: UICollectionViewCell {
     
     var setting: Setting? {
         didSet {
-            nameLabel.text = setting?.name.rawValue
-            iconImageView.image = UIImage(named: (setting?.imageName)!)?.withRenderingMode(.alwaysTemplate)
+            nameLabel.attributedText = NSMutableAttributedString(string: (setting?.name.rawValue)!, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
+            iconImageView.image = UIImage(named: (setting?.imageName)!)?.withRenderingMode(.alwaysOriginal)
             setupViews()
         }
     }

@@ -42,7 +42,7 @@ class UIManager {
     
     static func makeProfileImage(valueOfCornerRadius cr: CGFloat) -> UIImageView {
         let image = UIManager.makeImage(imageName: "blank_man")
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         image.layer.cornerRadius = cr
         image.layer.masksToBounds = true
         return image

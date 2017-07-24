@@ -135,7 +135,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     
-    
     override init() {
         super.init()
         
