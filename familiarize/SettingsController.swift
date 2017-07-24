@@ -60,6 +60,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     
     let websiteQRCodeImage: UIImageView = {
         let imageView = UIManager.makeImage(imageName: "familiarize_website_qr")
+       
         return imageView
     }()
     
@@ -73,7 +74,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             collectionView.bringSubview(toFront: websiteQRCodeImage)
             
 
-            
             tintOverlay.backgroundColor = UIColor(white: 0, alpha: 0.5)
             tintOverlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
             window.addSubview(tintOverlay)
@@ -84,12 +84,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             tintOverlay.frame = window.frame
             tintOverlay.alpha = 0
 
+            
             collectionView.addSubview(websiteQRCodeImage)
             websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
-            websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor, constant: -100).isActive = true
+            websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
+            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: width).isActive = true
+            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
             
-            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: 230).isActive = true
-            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: 230).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
