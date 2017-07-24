@@ -51,6 +51,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             ]
         
         UserProfile.clearData(forProfile: .myUser)
+        //UserProfile.clearData(forProfile: .otherUser)
         UserProfile.saveProfile(user2, forProfile: .myUser)
         UserProfile.saveProfile(user1, forProfile: .myUser)
         
@@ -114,7 +115,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         if setting.name == .TermsPrivacy {
             controller = TermsPrivacySettingController(collectionViewLayout: layout)
-            navigationItem.title = "PRIVACY"
         } else if setting.name == .Contact {
             controller = ContactSettingController(collectionViewLayout: layout)
         } else if setting.name == .Help {
