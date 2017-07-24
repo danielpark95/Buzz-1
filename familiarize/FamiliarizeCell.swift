@@ -9,7 +9,6 @@
 import QRCode
 import SwiftyJSON
 import UIKit
-
 class FamiliarizeCell: UICollectionViewCell {
     
     var fullBrightness: Bool = false
@@ -59,14 +58,14 @@ class FamiliarizeCell: UICollectionViewCell {
         }
         return JSON(jsonDict).rawString()!
     }
-    
+
     func createQR(_ profile: UserProfile) {
         var qrCode = QRCode(self.createJSON(profile))
         qrCode?.color = CIColor.white()
         qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         qrImageView = UIManager.makeImage()
         qrImageView?.image = qrCode?.image
-        //qrImageView?.image = UIImage(named: "familiarize_website_qr-1")
+        //qrImageView?.image = UIImage(named: "familiarize_website_qr")
     }
     
     let profileImage: UIImageView = {
@@ -107,10 +106,10 @@ class FamiliarizeCell: UICollectionViewCell {
             profileImage.heightAnchor.constraint(equalToConstant: 350.0).isActive = true
             profileImage.widthAnchor.constraint(equalToConstant: 350.0).isActive = true
             //profileImage.bounds.size.width = (self.qrImageView?.bounds.width)!
-            print("profileImage frame size = ", profileImage.frame.size)
-            print("profileImage frame width = ", profileImage.frame.size.width)
-            print("profileimage bounds = ", profileImage.bounds.size.width)
-            print("next = " , self.qrImageView?.bounds.width)
+            //print("profileImage frame size = ", profileImage.frame.size)
+            //print("profileImage frame width = ", profileImage.frame.size.width)
+            //print("profileimage bounds = ", profileImage.bounds.size.width)
+            //print("next = " , self.qrImageView?.bounds.width)
             profileImage.clipsToBounds = true
             
             //Namelabel position upated using NSLayoutConstraint -dan
@@ -135,10 +134,8 @@ class FamiliarizeCell: UICollectionViewCell {
             addConstraints([bio_topConstraint, bio_bottomConstraint, bio_leadingConstraint, bio_trailingConstraint])
             let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
             bioLabel.attributedText = bio
-            
-            
             presentSocialMediaButtons()
-            onQRImage = false
+            
         } else {
             //UIScreen.main.brightness = 1.0
             //self.fullBrightness = true
@@ -147,12 +144,12 @@ class FamiliarizeCell: UICollectionViewCell {
             qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
             qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
             qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            onQRImage = true
         }
     }
     
     
     func setupViews() {
+        print("setupViews inside FamiliarizeCell")
         flip()
     }
     
@@ -185,12 +182,12 @@ class FamiliarizeCell: UICollectionViewCell {
         var my_imagesToPresent = [UIImageView]()
         for key in (myUserProfile?.entity.attributesByName.keys)! {
             if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                print(key)
+                //print(key)
                 my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
             }
         }
         let size = my_imagesToPresent.count
-        print(size)
+        //print(size)
         var my_theta1 = 0.0
         var my_theta2 = 0.0
         let rad = 57.2958

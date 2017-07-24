@@ -85,26 +85,26 @@ class ScanProfileController: UIViewController {
     let checkBox: M13Checkbox = {
         let cb = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
         cb.stateChangeAnimation = .spiral
-        cb.animationDuration = 0.75
+        cb.animationDuration = 0.5
         cb.boxType = .circle
+        cb.markType = .checkmark
         cb.checkmarkLineWidth = 2.0
-        cb.secondaryTintColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0)
-        cb.tintColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha: 1.0)
-        cb.secondaryCheckmarkTintColor = UIColor(red: 37/255, green: 60/255, blue: 97/255, alpha: 1.0)
+        cb.secondaryTintColor = UIColor(red: 46/255, green: 202/255, blue: 209/255, alpha: 1.0)
+        cb.tintColor = UIColor(red: 46/255, green: 202/255, blue: 209/255, alpha: 1.0)
+        cb.secondaryCheckmarkTintColor = UIColor(red: 46/255, green: 202/255, blue: 209/255, alpha: 1.0)
         cb.translatesAutoresizingMaskIntoConstraints = false
         return cb
     }()
     
     lazy var viewProfileButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "view-profile-button")
+        let button = UIManager.makeButton(imageName: "dan_viewprofile_blue")
         button.addTarget(self, action: #selector(viewProfileClicked), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Setting up views
-    
     func setPopup() {
-        self.popupImageView = UIManager.makeImage(imageName: "scan-profile-popup")
+        self.popupImageView = UIManager.makeImage(imageName: "dan_profilepopup_square")
         let tap = UITapGestureRecognizer()
         self.popupImageView.addGestureRecognizer(tap)
         self.popupImageView.isUserInteractionEnabled = true
@@ -114,8 +114,8 @@ class ScanProfileController: UIViewController {
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
         self.popupCenterYAnchor?.isActive = true
-        self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
-        self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
+        //self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
+        //self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
     }
     
     // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
@@ -154,9 +154,8 @@ class ScanProfileController: UIViewController {
         profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
         
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
-        profileImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        
+        profileImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
@@ -164,9 +163,9 @@ class ScanProfileController: UIViewController {
         nameLabel.widthAnchor.constraint(equalToConstant:nameLabel.intrinsicContentSize.width).isActive = true
         
         viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
-        viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
-        viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 45).isActive = true
+        //viewProfileButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
+        //viewProfileButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
 
@@ -221,13 +220,13 @@ class ScanProfileController: UIViewController {
     // MARK: - Assigning UI Properties (Label, Button, Lines)
     
     func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dismiss-button-color")
+        dismissButton = UIManager.makeButton(imageName: "dan_close_text")
         view.addSubview(self.dismissButton)
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 73).isActive = true
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 81).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
+        //dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        //dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
     }
     
     

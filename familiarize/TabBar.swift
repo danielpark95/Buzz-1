@@ -13,12 +13,13 @@ import ESTabBarController_swift
 class ExampleBasicContentView: ESTabBarItemContentView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        backgroundColor = UIColor.init(white: 200.0 / 255.0, alpha: 1.0)
-        backdropColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
+        
+        //textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
+        //highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
+        //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+       // backgroundColor = UIColor.init(white: 200.0 / 255.0, alpha: 1.0)
+       // backdropColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -62,11 +63,15 @@ class ExampleIrregularityBasicContentView: ExampleBouncesContentView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
         textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
         highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
+        highlightIconColor = UIColor.init(red: 247/255.0, green: 169/255.0, blue:169/255.0, alpha: 1.0)
+        //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         backdropColor = .clear
+        
         highlightBackdropColor = .clear
     }
     
@@ -78,24 +83,26 @@ class ExampleIrregularityBasicContentView: ExampleBouncesContentView {
 class ExampleIrregularityContentView: ESTabBarItemContentView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //self.imageView.image = UIImage(named: "dan_camera_round")
-        //self.imageView.backgroundColor = UIColor.white
-//        self.imageView.layer.borderWidth = 2
-//        self.imageView.layer.borderColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0).cgColor
-//        self.imageView.layer.cornerRadius = 60
-        self.insets = UIEdgeInsetsMake(-16, 0, 0, 0)
+        
+        // For making the circle not fucking grey
+        renderingMode = .alwaysOriginal
+        self.layer.borderWidth = 0
+        self.imageView.backgroundColor = UIColor.white
+        //self.bringSubview(toFront: iconC)
+        //self.imageView.layer.borderColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0).cgColor
+        
+        self.imageView.layer.cornerRadius = 33
+        self.insets = UIEdgeInsetsMake(-32, 0, 0, 0)
+        let transform = CGAffineTransform.identity
+        self.imageView.transform = transform
         self.superview?.bringSubview(toFront: self)
-        //let transform = CGAffineTransform.identity
-        //self.imageView.transform = transform
-        //self.superview?.bringSubview(toFront: self)
+        self.imageView.layer.masksToBounds = true
+        //iconColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
+        //iconColor = UIColor.purple
+        //iconColor = UIColor.clear
         
-        //textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        //highlightTextColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        //iconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        //highlightIconColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        //backdropColor = .clear
-        //highlightBackdropColor = .clear
-        
+        //highlightIconColor = UIColor.purple
+        //highlightIconColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -110,8 +117,8 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
     public override func selectAnimation(animated: Bool, completion: (() -> ())?) {
         let view = UIView.init(frame: CGRect.init(origin: CGPoint.zero, size: CGSize(width: 2.0, height: 2.0)))
         view.layer.cornerRadius = 1.0
-        //view.layer.opacity = 0.5
-        view.backgroundColor = UIColor.init(red: 243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+        view.layer.opacity = 0.5
+        view.backgroundColor = UIColor.init(red: 10/255.0, green: 66/255.0, blue: 91/255.0, alpha: 1.0)
         self.addSubview(view)
         playMaskAnimation(animateView: view, target: self.imageView, completion: {
             [weak view] in
@@ -151,7 +158,7 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
         
         let scale = POPBasicAnimation.init(propertyNamed: kPOPLayerScaleXY)
         scale?.fromValue = NSValue.init(cgSize: CGSize.init(width: 1.0, height: 1.0))
-        scale?.toValue = NSValue.init(cgSize: CGSize.init(width: 36.0, height: 36.0))
+        scale?.toValue = NSValue.init(cgSize: CGSize.init(width: 33.0, height: 33.0))
         scale?.beginTime = CACurrentMediaTime()
         scale?.duration = 0.15
         scale?.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseOut)

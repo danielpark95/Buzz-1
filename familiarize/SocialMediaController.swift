@@ -45,6 +45,15 @@ class SocialMediaController: UIViewController {
     
     
     lazy var addButton: UIButton = {
+//<<<<<<< HEAD
+//        let button = UIManager.makeButton()
+//        //button.backgroundColor = UIColor(white: 0.4, alpha: 0.3)
+//        //button.layer.cornerRadius = 13
+//        let attributedText = NSAttributedString(string: "save", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 47/255, green: 47/255, blue: 47/255, alpha: 1.0)])
+//        button.setAttributedTitle(attributedText, for: .normal)
+//        button.contentHorizontalAlignment = .center
+//        button.contentVerticalAlignment = .center
+//=======
         let button = UIManager.makeButton(imageName: "dan_close")
         button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
         return button
@@ -58,7 +67,7 @@ class SocialMediaController: UIViewController {
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-        imageView.image = UIImage(named: "scan-profile-popup")
+        imageView.image = UIImage(named: "dan_popup_smallest")
         let tap = UITapGestureRecognizer()
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -71,7 +80,7 @@ class SocialMediaController: UIViewController {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
@@ -99,7 +108,6 @@ class SocialMediaController: UIViewController {
     }
 
     func setupViews() {
-        
         view.addSubview(self.tintOverlay)
         view.addSubview(self.outsideButton)
         view.addSubview(self.popupImageView)
@@ -116,22 +124,22 @@ class SocialMediaController: UIViewController {
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
         self.popupCenterYAnchor?.isActive = true
-        self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
-        self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
+        //self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
+        //self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
         
         self.addButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        self.addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 40).isActive = true
-        self.addButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
-        self.addButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        self.addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 75).isActive = true
+        //self.addButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
+        //self.addButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
 
         
         self.socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         self.socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
-        self.socialMediaImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.socialMediaImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        self.socialMediaImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        self.socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
         inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor).isActive = true
+        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 10).isActive = true
         inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
         inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
         
