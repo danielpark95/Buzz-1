@@ -154,14 +154,14 @@ class FamiliarizeCell: UICollectionViewCell {
     }
     
     lazy var socialMediaImages: [String: UIImageView] = [
-        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
-        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_black"),
-        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_black"),
-        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_black"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
-        "email": UIManager.makeImage(imageName: "dan_email_black"),
-        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
+        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_color"),
+        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_color"),
+        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_color"),
+        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_color"),
+        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_color"),
+        "email": UIManager.makeImage(imageName: "dan_email_color"),
+        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_color"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_color"),
         ]
     
     //Helper function to space out social media icons - dan

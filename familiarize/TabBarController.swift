@@ -18,6 +18,17 @@ extension ESTabBarController {
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "handshakelogo_white")!,iconInitialSize: CGSize(width: 70, height: 70), backgroundColor: UIColor(red: 165/255.0, green: 213/255.0, blue: 201/255.0, alpha:1.0))
+        //revealingSplashView.useCustomIconColor = true
+        self.view.addSubview(revealingSplashView)
+        revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
+        //Starts animation
+        revealingSplashView.startAnimation(){
+            print("Completed")
+        }
         self.delegate = self
         
 
@@ -35,7 +46,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //Scanner Controller
         let scannerController = QRScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_grey_2"), selectedImage: UIImage(named: "dan_tabbarcircle_grey_2"))
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_lightgreen"), selectedImage: UIImage(named: "dan_tabbarcircle_lightgreen"))
         //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
         
         //Contacts Controller

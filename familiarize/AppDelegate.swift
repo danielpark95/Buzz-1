@@ -27,23 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
-        
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "handshakelogo")!,iconInitialSize: CGSize(width: 70, height: 70), backgroundColor: UIColor(red:0.11, green:0.56, blue:0.95, alpha:1.0))
-        revealingSplashView.useCustomIconColor = true
-        revealingSplashView.iconColor = UIColor.red
-        window?.addSubview(revealingSplashView)
-        
-        //Starts animation
-        revealingSplashView.startAnimation(){
-            print("Completed")
-        }
-        
-        
         window?.rootViewController = TabBarController()
         UITabBar.appearance().layer.borderWidth = 1.0
         UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
-        
         
         let tabBarController = window!.rootViewController as! TabBarController
         tabBarController.selectedIndex = 0
@@ -52,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         
         //Change navigation font
-        let navigationTitleFont = UIFont(name: "Avenir", size: 17)
+        let navigationTitleFont = UIFont(name: "Avenir", size: 19)
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         //UIApplication.shared.statusBarStyle = .default
         return true

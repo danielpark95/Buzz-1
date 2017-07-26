@@ -54,7 +54,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+        cv.backgroundColor = UIColor(red: 165/255, green: 213/255, blue: 201/255, alpha: 1.0)
         return cv
     }()
     
@@ -88,8 +88,8 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
             websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor, constant: -100).isActive = true
             
-            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: 230).isActive = true
-            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: 230).isActive = true
+            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: 0).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
