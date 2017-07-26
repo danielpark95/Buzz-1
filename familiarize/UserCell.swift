@@ -69,7 +69,6 @@ class UserCell: UICollectionViewCell {
         return UIManager.makeProfileImage(valueOfCornerRadius: 350.0 / 2.0)
     }()
     
-    
     let bioLabel: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
         return label
@@ -104,27 +103,19 @@ class UserCell: UICollectionViewCell {
     }
     
     func presentProfile() {
-        //self.fullBrightness = false
         addSubview(bioLabel)
         
         if (myUserProfile?.name) == "T.J. Miller" {
-            profileImage.layer.masksToBounds = true
-            profileImage.image = UIImage(named: "tjmiller6")
+            profileImage.image = cropRightImage(image: UIImage(named: "tjmiller6")!)
         }
         else {
-            profileImage.image = UIImage(named: "tjmiller7")
+            profileImage.image = cropRightImage(image: UIImage(named: "tjmiller7")!)
         }
         addSubview(profileImage)
-        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 100).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 48).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 350.0).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 350.0).isActive = true
-        //profileImage.bounds.size.width = (self.qrImageView?.bounds.width)!
-        //print("profileImage frame size = ", profileImage.frame.size)
-        //print("profileImage frame width = ", profileImage.frame.size.width)
-        //print("profileimage bounds = ", profileImage.bounds.size.width)
-        //print("next = " , self.qrImageView?.bounds.width)
-        profileImage.clipsToBounds = true
+        profileImage.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 350 - (imageXCoordPadding/2)).isActive = true
         
         //Namelabel position upated using NSLayoutConstraint -dan
         addSubview(nameLabel)
@@ -149,6 +140,14 @@ class UserCell: UICollectionViewCell {
     func setupViews() {
         flipCard()
     }
+
+    let imageXCoordPadding: CGFloat = -134
+    func cropRightImage(image: UIImage) -> UIImage {
+        let rect = CGRect(x: imageXCoordPadding, y: 0, width: image.size.height*2, height: image.size.height*2)
+        let imageRef:CGImage = image.cgImage!.cropping(to: rect)!
+        let croppedImage:UIImage = UIImage(cgImage:imageRef)
+        return croppedImage
+    }
     
     lazy var socialMediaImages: [String: UIImageView] = [
         "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
@@ -166,7 +165,7 @@ class UserCell: UICollectionViewCell {
         var count = 0
         for image in imagesToPresent{
             self.addSubview(image)
-            image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2))).isActive = true
+            image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2) + 30)).isActive = true
             image.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor, constant: CGFloat(r * sin(theta1 + Double(count) * theta2))).isActive = true
             image.heightAnchor.constraint(equalToConstant: 50).isActive = true
             image.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -210,6 +209,7 @@ class UserCell: UICollectionViewCell {
         } else {
             
         }
+        
         autoSpaceButtons(r: 220.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
     }
 }
