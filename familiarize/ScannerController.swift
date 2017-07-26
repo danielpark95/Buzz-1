@@ -13,12 +13,12 @@ import Alamofire
 import Kanna
 import CoreData
 
-protocol QRScannerControllerDelegate {
+protocol ScannerControllerDelegate {
     func startCameraScanning() -> Void
     func stopCameraScanning() -> Void
 }
 
-class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, QRScannerControllerDelegate {
+class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScannerControllerDelegate {
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
@@ -171,7 +171,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 // Setting up the controller and animations
                 scanProfileController.userProfile = self.userProfile
                 scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                scanProfileController.QRScannerControllerDelegate = self
+                scanProfileController.ScannerControllerDelegate = self
                 
                 self.scrapeSocialMedia(scanProfileController)
                 

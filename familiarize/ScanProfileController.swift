@@ -16,7 +16,7 @@ import M13Checkbox
 
 class ScanProfileController: UIViewController {
     
-    var QRScannerControllerDelegate: QRScannerControllerDelegate?
+    var ScannerControllerDelegate: ScannerControllerDelegate?
     var userProfile: UserProfile?
     
     override func viewDidLoad() {
@@ -179,7 +179,7 @@ class ScanProfileController: UIViewController {
             // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
             tabBarController.tabBar.isHidden = false
         }
-        self.QRScannerControllerDelegate?.startCameraScanning()
+        self.ScannerControllerDelegate?.startCameraScanning()
         setupDismiss()
         NotificationCenter.default.post(name: .viewProfile, object: nil)
     }
@@ -213,7 +213,7 @@ class ScanProfileController: UIViewController {
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
     // QRScannerController view controller. And also pops this view controller from the stack.
     func dismissClicked() {
-        self.QRScannerControllerDelegate?.startCameraScanning()
+        self.ScannerControllerDelegate?.startCameraScanning()
         setupDismiss()
     }
     

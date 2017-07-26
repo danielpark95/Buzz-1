@@ -29,7 +29,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         
         
         //Scanner Controller
-        let scannerController = QRScannerController()
+        let scannerController = ScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
         scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_teal"), selectedImage: UIImage(named: "dan_tabbarcircle_teal"))
         
