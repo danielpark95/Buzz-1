@@ -76,9 +76,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func didDoubleTapCollectionView(_ gesture: UITapGestureRecognizer) {
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
-        let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! FamiliarizeCell
+        let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! UserCell
         selectedCell.onQRImage = !selectedCell.onQRImage
-        selectedCell.flip()
+        selectedCell.flipCard()
     }
     
     func setupNavBarButton() {
@@ -156,7 +156,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func setupCollectionView() {
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(FamiliarizeCell.self, forCellWithReuseIdentifier: self.cellId)
+        collectionView?.register(UserCell.self, forCellWithReuseIdentifier: self.cellId)
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -185,7 +185,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return 0
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! FamiliarizeCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! UserCell
         
         if let myUserProfile = myUserProfiles?[indexPath.item] {
             cell.myUserProfile = myUserProfile

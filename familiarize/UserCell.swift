@@ -1,15 +1,14 @@
-//
-//  FamiliarizeCell.swift
+//  UserCell.swift
 //  familiarize
 //
 //  Created by Alex Oh on 6/1/17.
 //  Copyright © 2017 nosleep. All rights reserved.
 //
-
 import QRCode
 import SwiftyJSON
 import UIKit
-class FamiliarizeCell: UICollectionViewCell {
+
+class UserCell: UICollectionViewCell {
     
     var fullBrightness: Bool = false
     override init(frame: CGRect) {
@@ -33,10 +32,6 @@ class FamiliarizeCell: UICollectionViewCell {
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
     
-    enum borderTag: Int {
-        case val = 999
-    }
-    
     
     var myUserProfile: UserProfile? {
         didSet {
@@ -47,18 +42,18 @@ class FamiliarizeCell: UICollectionViewCell {
             setupViews()
         }
     }
-
+    
     
     func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
             if (profile.value(forKey: key) != nil && UIManager.makeShortHandForQR(key) != nil) {
-                    jsonDict[UIManager.makeShortHandForQR(key)!] = profile.value(forKey: key) as? String
+                jsonDict[UIManager.makeShortHandForQR(key)!] = profile.value(forKey: key) as? String
             }
         }
         return JSON(jsonDict).rawString()!
     }
-
+    
     func createQR(_ profile: UserProfile) {
         var qrCode = QRCode(self.createJSON(profile))
         qrCode?.color = CIColor.white()
@@ -72,7 +67,6 @@ class FamiliarizeCell: UICollectionViewCell {
         return UIManager.makeProfileImage(valueOfCornerRadius: 350.0 / 2.0)
     }()
     
-    
     let bioLabel: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
         return label
@@ -84,73 +78,73 @@ class FamiliarizeCell: UICollectionViewCell {
     }()
     
     
-    func flip() {
+    func flipCard() {
         for v in (self.subviews){
             v.removeFromSuperview()
         }
         
         if onQRImage == true {
-            //self.fullBrightness = false
-            addSubview(bioLabel)
-            
-            if (myUserProfile?.name) == "T.J. Miller" {
-                profileImage.layer.masksToBounds = true
-                profileImage.image = UIImage(named: "tjmiller6")
-            }
-            else {
-                profileImage.image = UIImage(named: "tjmiller7")
-            }
-            addSubview(profileImage)
-            profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 90).isActive = true
-            profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -125).isActive = true
-            profileImage.heightAnchor.constraint(equalToConstant: 350.0).isActive = true
-            profileImage.widthAnchor.constraint(equalToConstant: 350.0).isActive = true
-            //profileImage.bounds.size.width = (self.qrImageView?.bounds.width)!
-            //print("profileImage frame size = ", profileImage.frame.size)
-            //print("profileImage frame width = ", profileImage.frame.size.width)
-            //print("profileimage bounds = ", profileImage.bounds.size.width)
-            //print("next = " , self.qrImageView?.bounds.width)
-            profileImage.clipsToBounds = true
-            
-            //Namelabel position upated using NSLayoutConstraint -dan
-            nameLabel.translatesAutoresizingMaskIntoConstraints = false
-            let name_topConstraint = NSLayoutConstraint(item: nameLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
-            let name_bottomConstraint = NSLayoutConstraint(item: nameLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 310)
-            let name_leadingConstraint = NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 35)
-            let name_trailingConstraint = NSLayoutConstraint(item: nameLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
-            addSubview(nameLabel)
-            addConstraints([name_topConstraint, name_bottomConstraint, name_leadingConstraint, name_trailingConstraint])
-            layoutIfNeeded()
-            let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
-            nameLabel.attributedText = name
-            
-            //Biolabel position updated using NSLayoutConstraint -dan
-            bioLabel.translatesAutoresizingMaskIntoConstraints = false
-            let bio_topConstraint = NSLayoutConstraint(item: bioLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
-            let bio_bottomConstraint = NSLayoutConstraint(item: bioLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 380)
-            let bio_leadingConstraint = NSLayoutConstraint(item: bioLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 35)
-            let bio_trailingConstraint = NSLayoutConstraint(item: bioLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
-            addSubview(bioLabel)
-            addConstraints([bio_topConstraint, bio_bottomConstraint, bio_leadingConstraint, bio_trailingConstraint])
-            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
-            bioLabel.attributedText = bio
-            presentSocialMediaButtons()
-            
+            presentProfile()
         } else {
-            //UIScreen.main.brightness = 1.0
-            //self.fullBrightness = true
-            addSubview(qrImageView!)
-            qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-            qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
-            qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
-            qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            presentScannableCode()
         }
     }
     
+    func presentScannableCode() {
+        //UIScreen.main.brightness = 1.0
+        //self.fullBrightness = true
+        addSubview(qrImageView!)
+        qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
+        qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
+    }
+    
+    func presentProfile() {
+        addSubview(bioLabel)
+        
+        if (myUserProfile?.name) == "T.J. Miller" {
+            profileImage.image = cropRightImage(image: UIImage(named: "tjmiller6")!)
+        }
+        else {
+            profileImage.image = cropRightImage(image: UIImage(named: "tjmiller7")!)
+        }
+        addSubview(profileImage)
+        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 48).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -130).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 350 - (imageXCoordPadding/2)).isActive = true
+        
+        //Namelabel position upated using NSLayoutConstraint -dan
+        addSubview(nameLabel)
+        addSubview(bioLabel)
+        
+        nameLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 310).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+        nameLabel.attributedText = name
+        
+        bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 370).isActive = true
+        bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
+        bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
+        bioLabel.attributedText = bio
+        presentSocialMediaButtons()
+    }
     
     func setupViews() {
-        print("setupViews inside FamiliarizeCell")
-        flip()
+        flipCard()
+    }
+    
+    let imageXCoordPadding: CGFloat = -134
+    func cropRightImage(image: UIImage) -> UIImage {
+        let rect = CGRect(x: imageXCoordPadding, y: 0, width: image.size.height*2, height: image.size.height*2)
+        let imageRef:CGImage = image.cgImage!.cropping(to: rect)!
+        let croppedImage:UIImage = UIImage(cgImage:imageRef)
+        return croppedImage
     }
     
     lazy var socialMediaImages: [String: UIImageView] = [
@@ -169,7 +163,7 @@ class FamiliarizeCell: UICollectionViewCell {
         var count = 0
         for image in imagesToPresent{
             self.addSubview(image)
-            image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2))).isActive = true
+            image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2) + 30)).isActive = true
             image.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor, constant: CGFloat(r * sin(theta1 + Double(count) * theta2))).isActive = true
             image.heightAnchor.constraint(equalToConstant: 50).isActive = true
             image.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -213,6 +207,7 @@ class FamiliarizeCell: UICollectionViewCell {
         } else {
             
         }
+        
         autoSpaceButtons(r: 220.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
     }
 }
