@@ -10,6 +10,12 @@ import UIKit
 import pop
 import ESTabBarController_swift
 
+
+let teal = UIColor.init(red: 118/255.0, green: 219/255.0, blue: 203/255.0, alpha: 1.0)
+let salmon = UIColor.init(red: 247/255.0, green: 169/255.0, blue: 169/255.0, alpha: 1.0)
+let softblack = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+let grey = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
+
 class ExampleBasicContentView: ESTabBarItemContentView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,14 +70,14 @@ class ExampleIrregularityBasicContentView: ExampleBouncesContentView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        renderingMode = .alwaysOriginal
         
-        textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        textColor = grey
+        highlightTextColor = teal
         //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightIconColor = UIColor.init(red: 247/255.0, green: 169/255.0, blue:169/255.0, alpha: 1.0)
+        //highlightIconColor = UIColor.init(red: 247/255.0, green: 169/255.0, blue:169/255.0, alpha: 1.0)
         //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         backdropColor = .clear
-        
         highlightBackdropColor = .clear
     }
     

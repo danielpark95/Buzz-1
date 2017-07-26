@@ -10,7 +10,6 @@ import UIKit
 import Quikkly
 
 class ScanContextViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "dan_friends_black.png",
+      "filename" : "dan_myinfo_teal.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dan_friends_black@2x.png",
+      "filename" : "dan_myinfo_teal@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dan_friends_black@3x.png",
+      "filename" : "dan_myinfo_teal@3x.png",
       "scale" : "3x"
     }
   ],

@@ -33,5 +33,8 @@ target 'familiarize' do
   
   #Quikkly QR Code
   pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
+  
+  #Twitter style launch screen
+  pod 'RevealingSplashView'
 
 end

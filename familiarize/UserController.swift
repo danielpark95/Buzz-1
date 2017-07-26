@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import SwiftyJSON
-
+import RevealingSplashView
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
@@ -30,7 +30,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-
         let user1: JSON = [
             "name": "T.J. Miller",
             "pn": "pn",
@@ -150,7 +149,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         view.addSubview(pageControl)
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
