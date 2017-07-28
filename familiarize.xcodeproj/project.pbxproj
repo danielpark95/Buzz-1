@@ -25,6 +25,7 @@
 		1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51A1F0979DD00F173DE /* ContactSettingController.swift */; };
 		1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51C1F097A1400F173DE /* HelpSettingController.swift */; };
 		1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */; };
+		1459F7971F2B0F8F00372DCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1459F7961F2B0F8F00372DCA /* GoogleService-Info.plist */; };
 		14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */; };
 		14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */; };
 		14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E031EE604D7000D6AA9 /* Extensions.swift */; };
@@ -41,9 +42,6 @@
 		F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96251F1ACE25009F6EF8 /* TabBarController.swift */; };
 		F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */; };
 		F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6926F8D1F0A5FBA006E312C /* pop.framework */; };
-		F6B3698D1F1EB0E400A3E7AE /* ScanContextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B3698C1F1EB0E400A3E7AE /* ScanContextViewController.swift */; };
-		F6B3698F1F1EB0FA00A3E7AE /* CustomScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B3698E1F1EB0FA00A3E7AE /* CustomScanViewController.swift */; };
-		F6B369911F1EB10B00A3E7AE /* GenerateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B369901F1EB10B00A3E7AE /* GenerateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +65,7 @@
 		1458B51A1F0979DD00F173DE /* ContactSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSettingController.swift; sourceTree = "<group>"; };
 		1458B51C1F097A1400F173DE /* HelpSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpSettingController.swift; sourceTree = "<group>"; };
 		1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackSettingController.swift; sourceTree = "<group>"; };
+		1459F7961F2B0F8F00372DCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14773E031EE604D7000D6AA9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -85,9 +84,6 @@
 		F67D96251F1ACE25009F6EF8 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		F6926F8D1F0A5FBA006E312C /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = ../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework; sourceTree = "<group>"; };
-		F6B3698C1F1EB0E400A3E7AE /* ScanContextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanContextViewController.swift; sourceTree = "<group>"; };
-		F6B3698E1F1EB0FA00A3E7AE /* CustomScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScanViewController.swift; sourceTree = "<group>"; };
-		F6B369901F1EB10B00A3E7AE /* GenerateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,9 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				143532401EDA9CC2000507DB /* AppDelegate.swift */,
-				F6B3698C1F1EB0E400A3E7AE /* ScanContextViewController.swift */,
-				F6B369901F1EB10B00A3E7AE /* GenerateViewController.swift */,
-				F6B3698E1F1EB0FA00A3E7AE /* CustomScanViewController.swift */,
 				1497A22C1EEF7B3900366303 /* Managers */,
 				14A3F33E1EE11D4300C97747 /* Models */,
 				141CEEBB1EDCD02B0068B2B9 /* Views */,
@@ -194,6 +187,7 @@
 				1435324A1EDA9CC2000507DB /* Assets.xcassets */,
 				1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */,
 				1435324F1EDA9CC2000507DB /* Info.plist */,
+				1459F7961F2B0F8F00372DCA /* GoogleService-Info.plist */,
 				14773E031EE604D7000D6AA9 /* Extensions.swift */,
 			);
 			path = familiarize;
@@ -319,6 +313,7 @@
 			files = (
 				1435324E1EDA9CC2000507DB /* LaunchScreen.storyboard in Resources */,
 				1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */,
+				1459F7971F2B0F8F00372DCA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +375,6 @@
 				14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */,
 				F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */,
 				140A40011EDFC42E00D4539E /* ScannerController.swift in Sources */,
-				F6B3698D1F1EB0E400A3E7AE /* ScanContextViewController.swift in Sources */,
 				1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */,
 				14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */,
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
@@ -394,8 +388,6 @@
 				14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */,
 				14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */,
 				143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */,
-				F6B3698F1F1EB0FA00A3E7AE /* CustomScanViewController.swift in Sources */,
-				F6B369911F1EB10B00A3E7AE /* GenerateViewController.swift in Sources */,
 				141CEEB81EDCCFB60068B2B9 /* ContactsCell.swift in Sources */,
 				1432D9E31F0F40A400B2BF88 /* SocialMediaController.swift in Sources */,
 				144F192A1EE0FD1300A9250E /* UserCell.swift in Sources */,

@@ -6,13 +6,9 @@
 //  Copyright © 2017 nosleep. All rights reserved.
 //
 
-// FYI the icons that are on the navigation bar are copyrighted material.
-// Please create own content before the app is realeased: https://icons8.com
-
 import UIKit
 import CoreData
 import ESTabBarController_swift
-import Quikkly
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {

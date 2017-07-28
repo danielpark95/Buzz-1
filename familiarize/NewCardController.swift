@@ -35,6 +35,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "New Card"
+        navigationController?.navigationBar.tintColor = UIColor.black
         setupCollectionView()
         setupNavBarButton()
     }
@@ -64,7 +65,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
     
     //# MARK: - Body Collection View
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -139,8 +139,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     func setupNavBarButton() {
         let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
         let nextButton = UIBarButtonItem.init(title: "next", style: .plain, target: self, action: #selector(nextClicked))
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = nextButton
     }

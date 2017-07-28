@@ -38,8 +38,7 @@ class SocialMediaSelectHeader: UICollectionViewCell {
         
         sectionTitle.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         sectionTitle.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        sectionTitle.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        sectionTitle.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        sectionTitle.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
         separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
