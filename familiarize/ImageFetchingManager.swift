@@ -44,7 +44,7 @@ class ImageFetchingManager {
         }
     }
     
-//https://www.techuntold.com/view-instagram-profile-picture-full-size/
+    //https://www.techuntold.com/view-instagram-profile-picture-full-size/
     //https://gist.github.com/jcsrb/1081548
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
     static fileprivate func parseHTML(html: String, withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForParse: @escaping (SocialMediaProfileImage) -> Void) {

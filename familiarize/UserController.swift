@@ -30,7 +30,10 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-
+        let randoImage: UIImage = UIImage(named: "dan_yelp")!
+        let imageData: Data = UIImagePNGRepresentation(randoImage)!
+        FirebaseManager.uploadImageToFirebase(imageData)
+        
         let user1: JSON = [
             "name": "T.J. Miller",
             "pn": "pn",

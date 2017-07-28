@@ -43,6 +43,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - ESTabBarController-swift
+  - Firebase/Core
   - Firebase/Storage
   - Kanna (~> 2.1.0)
   - M13Checkbox
@@ -73,6 +74,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: 726c236e610eaf3f5899e7c38a1d7ca8e14a5bea
+PODFILE CHECKSUM: 7892ad26916966b0fb2890ae0d30813f6dfd98d2
 
 COCOAPODS: 1.2.1

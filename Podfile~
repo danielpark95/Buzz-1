@@ -35,6 +35,6 @@ target 'familiarize' do
 #  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
   #Firebase baby (:
-  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end

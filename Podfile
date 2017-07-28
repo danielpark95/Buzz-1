@@ -36,5 +36,6 @@ target 'familiarize' do
 
   #Firebase baby (:
   pod 'Firebase/Storage'
+  pod 'Firebase/Core'
 
 end
