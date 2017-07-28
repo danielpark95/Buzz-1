@@ -143,7 +143,7 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
     
     public override func highlightAnimation(animated: Bool, completion: (() -> ())?) {
         UIView.beginAnimations("small", context: nil)
-        UIView.setAnimationDuration(0.1)
+        UIView.setAnimationDuration(0.15)
         let transform = self.imageView.transform.scaledBy(x: 0.8, y: 0.8)
         self.imageView.transform = transform
         UIView.commitAnimations()
@@ -152,7 +152,7 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
     
     public override func dehighlightAnimation(animated: Bool, completion: (() -> ())?) {
         UIView.beginAnimations("big", context: nil)
-        UIView.setAnimationDuration(0.1)
+        UIView.setAnimationDuration(0.15)
         let transform = CGAffineTransform.identity
         self.imageView.transform = transform
         UIView.commitAnimations()

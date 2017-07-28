@@ -12,7 +12,7 @@
 import UIKit
 import CoreData
 import ESTabBarController_swift
-import Quikkly
+//import Quikkly
 import RevealingSplashView
 
 @UIApplicationMain
@@ -29,16 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
         UITabBar.appearance().layer.borderWidth = 1.0
-        UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
+        //UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
         
         let tabBarController = window!.rootViewController as! TabBarController
         tabBarController.selectedIndex = 0
-        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1)
+        UINavigationBar.appearance().barTintColor = UIColor(red:255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
         //UINavigationBar.appearance().clipsToBounds = true
         
         
         //Change navigation font
-        let navigationTitleFont = UIFont(name: "Avenir", size: 19)
+        let navigationTitleFont = UIFont(name: "ProximaNovaSoft-Regular", size: 21)
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         //UIApplication.shared.statusBarStyle = .default
         return true

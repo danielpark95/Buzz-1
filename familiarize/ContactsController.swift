@@ -28,6 +28,8 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         let delegate = UIApplication.shared.delegate as! AppDelegate
         delegate.previousIndex = 2
         //UIScreen.main.brightness = delegate.userBrightnessLevel
+        
+        self.tabBarController?.tabBar.barTintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha:1.0)
     }
     
     override func viewDidLoad() {

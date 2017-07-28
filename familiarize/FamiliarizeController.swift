@@ -40,6 +40,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     override func viewWillAppear(_ animated: Bool) {
         if captureSession != nil {
             captureSession?.startRunning()
+            print("asked for permission")
         }
         self.cameraActive = true
         super.viewWillAppear(animated)
@@ -47,14 +48,40 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         self.tabBarController?.tabBar.isHidden = true
     }
     
+    
     override func viewDidLoad() {
-        
+        print("hello")
         super.viewDidLoad()
         
         // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video as the media type parameter.
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+            case .authorized:
+            // The user has explicitly granted permission for media capture
+                print("authorized")
+                break
+            
+            case .notDetermined:
+            // The user has not yet granted or denied permission
+                print("notdetermined")
+                break
+            
+            case .restricted:
+            // The user is not allowed to access media capture devices
+                print("restricted")
+                break
+            
+            case .denied:
+            // The user has explicitly denied permission for media capture
+                print("denied")
+                break
+        }
+        
+        
+        
         do {
+            print("inside do")
             // Get an instance of the AVCaptureDeviceInput class using the previous device object.
             let input = try AVCaptureDeviceInput(device: captureDevice)
             

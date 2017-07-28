@@ -123,14 +123,14 @@ class UserCell: UICollectionViewCell {
         nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 310).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+        let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 27)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
         nameLabel.attributedText = name
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 370).isActive = true
         bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
+        let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
         bioLabel.attributedText = bio
         presentSocialMediaButtons()
     }
@@ -148,14 +148,14 @@ class UserCell: UICollectionViewCell {
     }
     
     lazy var socialMediaImages: [String: UIImageView] = [
-        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_color"),
-        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_color"),
-        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_color"),
-        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_color"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_color"),
-        "email": UIManager.makeImage(imageName: "dan_email_color"),
-        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_color"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_color"),
+        "phoneNumber": UIManager.makeImage(imageName: "51"),
+        "faceBookProfile": UIManager.makeImage(imageName: "58"),
+        "instagramProfile": UIManager.makeImage(imageName: "53"),
+        "snapChatProfile": UIManager.makeImage(imageName: "54"),
+        "linkedInProfile": UIManager.makeImage(imageName: "5test"),
+        "email": UIManager.makeImage(imageName: "6test"),
+        "twitterProfile": UIManager.makeImage(imageName: "55"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "56"),
         ]
     
     //Helper function to space out social media icons - dan
@@ -165,8 +165,8 @@ class UserCell: UICollectionViewCell {
             self.addSubview(image)
             image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2) + 30)).isActive = true
             image.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor, constant: CGFloat(r * sin(theta1 + Double(count) * theta2))).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            image.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            image.widthAnchor.constraint(equalToConstant: 30).isActive = true
             count += 1
         }
     }

@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.5.0)
   - ESTabBarController-swift (2.4)
+  - JSSAlertView (3.0.4)
   - Kanna (2.1.1)
   - M13Checkbox (3.1.3)
   - NVActivityIndicatorView (3.7.0):
@@ -8,7 +9,6 @@ PODS:
   - NVActivityIndicatorView/Presenter (3.7.0)
   - pop (1.0.10)
   - QRCode (2.0)
-  - Quikkly (1.2.0)
   - RevealingSplashView (0.4.0)
   - SwiftyJSON (3.1.4)
   - TextFieldEffects (1.3.3)
@@ -17,40 +17,31 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - ESTabBarController-swift
+  - JSSAlertView
   - Kanna (~> 2.1.0)
   - M13Checkbox
   - NVActivityIndicatorView
   - pop
   - QRCode
-  - Quikkly (from `https://github.com/quikkly/ios-sdk.git`)
   - RevealingSplashView
   - SwiftyJSON
   - TextFieldEffects
   - UPCarouselFlowLayout
 
-EXTERNAL SOURCES:
-  Quikkly:
-    :git: https://github.com/quikkly/ios-sdk.git
-
-CHECKOUT OPTIONS:
-  Quikkly:
-    :commit: 688f72e5e571c74d079a94387c21aed8fd004295
-    :git: https://github.com/quikkly/ios-sdk.git
-
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   ESTabBarController-swift: af496895039ba10ae60bf825473c45f23fc5c8b6
+  JSSAlertView: 7d8345c88e6fd8b515bc49f0fc8d8c69f6776b9c
   Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
   M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
   NVActivityIndicatorView: d3738df7e2e476aca0ba6bf32a8c9fbcfc33d64b
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
-  Quikkly: 4256fa2c2b44586ea0a0097c0086aceb46f73bb4
   RevealingSplashView: 72be158ad5e1bc72713e8f78383dc3e1803ce4d1
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: 85ff49a95228e5bc696e0600cb7e60e43d00be82
+PODFILE CHECKSUM: 89105927716f913001c74535a38d5000343430f2
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.0.rc.1

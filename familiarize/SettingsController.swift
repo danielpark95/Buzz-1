@@ -46,7 +46,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     
     
     let settings: [Setting] = {
-        return [Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [Setting(name: .Blank, imageName: "familiarize_website_qr"), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
     }()
     
     let websiteQRCode: Setting = Setting(name: .Blank, imageName: "familiarize_website_qr")
@@ -88,8 +88,8 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
             websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor, constant: -100).isActive = true
             
-            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: 0).isActive = true
-            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: 0).isActive = true
+            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
@@ -110,6 +110,8 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             
         }, completion: { _ in
             if setting.name != .Blank {
+                print("issa blank ", setting.name.rawValue)
+                print("setting = " , setting)
                 self.userController?.showControllerForSetting(setting: setting)
             }
         })
