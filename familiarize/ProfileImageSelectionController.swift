@@ -69,8 +69,27 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         
         // Error can occur right here for right now when there's no profile image to choose from
         UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: (socialMediaProfileImages?[(selectedIndexPath?.item)!])!)
-
+        
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+        if let count = socialMediaProfileImages?.count {
+            return count
+        }
+        return 0
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ProfileImageSelectionCell
+        
+        if let socialMediaProfileImage = socialMediaProfileImages?[indexPath.item] {
+            cell.socialMediaProfileImage = socialMediaProfileImage
+        }
+        
+        return cell
     }
     
     func setupCollectionView() {
@@ -99,25 +118,8 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         selectButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        if let count = socialMediaProfileImages?.count {
-            return count
-        }
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ProfileImageSelectionCell
-        
-        if let socialMediaProfileImage = socialMediaProfileImages?[indexPath.item] {
-            cell.socialMediaProfileImage = socialMediaProfileImage
-        }
-        
-        return cell
-    }
-    
+    // When only the last default cell is clicked, then the photolibrary pops up. 
+    // The defaul cell is created within the Image Fetching Manager.
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
             let imagePicker: UIImagePickerController = UIImagePickerController()
@@ -126,6 +128,8 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
             self.present(imagePicker, animated: false, completion: nil)
         }
     }
+    
+    // MARK: - UIImagePickerControllerDelegate Delegate Implementation
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
 
         picker.dismiss(animated: false, completion: { () -> Void in
@@ -137,6 +141,8 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
             }
         })
     }
+    
+    // MARK: - RSKImageCropperSwift Delegate Implementation
     func didCropImage(_ croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         socialMediaProfileImages?[(collectionView?.numberOfItems(inSection: 0))!-1].profileImage = croppedImage
         collectionView?.reloadData()
@@ -156,8 +162,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     func willCropImage(_ originalImage: UIImage) {
         
     }
-    
-
 
 }
 

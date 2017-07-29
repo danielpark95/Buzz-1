@@ -48,6 +48,13 @@ class UIManager {
         return image
     }
     
+    static func makeProfileImagee(_ image: UIImage) -> UIImageView {
+        let imageView = UIManager.makeImage(imageName: "blank_man")
+        imageView.image = imageView.image?.roundImage()
+        return imageView
+    }
+    
+
     static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
         let shortHandForQR = [
             "name": "name",
@@ -96,3 +103,20 @@ class UIManager {
     }
     
 }
+
+extension UIImage
+{
+    func roundImage() -> UIImage
+    {
+        let newImage = self.copy() as! UIImage
+        let cornerRadius = self.size.height/2
+        UIGraphicsBeginImageContextWithOptions(self.size, false, 1.0)
+        let bounds = CGRect(origin: CGPoint.zero, size: self.size)
+        UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).addClip()
+        newImage.draw(in: bounds)
+        let finalImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return finalImage!
+    }
+}
+

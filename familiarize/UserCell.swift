@@ -10,6 +10,8 @@ import QRCode
 import SwiftyJSON
 import UIKit
 
+
+
 class UserCell: UICollectionViewCell {
     
     var fullBrightness: Bool = false
@@ -65,7 +67,7 @@ class UserCell: UICollectionViewCell {
     }
     
     let profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 350.0 / 2.0)
+        return UIManager.makeImage()
     }()
     
     let bioLabel: UILabel = {
@@ -101,20 +103,35 @@ class UserCell: UICollectionViewCell {
         qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
     }
     
+    let imageXCoordPadding: CGFloat = -230
+    func cropRightImage(image: UIImage) -> UIImage {
+        let rect = CGRect(x: imageXCoordPadding, y: 0, width: image.size.width, height: image.size.height)
+        let imageRef:CGImage = image.cgImage!.cropping(to: rect)!
+        let croppedImage:UIImage = UIImage(cgImage:imageRef)
+        return croppedImage
+    }
+
     func presentProfile() {
         addSubview(bioLabel)
         
         if (myUserProfile?.name) == "T.J. Miller" {
-            profileImage.image = cropRightImage(image: UIImage(named: "tjmiller6")!)
+            //profileImage.image = cropRightImage(image: UIImage(named: "blank_profile")!)
+            let imagee = UIManager.makeImage(imageName: "blank_profile")
+            imagee.image = imagee.image?.roundImage()
+            imagee.image = cropRightImage(image: imagee.image!)
+            
+            
+            profileImage.image = imagee.image
         }
         else {
             profileImage.image = cropRightImage(image: UIImage(named: "tjmiller7")!)
         }
+        
         addSubview(profileImage)
-        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 48).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 41).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 350).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 350 - (imageXCoordPadding/2)).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
         
         //Namelabel position upated using NSLayoutConstraint -dan
         addSubview(nameLabel)
@@ -140,13 +157,7 @@ class UserCell: UICollectionViewCell {
         flipCard()
     }
 
-    let imageXCoordPadding: CGFloat = -134
-    func cropRightImage(image: UIImage) -> UIImage {
-        let rect = CGRect(x: imageXCoordPadding, y: 0, width: image.size.height*2, height: image.size.height*2)
-        let imageRef:CGImage = image.cgImage!.cropping(to: rect)!
-        let croppedImage:UIImage = UIImage(cgImage:imageRef)
-        return croppedImage
-    }
+
     
     lazy var socialMediaImages: [String: UIImageView] = [
         "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
