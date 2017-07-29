@@ -36,5 +36,9 @@ target 'familiarize' do
 
   #Firebase baby (:
   pod 'Firebase/Storage'
+  pod 'Firebase/Core'
+
+  #Circular Image Cropper -- Looks suprisingly like aquaints. FUCKKCKCKCKCKKCKC
+pod try RSKImageCropperSwift
 
 end

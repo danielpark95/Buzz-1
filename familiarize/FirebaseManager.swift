@@ -21,7 +21,7 @@ class FirebaseManager {
         // Upload the file to the path "images/rivers.jpg"
         let uploadTask = riversRef.putData(imageData, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
-                print(error)
+
                 // Uh-oh, an error occurred!
                 return
             }

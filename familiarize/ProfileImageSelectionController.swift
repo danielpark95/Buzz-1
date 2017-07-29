@@ -9,12 +9,19 @@
 import UIKit
 import UPCarouselFlowLayout
 import SwiftyJSON
+import RSKImageCropperSwift
 
-class ProfileImageSelectionController: UICollectionViewController {
-    
+class ProfileImageSelectionController: UICollectionViewController, UIImagePickerControllerDelegate, RSKImageCropViewControllerDelegate, UINavigationControllerDelegate {
+
     private let cellId = "cellId"
+    private let footerCellId = "footerCellId"
     
+    // socialMediaProfileImages contains information about which social media it is from and 
+    // the data of the social media image.
     var socialMediaProfileImages: [SocialMediaProfileImage]?
+    
+    // socialMediaInputs contains all of the information related to the survey inputs that the user 
+    // has provided.
     var socialMediaInputs: [SocialMedia]?
     
     
@@ -24,6 +31,13 @@ class ProfileImageSelectionController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollectionView()
+        setupViews()
+    
     }
     
     let selectProfileInstruction: UILabel = {
@@ -57,13 +71,6 @@ class ProfileImageSelectionController: UICollectionViewController {
         UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: (socialMediaProfileImages?[(selectedIndexPath?.item)!])!)
 
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
-
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupCollectionView()
-        setupViews()
     }
     
     func setupCollectionView() {
@@ -90,17 +97,18 @@ class ProfileImageSelectionController: UICollectionViewController {
         selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
         selectButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
         selectButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
         if let count = socialMediaProfileImages?.count {
             return count
         }
         return 0
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ProfileImageSelectionCell
         
         if let socialMediaProfileImage = socialMediaProfileImages?[indexPath.item] {
@@ -110,4 +118,46 @@ class ProfileImageSelectionController: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
+            let imagePicker: UIImagePickerController = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(imagePicker, animated: false, completion: nil)
+        }
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+
+        picker.dismiss(animated: false, completion: { () -> Void in
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                var imageCropVC : RSKImageCropViewController!
+                imageCropVC = RSKImageCropViewController(image: image, cropMode: RSKImageCropMode.circle)
+                imageCropVC.delegate = self
+                self.navigationController?.pushViewController(imageCropVC, animated: false)
+            }
+        })
+    }
+    func didCropImage(_ croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+        socialMediaProfileImages?[(collectionView?.numberOfItems(inSection: 0))!-1].profileImage = croppedImage
+        collectionView?.reloadData()
+        self.navigationController?.popViewController(animated: false)
+    }
+    
+    func didCropImage(_ croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
+        socialMediaProfileImages?[(collectionView?.numberOfItems(inSection: 0))!-1].profileImage = croppedImage
+        collectionView?.reloadData()
+        self.navigationController?.popViewController(animated: false)
+    }
+    
+    func didCancelCrop() {
+        self.navigationController?.popViewController(animated: false)
+    }
+    
+    func willCropImage(_ originalImage: UIImage) {
+        
+    }
+    
+
+
 }
+

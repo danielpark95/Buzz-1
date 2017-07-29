@@ -13,6 +13,7 @@ import UPCarouselFlowLayout
 
 class SocialMediaProfileImage: SocialMedia {
     var profileImage: UIImage?
+    var isDefault: Bool = false
     
     init(copyFrom: SocialMedia, withImage profileImage: UIImage) {
         super.init(copyFrom: copyFrom)
@@ -118,7 +119,6 @@ class LoadingProfileImageSelectionController: UIViewController {
                 profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
                 profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
                 self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
-                //self.present(profileImageSelectionController, animated: false, completion: nil)
             })
         }
     }

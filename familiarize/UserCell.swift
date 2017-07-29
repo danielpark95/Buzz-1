@@ -34,7 +34,6 @@ class UserCell: UICollectionViewCell {
     var onQRImage: Bool = true
     var qrImageView: UIImageView?
     
-    
     var myUserProfile: UserProfile? {
         didSet {
             // Views is set after knowing how long the texts are.
