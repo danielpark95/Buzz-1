@@ -58,7 +58,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "em": "em",
             ]
         
-        UserProfile.clearData(forProfile: .myUser)
+        //UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)
@@ -182,10 +182,20 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return 0
     }
     
+    let profileImageCache = NSCache<NSString, UIImage>()
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! UserCell
         if let myUserProfile = myUserProfiles?[indexPath.item] {
             cell.myUserProfile = myUserProfile
+            //cell.profileImage.image = UIImage(data: myUserProfile.profileImage!)
+
+            if let imagee = profileImageCache.object(forKey: myUserProfile.profileImage?.base64EncodedString() as! NSString) {
+                cell.profileImage.image = imagee
+            } else {
+                cell.profileImage.image = UIImage(data: myUserProfile.profileImage!)
+                profileImageCache.setObject(cell.profileImage.image!, forKey: myUserProfile.profileImage?.base64EncodedString() as! NSString)
+            }
+            
         }
         return cell
     }
@@ -199,6 +209,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func reloadCard() {
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
+        profileImageCache.removeAllObjects()
         collectionView?.reloadData()
     }
 

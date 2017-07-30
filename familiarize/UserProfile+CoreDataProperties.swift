@@ -83,7 +83,7 @@ extension UserProfile {
         toSaveCard["pi"]["in"].string = socialMediaProfileImage.inputName
         
         let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
-        let profileImageData = UIManager.makeCardProfileImageData(socialMediaProfileImage.profileImage!, withImageXCoordPadding: -230)
+        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)! , withImageXCoordPadding: -230)
         UserProfile.saveProfileImage(profileImageData, userObject: userProfile)
     }
     

@@ -52,7 +52,7 @@ class UserCell: UICollectionViewCell {
             let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
             bioLabel.attributedText = bio
             
-            self.profileImage.image = UIImage(data: (self.myUserProfile?.profileImage)!)
+            //self.profileImage.image = UIImage(data: (self.myUserProfile?.profileImage)!)
             
             //profileImage = UIManager.makeCardProfileImage((myUserProfile?.profileImage)!, withImageXCoordPadding: imageXCoordPadding)
             

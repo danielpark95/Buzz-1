@@ -48,12 +48,11 @@ class UIManager {
         return image
     }
     
-    static func makeCardProfileImageData(_ image: UIImage, withImageXCoordPadding imageXCoordPadding: CGFloat) -> Data {
-        var newImage = UIImage()
-        newImage = image
-        newImage = image.roundImage()
-        newImage = cropRightImage(image: image, withImageXCoordPadding: imageXCoordPadding)
-        return UIImagePNGRepresentation(newImage)!
+    static func makeCardProfileImageData(_ imageData: Data, withImageXCoordPadding imageXCoordPadding: CGFloat) -> Data {
+        var image = UIImage(data: imageData)
+        image = image?.roundImage()
+        image = cropRightImage(image: image!, withImageXCoordPadding: imageXCoordPadding)
+        return UIImagePNGRepresentation(image!)!
     }
 
     static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
@@ -68,7 +67,6 @@ class UIManager {
             "linkedInProfile": "in",
             "soundCloudProfile": "so",
             "twitterProfile": "tw",
-            "default" : "df",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName

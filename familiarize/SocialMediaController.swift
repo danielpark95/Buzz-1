@@ -124,13 +124,9 @@ class SocialMediaController: UIViewController {
         // Initially set all the way at the bottom so that it animates up.
         self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
         self.popupCenterYAnchor?.isActive = true
-        //self.popupImageView.heightAnchor.constraint(equalToConstant: 182).isActive = true
-        //self.popupImageView.widthAnchor.constraint(equalToConstant: 217).isActive = true
         
         self.addButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         self.addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 75).isActive = true
-        //self.addButton.heightAnchor.constraint(equalToConstant: 33).isActive = true
-        //self.addButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
 
         
         self.socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
