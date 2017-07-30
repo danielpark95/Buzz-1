@@ -10,6 +10,7 @@
 // Please create own content before the app is realeased: https://icons8.com
 
 import UIKit
+import Quikkly
 import CoreData
 import ESTabBarController_swift
 //import Quikkly
@@ -21,59 +22,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     var window: UIWindow?
     var previousIndex: Int?
     var userBrightnessLevel: CGFloat!
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.makeKeyAndVisible()
-        window?.rootViewController = TabBarController()
-        UITabBar.appearance().layer.borderWidth = 1.0
-        //UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
+        // Quikkly framework setup
+        Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U" //Insert your api key here
         
-        let tabBarController = window!.rootViewController as! TabBarController
-        tabBarController.selectedIndex = 0
-        UINavigationBar.appearance().barTintColor = UIColor(red:255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
-        //UINavigationBar.appearance().clipsToBounds = true
+        let tabVC = UITabBarController()
+        let vc0 = ScanContextViewController()
+        vc0.tabBarItem = UITabBarItem(title: "Scanning", image: UIImage(named: "Image-TabBar-Scanning"), tag: 0)
+        let vc1 = UINavigationController(rootViewController: GenerateViewController())
+        vc1.tabBarItem = UITabBarItem(title: "Generating", image: UIImage(named: "Image-TabBar-Generating"), tag: 1)
+        tabVC.viewControllers = [vc0, vc1]
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = tabVC
+        self.window?.backgroundColor = .white
+        self.window?.makeKeyAndVisible()
         
         
-        //Change navigation font
-        let navigationTitleFont = UIFont(name: "ProximaNovaSoft-Regular", size: 21)
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-        //UIApplication.shared.statusBarStyle = .default
         return true
     }
     
     
-    // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.portrait.rawValue)
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
-    }
     
+    
+
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+//        // Override point for customization after application launch.
+//        
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.makeKeyAndVisible()
+//        window?.rootViewController = TabBarController()
+//        UITabBar.appearance().layer.borderWidth = 1.0
+//        //UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
+//        
+//        let tabBarController = window!.rootViewController as! TabBarController
+//        tabBarController.selectedIndex = 0
+//        UINavigationBar.appearance().barTintColor = UIColor(red:255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+//        //UINavigationBar.appearance().clipsToBounds = true
+//        
+//        
+//        //Change navigation font
+//        let navigationTitleFont = UIFont(name: "ProximaNovaSoft-Regular", size: 21)
+//        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
+//        //UIApplication.shared.statusBarStyle = .default
+//        return true
+//        
+//        
+//    }
+//    
+//    
+//    // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
+//    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+//        return UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.portrait.rawValue)
+//    }
+//
+//    func applicationWillResignActive(_ application: UIApplication) {
+//        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+//        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+//    }
+//
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+//        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//    }
+//
+//    func applicationWillEnterForeground(_ application: UIApplication) {
+//        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+//    }
+//
+//    func applicationDidBecomeActive(_ application: UIApplication) {
+//        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//    }
+//
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+//        // Saves changes in the application's managed object context before the application terminates.
+//        self.saveContext()
+//    }
+//    
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -101,22 +129,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         })
         return container
     }()
-
-    // MARK: - Core Data Saving support
-
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
+//
+//    // MARK: - Core Data Saving support
+//
+//    func saveContext () {
+//        let context = persistentContainer.viewContext
+//        if context.hasChanges {
+//            do {
+//                try context.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nserror = error as NSError
+//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            }
+//        }
+//    }
 
 }
 
