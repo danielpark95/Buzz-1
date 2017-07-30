@@ -30,9 +30,14 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-        let randoImage: UIImage = UIImage(named: "dan_yelp")!
-        let imageData: Data = UIImagePNGRepresentation(randoImage)!
-        FirebaseManager.uploadImageToFirebase(imageData)
+        
+        super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false
+        navigationItem.title = "Me"
+        
+//        let randoImage: UIImage = UIImage(named: "dan_yelp")!
+//        let imageData: Data = UIImagePNGRepresentation(randoImage)!
+//        FirebaseManager.uploadImageToFirebase(imageData)
         
         let user1: JSON = [
             "name": "T.J. Miller",
@@ -55,21 +60,13 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
-        UserProfile.saveProfile(user2, forProfile: .myUser)
-        UserProfile.saveProfile(user1, forProfile: .myUser)
-        
-        super.viewDidLoad()
-        navigationItem.title = "Me"
-        
-        setupNavBarButton()
-        self.automaticallyAdjustsScrollViewInsets = false
-        
+        //UserProfile.saveProfile(user2, forProfile: .myUser)
+        //UserProfile.saveProfile(user1, forProfile: .myUser)
+
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
+        setupNavBarButton()
         setupCollectionView()
-        //crop()
-        
-        //createSmallLineOnTabBar()
         
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
         doubleTapGesture.numberOfTapsRequired = 2
@@ -136,12 +133,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     
-    let profileImage: UIImageView = {
-        let image = UIManager.makeProfileImage(valueOfCornerRadius: 30)
-        image.contentMode = .scaleAspectFill
-        return image
-    }()
-    
     let headerBar: UIImageView = {
         let image = UIManager.makeImage(imageName: "dan_header_bar")
         image.contentMode = .scaleAspectFit
@@ -182,6 +173,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
         pageControl.currentPage = pageNumber
     }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // Modify this after you saved a user.
         if let count = self.myUserProfiles?.count {
@@ -189,26 +181,13 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         return 0
     }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! UserCell
-        
         if let myUserProfile = myUserProfiles?[indexPath.item] {
             cell.myUserProfile = myUserProfile
         }
-        
         return cell
-    }
-    
-    func crop() {
-        //print("crop" , collectionView?.backgroundView?.layer.bounds.size.width!)
-        //print("crop", collectionView?.collectionViewLayout.collectionView?.bounds)
-        
-        //cell.profileImage.layer.bounds.size.width = view.frame.width
-        //print("crop" , view.layer.bounds.size.width)
-        //print("crop",  view.frame.width)
-        //view.layer.masksToBounds = true
-        //cell.profileImage.layer.masksToBounds = true
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

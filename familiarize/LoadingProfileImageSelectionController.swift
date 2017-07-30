@@ -13,7 +13,6 @@ import UPCarouselFlowLayout
 
 class SocialMediaProfileImage: SocialMedia {
     var profileImage: UIImage?
-    var isDefault: Bool = false
     
     init(copyFrom: SocialMedia, withImage profileImage: UIImage) {
         super.init(copyFrom: copyFrom)
@@ -88,6 +87,10 @@ class LoadingProfileImageSelectionController: UIViewController {
         return label
     }()
     
+    let skipButton: UIButton = {
+       return UIManager.makeButton(imageName: "dan_close_text")
+    }()
+    
     
     func setupViews() {
         view.addSubview(activityIndicator1)
@@ -109,7 +112,17 @@ class LoadingProfileImageSelectionController: UIViewController {
         loadingName.widthAnchor.constraint(equalToConstant: loadingName.intrinsicContentSize.width).isActive = true
         loadingName.heightAnchor.constraint(equalToConstant: loadingName.intrinsicContentSize.height).isActive = true
         
+        
+        view.addSubview(self.skipButton)
+        skipButton.addTarget(self, action: #selector(skipButtonClicked), for: .touchUpInside)
+        skipButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 81).isActive = true
+        skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
         fetchImage()
+    }
+    
+    func skipButtonClicked() {
+        
     }
     
     func fetchImage() {

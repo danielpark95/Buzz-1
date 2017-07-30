@@ -23,10 +23,9 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     var optionalSocialMediaInputs: [SocialMedia] = []
 
     var requiredSocialMediaInputs: [SocialMedia] = [
-        SocialMedia(withSocialMedia: "name", withImageName: "dan_facebook_black", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withSocialMedia: "bio", withImageName: "dan_facebook_black", withInputName: "Optional", withAlreadySet: true)
+        SocialMedia(withAppName: "name", withImageName: "dan_facebook_black", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withAppName: "bio", withImageName: "dan_facebook_black", withInputName: "Optional", withAlreadySet: true)
     ]
-    
     
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
     private let socialMediaSelectedCellId = "socialMediaSelectedCellId"

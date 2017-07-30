@@ -75,13 +75,16 @@ extension UserProfile {
             toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
         }
         
+        // an -- App Name
+        // When default profile image is chosen, then the appName is: default
+        // in -- Input Name
+        // When default profile image is chosen, then the inputName is the url link to the image
         toSaveCard["pi"]["an"].string = UIManager.makeShortHandForQR(socialMediaProfileImage.appName!)
         toSaveCard["pi"]["in"].string = socialMediaProfileImage.inputName
-
-        print(toSaveCard)
         
         let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
-        UserProfile.saveProfileImage(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)!, userObject: userProfile)
+        let profileImageData = UIManager.makeCardProfileImageData(socialMediaProfileImage.profileImage!, withImageXCoordPadding: -230)
+        UserProfile.saveProfileImage(profileImageData, userObject: userProfile)
     }
     
     static func saveProfile(_ qrJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {

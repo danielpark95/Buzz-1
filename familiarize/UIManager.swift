@@ -48,12 +48,13 @@ class UIManager {
         return image
     }
     
-    static func makeProfileImagee(_ image: UIImage) -> UIImageView {
-        let imageView = UIManager.makeImage(imageName: "blank_man")
-        imageView.image = imageView.image?.roundImage()
-        return imageView
+    static func makeCardProfileImageData(_ image: UIImage, withImageXCoordPadding imageXCoordPadding: CGFloat) -> Data {
+        var newImage = UIImage()
+        newImage = image
+        newImage = image.roundImage()
+        newImage = cropRightImage(image: image, withImageXCoordPadding: imageXCoordPadding)
+        return UIImagePNGRepresentation(newImage)!
     }
-    
 
     static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
         let shortHandForQR = [
@@ -67,6 +68,7 @@ class UIManager {
             "linkedInProfile": "in",
             "soundCloudProfile": "so",
             "twitterProfile": "tw",
+            "default" : "df",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName
@@ -102,6 +104,12 @@ class UIManager {
         return button
     }
     
+    private static func cropRightImage(image: UIImage, withImageXCoordPadding imageXCoordPadding: CGFloat) -> UIImage {
+        let rect = CGRect(x: imageXCoordPadding, y: 0, width: image.size.width, height: image.size.height)
+        let imageRef:CGImage = image.cgImage!.cropping(to: rect)!
+        let croppedImage:UIImage = UIImage(cgImage:imageRef)
+        return croppedImage
+    }
 }
 
 extension UIImage

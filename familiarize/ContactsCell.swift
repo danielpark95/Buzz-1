@@ -37,7 +37,6 @@ class ContactsCell: UICollectionViewCell {
                 self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
                 self.profileImage.contentMode = .scaleAspectFill
                 self.profileImage.clipsToBounds = true
-                
             }
             
             // Views is set after knowing how long the texts are.

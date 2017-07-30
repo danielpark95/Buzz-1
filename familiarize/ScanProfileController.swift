@@ -65,7 +65,7 @@ class ScanProfileController: UIViewController {
     }()
     
     lazy var dismissButton: UIButton = {
-        return UIManager.makeButton()
+        return UIManager.makeButton(imageName: "dan_close_text")
     }()
     
     lazy var outsideButton: UIButton = {
@@ -220,13 +220,10 @@ class ScanProfileController: UIViewController {
     // MARK: - Assigning UI Properties (Label, Button, Lines)
     
     func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dan_close_text")
         view.addSubview(self.dismissButton)
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 81).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        //dismissButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        //dismissButton.widthAnchor.constraint(equalToConstant: 51).isActive = true
     }
     
     

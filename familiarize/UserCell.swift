@@ -15,6 +15,13 @@ import UIKit
 class UserCell: UICollectionViewCell {
     
     var fullBrightness: Bool = false
+    
+    // Padding for moving the user profile picture around
+    // The amount of padding removes X amount of padding from the right side.
+    // We have to compensate for the lost padding in the view controller by removing the width of the image when applying constraints
+    let imageXCoordPadding: CGFloat = -230
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
@@ -38,14 +45,22 @@ class UserCell: UICollectionViewCell {
     
     var myUserProfile: UserProfile? {
         didSet {
-            // Views is set after knowing how long the texts are.
+            
+            let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+            nameLabel.attributedText = name
+            
+            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
+            bioLabel.attributedText = bio
+            
+            self.profileImage.image = UIImage(data: (self.myUserProfile?.profileImage)!)
+            
+            //profileImage = UIManager.makeCardProfileImage((myUserProfile?.profileImage)!, withImageXCoordPadding: imageXCoordPadding)
             
             // When myUserProfile is set within the UserController as a cell, then load up the required information that the user has.
             createQR(myUserProfile!)
             setupViews()
         }
     }
-
     
     func createJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
@@ -63,17 +78,18 @@ class UserCell: UICollectionViewCell {
         qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         qrImageView = UIManager.makeImage()
         qrImageView?.image = qrCode?.image
-        //qrImageView?.image = UIImage(named: "familiarize_website_qr")
     }
     
-    let profileImage: UIImageView = {
-        return UIManager.makeImage()
+    var profileImage: UIImageView = {
+        let image = UIManager.makeImage()
+        image.clipsToBounds = true
+        image.contentMode = UIViewContentMode.scaleAspectFill
+        return image
     }()
     
     let bioLabel: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1)
         return label
-        
     }()
     
     let nameLabel: UILabel = {
@@ -94,44 +110,20 @@ class UserCell: UICollectionViewCell {
     }
     
     func presentScannableCode() {
-        //UIScreen.main.brightness = 1.0
-        //self.fullBrightness = true
         addSubview(qrImageView!)
         qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
         qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
         qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
     }
-    
-    let imageXCoordPadding: CGFloat = -230
-    func cropRightImage(image: UIImage) -> UIImage {
-        let rect = CGRect(x: imageXCoordPadding, y: 0, width: image.size.width, height: image.size.height)
-        let imageRef:CGImage = image.cgImage!.cropping(to: rect)!
-        let croppedImage:UIImage = UIImage(cgImage:imageRef)
-        return croppedImage
-    }
 
     func presentProfile() {
-        addSubview(bioLabel)
-        
-        if (myUserProfile?.name) == "T.J. Miller" {
-            //profileImage.image = cropRightImage(image: UIImage(named: "blank_profile")!)
-            let imagee = UIManager.makeImage(imageName: "blank_profile")
-            imagee.image = imagee.image?.roundImage()
-            imagee.image = cropRightImage(image: imagee.image!)
-            
-            
-            profileImage.image = imagee.image
-        }
-        else {
-            profileImage.image = cropRightImage(image: UIImage(named: "tjmiller7")!)
-        }
-        
         addSubview(profileImage)
         profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 41).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 350).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
+        // We have to do imageXCoordPadding/4 because we are removing some pieces on the right side and have to compensate for it.
         
         //Namelabel position upated using NSLayoutConstraint -dan
         addSubview(nameLabel)
@@ -141,15 +133,12 @@ class UserCell: UICollectionViewCell {
         nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 290).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
-        nameLabel.attributedText = name
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 350).isActive = true
         bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
-        bioLabel.attributedText = bio
+        
         presentSocialMediaButtons()
     }
     
@@ -157,8 +146,6 @@ class UserCell: UICollectionViewCell {
         flipCard()
     }
 
-
-    
     lazy var socialMediaImages: [String: UIImageView] = [
         "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
         "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_black"),
@@ -188,7 +175,6 @@ class UserCell: UICollectionViewCell {
         var my_imagesToPresent = [UIImageView]()
         for key in (myUserProfile?.entity.attributesByName.keys)! {
             if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                //print(key)
                 my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
             }
         }

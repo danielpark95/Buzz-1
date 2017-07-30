@@ -44,6 +44,5 @@ class ProfileImageSelectionCell: UICollectionViewCell {
         profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
     }
 }
