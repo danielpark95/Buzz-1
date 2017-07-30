@@ -40,6 +40,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     }()
 
     let socialMediaCollectionView: UICollectionView = {
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

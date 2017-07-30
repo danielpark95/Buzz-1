@@ -13,6 +13,8 @@ import Kanna
 class ImageFetchingManager {
 
     static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
+    
+        // USE OPERATIONQUEUE IN ORDER TO CANCEL ALL QUEUES!!!
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
         let massagedSocialMediaInputs = massageSocialMediaInputsData(socialMediaInputs)

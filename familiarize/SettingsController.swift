@@ -41,9 +41,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     private let cellId = "cellId"
     private let footerCellId = "footerCellId"
     
-    
     var userController: UserController?
-    
     
     let settings: [Setting] = {
         return [Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
@@ -97,7 +95,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
                 self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
                 
             }, completion: nil)
-            
 
         }
     }
@@ -108,6 +105,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             if let window = UIApplication.shared.keyWindow {
                 self.collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
             }
+            self.userController?.closingHamburger()
             
         }, completion: { _ in
             if setting.name != .Blank {

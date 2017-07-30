@@ -97,7 +97,12 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }()
     
     func handleHamburger() {
+        UIApplication.shared.isStatusBarHidden = true
         settingsLauncher.showSettings()
+    }
+    
+    func closingHamburger() {
+        UIApplication.shared.isStatusBarHidden = false
     }
     
     func handleNewCard() {
