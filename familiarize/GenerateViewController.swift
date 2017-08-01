@@ -40,19 +40,20 @@ class GenerateViewController: UIViewController {
         skin.dotColor = "#FFFFFF"
         skin.borderColor = "#444444"
         skin.imageUri = "https://s3-eu-west-1.amazonaws.com/docs.quikkly.io/img/1481647718.png"
-        //let scannable = Scannable(withValue: 123456789, template:nil, skin: skin)
+        let scannable = Scannable(withValue: 42587309, template: "template0002style1", skin: skin)
         
-        let dict:[String:Any] = ["id" : 1567567756567,
-                                 "url": "this string could be displayed when the scannable gets detected"]
-        Scannable(withMappedData: dict, template: nil, skin: skin, completion: { (success, scannable) in
-            if success {
-                self.scannableView.scannable = scannable
-                print(scannable.value)
-            } else {
-                print ("generate failure")
-            }
-            
-        })
+        //self.scannableView = ScannableView()
+        self.scannableView.scannable = scannable
+        //let dict:[String:Any] = ["id" : 123, "url": "this string could be displayed when the scannable gets detected"]
+//        Scannable(withMappedData: dict, template: nil, skin: skin, completion: { (success, scannable) in
+//            if success {
+//                self.scannableView.scannable = scannable
+//                print(scannable.value)
+//            } else {
+//                print ("generate failure")
+//            }
+//            
+//        })
         
         
         

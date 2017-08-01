@@ -32,7 +32,7 @@ target 'familiarize' do
   pod 'UPCarouselFlowLayout'
   
   #Quikkly QR Code
-  #pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
+  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
   #Twitter style launch screen
   pod 'RevealingSplashView'

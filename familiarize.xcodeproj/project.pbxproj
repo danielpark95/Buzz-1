@@ -37,8 +37,10 @@
 		14F5A0581F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5A0571F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
 		F63192711F297C7A00F5AF8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F63192701F297C7A00F5AF8A /* LaunchScreen.storyboard */; };
+		F65EB3191F2DACFD00552E4C /* GenerateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65EB3181F2DACFD00552E4C /* GenerateViewController.swift */; };
+		F65EB31B1F2DAD0900552E4C /* CustomScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65EB31A1F2DAD0900552E4C /* CustomScanViewController.swift */; };
+		F65EB31D1F2DAD0F00552E4C /* ScanContextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65EB31C1F2DAD0F00552E4C /* ScanContextViewController.swift */; };
 		F677B3D71F2C001600D78772 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = F677B3D61F2C001600D78772 /* Fonts */; };
-		F677B3DD1F2C039D00D78772 /* ProximaNovaSoft-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F677B3DC1F2C039D00D78772 /* ProximaNovaSoft-Regular.otf */; };
 		F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96231F1ACE05009F6EF8 /* TabBar.swift */; };
 		F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96251F1ACE25009F6EF8 /* TabBarController.swift */; };
 		F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */; };
@@ -80,8 +82,10 @@
 		83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.debug.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.release.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.release.xcconfig"; sourceTree = "<group>"; };
 		F63192701F297C7A00F5AF8A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ../../Desktop/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F65EB3181F2DACFD00552E4C /* GenerateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateViewController.swift; sourceTree = "<group>"; };
+		F65EB31A1F2DAD0900552E4C /* CustomScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScanViewController.swift; sourceTree = "<group>"; };
+		F65EB31C1F2DAD0F00552E4C /* ScanContextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanContextViewController.swift; sourceTree = "<group>"; };
 		F677B3D61F2C001600D78772 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
-		F677B3DC1F2C039D00D78772 /* ProximaNovaSoft-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNovaSoft-Regular.otf"; path = "familiarize/Fonts/ProximaNovaSoft-Regular.otf"; sourceTree = "<group>"; };
 		F67D96231F1ACE05009F6EF8 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		F67D96251F1ACE25009F6EF8 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
@@ -161,7 +165,6 @@
 		143532341EDA9CC2000507DB = {
 			isa = PBXGroup;
 			children = (
-				F677B3DC1F2C039D00D78772 /* ProximaNovaSoft-Regular.otf */,
 				1435323F1EDA9CC2000507DB /* familiarize */,
 				1435323E1EDA9CC2000507DB /* Products */,
 				F1CF0698638552B95353DDA4 /* Pods */,
@@ -182,6 +185,9 @@
 			children = (
 				F677B3D61F2C001600D78772 /* Fonts */,
 				143532401EDA9CC2000507DB /* AppDelegate.swift */,
+				F65EB31A1F2DAD0900552E4C /* CustomScanViewController.swift */,
+				F65EB3181F2DACFD00552E4C /* GenerateViewController.swift */,
+				F65EB31C1F2DAD0F00552E4C /* ScanContextViewController.swift */,
 				1497A22C1EEF7B3900366303 /* Managers */,
 				14A3F33E1EE11D4300C97747 /* Models */,
 				141CEEBB1EDCD02B0068B2B9 /* Views */,
@@ -318,7 +324,6 @@
 				F677B3D71F2C001600D78772 /* Fonts in Resources */,
 				1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */,
 				F63192711F297C7A00F5AF8A /* LaunchScreen.storyboard in Resources */,
-				F677B3DD1F2C039D00D78772 /* ProximaNovaSoft-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +344,7 @@
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCode/QRCode.framework",
+				"${PODS_ROOT}/Quikkly/Quikkly.framework",
 				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
@@ -355,6 +361,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCode.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quikkly.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
@@ -408,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14323B7F1F04DF33004694A6 /* SettingsController.swift in Sources */,
+				F65EB3191F2DACFD00552E4C /* GenerateViewController.swift in Sources */,
 				F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */,
 				140A40011EDFC42E00D4539E /* FamiliarizeController.swift in Sources */,
 				1497A2291EEDCEB600366303 /* ViewProfileController.swift in Sources */,
@@ -415,6 +423,7 @@
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
+				F65EB31D1F2DAD0F00552E4C /* ScanContextViewController.swift in Sources */,
 				14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
@@ -430,6 +439,7 @@
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
 				144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
+				F65EB31B1F2DAD0900552E4C /* CustomScanViewController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
 				14F5A0581F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
