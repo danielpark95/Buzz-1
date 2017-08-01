@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import SwiftyJSON
 import RevealingSplashView
+import Alamofire
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"

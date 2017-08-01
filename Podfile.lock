@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.5.0)
-  - ESTabBarController-swift (2.4)
+  - ESTabBarController-swift (2.5)
   - JSSAlertView (3.0.4)
   - Kanna (2.1.1)
   - M13Checkbox (3.1.3)
@@ -12,6 +12,7 @@ PODS:
   - RevealingSplashView (0.4.0)
   - SwiftyJSON (3.1.4)
   - TextFieldEffects (1.3.3)
+  - Unirest (1.1.4)
   - UPCarouselFlowLayout (1.1.1)
 
 DEPENDENCIES:
@@ -26,11 +27,12 @@ DEPENDENCIES:
   - RevealingSplashView
   - SwiftyJSON
   - TextFieldEffects
+  - Unirest (~> 1.1.4)
   - UPCarouselFlowLayout
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  ESTabBarController-swift: af496895039ba10ae60bf825473c45f23fc5c8b6
+  ESTabBarController-swift: 8daa432f2a9be8ebd25101dc46c84472fd760512
   JSSAlertView: 7d8345c88e6fd8b515bc49f0fc8d8c69f6776b9c
   Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
   M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
@@ -40,8 +42,9 @@ SPEC CHECKSUMS:
   RevealingSplashView: 72be158ad5e1bc72713e8f78383dc3e1803ce4d1
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
+  Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: 89105927716f913001c74535a38d5000343430f2
+PODFILE CHECKSUM: e83723cbc2c51291c5af0d41a3df0d4df3b5dc9a
 
 COCOAPODS: 1.3.0.rc.1

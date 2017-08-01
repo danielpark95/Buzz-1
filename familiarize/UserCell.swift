@@ -6,6 +6,8 @@
 //
 import QRCode
 import SwiftyJSON
+import Alamofire
+import SwiftyJSON
 import UIKit
 
 class UserCell: UICollectionViewCell {
@@ -55,6 +57,7 @@ class UserCell: UICollectionViewCell {
     }
     
     func createQR(_ profile: UserProfile) {
+        var qrCodeimg = UIImage()
         var qrCode = QRCode(self.createJSON(profile))
         qrCode?.color = CIColor.white()
         qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
@@ -84,9 +87,61 @@ class UserCell: UICollectionViewCell {
         }
         
         if onQRImage == true {
+            
             presentProfile()
         } else {
-            presentScannableCode()
+            //presentScannableCode()
+            apiCall()
+        }
+    }
+    
+    func apiCall() {
+      
+        let parameters: Parameters = ["data": "https://familiarize-app.github.io",
+                                   "config": [
+                                    "body": "dot",
+                                    "eye" : "frame13",
+                                    "eyeBall" : "ball14",
+                                    "erf1" : [],
+                                    "erf2" : [],
+                                    "erf3" : [],
+                                    "brf1" : [],
+                                    "brf2" : [],
+                                    "brf3" : [],
+                                    "bodyColor" : "#2f2f2f",
+                                    "bgColor" : "#ffd700",
+                                    "eye1Color" : "#2f2f2f",
+                                    "eye2Color" : "#2f2f2f",
+                                    "eye3Color" : "#2f2f2f",
+                                    "eyeBall1Color" : "#2f2f2f",
+                                    "eyeBall2Color" : "#2f2f2f",
+                                    "eyeBall3Color" : "#2f2f2f",
+                                    "gradientColor1" : "#2f2f2f",
+                                    "gradientColor2" : "#2f2f2f",
+                                    "gradientType" : "linear",
+                                    "gradientOnEyes" : false,
+                                    "logo" : "#facebook"],
+                                   "size" : 600,
+                                   "download": false,
+                                   "file": "png"]
+        
+        
+        let headers: HTTPHeaders = [
+            "X-Mashape-Key": "ddkwc9CKTgmshWfrKQ88cgzM8JGhp1zqUEPjsnSNcuHuC6RQ1l",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        ]
+        
+        Alamofire.request("https://qrcode-monkey.p.mashape.com/qr/custom", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseData { response in
+            if let data = response.result.value {
+                let imagee = UIManager.makeImage()
+                imagee.image = UIImage(data: data)
+                self.addSubview(imagee)
+                imagee.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+                imagee.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
+                imagee.heightAnchor.constraint(equalToConstant: 300).isActive = true
+                imagee.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            }
         }
     }
     

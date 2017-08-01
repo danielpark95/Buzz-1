@@ -39,5 +39,8 @@ target 'familiarize' do
   
   #Custom alerts
   pod 'JSSAlertView'
+  
+  #Unirest
+  pod 'Unirest', '~>1.1.4'
 
 end
