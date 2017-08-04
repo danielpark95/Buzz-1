@@ -11,23 +11,20 @@ import Firebase
 
 class FirebaseManager {
     
-    static func uploadImageToFirebase(_ imageData: Data) {
+    static func uploadImageToFirebase(_ socialMediaProfileImage: SocialMediaProfileImage, completionHandler: @escaping (String) -> Void) {
+        let profileImage = UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)
         let storage = Storage.storage()
         // Create a root reference
         let storageRef = storage.reference()
         // Create a reference to the file you want to upload
-        let riversRef = storageRef.child("images/rivers.jpg")
-        
+        let riversRef = storageRef.child("\(UIDevice.current.identifierForVendor!.uuidString)/\(UUID().uuidString)")
         // Upload the file to the path "images/rivers.jpg"
-        let uploadTask = riversRef.putData(imageData, metadata: nil) { (metadata, error) in
+        let uploadTask = riversRef.putData(profileImage!, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
-
                 // Uh-oh, an error occurred!
                 return
             }
-            // Metadata contains file metadata such as size, content-type, and download URL.
-            let downloadURL = metadata.downloadURL
-            print(downloadURL)
+            completionHandler((metadata.downloadURL()?.absoluteString)!)
         }
     }
     
