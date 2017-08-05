@@ -179,7 +179,6 @@ class UserCell: UICollectionViewCell {
             }
         }
         let size = my_imagesToPresent.count
-        //print(size)
         var my_theta1 = 0.0
         var my_theta2 = 0.0
         let rad = 57.2958

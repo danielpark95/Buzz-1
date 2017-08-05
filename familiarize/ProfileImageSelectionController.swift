@@ -66,9 +66,25 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
         
         let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
-        
+        let selectedSocialMediaProfileImage = socialMediaProfileImages?[(selectedIndexPath?.item)!]
         // Error can occur right here for right now when there's no profile image to choose from
-        UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: (socialMediaProfileImages?[(selectedIndexPath?.item)!])!)
+        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: selectedSocialMediaProfileImage!)
+        if (selectedSocialMediaProfileImage?.appName == "default") {
+            FirebaseManager.uploadImageToFirebase(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
+                
+                UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage?.appName)!, withUserProfile: newUserProfile)
+                NotificationCenter.default.post(name: .reloadCards, object: nil)
+            })
+        }
+        
+        if socialMediaInputs != nil {
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
+                let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
+                profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
+                profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
+                self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
+            })
+        }
         
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }

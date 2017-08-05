@@ -41,11 +41,10 @@ class ImageFetchingManager {
     static fileprivate func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage?) -> Void) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         if socialMediaInput.appName == "faceBookProfile" {
-            print("TACOS")
+        
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
                 
                 if let html = response.result.value {
-                    //print (html)
                     self.parseHTML(html: html, withSocialMediaInput: socialMediaInput, completionHandlerForParse: { profileImage in
                         completionHandlerForScrape(profileImage)
                     })

@@ -37,7 +37,10 @@ extension UserProfile {
     @NSManaged public var linkedInProfile: String?
     @NSManaged public var soundCloudProfile: String?
     @NSManaged public var twitterProfile: String?
+    @NSManaged public var profileImageApp: String?
+    @NSManaged public var profileImageURL: String?
     @NSManaged var userProfileSelection: userProfileSelection
+    
 
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
         
@@ -54,7 +57,20 @@ extension UserProfile {
         return []
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) {
+    static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        userProfile.profileImageApp = UIManager.makeShortHandForQR(socialMediaProfileApp)
+        userProfile.profileImageURL = socialMediaProfileURL
+        do {
+            try(managedObjectContext.save())
+            NotificationCenter.default.post(name: .reload, object: nil)
+        } catch let err {
+            print(err)
+        }
+    }
+    
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) -> UserProfile {
         var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
         
         var currentSocialMediaName: String = ""
@@ -69,22 +85,25 @@ extension UserProfile {
         }
         
         // There's always going to be a profile image. Either default or not.
-        var toSaveCard: JSON = ["pi": ["an":"", "in":""]]
+        // Previous errors with this => must be initialized with:
+        // [:] to create an empty dictionary. [] creates an empty array and is wrong.
+        var toSaveCard: JSON = [:]
         for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
             let currentSocialMediaName = UIManager.makeShortHandForQR(eachConcantenatedSocialMediaInput.socialMediaName)
             toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
         }
         
-        // an -- App Name
+        // pia -- App Name
         // When default profile image is chosen, then the appName is: default
-        // in -- Input Name
+        // piu -- Input Name
         // When default profile image is chosen, then the inputName is the url link to the image
-        toSaveCard["pi"]["an"].string = UIManager.makeShortHandForQR(socialMediaProfileImage.appName!)
-        toSaveCard["pi"]["in"].string = socialMediaProfileImage.inputName
+        toSaveCard["pia"].string = UIManager.makeShortHandForQR(socialMediaProfileImage.appName!)
+        toSaveCard["piu"].string = socialMediaProfileImage.inputName
         
         let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
         let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)! , withImageXCoordPadding: -230)
-        UserProfile.saveProfileImage(profileImageData, userObject: userProfile)
+        UserProfile.saveProfileImage(profileImageData, withUserProfile: userProfile)
+        return userProfile
     }
     
     static func saveProfile(_ qrJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
@@ -123,6 +142,13 @@ extension UserProfile {
         if (qrJSON["so"].exists()) {
             newUser.soundCloudProfile = qrJSON["so"].string
         }
+        if (qrJSON["pia"].exists()) {
+            newUser.profileImageApp = qrJSON["pia"].string
+        }
+        if (qrJSON["piu"].exists()) {
+            newUser.profileImageURL = qrJSON["piu"].string
+            print("This is what we have here!!!!!!!: \(newUser.profileImageURL)")
+        }
 
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
@@ -136,10 +162,10 @@ extension UserProfile {
         return newUser
     }
     
-    static func saveProfileImage(_ profileImage: Data, userObject newUser: UserProfile) {
+    static func saveProfileImage(_ profileImage: Data, withUserProfile userProfile: UserProfile) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
-        newUser.profileImage = profileImage as Data
+        userProfile.profileImage = profileImage as Data
         do {
             try(managedObjectContext.save())
             NotificationCenter.default.post(name: .reload, object: nil)

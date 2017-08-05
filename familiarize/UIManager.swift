@@ -67,7 +67,11 @@ class UIManager {
             "linkedInProfile": "in",
             "soundCloudProfile": "so",
             "twitterProfile": "tw",
+            "default": "df",
+            "profileImageApp": "pia",
+            "profileImageURL": "piu",
             ]
+
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName
         } else {

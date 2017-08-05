@@ -10,6 +10,10 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
+extension Notification.Name {
+    static let reloadCards = Notification.Name("reloadCardsNotification")
+}
+
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
@@ -25,7 +29,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        self.reloadCard()
+        self.reloadCards()
         delegate.previousIndex = 0
     }
     
@@ -35,9 +39,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         self.automaticallyAdjustsScrollViewInsets = false
         navigationItem.title = "Me"
         
-//        let randoImage: UIImage = UIImage(named: "dan_yelp")!
-//        let imageData: Data = UIImagePNGRepresentation(randoImage)!
-//        FirebaseManager.uploadImageToFirebase(imageData)
+
+        // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCards), name: .reloadCards, object: nil)
         
         let user1: JSON = [
             "name": "T.J. Miller",
@@ -58,7 +62,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "em": "em",
             ]
         
-        //UserProfile.clearData(forProfile: .myUser)
+        UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)
@@ -212,7 +216,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return 0
     }
     
-    func reloadCard() {
+    func reloadCards() {
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         profileImageCache.removeAllObjects()
         collectionView?.reloadData()

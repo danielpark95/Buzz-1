@@ -22,7 +22,6 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
-    var qrJSON: JSON = []
     var cameraActive: Bool = true
     var userProfile: UserProfile?
     
@@ -157,8 +156,7 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
             qrCodeFrameView?.frame = CGRect.zero
             return
         }
-        
-        print("Camera status \(cameraActive)")
+
         // Get the metadata object.
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
@@ -178,20 +176,41 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
                 self.present(scanProfileController, animated: false)
                 
                 self.cameraActive = false
-                
             }
         }
     }
     
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
-        // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
-        Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
-            print("\(response.result.isSuccess)")
-            if let html = response.result.value {
-                self.parseHTML(html: html, scanProfileController: scanProfileController)
+        
+        let profileImageApp = userProfile?.profileImageApp
+        print("The profile image app is: \(profileImageApp)" )
+        if (profileImageApp == "fb") {
+            // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
+            Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
+                if let html = response.result.value {
+                    self.parseHTML(html: html, scanProfileController: scanProfileController)
+                }
             }
+        } else if (profileImageApp == "df") { // For handling images that were uploaded to the firebase server.
+            print ("TACOSOSOSOSO")
+            let profileImageURL = userProfile?.profileImageURL
+            let formattedProfileImageURL  = URL(string: profileImageURL!)
+            
+            URLSession.shared.dataTask(with: formattedProfileImageURL!, completionHandler: { data, response, error in
+                
+                if let profileImageData = data {
+                    DispatchQueue.main.async {
+                        UserProfile.saveProfileImage(profileImageData as Data, withUserProfile: self.userProfile!)
+                        scanProfileController.setImage()
+                    }
+                }
+                
+            }).resume()
+
+            
         }
+
     }
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
@@ -200,7 +219,7 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
             for show in doc.css("img[class^='profilePic img']") {
                 let url = NSURL(string: show["src"]!)!
                 let profileImage:NSData? = NSData(contentsOf: url as URL)
-                UserProfile.saveProfileImage(profileImage! as Data, userObject: self.userProfile!)
+                UserProfile.saveProfileImage(profileImage! as Data, withUserProfile: self.userProfile!)
                 scanProfileController.setImage()
             }
         }
