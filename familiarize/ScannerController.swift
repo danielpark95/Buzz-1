@@ -180,6 +180,8 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         }
     }
     
+    // MUST REFACTOR ALL THESE CODES FOR LATER USE. PUT ALL OF THESE CALLS INTO IMAGEFETCHINGMANAGER!!
+    
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
         
@@ -193,7 +195,7 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
                 }
             }
         } else if (profileImageApp == "df") { // For handling images that were uploaded to the firebase server.
-            print ("TACOSOSOSOSO")
+
             let profileImageURL = userProfile?.profileImageURL
             let formattedProfileImageURL  = URL(string: profileImageURL!)
             
@@ -205,13 +207,10 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
                         scanProfileController.setImage()
                     }
                 }
-                
             }).resume()
-
-            
         }
-
     }
+    
     
     // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
     func parseHTML(html: String, scanProfileController: ScanProfileController) {

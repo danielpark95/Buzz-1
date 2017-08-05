@@ -52,7 +52,6 @@ class ViewProfileController: UIViewController {
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-        
         return imageView
     }()
     
@@ -146,8 +145,8 @@ class ViewProfileController: UIViewController {
     
     func setImage() {
         if userProfile?.profileImage != nil {
-            //self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
-            self.profileImage.image = UIManager.makeImage(imageName: "tjmiller6").image
+            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+            //self.profileImage.image = UIManager.makeImage(imageName: "tjmiller6").image
             self.profileImage.clipsToBounds = true
         }
     }

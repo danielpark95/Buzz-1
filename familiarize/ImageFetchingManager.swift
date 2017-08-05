@@ -68,8 +68,11 @@ class ImageFetchingManager {
                     URLSession.shared.dataTask(with: formattedProfileImageUrl!, completionHandler: { data, response, error in
                         
                         if let profileImageData = data {
-                            let newSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: socialMediaInput, withImage: UIImage(data: profileImageData)!)
-                            completionHandlerForParse(newSocialMediaProfileImage)
+                            
+                            DispatchQueue.main.async {
+                                let newSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: socialMediaInput, withImage: UIImage(data: profileImageData)!)
+                                completionHandlerForParse(newSocialMediaProfileImage)
+                            }
                         }
 
                     }).resume()
