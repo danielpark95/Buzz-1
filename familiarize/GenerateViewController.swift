@@ -37,17 +37,19 @@ class GenerateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+            
+            
         let user1: JSON = [
             "name": "T.J. Miller",
-            "pn": "pn",
-            "fb": "100015503711138",
-            "sc": "sc",
-            "ig": "ig",
-            "so": "so",
-            "tw": "tw",
+            "phoneNumber": "pn",
+            "faceBookProfile": "100015503711138",
+            "snapChatProfile": "sc",
+            "instagramProfile": "ig",
+            "soundCloudProfile": "so",
+            "twitterProfile": "tw",
             "bio": "Miller the professional chiller.",
-            "pia": "faceBookProfile",
-            "piu": "100015503711138",
+            "profileImageApp": "default",
+            "profileImageURL": "https://firebasestorage.googleapis.com/v0/b/familiarize-ios.appspot.com/o/E6FC1A29-6F26-4F01-97A2-CB91FE8A47FD%2F30CC2866-639D-43B2-879E-474FE36E5ACD?alt=media&token=25054d78-60fd-417b-a9e7-43ea8a6b4a28",
             ]
         
         let uniqueID = FirebaseManager.generateUniqueID()

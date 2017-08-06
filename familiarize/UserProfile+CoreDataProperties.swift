@@ -60,7 +60,7 @@ extension UserProfile {
     static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
-        userProfile.profileImageApp = UIManager.makeShortHandForQR(socialMediaProfileApp)
+        userProfile.profileImageApp = socialMediaProfileApp
         userProfile.profileImageURL = socialMediaProfileURL
         do {
             try(managedObjectContext.save())
@@ -89,16 +89,17 @@ extension UserProfile {
         // [:] to create an empty dictionary. [] creates an empty array and is wrong.
         var toSaveCard: JSON = [:]
         for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
-            let currentSocialMediaName = UIManager.makeShortHandForQR(eachConcantenatedSocialMediaInput.socialMediaName)
-            toSaveCard[currentSocialMediaName!].string = eachConcantenatedSocialMediaInput.inputName
+            let currentSocialMediaName = eachConcantenatedSocialMediaInput.socialMediaName
+            toSaveCard[currentSocialMediaName].string = eachConcantenatedSocialMediaInput.inputName
         }
+        
         
         // pia -- App Name
         // When default profile image is chosen, then the appName is: default
         // piu -- Input Name
         // When default profile image is chosen, then the inputName is the url link to the image
-        toSaveCard["pia"].string = UIManager.makeShortHandForQR(socialMediaProfileImage.appName!)
-        toSaveCard["piu"].string = socialMediaProfileImage.inputName
+        toSaveCard["profileImageApp"].string = socialMediaProfileImage.appName!
+        toSaveCard["profileImageURL"].string = socialMediaProfileImage.inputName
         
         let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
         let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)! , withImageXCoordPadding: -230)
@@ -111,42 +112,42 @@ extension UserProfile {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
-        
+
         if (qrJSON["name"].exists()) {
             newUser.name = qrJSON["name"].string
         }
         if (qrJSON["bio"].exists()) {
             newUser.bio = qrJSON["bio"].string
         }
-        if (qrJSON["fb"].exists()) {
-            newUser.faceBookProfile = qrJSON["fb"].string
+        if (qrJSON["faceBookProfile"].exists()) {
+            newUser.faceBookProfile = qrJSON["faceBookProfile"].string
         }
-        if (qrJSON["sc"].exists()) {
-            newUser.snapChatProfile = qrJSON["sc"].string
+        if (qrJSON["snapChatProfile"].exists()) {
+            newUser.snapChatProfile = qrJSON["snapChatProfile"].string
         }
-        if (qrJSON["ig"].exists()) {
-            newUser.instagramProfile = qrJSON["ig"].string
+        if (qrJSON["instagramProfile"].exists()) {
+            newUser.instagramProfile = qrJSON["instagramProfile"].string
         }
-        if (qrJSON["em"].exists()) {
-            newUser.email = qrJSON["em"].string
+        if (qrJSON["email"].exists()) {
+            newUser.email = qrJSON["email"].string
         }
-        if (qrJSON["pn"].exists()) {
-            newUser.phoneNumber = qrJSON["pn"].string
+        if (qrJSON["phoneNumber"].exists()) {
+            newUser.phoneNumber = qrJSON["phoneNumber"].string
         }
-        if (qrJSON["in"].exists()) {
-            newUser.linkedInProfile = qrJSON["in"].string
+        if (qrJSON["linkedInProfile"].exists()) {
+            newUser.linkedInProfile = qrJSON["linkedInProfile"].string
         }
-        if (qrJSON["tw"].exists()) {
-            newUser.twitterProfile = qrJSON["tw"].string
+        if (qrJSON["twitterProfile"].exists()) {
+            newUser.twitterProfile = qrJSON["twitterProfile"].string
         }
-        if (qrJSON["so"].exists()) {
-            newUser.soundCloudProfile = qrJSON["so"].string
+        if (qrJSON["soundCloudProfile"].exists()) {
+            newUser.soundCloudProfile = qrJSON["soundCloudProfile"].string
         }
-        if (qrJSON["pia"].exists()) {
-            newUser.profileImageApp = qrJSON["pia"].string
+        if (qrJSON["profileImageApp"].exists()) {
+            newUser.profileImageApp = qrJSON["profileImageApp"].string
         }
-        if (qrJSON["piu"].exists()) {
-            newUser.profileImageURL = qrJSON["piu"].string
+        if (qrJSON["profileImageURL"].exists()) {
+            newUser.profileImageURL = qrJSON["profileImageURL"].string
         }
 
         newUser.userProfileSelection = userProfile

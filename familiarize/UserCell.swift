@@ -66,7 +66,7 @@ class UserCell: UICollectionViewCell {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
             if (profile.value(forKey: key) != nil && UIManager.makeShortHandForQR(key) != nil) {
-                    jsonDict[UIManager.makeShortHandForQR(key)!] = profile.value(forKey: key) as? String
+                    jsonDict[key] = profile.value(forKey: key) as? String
             }
         }
         return JSON(jsonDict).rawString()!
