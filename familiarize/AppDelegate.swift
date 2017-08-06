@@ -21,6 +21,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Quikkly framework setup
+        Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U" //Insert your api key here
+        
+        // Firebase Setup
+        FirebaseApp.configure()
+        
+        let tabVC = UITabBarController()
+        let vc0 = ScanContextViewController()
+        vc0.tabBarItem = UITabBarItem(title: "Scanning", image: UIImage(named: "Image-TabBar-Scanning"), tag: 0)
+        let vc1 = UINavigationController(rootViewController: GenerateViewController())
+        vc1.tabBarItem = UITabBarItem(title: "Generating", image: UIImage(named: "Image-TabBar-Generating"), tag: 1)
+        tabVC.viewControllers = [vc0, vc1]
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = tabVC
+        self.window?.backgroundColor = .white
+        self.window?.makeKeyAndVisible()
+        
+        
+        return true
+        
+        /*
+        
         Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U"
         
         // Firebase Setup 
@@ -44,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         UIApplication.shared.statusBarStyle = .default
         return true
+         */
     }
     
     

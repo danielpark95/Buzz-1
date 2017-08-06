@@ -70,7 +70,7 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         // Error can occur right here for right now when there's no profile image to choose from
         let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: selectedSocialMediaProfileImage!)
         if (selectedSocialMediaProfileImage?.appName == "default") {
-            FirebaseManager.uploadImageToFirebase(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
+            FirebaseManager.uploadImage(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
                 
                 UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage?.appName)!, withUserProfile: newUserProfile)
                 NotificationCenter.default.post(name: .reloadCards, object: nil)

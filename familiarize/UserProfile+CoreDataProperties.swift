@@ -147,7 +147,6 @@ extension UserProfile {
         }
         if (qrJSON["piu"].exists()) {
             newUser.profileImageURL = qrJSON["piu"].string
-            print("This is what we have here!!!!!!!: \(newUser.profileImageURL)")
         }
 
         newUser.userProfileSelection = userProfile
