@@ -106,7 +106,25 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                     self.scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                     self.scanProfileController.ScannerControllerDelegate = self
                     
-                    self.scrapeSocialMedia(self.scanProfileController)
+                    
+                    /*
+ 
+ 
+ ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
+ let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
+ profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
+ profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
+ self.navigationController?.pushViewController(profileI
+ */
+                    
+                    let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
+                    ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                        let profileImage = fetchedSocialMediaProfileImages[0].profileImage
+                        UserProfile.saveProfileImage(UIImagePNGRepresentation(profileImage!)!, withUserProfile: self.userProfile!)
+                        self.scanProfileController.setImage()
+                        
+                    })
+                    
                     
                     self.present(self.scanProfileController, animated: false)
                     
@@ -123,7 +141,8 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     // MUST REFACTOR ALL THESE CODES FOR LATER USE. PUT ALL OF THESE CALLS INTO IMAGEFETCHINGMANAGER!!
     
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
-    func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
+    
+    func scrapeSocialMedia(_ scanProfileController: ScanProfileController ) {
         
         let profileImageApp = userProfile?.profileImageApp
         print("The profile image app is: \(profileImageApp)" )

@@ -45,8 +45,10 @@ class GenerateViewController: UIViewController {
             "ig": "ig",
             "so": "so",
             "tw": "tw",
-            "bio": "Miller the professional chiller."
-        ]
+            "bio": "Miller the professional chiller.",
+            "pia": "faceBookProfile",
+            "piu": "100015503711138",
+            ]
         
         let uniqueID = FirebaseManager.generateUniqueID()
         FirebaseManager.uploadCard(user1, withUniqueID: uniqueID)
