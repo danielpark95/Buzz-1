@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        /*
         // Quikkly framework setup
         Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U" //Insert your api key here
         
@@ -42,7 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         return true
         
-        /*
+        */
+ 
+        
         
         Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U"
         
@@ -67,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         UIApplication.shared.statusBarStyle = .default
         return true
-         */
+        
     }
     
     

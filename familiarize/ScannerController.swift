@@ -7,17 +7,166 @@
 //
 
 import UIKit
-import AVFoundation
 import SwiftyJSON
 import Alamofire
 import Kanna
 import CoreData
+import Quikkly
 
 protocol ScannerControllerDelegate {
     func startCameraScanning() -> Void
     func stopCameraScanning() -> Void
 }
 
+class ScannerController: ScanViewController, ScannerControllerDelegate {
+    
+    var cameraActive: Bool = true
+    var cameraScanView: ScanView?
+    var userProfile: UserProfile?
+    
+    override init() {
+        super.init()
+        var count = 0
+        for v in (view.subviews){
+            if count != 0 {
+                v.removeFromSuperview()
+            }
+            count = count + 1
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if cameraScanView != nil {
+            cameraScanView?.stop()
+        }
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if cameraScanView != nil {
+            cameraScanView?.start()
+        }
+        self.cameraActive = true
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.tabBarController?.tabBar.isHidden = true
+        setupViews()
+    }
+    
+    lazy var backButton: UIButton = {
+        let image = UIImage(named: "cancel-button") as UIImage?
+        var button = UIButton(type: .custom) as UIButton
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didSelectBack), for: .touchUpInside)
+        return button
+    }()
+    
+    func didSelectBack() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        tabBarController?.selectedIndex = delegate.previousIndex!
+    }
+    
+    func setupViews() {
+        view.addSubview(backButton)
+        view.bringSubview(toFront: backButton)
+        
+        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+    }
+    
+    func startCameraScanning() {
+        //captureSession?.startRunning()
+        cameraActive = true
+    }
+    
+    func stopCameraScanning() {
+        if cameraScanView != nil {
+            cameraScanView?.stop()
+        }
+    }
+    
+    let scanProfileController = ScanProfileController()
+    func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
+        cameraScanView = scanView
+        
+        if cameraActive == true {
+            // Handle detected scannables
+            if let scannable = scannables.first {
+                FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
+                    
+                    self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
+                    
+                    // Setting up the controller and animations
+                    self.scanProfileController.userProfile = self.userProfile
+                    self.scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                    self.scanProfileController.ScannerControllerDelegate = self
+                    
+                    self.scrapeSocialMedia(self.scanProfileController)
+                    
+                    self.present(self.scanProfileController, animated: false)
+                    
+                    self.cameraActive = false
+                    
+                    // If we dont stop the camera the cpu is going off the fucking charts . . .
+                    //self.cameraScanView?.stop()
+                    
+                })
+            }
+        }
+    }
+    
+    // MUST REFACTOR ALL THESE CODES FOR LATER USE. PUT ALL OF THESE CALLS INTO IMAGEFETCHINGMANAGER!!
+    
+    // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
+    func scrapeSocialMedia(_ scanProfileController: ScanProfileController) {
+        
+        let profileImageApp = userProfile?.profileImageApp
+        print("The profile image app is: \(profileImageApp)" )
+        if (profileImageApp == "fb") {
+            // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
+            Alamofire.request("https://www.facebook.com/" + (self.userProfile?.faceBookProfile)!).responseString { response in
+                if let html = response.result.value {
+                    self.parseHTML(html: html, scanProfileController: scanProfileController)
+                }
+            }
+        } else if (profileImageApp == "df") { // For handling images that were uploaded to the firebase server.
+            
+            let profileImageURL = userProfile?.profileImageURL
+            let formattedProfileImageURL  = URL(string: profileImageURL!)
+            
+            URLSession.shared.dataTask(with: formattedProfileImageURL!, completionHandler: { data, response, error in
+                
+                if let profileImageData = data {
+                    DispatchQueue.main.async {
+                        UserProfile.saveProfileImage(profileImageData as Data, withUserProfile: self.userProfile!)
+                        scanProfileController.setImage()
+                    }
+                }
+            }).resume()
+        }
+    }
+    
+    
+    // This receives a whole html page and parses through the html document and go search for the link that holds the facebook image.
+    func parseHTML(html: String, scanProfileController: ScanProfileController) {
+        if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
+            for show in doc.css("img[class^='profilePic img']") {
+                let url = NSURL(string: show["src"]!)!
+                let profileImage:NSData? = NSData(contentsOf: url as URL)
+                UserProfile.saveProfileImage(profileImage! as Data, withUserProfile: self.userProfile!)
+                scanProfileController.setImage()
+            }
+        }
+    }
+}
+
+
+/*
 class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScannerControllerDelegate {
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
@@ -124,10 +273,6 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func verifyAndSave(_ qrCode: String) -> Bool {
         // TODO: Before even moving on, this function should verify that the qr code's JSON is in the format that we need it in.
@@ -224,3 +369,4 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         }
     }
 }
+*/
