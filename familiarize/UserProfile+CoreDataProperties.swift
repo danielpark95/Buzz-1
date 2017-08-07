@@ -39,8 +39,10 @@ extension UserProfile {
     @NSManaged public var twitterProfile: String?
     @NSManaged public var profileImageApp: String?
     @NSManaged public var profileImageURL: String?
+    @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
     
+ 
 
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
         
@@ -107,48 +109,51 @@ extension UserProfile {
         return userProfile
     }
     
-    static func saveProfile(_ qrJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
+    static func saveProfile(_ cardJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
 
-        if (qrJSON["name"].exists()) {
-            newUser.name = qrJSON["name"].string
+        if (cardJSON["name"].exists()) {
+            newUser.name = cardJSON["name"].string
         }
-        if (qrJSON["bio"].exists()) {
-            newUser.bio = qrJSON["bio"].string
+        if (cardJSON["bio"].exists()) {
+            newUser.bio = cardJSON["bio"].string
         }
-        if (qrJSON["faceBookProfile"].exists()) {
-            newUser.faceBookProfile = qrJSON["faceBookProfile"].string
+        if (cardJSON["faceBookProfile"].exists()) {
+            newUser.faceBookProfile = cardJSON["faceBookProfile"].string
         }
-        if (qrJSON["snapChatProfile"].exists()) {
-            newUser.snapChatProfile = qrJSON["snapChatProfile"].string
+        if (cardJSON["snapChatProfile"].exists()) {
+            newUser.snapChatProfile = cardJSON["snapChatProfile"].string
         }
-        if (qrJSON["instagramProfile"].exists()) {
-            newUser.instagramProfile = qrJSON["instagramProfile"].string
+        if (cardJSON["instagramProfile"].exists()) {
+            newUser.instagramProfile = cardJSON["instagramProfile"].string
         }
-        if (qrJSON["email"].exists()) {
-            newUser.email = qrJSON["email"].string
+        if (cardJSON["email"].exists()) {
+            newUser.email = cardJSON["email"].string
         }
-        if (qrJSON["phoneNumber"].exists()) {
-            newUser.phoneNumber = qrJSON["phoneNumber"].string
+        if (cardJSON["phoneNumber"].exists()) {
+            newUser.phoneNumber = cardJSON["phoneNumber"].string
         }
-        if (qrJSON["linkedInProfile"].exists()) {
-            newUser.linkedInProfile = qrJSON["linkedInProfile"].string
+        if (cardJSON["linkedInProfile"].exists()) {
+            newUser.linkedInProfile = cardJSON["linkedInProfile"].string
         }
-        if (qrJSON["twitterProfile"].exists()) {
-            newUser.twitterProfile = qrJSON["twitterProfile"].string
+        if (cardJSON["twitterProfile"].exists()) {
+            newUser.twitterProfile = cardJSON["twitterProfile"].string
         }
-        if (qrJSON["soundCloudProfile"].exists()) {
-            newUser.soundCloudProfile = qrJSON["soundCloudProfile"].string
+        if (cardJSON["soundCloudProfile"].exists()) {
+            newUser.soundCloudProfile = cardJSON["soundCloudProfile"].string
         }
-        if (qrJSON["profileImageApp"].exists()) {
-            newUser.profileImageApp = qrJSON["profileImageApp"].string
+        if (cardJSON["profileImageApp"].exists()) {
+            newUser.profileImageApp = cardJSON["profileImageApp"].string
         }
-        if (qrJSON["profileImageURL"].exists()) {
-            newUser.profileImageURL = qrJSON["profileImageURL"].string
+        if (cardJSON["profileImageURL"].exists()) {
+            newUser.profileImageURL = cardJSON["profileImageURL"].string
         }
+
+        newUser.uniqueID = NSNumber(value: Int64(FirebaseManager.generateUniqueID()))
+        FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.int64Value))
 
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()

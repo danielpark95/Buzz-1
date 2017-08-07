@@ -20,13 +20,19 @@ class UserCell: UICollectionViewCell {
     // The amount of padding removes X amount of padding from the right side.
     // We have to compensate for the lost padding in the view controller by removing the width of the image when applying constraints
     let imageXCoordPadding: CGFloat = -230
-    
+    var onQRImage: Bool = true
+    var scannableView:ScannableView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         scannableView = ScannableView()
         NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     func manageBrightness() {
         if (self.fullBrightness == true) {
@@ -37,12 +43,7 @@ class UserCell: UICollectionViewCell {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var onQRImage: Bool = true
-    var scannableView:ScannableView!
+
     
     var myUserProfile: UserProfile? {
         didSet {
@@ -63,24 +64,7 @@ class UserCell: UICollectionViewCell {
         }
     }
 
- 
-    var uploadableCardInfomation: Set<String> = ["name", "bio", "email", "phoneNumber", "faceBookProfile", "snapChatProfile", "instagramProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile", "default", "profileImageApp", "profileImageURL"]
- 
-    func createCardJSON(_ profile: UserProfile) -> JSON {
-        var cardJSON: JSON = [:]
-        for key in (profile.entity.attributesByName.keys) {
-            if (profile.value(forKey: key) != nil && uploadableCardInfomation.contains(key)) {
-                    cardJSON[key].string = profile.value(forKey: key) as? String
-            }
-        }
-        return cardJSON
-    }
-
     func createQR(_ profile: UserProfile) {
-        
-        let cardJSON = createCardJSON(profile)
-        let uniqueID = FirebaseManager.generateUniqueID()
-        FirebaseManager.uploadCard(cardJSON, withUniqueID: uniqueID)
         
         let skin = ScannableSkin()
         skin.backgroundColor = "#ffffff"
@@ -92,7 +76,7 @@ class UserCell: UICollectionViewCell {
         skin.imageFit = .templateDefault
         skin.logoUri = ""
         
-        let scannable = Scannable(withValue: uniqueID, template: "template0015style2", skin: skin)
+        let scannable = Scannable(withValue: profile.uniqueID as! UInt64, template: "template0015style2", skin: skin)
         
         self.scannableView.scannable = scannable
         
