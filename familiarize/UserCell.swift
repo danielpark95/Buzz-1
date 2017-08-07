@@ -9,7 +9,7 @@
 import QRCode
 import SwiftyJSON
 import UIKit
-
+import Quikkly
 
 
 class UserCell: UICollectionViewCell {
@@ -24,6 +24,7 @@ class UserCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        scannableView = ScannableView()
         NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
     }
     
@@ -41,7 +42,7 @@ class UserCell: UICollectionViewCell {
     }
     
     var onQRImage: Bool = true
-    var qrImageView: UIImageView?
+    var scannableView:ScannableView!
     
     var myUserProfile: UserProfile? {
         didSet {
@@ -65,22 +66,36 @@ class UserCell: UICollectionViewCell {
  
     var uploadableCardInfomation: Set<String> = ["name", "bio", "email", "phoneNumber", "faceBookProfile", "snapChatProfile", "instagramProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile", "default", "profileImageApp", "profileImageURL"]
  
-    func createCardJSON(_ profile: UserProfile) -> String {
-        var jsonDict: [String: String] = [:]
+    func createCardJSON(_ profile: UserProfile) -> JSON {
+        var cardJSON: JSON = [:]
         for key in (profile.entity.attributesByName.keys) {
             if (profile.value(forKey: key) != nil && uploadableCardInfomation.contains(key)) {
-                    jsonDict[key] = profile.value(forKey: key) as? String
+                    cardJSON[key].string = profile.value(forKey: key) as? String
             }
         }
-        return JSON(jsonDict).rawString()!
+        return cardJSON
     }
 
     func createQR(_ profile: UserProfile) {
-        var cardJSON = QRCode(self.createCardJSON(profile))
-        cardJSON?.color = CIColor.white()
-        cardJSON?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        qrImageView = UIManager.makeImage()
-        qrImageView?.image = cardJSON?.image
+        
+        let cardJSON = createCardJSON(profile)
+        let uniqueID = FirebaseManager.generateUniqueID()
+        FirebaseManager.uploadCard(cardJSON, withUniqueID: uniqueID)
+        
+        let skin = ScannableSkin()
+        skin.backgroundColor = "#ffffff"
+        skin.maskColor = "#ffffff"
+        skin.dotColor = "#58595b"
+        skin.borderColor = "#58595b"
+        skin.overlayColor = "#58595b"
+        skin.imageUri = "https://s3-eu-west-1.amazonaws.com/qkly-service-albums/temp_icons/squiddy.png"
+        skin.imageFit = .templateDefault
+        skin.logoUri = ""
+        
+        let scannable = Scannable(withValue: uniqueID, template: "template0015style2", skin: skin)
+        
+        self.scannableView.scannable = scannable
+        
     }
     
     var profileImage: UIImageView = {
@@ -113,11 +128,12 @@ class UserCell: UICollectionViewCell {
     }
     
     func presentScannableCode() {
-        addSubview(qrImageView!)
-        qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
-        qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        self.addSubview(self.scannableView)
+        scannableView.translatesAutoresizingMaskIntoConstraints = false
+        scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        scannableView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        scannableView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
     }
 
     func presentProfile() {

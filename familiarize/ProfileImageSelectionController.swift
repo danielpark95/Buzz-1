@@ -79,7 +79,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
                 
                 UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage?.appName)!, withUserProfile: newUserProfile)
                 NotificationCenter.default.post(name: .reloadCards, object: nil)
-
             })
         }
         

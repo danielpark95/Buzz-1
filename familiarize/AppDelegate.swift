@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        /*
+       /*
         
         // Quikkly framework setup
         Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U" //Insert your api key here
@@ -44,8 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         return true
  
- 
  */
+ 
         
         
         Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U"

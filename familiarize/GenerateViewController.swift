@@ -28,9 +28,14 @@ class GenerateViewController: UIViewController {
         
         self.view.backgroundColor = .white
         
-        self.scannableView = ScannableView(frame: CGRect())
+        self.scannableView = ScannableView()
         self.view.addSubview(self.scannableView)
-        
+        self.scannableView.translatesAutoresizingMaskIntoConstraints = false
+        self.scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        self.scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        self.scannableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.scannableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
 
     }
     
@@ -71,12 +76,7 @@ class GenerateViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.scannableView.translatesAutoresizingMaskIntoConstraints = false
-        self.scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        self.scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        self.scannableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.scannableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-
+        
     }
     
 }
