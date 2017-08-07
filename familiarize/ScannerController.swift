@@ -97,7 +97,10 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
         if cameraActive == true {
             // Handle detected scannables
             if let scannable = scannables.first {
+                
+                print("THIS IS THE SCAN CODE \(scannable.value)")
                 FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
+                    
 
                     self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
                     

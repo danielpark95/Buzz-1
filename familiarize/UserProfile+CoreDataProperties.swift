@@ -107,6 +107,9 @@ extension UserProfile {
     }
     
     static func saveProfile(_ cardJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
+        
+        // TODO: A NEW CARD IS ALWAYS BEING UPLOADED ON SCAN!!! 
+        
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
