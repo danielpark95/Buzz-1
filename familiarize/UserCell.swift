@@ -61,11 +61,14 @@ class UserCell: UICollectionViewCell {
             setupViews()
         }
     }
-    
-    func createJSON(_ profile: UserProfile) -> String {
+
+ 
+    var uploadableCardInfomation: Set<String> = ["name", "bio", "email", "phoneNumber", "faceBookProfile", "snapChatProfile", "instagramProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile", "default", "profileImageApp", "profileImageURL"]
+ 
+    func createCardJSON(_ profile: UserProfile) -> String {
         var jsonDict: [String: String] = [:]
         for key in (profile.entity.attributesByName.keys) {
-            if (profile.value(forKey: key) != nil && UIManager.makeShortHandForQR(key) != nil) {
+            if (profile.value(forKey: key) != nil && uploadableCardInfomation.contains(key)) {
                     jsonDict[key] = profile.value(forKey: key) as? String
             }
         }
@@ -73,11 +76,11 @@ class UserCell: UICollectionViewCell {
     }
 
     func createQR(_ profile: UserProfile) {
-        var qrCode = QRCode(self.createJSON(profile))
-        qrCode?.color = CIColor.white()
-        qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        var cardJSON = QRCode(self.createCardJSON(profile))
+        cardJSON?.color = CIColor.white()
+        cardJSON?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         qrImageView = UIManager.makeImage()
-        qrImageView?.image = qrCode?.image
+        qrImageView?.image = cardJSON?.image
     }
     
     var profileImage: UIImageView = {
@@ -157,7 +160,7 @@ class UserCell: UICollectionViewCell {
         "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
     
-    //Helper function to space out social media icons - dan
+    // Helper function to space out social media icons - dan
     func autoSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
         var count = 0
         for image in imagesToPresent{
@@ -170,7 +173,7 @@ class UserCell: UICollectionViewCell {
         }
     }
     
-    //Function to space out social media icons evenly around the profile picture at an equal distance -dan
+    // Function to space out social media icons evenly around the profile picture at an equal distance -dan
     func presentSocialMediaButtons() {
         var my_imagesToPresent = [UIImageView]()
         for key in (myUserProfile?.entity.attributesByName.keys)! {
@@ -191,14 +194,12 @@ class UserCell: UICollectionViewCell {
             my_theta1 = 110.0
             my_theta2 = 35.0
         } else if size == 4 {
-            //looks good
             my_theta1 = 110.0
             my_theta2 = 30.0
         } else if size == 5 {
             my_theta1 = 95.0
             my_theta2 = 25.0
         } else if size == 6 {
-            //looks good
             my_theta1 = 80.0
             my_theta2 = 25.0
         } else {

@@ -71,6 +71,7 @@ class FirebaseManager {
                 return
             }
             completionHandler((metadata.downloadURL()?.absoluteString)!)
+            
         }
     }
     

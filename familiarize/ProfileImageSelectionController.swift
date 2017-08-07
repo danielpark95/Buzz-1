@@ -65,24 +65,21 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     func selectClicked() {
         let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
         
+        // Select the chosen image from the carousel.
         let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
         let selectedSocialMediaProfileImage = socialMediaProfileImages?[(selectedIndexPath?.item)!]
-        // Error can occur right here for right now when there's no profile image to choose from
+        
+        // Save the new card information into core data.
         let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: selectedSocialMediaProfileImage!)
+
+        // When the image chosen is from the camera roll, upload the image to firebase
+        // And then update the URL link to that image.
         if (selectedSocialMediaProfileImage?.appName == "default") {
             FirebaseManager.uploadImage(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
                 
                 UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage?.appName)!, withUserProfile: newUserProfile)
                 NotificationCenter.default.post(name: .reloadCards, object: nil)
-            })
-        }
-        
-        if socialMediaInputs != nil {
-            ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
-                let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
-                profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
-                profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
-                self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
+
             })
         }
         
@@ -90,7 +87,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
         if let count = socialMediaProfileImages?.count {
             return count
         }

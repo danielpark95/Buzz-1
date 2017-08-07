@@ -37,8 +37,6 @@ class GenerateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-            
-            
         let user1: JSON = [
             "name": "T.J. Miller",
             "phoneNumber": "pn",

@@ -31,7 +31,7 @@ class ImageFetchingManager {
         
         asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
             let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "default", withInputName: "default", withAlreadySet: false)
-            let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "dan_camera_85")!)
+            let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "default")!)
             socialMediaProfileImages.append(defaultSocialMediaProfileImage)
             completionHandler(socialMediaProfileImages)
         })

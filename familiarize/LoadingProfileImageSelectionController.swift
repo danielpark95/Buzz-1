@@ -126,14 +126,14 @@ class LoadingProfileImageSelectionController: UIViewController {
     }
     
     func fetchImage() {
-        if socialMediaInputs != nil {
-            ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
-                let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
-                profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
-                profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
-                self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
-            })
-        }
+        
+        ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
+            let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
+            profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
+            profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
+            self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
+        })
+        
     }
     
     

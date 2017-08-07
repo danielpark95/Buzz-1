@@ -94,11 +94,11 @@ extension UserProfile {
         }
         
         
-        // pia -- App Name
+        // profileImageApp
         // When default profile image is chosen, then the appName is: default
-        // piu -- Input Name
+        // profileImageURL
         // When default profile image is chosen, then the inputName is the url link to the image
-        toSaveCard["profileImageApp"].string = socialMediaProfileImage.appName!
+        toSaveCard["profileImageApp"].string = socialMediaProfileImage.appName
         toSaveCard["profileImageURL"].string = socialMediaProfileImage.inputName
         
         let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
