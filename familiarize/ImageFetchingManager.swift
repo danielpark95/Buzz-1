@@ -31,7 +31,7 @@ class ImageFetchingManager {
         
         asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
             let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "default", withInputName: "default", withAlreadySet: false)
-            let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "dan_camera_85")!)
+            let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "default")!)
             socialMediaProfileImages.append(defaultSocialMediaProfileImage)
             completionHandler(socialMediaProfileImages)
         })
@@ -51,6 +51,18 @@ class ImageFetchingManager {
                 }
 
             }
+        } else if socialMediaInput.appName == "default" {
+            let formattedProfileImageURL  = URL(string: socialMediaInput.inputName!)
+            URLSession.shared.dataTask(with: formattedProfileImageURL!, completionHandler: { data, response, error in
+                
+                if let profileImageData = data {
+                    DispatchQueue.main.async {
+                        
+                        let newSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: socialMediaInput, withImage: UIImage(data: profileImageData)!)
+                        completionHandlerForScrape(newSocialMediaProfileImage)
+                    }
+                }
+            }).resume()
         }
     }
     
@@ -88,7 +100,7 @@ class ImageFetchingManager {
         var massagedSocialMediaInputs: [SocialMedia] = []
         
         // TODO: Include all social media that supports profile images.
-        let socialMediaAppsWithRetrievableProfileImages: Set<String> = ["faceBookProfile"]
+        let socialMediaAppsWithRetrievableProfileImages: Set<String> = ["faceBookProfile", "default"]
         
         for eachSocialMediaInput in socialMediaInputs {
             if socialMediaAppsWithRetrievableProfileImages.contains(eachSocialMediaInput.appName!) {

@@ -37,10 +37,12 @@ target 'familiarize' do
   #Firebase baby (:
   pod 'Firebase/Storage'
   pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
   #Circular Image Cropper -- Looks suprisingly like aquaints. FUCKKCKCKCKCKKCKC
   pod 'RSKImageCropperSwift', '1.5.1.swift3'
 
   pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
+
 
 end

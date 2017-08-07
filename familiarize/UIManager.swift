@@ -54,30 +54,6 @@ class UIManager {
         image = cropRightImage(image: image!, withImageXCoordPadding: imageXCoordPadding)
         return UIImagePNGRepresentation(image!)!
     }
-
-    static func makeShortHandForQR(_ longSocialMediaName: String) -> String? {
-        let shortHandForQR = [
-            "name": "name",
-            "bio": "bio",
-            "email": "em",
-            "phoneNumber": "pn",
-            "faceBookProfile": "fb",
-            "snapChatProfile": "sc" ,
-            "instagramProfile": "ig",
-            "linkedInProfile": "in",
-            "soundCloudProfile": "so",
-            "twitterProfile": "tw",
-            "default": "df",
-            "profileImageApp": "pia",
-            "profileImageURL": "piu",
-            ]
-
-        if let shortName = shortHandForQR[longSocialMediaName] {
-            return shortName
-        } else {
-            return nil
-        }
-    }
     
     static func makeRegularHandForDisplay(_ longSocialMediaName: String) -> String? {
         let shortHandForQR = [

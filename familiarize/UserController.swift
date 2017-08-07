@@ -51,7 +51,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "ig": "ig",
             "so": "so",
             "tw": "tw",
-            "bio": "Miller the professional chiller."
+            "bio": "Miller the professional chiller.",
+            "pia": "fb",
+            "piu": "100015503711138",
         ]
         
         let user2: JSON = [
@@ -62,7 +64,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "em": "em",
             ]
         
-        UserProfile.clearData(forProfile: .myUser)
+        //UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)

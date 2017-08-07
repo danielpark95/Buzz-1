@@ -15,9 +15,10 @@
         <attribute name="snapChatProfile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="soundCloudProfile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="twitterProfile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="userProfileSelection" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UserProfile" positionX="-1422" positionY="-9" width="128" height="270"/>
+        <element name="UserProfile" positionX="-1422" positionY="-9" width="128" height="285"/>
     </elements>
 </model>

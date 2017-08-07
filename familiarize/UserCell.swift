@@ -9,7 +9,7 @@
 import QRCode
 import SwiftyJSON
 import UIKit
-
+import Quikkly
 
 
 class UserCell: UICollectionViewCell {
@@ -20,12 +20,19 @@ class UserCell: UICollectionViewCell {
     // The amount of padding removes X amount of padding from the right side.
     // We have to compensate for the lost padding in the view controller by removing the width of the image when applying constraints
     let imageXCoordPadding: CGFloat = -230
-    
+    var onQRImage: Bool = true
+    var scannableView:ScannableView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        scannableView = ScannableView()
         NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     func manageBrightness() {
         if (self.fullBrightness == true) {
@@ -36,12 +43,7 @@ class UserCell: UICollectionViewCell {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var onQRImage: Bool = true
-    var qrImageView: UIImageView?
+
     
     var myUserProfile: UserProfile? {
         didSet {
@@ -61,23 +63,22 @@ class UserCell: UICollectionViewCell {
             setupViews()
         }
     }
-    
-    func createJSON(_ profile: UserProfile) -> String {
-        var jsonDict: [String: String] = [:]
-        for key in (profile.entity.attributesByName.keys) {
-            if (profile.value(forKey: key) != nil && UIManager.makeShortHandForQR(key) != nil) {
-                    jsonDict[UIManager.makeShortHandForQR(key)!] = profile.value(forKey: key) as? String
-            }
-        }
-        return JSON(jsonDict).rawString()!
-    }
 
-    func createQR(_ profile: UserProfile) {
-        var qrCode = QRCode(self.createJSON(profile))
-        qrCode?.color = CIColor.white()
-        qrCode?.backgroundColor = CIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        qrImageView = UIManager.makeImage()
-        qrImageView?.image = qrCode?.image
+    func createQR(_ userProfile: UserProfile) {
+        
+        let skin = ScannableSkin()
+        skin.backgroundColor = "#ffffff"
+        skin.maskColor = "#ffffff"
+        skin.dotColor = "#58595b"
+        skin.borderColor = "#58595b"
+        skin.overlayColor = "#58595b"
+        skin.imageUri = "https://s3-eu-west-1.amazonaws.com/qkly-service-albums/temp_icons/squiddy.png"
+        skin.imageFit = .templateDefault
+        skin.logoUri = ""
+        
+        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0015style2", skin: skin)
+        
+        self.scannableView.scannable = scannable
     }
     
     var profileImage: UIImageView = {
@@ -110,11 +111,12 @@ class UserCell: UICollectionViewCell {
     }
     
     func presentScannableCode() {
-        addSubview(qrImageView!)
-        qrImageView?.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        qrImageView?.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
-        qrImageView?.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        qrImageView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        self.addSubview(self.scannableView)
+        scannableView.translatesAutoresizingMaskIntoConstraints = false
+        scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        scannableView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        scannableView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
     }
 
     func presentProfile() {
@@ -157,7 +159,7 @@ class UserCell: UICollectionViewCell {
         "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
     
-    //Helper function to space out social media icons - dan
+    // Helper function to space out social media icons - dan
     func autoSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
         var count = 0
         for image in imagesToPresent{
@@ -170,7 +172,7 @@ class UserCell: UICollectionViewCell {
         }
     }
     
-    //Function to space out social media icons evenly around the profile picture at an equal distance -dan
+    // Function to space out social media icons evenly around the profile picture at an equal distance -dan
     func presentSocialMediaButtons() {
         var my_imagesToPresent = [UIImageView]()
         for key in (myUserProfile?.entity.attributesByName.keys)! {
@@ -191,14 +193,12 @@ class UserCell: UICollectionViewCell {
             my_theta1 = 110.0
             my_theta2 = 35.0
         } else if size == 4 {
-            //looks good
             my_theta1 = 110.0
             my_theta2 = 30.0
         } else if size == 5 {
             my_theta1 = 95.0
             my_theta2 = 25.0
         } else if size == 6 {
-            //looks good
             my_theta1 = 80.0
             my_theta2 = 25.0
         } else {
