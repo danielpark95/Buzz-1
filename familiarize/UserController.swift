@@ -173,6 +173,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     var pageControl: UIPageControl = {
         let pc = UIPageControl()
+        pc.hidesForSinglePage = true
         pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
         pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
         pc.translatesAutoresizingMaskIntoConstraints = false

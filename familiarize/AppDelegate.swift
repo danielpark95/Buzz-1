@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Quikkly.apiKey = "jVhRa3tYqXbDQoNoZKEehEq4ONRBFPwUik5lkrbPoEL1foWgKh171FtyCC0iVHXC8U"
+        Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
         
         // Firebase Setup 
         FirebaseApp.configure()

@@ -11,9 +11,6 @@ import CoreData
 import UIKit
 import SwiftyJSON
 
-
-
-
 extension UserProfile {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserProfile> {
@@ -152,9 +149,13 @@ extension UserProfile {
             newUser.profileImageURL = cardJSON["profileImageURL"].string
         }
 
+        print("Before making unique ID")
         // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
-        newUser.uniqueID = NSNumber(value: Int64(FirebaseManager.generateUniqueID()))
-        FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.int64Value))
+        newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
+        //newUser.uniqueID = 234234423
+        
+        print("After making unique ID")
+        FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.uint64Value))
 
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
