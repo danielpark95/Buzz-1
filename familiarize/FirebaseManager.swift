@@ -58,6 +58,13 @@ class FirebaseManager {
         }
         databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
     }
+    
+    static func updateCard(_ newCardJSON: JSON, withUniqueID uniqueID: UInt64) {
+        let uniqueIDString = String(uniqueID)
+        for (key,value):(String, JSON) in newCardJSON {
+            databaseRef.child("cards").child(uniqueIDString).child(key).setValue(value.string)
+        }
+    }
 
     static func uploadImage(_ socialMediaProfileImage: SocialMediaProfileImage, completionHandler: @escaping (String) -> Void) {
         let profileImage = UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)

@@ -64,7 +64,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "em": "em",
             ]
         
-        UserProfile.clearData(forProfile: .myUser)
+        //UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)

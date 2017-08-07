@@ -64,7 +64,7 @@ class UserCell: UICollectionViewCell {
         }
     }
 
-    func createQR(_ profile: UserProfile) {
+    func createQR(_ userProfile: UserProfile) {
         
         let skin = ScannableSkin()
         skin.backgroundColor = "#ffffff"
@@ -76,10 +76,9 @@ class UserCell: UICollectionViewCell {
         skin.imageFit = .templateDefault
         skin.logoUri = ""
         
-        let scannable = Scannable(withValue: profile.uniqueID as! UInt64, template: "template0015style2", skin: skin)
+        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0015style2", skin: skin)
         
         self.scannableView.scannable = scannable
-        
     }
     
     var profileImage: UIImageView = {

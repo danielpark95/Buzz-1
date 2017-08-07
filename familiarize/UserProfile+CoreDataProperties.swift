@@ -41,9 +41,7 @@ extension UserProfile {
     @NSManaged public var profileImageURL: String?
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
-    
  
-
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
         
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -66,6 +64,8 @@ extension UserProfile {
         userProfile.profileImageURL = socialMediaProfileURL
         do {
             try(managedObjectContext.save())
+            let newCardJSON: JSON = JSON(["profileImageApp":socialMediaProfileApp, "profileImageURL": socialMediaProfileURL])
+            FirebaseManager.updateCard(newCardJSON, withUniqueID: userProfile.uniqueID as! UInt64)
             NotificationCenter.default.post(name: .reload, object: nil)
         } catch let err {
             print(err)
@@ -152,6 +152,7 @@ extension UserProfile {
             newUser.profileImageURL = cardJSON["profileImageURL"].string
         }
 
+        // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
         newUser.uniqueID = NSNumber(value: Int64(FirebaseManager.generateUniqueID()))
         FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.int64Value))
 
