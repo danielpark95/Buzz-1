@@ -18,7 +18,7 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     
     // socialMediaProfileImages contains information about which social media it is from and 
     // the data of the social media image.
-    var socialMediaProfileImages: [SocialMediaProfileImage]?
+    var socialMediaProfileImages: [SocialMediaProfileImage]? 
     
     // socialMediaInputs contains all of the information related to the survey inputs that the user 
     // has provided.
@@ -80,6 +80,8 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
                 UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage?.appName)!, withUserProfile: newUserProfile)
                 NotificationCenter.default.post(name: .reloadCards, object: nil)
             })
+        } else {
+            NotificationCenter.default.post(name: .reloadCards, object: nil)
         }
         
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)

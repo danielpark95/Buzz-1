@@ -51,7 +51,14 @@ class UIManager {
     static func makeCardProfileImageData(_ imageData: Data, withImageXCoordPadding imageXCoordPadding: CGFloat) -> Data {
         var image = UIImage(data: imageData)
         image = image?.roundImage()
-        image = cropRightImage(image: image!, withImageXCoordPadding: imageXCoordPadding)
+        
+        UIGraphicsBeginImageContext(CGSize(width: 1400, height: 1400))
+        image?.draw(in: CGRect(x: 0, y: 0, width: 1400, height: 1400))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        
+        image = cropRightImage(image: newImage!, withImageXCoordPadding: imageXCoordPadding)
         return UIImagePNGRepresentation(image!)!
     }
     

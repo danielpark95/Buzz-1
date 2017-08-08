@@ -12,15 +12,14 @@ import Kanna
 
 class ImageFetchingManager {
     
-    // TODO: Migrate everything from urlsession to alamofire. 
+    // TODO: Migrate everything from urlsession to alamofire.
     
     
     static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
     
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
-        let massagedSocialMediaInputs = massageSocialMediaInputsData(socialMediaInputs)
-        for eachSocialMediaInput in massagedSocialMediaInputs {
+        for eachSocialMediaInput in socialMediaInputs {
             asyncDispatchGroup.enter()
             scrapeSocialMedia(withSocialMediaInput: eachSocialMediaInput, completionHandlerForScrape: { profileImage in
                     // TODO: Handle cases for when a profile image is not retrievable.
@@ -32,9 +31,6 @@ class ImageFetchingManager {
         }
 
         asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
-            let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "default", withInputName: "default", withAlreadySet: false)
-            let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "default")!)
-            socialMediaProfileImages.append(defaultSocialMediaProfileImage)
             completionHandler(socialMediaProfileImages)
         })
     }
@@ -53,7 +49,6 @@ class ImageFetchingManager {
                     // If the cancel button has been pressed or url was invalid, then dont return anything
                     completionHandlerForScrape(nil)
                 }
-                
             }
 
         } else if socialMediaInput.appName == "default" {
@@ -101,7 +96,7 @@ class ImageFetchingManager {
     }
     
     // Only fetch images from social media that has profile images.
-    static fileprivate func massageSocialMediaInputsData(_ socialMediaInputs: [SocialMedia]) -> [SocialMedia] {
+    static func massageSocialMediaInputsData(_ socialMediaInputs: [SocialMedia]) -> [SocialMedia] {
         var massagedSocialMediaInputs: [SocialMedia] = []
         
         // TODO: Include all social media that supports profile images.

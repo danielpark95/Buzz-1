@@ -29,7 +29,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        self.reloadCards()
+        //self.reloadCards()
         delegate.previousIndex = 0
     }
     
@@ -64,8 +64,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "em": "em",
             ]
         
-        //UserProfile.clearData(forProfile: .myUser)
-        //UserProfile.clearData(forProfile: .otherUser)
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)
 
@@ -103,7 +103,10 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }()
     
     func handleHamburger() {
-        UIApplication.shared.isStatusBarHidden = true
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            UIApplication.shared.isStatusBarHidden = true            
+        }, completion: nil)
+        
         settingsLauncher.showSettings()
     }
     

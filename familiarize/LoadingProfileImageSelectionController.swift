@@ -35,7 +35,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor.white
-        setupViews()
+        fetchImage()
     }
     
     lazy var activityIndicator1: NVActivityIndicatorView = {
@@ -119,7 +119,7 @@ class LoadingProfileImageSelectionController: UIViewController {
         skipButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 81).isActive = true
         skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        fetchImage()
+        
     }
     
 
@@ -151,15 +151,30 @@ class LoadingProfileImageSelectionController: UIViewController {
         }
     }
     
+    func segueToProfileImageSelectionController(_ socialMediaProfileImages: [SocialMediaProfileImage]) {
+        var socialMediaProfileImagesCopy = socialMediaProfileImages
+        let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "default", withInputName: "default", withAlreadySet: false)
+        let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "default")!)
+        socialMediaProfileImagesCopy.append(defaultSocialMediaProfileImage)
+        
+        let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
+        profileImageSelectionController.socialMediaProfileImages = socialMediaProfileImagesCopy
+        profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
+        self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
+    }
+    
     func fetchImage() {
+        let massagedSocialMediaInputs = ImageFetchingManager.massageSocialMediaInputsData(socialMediaInputs!)
         
-        ImageFetchingManager.fetchImages(withSocialMediaInputs: socialMediaInputs!, completionHandler: { fetchedSocialMediaProfileImages in
-            let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
-            profileImageSelectionController.socialMediaProfileImages = fetchedSocialMediaProfileImages
-            profileImageSelectionController.socialMediaInputs = self.socialMediaInputs
-            self.navigationController?.pushViewController(profileImageSelectionController, animated: false)
-        })
-        
+        // If there are no images to find, then do not animate.
+        if massagedSocialMediaInputs.count == 0 {
+            segueToProfileImageSelectionController([])
+        } else {
+            setupViews()
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: massagedSocialMediaInputs, completionHandler: { fetchedSocialMediaProfileImages in
+                self.segueToProfileImageSelectionController(fetchedSocialMediaProfileImages)
+            })
+        }
     }
     
     

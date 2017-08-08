@@ -23,8 +23,8 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     var optionalSocialMediaInputs: [SocialMedia] = []
 
     var requiredSocialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "dan_facebook_black", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "dan_facebook_black", withInputName: "Optional", withAlreadySet: true)
+        SocialMedia(withAppName: "name", withImageName: "name_form", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withAppName: "bio", withImageName: "bio_form", withInputName: "Optional", withAlreadySet: true)
     ]
     
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
@@ -177,8 +177,9 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         requiredSocialMediaInputs.sort(by: { $0.appName! < $1.appName! })
         let socialMediaInputs: [SocialMedia] = requiredSocialMediaInputs
         
-        //# MARK: - Presenting ProfileImageSelectionController
         
+        //# MARK: - Presenting ProfileImageSelectionController
+    
         let loadingProfileImageSelectionController = LoadingProfileImageSelectionController()
         loadingProfileImageSelectionController.socialMediaInputs = socialMediaInputs
         navigationController?.pushViewController(loadingProfileImageSelectionController, animated: true)
