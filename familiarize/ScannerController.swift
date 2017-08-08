@@ -98,7 +98,6 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             // Handle detected scannables
             if let scannable = scannables.first {
                 
-                print("THIS IS THE SCAN CODE \(scannable.value)")
                 FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
                     
 

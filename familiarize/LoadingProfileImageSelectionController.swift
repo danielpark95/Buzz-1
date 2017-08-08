@@ -10,6 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import Foundation
 import UPCarouselFlowLayout
+import Alamofire
 
 class SocialMediaProfileImage: SocialMedia {
     var profileImage: UIImage?
@@ -121,8 +122,33 @@ class LoadingProfileImageSelectionController: UIViewController {
         fetchImage()
     }
     
+
     func skipButtonClicked() {
         
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
+            dataTasks.forEach {
+                $0.cancel()
+            }
+            uploadTasks.forEach {
+                $0.cancel()
+            }
+            downloadTasks.forEach {
+                $0.cancel()
+            }
+        }
+        
+        URLSession.shared.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
+            
+            dataTasks.forEach {
+                $0.cancel()
+            }
+            uploadTasks.forEach {
+                $0.cancel()
+            }
+            downloadTasks.forEach {
+                $0.cancel()
+            }
+        }
     }
     
     func fetchImage() {

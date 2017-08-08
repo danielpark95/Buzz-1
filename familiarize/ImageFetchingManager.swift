@@ -11,10 +11,12 @@ import Alamofire
 import Kanna
 
 class ImageFetchingManager {
-
+    
+    // TODO: Migrate everything from urlsession to alamofire. 
+    
+    
     static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
     
-        // USE OPERATIONQUEUE IN ORDER TO CANCEL ALL QUEUES!!!
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
         let massagedSocialMediaInputs = massageSocialMediaInputsData(socialMediaInputs)
@@ -28,7 +30,7 @@ class ImageFetchingManager {
                 asyncDispatchGroup.leave()
             })
         }
-        
+
         asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
             let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "default", withInputName: "default", withAlreadySet: false)
             let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "default")!)
@@ -36,31 +38,35 @@ class ImageFetchingManager {
             completionHandler(socialMediaProfileImages)
         })
     }
-    
+
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     static fileprivate func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage?) -> Void) {
         // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         if socialMediaInput.appName == "faceBookProfile" {
-        
+            
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
-                
                 if let html = response.result.value {
                     self.parseHTML(html: html, withSocialMediaInput: socialMediaInput, completionHandlerForParse: { profileImage in
                         completionHandlerForScrape(profileImage)
                     })
+                } else {
+                    // If the cancel button has been pressed or url was invalid, then dont return anything
+                    completionHandlerForScrape(nil)
                 }
-
+                
             }
+
         } else if socialMediaInput.appName == "default" {
             let formattedProfileImageURL  = URL(string: socialMediaInput.inputName!)
             URLSession.shared.dataTask(with: formattedProfileImageURL!, completionHandler: { data, response, error in
-                
                 if let profileImageData = data {
                     DispatchQueue.main.async {
-                        
                         let newSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: socialMediaInput, withImage: UIImage(data: profileImageData)!)
                         completionHandlerForScrape(newSocialMediaProfileImage)
                     }
+                } else {
+                    // If the cancel button has been pressed or url was invalid, then dont return anything
+                    completionHandlerForScrape(nil)
                 }
             }).resume()
         }
@@ -78,7 +84,6 @@ class ImageFetchingManager {
                     let profileImageUrl = "http://graph.facebook.com/\(facebook_id!)/picture?width=1080&height=1080"
                     let formattedProfileImageUrl  = URL(string: profileImageUrl)
                     URLSession.shared.dataTask(with: formattedProfileImageUrl!, completionHandler: { data, response, error in
-                        
                         if let profileImageData = data {
                             
                             DispatchQueue.main.async {
@@ -86,9 +91,9 @@ class ImageFetchingManager {
                                 completionHandlerForParse(newSocialMediaProfileImage)
                             }
                         }
-
                     }).resume()
                 } else {
+                    // If the cancel button has been pressed or url was invalid, then dont return anything
                     completionHandlerForParse(nil)
                 }
             }
