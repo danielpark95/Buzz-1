@@ -52,12 +52,13 @@ class UIManager {
         var image = UIImage(data: imageData)
         image = image?.roundImage()
         
+        // Make all images uniform in size so that cropping is uniform.
         UIGraphicsBeginImageContext(CGSize(width: 1400, height: 1400))
         image?.draw(in: CGRect(x: 0, y: 0, width: 1400, height: 1400))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        
+        // Crop the right side of the image so that we can make the card on the top right of the screen.
         image = cropRightImage(image: newImage!, withImageXCoordPadding: imageXCoordPadding)
         return UIImagePNGRepresentation(image!)!
     }

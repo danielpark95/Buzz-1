@@ -34,14 +34,13 @@ class LoadingProfileImageSelectionController: UIViewController {
     }
     
     override func viewDidLoad() {
-        view.backgroundColor = UIColor.white
         fetchImage()
     }
     
     lazy var activityIndicator1: NVActivityIndicatorView = {
         let aiFrame = CGRect(x: self.view.frame.width/2, y: self.view.frame.width/2, width: 770, height: 770)
         let aiType = NVActivityIndicatorType.ballScaleRipple
-        let aiColor = UIColor(red: 121/255, green: 221/255, blue: 255/255, alpha: 1.0)
+        let aiColor = UIColor.white
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
@@ -52,7 +51,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     lazy var activityIndicator2: NVActivityIndicatorView = {
         let aiFrame = CGRect(x: self.view.frame.width/2, y: self.view.frame.width/2, width: 767, height: 767)
         let aiType = NVActivityIndicatorType.ballScaleRipple
-        let aiColor = UIColor(red: 121/255, green: 221/255, blue: 255/255, alpha: 1.0)
+        let aiColor = UIColor.white
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
@@ -63,7 +62,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     lazy var activityIndicator3: NVActivityIndicatorView = {
         let aiFrame = CGRect(x: self.view.frame.width/2, y: self.view.frame.width/2, width: 764, height: 764)
         let aiType = NVActivityIndicatorType.ballScaleRipple
-        let aiColor = UIColor(red: 121/255, green: 221/255, blue: 255/255, alpha: 1.0)
+        let aiColor = UIColor.white
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
@@ -74,7 +73,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     lazy var activityIndicator4: NVActivityIndicatorView = {
         let aiFrame = CGRect(x: self.view.frame.width/2, y: self.view.frame.width/2, width: 761, height: 761)
         let aiType = NVActivityIndicatorType.ballScaleRipple
-        let aiColor = UIColor(red: 121/255, green: 221/255, blue: 255/255, alpha: 1.0)
+        let aiColor = UIColor.white
         let aiPadding = CGFloat(0)
         let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
         actIndicator.startAnimating()
@@ -82,18 +81,27 @@ class LoadingProfileImageSelectionController: UIViewController {
         return actIndicator
     }()
     
-    let loadingName: UILabel = {
-        let label = UIManager.makeLabel(numberOfLines: 1)
-        label.text = "Fetching profile images (:"
-        return label
+    lazy var activityIndicator5: NVActivityIndicatorView = {
+        let aiFrame = CGRect(x: self.view.frame.width/2, y: self.view.frame.width/2, width: 758, height: 758)
+        let aiType = NVActivityIndicatorType.ballScaleRipple
+        let aiColor = UIColor.white
+        let aiPadding = CGFloat(0)
+        let actIndicator = NVActivityIndicatorView(frame: aiFrame, type: aiType, color: aiColor, padding: aiPadding)
+        actIndicator.startAnimating()
+        actIndicator.layer.speed = 0.3
+        return actIndicator
     }()
     
-    let skipButton: UIButton = {
+    let loadingBee: UIImageView = {
+        return UIManager.makeImage(imageName: "bee")
+    }()
+    
+    let cancelButton: UIButton = {
        return UIManager.makeButton(imageName: "dan_close_text")
     }()
     
-    
     func setupViews() {
+        view.backgroundColor = UIColor(red: 255/255, green: 214/255, blue: 2/255, alpha: 1.0)
         view.addSubview(activityIndicator1)
         activityIndicator1.center.x = view.center.x
         activityIndicator1.center.y = view.center.y
@@ -106,25 +114,26 @@ class LoadingProfileImageSelectionController: UIViewController {
         view.addSubview(activityIndicator4)
         activityIndicator4.center.x = view.center.x
         activityIndicator4.center.y = view.center.y
+        view.addSubview(activityIndicator5)
+        activityIndicator5.center.x = view.center.x
+        activityIndicator5.center.y = view.center.y
 
-        view.addSubview(loadingName)
-        loadingName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingName.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingName.widthAnchor.constraint(equalToConstant: loadingName.intrinsicContentSize.width).isActive = true
-        loadingName.heightAnchor.constraint(equalToConstant: loadingName.intrinsicContentSize.height).isActive = true
+        view.addSubview(loadingBee)
+        view.bringSubview(toFront: loadingBee)
+        loadingBee.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingBee.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
         
-        
-        view.addSubview(self.skipButton)
-        skipButton.addTarget(self, action: #selector(skipButtonClicked), for: .touchUpInside)
-        skipButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 81).isActive = true
-        skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        
+        view.addSubview(self.cancelButton)
+        cancelButton.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
+        cancelButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
+        cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
 
-    func skipButtonClicked() {
+    func cancelButtonClicked() {
         
+        // When the skip cancel button is clicked, stop any URL tasks from happening
         Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
             dataTasks.forEach {
                 $0.cancel()
@@ -164,14 +173,14 @@ class LoadingProfileImageSelectionController: UIViewController {
     }
     
     func fetchImage() {
-        let massagedSocialMediaInputs = ImageFetchingManager.massageSocialMediaInputsData(socialMediaInputs!)
+        let selectedSocialMediaInputsWithPossibleImages = ImageFetchingManager.selectSocialMediaInputsWithPossibleImages(socialMediaInputs!)
         
         // If there are no images to find, then do not animate.
-        if massagedSocialMediaInputs.count == 0 {
+        if selectedSocialMediaInputsWithPossibleImages.count == 0 {
             segueToProfileImageSelectionController([])
         } else {
             setupViews()
-            ImageFetchingManager.fetchImages(withSocialMediaInputs: massagedSocialMediaInputs, completionHandler: { fetchedSocialMediaProfileImages in
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: selectedSocialMediaInputsWithPossibleImages, completionHandler: { fetchedSocialMediaProfileImages in
                 self.segueToProfileImageSelectionController(fetchedSocialMediaProfileImages)
             })
         }

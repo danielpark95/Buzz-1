@@ -25,27 +25,9 @@ class FirebaseManager {
     
     static func generateUniqueID() -> UInt64 {
         
-        let date = Date()
-        let calendar = Calendar.current
-        
-        let year = calendar.component(.year, from: date)%100
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-        let seconds = calendar.component(.second, from: date)
-        let milliseconds = calendar.component(.nanosecond, from: date)/100
-        let randomNumber = Int(arc4random())%1000
-        
-        let uniqueIDString = String(format: "%i%i%i%i%i%i%i%i", arguments: [year,
-                                                                            month,
-                                                                            day,
-                                                                            hour,
-                                                                            minutes,
-                                                                            seconds,
-                                                                            milliseconds,
-                                                                            randomNumber])
-        
+        let timeIntervalSince1970InMilliseconds = UInt64(Date().timeIntervalSince1970 * 1000.0)
+        let randomNumber = Int(arc4random())%10000
+        let uniqueIDString = String(format: "%llu%i", arguments: [timeIntervalSince1970InMilliseconds, randomNumber])
         return UInt64(uniqueIDString)!
     }
 

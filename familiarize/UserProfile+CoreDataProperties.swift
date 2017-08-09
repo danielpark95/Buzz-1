@@ -152,11 +152,13 @@ extension UserProfile {
             newUser.profileImageURL = cardJSON["profileImageURL"].string
         }
 
-        // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
-        newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
+        // If this is my user that I am saving, then push it to the cloud.
+        if userProfile == .myUser {
+            // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
+            newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
 
-        FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.uint64Value))
-
+            FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.uint64Value))
+        }
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
         

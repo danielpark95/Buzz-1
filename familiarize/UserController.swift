@@ -36,10 +36,16 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+        
+        let pickle:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000.0)
+            print("This is time \(pickle)")
         self.automaticallyAdjustsScrollViewInsets = false
         navigationItem.title = "Me"
         
-
+//1502249752393
+//1502249785543
+//1502249875149
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCards), name: .reloadCards, object: nil)
         
@@ -64,8 +70,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             "em": "em",
             ]
         
-        UserProfile.clearData(forProfile: .myUser)
-        UserProfile.clearData(forProfile: .otherUser)
+        //UserProfile.clearData(forProfile: .myUser)
+        //UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)
 

@@ -37,7 +37,6 @@ class ImageFetchingManager {
 
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     static fileprivate func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage?) -> Void) {
-        // TODO: If user does not have a facebook profile, then try to scrape it from instagram.
         if socialMediaInput.appName == "faceBookProfile" {
             
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
@@ -96,7 +95,7 @@ class ImageFetchingManager {
     }
     
     // Only fetch images from social media that has profile images.
-    static func massageSocialMediaInputsData(_ socialMediaInputs: [SocialMedia]) -> [SocialMedia] {
+    static func selectSocialMediaInputsWithPossibleImages (_ socialMediaInputs: [SocialMedia]) -> [SocialMedia] {
         var massagedSocialMediaInputs: [SocialMedia] = []
         
         // TODO: Include all social media that supports profile images.

@@ -43,6 +43,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         setupRefreshingAndReloading()
         setupCollectionView()
+
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
