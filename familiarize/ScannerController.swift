@@ -93,39 +93,38 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     let scanProfileController = ScanProfileController()
     func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
         cameraScanView = scanView
-        
         if cameraActive == true {
             // Handle detected scannables
             if let scannable = scannables.first {
+                print(scannable.value)
                 
-                FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
-                    
-
-                    self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
-                    
-                    // Setting up the controller and animations
-                    self.scanProfileController.userProfile = self.userProfile
-                    self.scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                    self.scanProfileController.ScannerControllerDelegate = self
-                    
-                    
-                    let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
-                    ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
-                        let profileImage = fetchedSocialMediaProfileImages[0].profileImage
-                        UserProfile.saveProfileImage(UIImagePNGRepresentation(profileImage!)!, withUserProfile: self.userProfile!)
-                        self.scanProfileController.setImage()
-                        
-                    })
-                    
-                    
-                    self.present(self.scanProfileController, animated: false)
-                    
+//                FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
+//
+//                    self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
+//                    
+//                    // Setting up the controller and animations
+//                    self.scanProfileController.userProfile = self.userProfile
+//                    self.scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//                    self.scanProfileController.ScannerControllerDelegate = self
+//                    
+//                    
+//                    let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
+//                    ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+//                        let profileImage = fetchedSocialMediaProfileImages[0].profileImage
+//                        UserProfile.saveProfileImage(UIImagePNGRepresentation(profileImage!)!, withUserProfile: self.userProfile!)
+//                        self.scanProfileController.setImage()
+//                        
+//                    })
+//                    
+//                    
+//                    self.present(self.scanProfileController, animated: false)
+//                    
                     self.cameraActive = false
-                    
-                    // If we dont stop the camera the cpu is going off the fucking charts . . .
-                    //self.cameraScanView?.stop()
-                    
-                })
+//                    
+//                    // If we dont stop the camera the cpu is going off the fucking charts . . .
+//                    //self.cameraScanView?.stop()
+//                    
+//                })
             }
         }
     }

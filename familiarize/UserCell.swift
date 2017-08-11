@@ -48,10 +48,10 @@ class UserCell: UICollectionViewCell {
     var myUserProfile: UserProfile? {
         didSet {
             
-            let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+            let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
             nameLabel.attributedText = name
             
-            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
+            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
             bioLabel.attributedText = bio
             
             //self.profileImage.image = UIImage(data: (self.myUserProfile?.profileImage)!)
@@ -67,16 +67,16 @@ class UserCell: UICollectionViewCell {
     func createQR(_ userProfile: UserProfile) {
         
         let skin = ScannableSkin()
-        skin.backgroundColor = "#ffffff"
-        skin.maskColor = "#ffffff"
-        skin.dotColor = "#58595b"
-        skin.borderColor = "#58595b"
-        skin.overlayColor = "#58595b"
-        skin.imageUri = "https://s3-eu-west-1.amazonaws.com/qkly-service-albums/temp_icons/squiddy.png"
+        skin.backgroundColor = "#ffe769"
+        //skin.maskColor = "#2f2f2f"
+        skin.dotColor = "#2f2f2f"
+        skin.borderColor = "#2f2f2f"
+        //skin.overlayColor = "#ffd705"
+        skin.imageUri = "http://i.imgur.com/WrCpmBQ.png"
         skin.imageFit = .templateDefault
         skin.logoUri = ""
         
-        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0015style2", skin: skin)
+        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0002style6", skin: skin)
         
         self.scannableView.scannable = scannable
     }
@@ -149,14 +149,14 @@ class UserCell: UICollectionViewCell {
     }
 
     lazy var socialMediaImages: [String: UIImageView] = [
-        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
-        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_black"),
-        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_black"),
-        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_black"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
-        "email": UIManager.makeImage(imageName: "dan_email_black"),
-        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
+        "phoneNumber": UIManager.makeImage(imageName: "57"),
+        "faceBookProfile": UIManager.makeImage(imageName: "51"),
+        "instagramProfile": UIManager.makeImage(imageName: "56"),
+        "snapChatProfile": UIManager.makeImage(imageName: "53"),
+        "linkedInProfile": UIManager.makeImage(imageName: "55"),
+        "email": UIManager.makeImage(imageName: "58"),
+        "twitterProfile": UIManager.makeImage(imageName: "56"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "54"),
         ]
     
     // Helper function to space out social media icons - dan

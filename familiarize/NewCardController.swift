@@ -46,9 +46,9 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: socialMediaHeaderCellId, for: indexPath) as! SocialMediaSelectHeader
         if indexPath.section == 0 {
-            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "Add", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 14)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "Add", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 14)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
         } else {
-            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "My Info", attributes: [NSFontAttributeName: UIFont(name: "Avenir", size: 14)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "My Info", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 14)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
         }
         return cell
     }

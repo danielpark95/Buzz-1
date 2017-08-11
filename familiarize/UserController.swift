@@ -95,8 +95,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
         navigationItem.rightBarButtonItem = addButton
@@ -216,7 +216,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 cell.profileImage.image = UIImage(data: myUserProfile.profileImage!)
                 profileImageCache.setObject(cell.profileImage.image!, forKey: myUserProfile.profileImage?.base64EncodedString() as! NSString)
             }
-            
         }
         return cell
     }
