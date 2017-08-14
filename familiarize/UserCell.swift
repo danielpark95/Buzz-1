@@ -149,14 +149,15 @@ class UserCell: UICollectionViewCell {
     }
 
     lazy var socialMediaImages: [String: UIImageView] = [
-        "phoneNumber": UIManager.makeImage(imageName: "57"),
-        "faceBookProfile": UIManager.makeImage(imageName: "51"),
-        "instagramProfile": UIManager.makeImage(imageName: "56"),
-        "snapChatProfile": UIManager.makeImage(imageName: "53"),
-        "linkedInProfile": UIManager.makeImage(imageName: "55"),
-        "email": UIManager.makeImage(imageName: "58"),
-        "twitterProfile": UIManager.makeImage(imageName: "56"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "54"),
+        //temporary icons while we wait for new icons from our graphic designers
+        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_temp"),
+        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_temp"),
+        "instagramProfile": UIManager.makeImage(imageName: "dan_snapchat_temp"),
+        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_temp"),
+        "linkedInProfile": UIManager.makeImage(imageName: "dan_slack_temp"),
+        "email": UIManager.makeImage(imageName: "dan_slack_temp"),
+        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_temp"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_temp"),
         ]
     
     // Helper function to space out social media icons - dan
@@ -185,7 +186,8 @@ class UserCell: UICollectionViewCell {
         var my_theta2 = 0.0
         let rad = 57.2958
         if size == 1 {
-            
+            my_theta1 = 110.0
+            my_theta2 = 35.0
         } else if size == 2 {
             my_theta1 = 110.0
             my_theta2 = 35.0

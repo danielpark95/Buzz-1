@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import ESTabBarController_swift
 
-protocol WalkthroughControllerDelegate : class {
+protocol walkThroughControllerDelegate : class {
     func finishWalkthrough()
 }
 
-class WalkthroughController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WalkthroughControllerDelegate {
+class WalkthroughController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, walkThroughControllerDelegate {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -37,7 +37,6 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         let secondWalkthrough = Walkthrough(title: "Create personalized profiles", message: "Social, business, or anything else can be easily customized.", imageName: "pg2")
         
         let thirdWalkthrough = Walkthrough(title: "Double tap to reveal code!", message: "Then scan to add automatically.", imageName: "pg3")
-        
         
         return [firstWalkthrough, secondWalkthrough, thirdWalkthrough]
     }()

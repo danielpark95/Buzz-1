@@ -20,7 +20,7 @@ class WalkthroughStartCell: UICollectionViewCell {
         return button
     }()
     
-    weak var delegate : WalkthroughControllerDelegate?
+    weak var delegate : walkThroughControllerDelegate?
     
     func handleStart() {
         delegate?.finishWalkthrough()

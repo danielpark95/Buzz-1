@@ -43,12 +43,14 @@ class WalkthroughCell: UICollectionViewCell {
     }
     
     let imageView: UIImageView = {
-        let iv = UIImageView()
-        //iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "walkthrough1")
-        //iv.contentScaleFactor = 0.6
-        //iv.clipsToBounds = true
-        return iv
+//        let iv = UIImageView()
+//        //iv.contentMode = .scaleAspectFit
+//        iv.image = UIImage(named: "walkthrough1")
+//        //iv.contentScaleFactor = 0.6
+//        //iv.clipsToBounds = true
+//        return iv
+        
+        return UIManager.makeImage(imageName: "walkthrough1")
     }()
     
     let textView: UITextView = {
