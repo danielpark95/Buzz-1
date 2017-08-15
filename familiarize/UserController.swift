@@ -223,7 +223,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func reloadCards() {
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
-        myUserProfileImageCache.removeAllObjects()
         collectionView?.reloadData()
     }
 
