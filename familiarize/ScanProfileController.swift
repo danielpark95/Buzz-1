@@ -239,8 +239,11 @@ class ScanProfileController: UIViewController {
     }
     
     func setImage() {
-        if userProfile?.profileImage != nil {
-            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
+        if userProfile?.uniqueID != nil {
+            
+            if let profileImage = DiskManager.readImageFromLocal(withUniqueID: userProfile?.uniqueID as! UInt64) {
+                self.profileImage.image = profileImage
+            }
             self.profileImage.clipsToBounds = true
             profileImageCenterYAnchor?.constant = -100
             profileImage.isHidden = false

@@ -144,11 +144,20 @@ class ViewProfileController: UIViewController {
     }
     
     func setImage() {
-        if userProfile?.profileImage != nil {
-            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
-            //self.profileImage.image = UIManager.makeImage(imageName: "tjmiller6").image
-            self.profileImage.clipsToBounds = true
+        
+        guard let uniqueID = userProfile?.uniqueID else {
+            print("unique id is null")
+            return
         }
+        
+        guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID as! UInt64) else {
+            print("file was not able to be retrieved from disk")
+            return
+        }
+        
+        self.profileImage.image = profileImage
+        self.profileImage.clipsToBounds = true
+        
     }
     
     // MARK: - Animating popup display

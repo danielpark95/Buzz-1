@@ -30,7 +30,6 @@ extension UserProfile {
     @NSManaged public var faceBookProfile: String?
     @NSManaged public var instagramProfile: String?
     @NSManaged public var snapChatProfile: String?
-    @NSManaged public var profileImage: Data?
     @NSManaged public var linkedInProfile: String?
     @NSManaged public var soundCloudProfile: String?
     @NSManaged public var twitterProfile: String?
@@ -152,11 +151,10 @@ extension UserProfile {
             newUser.profileImageURL = cardJSON["profileImageURL"].string
         }
 
+        // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
+        newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
         // If this is my user that I am saving, then push it to the cloud.
         if userProfile == .myUser {
-            // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
-            newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
-
             FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.uint64Value))
         }
         newUser.userProfileSelection = userProfile
@@ -172,15 +170,8 @@ extension UserProfile {
     }
     
     static func saveProfileImage(_ profileImage: Data, withUserProfile userProfile: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        userProfile.profileImage = profileImage as Data
-        do {
-            try(managedObjectContext.save())
-            NotificationCenter.default.post(name: .reload, object: nil)
-        } catch let err {
-            print(err)
-        }
+        DiskManager.writeImageDataToLocal(withData: profileImage, withUniqueID: userProfile.uniqueID as! UInt64)
+        NotificationCenter.default.post(name: .reload, object: nil)
     }
     
     static func deleteProfile(user: UserProfile) {

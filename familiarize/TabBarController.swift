@@ -13,10 +13,15 @@ extension ESTabBarController {
         return selectedViewController
     }
 }
+extension Notification.Name {
+    static let removeScanner = Notification.Name("removeScanner")
+}
+
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
         
         let tabBarController = ESTabBarController()
         tabBarController.tabBar.isTranslucent = false
@@ -44,5 +49,14 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         
         viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
         
+    }
+    
+    func removeScanner() {
+        viewControllers?.remove(at: 1)
+        //Scanner Controller
+        let scannerController = ScannerController()
+        let scannerNavigationController = UINavigationController(rootViewController: scannerController)
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_teal"), selectedImage: UIImage(named: "dan_tabbarcircle_teal"))
+        viewControllers?.insert(scannerNavigationController, at: 1)
     }
 }

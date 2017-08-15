@@ -34,14 +34,18 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             count = count + 1
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
+        
         super.viewWillDisappear(animated)
+        print("poop")
         if cameraScanView != nil {
             cameraScanView?.stop()
         }
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.tabBarController?.tabBar.isHidden = false
+        self.removeFromParentViewController()
+        NotificationCenter.default.post(name: .removeScanner, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +69,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     }()
     
     func didSelectBack() {
+        self.dismiss(animated: false, completion: nil)
         let delegate = UIApplication.shared.delegate as! AppDelegate
         tabBarController?.selectedIndex = delegate.previousIndex!
     }
@@ -92,15 +97,15 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     
     let scanProfileController = ScanProfileController()
     func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
-        cameraScanView = scanView
+        cameraScanView = scanView.self
         
         if cameraActive == true {
             // Handle detected scannables
             if let scannable = scannables.first {
-                
                 FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
+                    // If we dont stop the camera the cpu is going off the fucking charts . . .
+                    self.cameraScanView?.stop()
                     
-
                     self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
                     
                     // Setting up the controller and animations
@@ -121,9 +126,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                     self.present(self.scanProfileController, animated: false)
                     
                     self.cameraActive = false
-                    
-                    // If we dont stop the camera the cpu is going off the fucking charts . . .
-                    //self.cameraScanView?.stop()
+
                     
                 })
             }

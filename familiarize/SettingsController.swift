@@ -82,7 +82,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             tintOverlay.frame = window.frame
             tintOverlay.alpha = 0
 
-            
             collectionView.addSubview(websiteQRCodeImage)
             websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
             websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
@@ -95,7 +94,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
                 self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
                 
             }, completion: nil)
-
         }
     }
     
@@ -131,7 +129,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         let setting = self.settings[indexPath.item]
         handleDismiss(setting: setting)
     }
-    
     
     override init() {
         super.init()
