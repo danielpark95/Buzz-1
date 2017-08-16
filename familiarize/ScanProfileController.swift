@@ -25,13 +25,18 @@ class ScanProfileController: UIViewController {
         self.setupBackground()
         self.addToBackground()
         self.setupGraphics()
-        self.addToGraphics()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.addToGraphics()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.animatePopup()
     }
+    
     // This makes the profile image into a circle.
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -144,18 +149,19 @@ class ScanProfileController: UIViewController {
         setName()
         setDismissButton()
     }
-    
+    var profileImageCenterYAnchor: NSLayoutConstraint?
     func addToGraphics() {
         view.addSubview(self.viewProfileButton)
-        view.addSubview(self.profileImage)
+        
         view.addSubview(self.nameLabel)
         
+        view.addSubview(self.profileImage)
         profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -100).isActive = true
-        
-        // Set to 80 --> Then you also have to change the corner radius to 40 ..
+        profileImageCenterYAnchor = profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50)
+        profileImageCenterYAnchor?.isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        profileImage.isHidden = true
         
         nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
@@ -236,6 +242,11 @@ class ScanProfileController: UIViewController {
         if userProfile?.profileImage != nil {
             self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
             self.profileImage.clipsToBounds = true
+            profileImageCenterYAnchor?.constant = -100
+            profileImage.isHidden = false
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
         }
     }
     
