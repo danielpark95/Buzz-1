@@ -33,7 +33,6 @@ class UserCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
     func manageBrightness() {
         if (self.fullBrightness == true) {
             //UIScreen.main.brightness = 1.0
@@ -43,15 +42,12 @@ class UserCell: UICollectionViewCell {
         }
     }
     
-
-    
     var myUserProfile: UserProfile? {
         didSet {
-            
             let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
             nameLabel.attributedText = name
             
-            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 18)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
+            let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 21)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
             bioLabel.attributedText = bio
             
             //self.profileImage.image = UIImage(data: (self.myUserProfile?.profileImage)!)
@@ -72,12 +68,11 @@ class UserCell: UICollectionViewCell {
         skin.dotColor = "#2f2f2f"
         skin.borderColor = "#2f2f2f"
         //skin.overlayColor = "#ffd705"
-        skin.imageUri = "http://i.imgur.com/WrCpmBQ.png"
+        skin.imageUri = "http://i.imgur.com/JDpYmVp.gif"
         skin.imageFit = .templateDefault
         skin.logoUri = ""
         
-        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0002style6", skin: skin)
-        
+        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0014style3", skin: skin)
         self.scannableView.scannable = scannable
     }
     
@@ -121,10 +116,11 @@ class UserCell: UICollectionViewCell {
 
     func presentProfile() {
         addSubview(profileImage)
-        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 41).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -160).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 350).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -100).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        //profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
         // We have to do imageXCoordPadding/4 because we are removing some pieces on the right side and have to compensate for it.
         
         //Namelabel position upated using NSLayoutConstraint -dan
@@ -132,36 +128,131 @@ class UserCell: UICollectionViewCell {
         addSubview(bioLabel)
         
         nameLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 290).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 180).isActive = true
+        //nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
+        //nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 350).isActive = true
-        bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
-        bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 240).isActive = true
+        //bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
+        //bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
-        presentSocialMediaButtons()
+        //presentAngularSocialMediaButtons()
+        presentLinearSocialMediaButtons()
     }
     
     func setupViews() {
         flipCard()
     }
-
+    
+    
     lazy var socialMediaImages: [String: UIImageView] = [
         //temporary icons while we wait for new icons from our graphic designers
-        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_temp"),
-        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_temp"),
-        "instagramProfile": UIManager.makeImage(imageName: "dan_snapchat_temp"),
-        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_temp"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_slack_temp"),
-        "email": UIManager.makeImage(imageName: "dan_slack_temp"),
-        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_temp"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_temp"),
+        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
+        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_black"),
+        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_black"),
+        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_black"),
+        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
+        "email": UIManager.makeImage(imageName: "dan_email_black"),
+        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
     
+    //todo: this is old code - change to collectionview
+    func presentLinearSocialMediaButtons() {
+        var imagesToPresent = [UIImageView]()
+        for key in (myUserProfile?.entity.attributesByName.keys)! {
+            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
+                imagesToPresent.insert(socialMediaImages[key]!, at: 0)
+            }
+        }
+        let size = imagesToPresent.count
+        var xConstant : CGFloat = 0
+        var count = 0
+        if size == 1 {
+            for image in imagesToPresent {
+                self.addSubview(image)
+                image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor).isActive = true
+                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            }
+        } else if size == 2 {
+            xConstant = 50
+            count = 0
+            for image in imagesToPresent {
+                self.addSubview(image)
+                if count == 0 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -xConstant).isActive = true
+                } else if count == 1 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: xConstant).isActive = true
+                }
+                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                count += 1
+            }
+        } else if size == 3 {
+            xConstant = 80
+            count = 0
+            for image in imagesToPresent {
+                self.addSubview(image)
+                if count == 0 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -xConstant).isActive = true
+                } else if count == 1 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor).isActive = true
+                } else if count == 2 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: xConstant).isActive = true
+                }
+                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                count += 1
+            }
+        } else if size == 4 {
+            xConstant = 40
+            count = 0
+            for image in imagesToPresent {
+                self.addSubview(image)
+                if count == 0 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -3*xConstant).isActive = true
+                } else if count == 1 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -xConstant).isActive = true
+                } else if count == 2 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: xConstant).isActive = true
+                } else if count == 3 {
+                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: 3*xConstant).isActive = true
+                }
+                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
+                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                count += 1
+            }
+        } else if size == 5 {
+            
+        } else if size == 6 {
+            
+        }
+        
+
+    }
+    
+    func autoLinearSpaceButtons(imagesToPresent: [UIImageView]) {
+        var count = 0
+        for image in imagesToPresent {
+            self.addSubview(image)
+            image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: 50 ).isActive = true
+            image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 50).isActive = true
+            image.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+    }
+    
     // Helper function to space out social media icons - dan
-    func autoSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
+    func autoAngularSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
         var count = 0
         for image in imagesToPresent{
             self.addSubview(image)
@@ -174,7 +265,7 @@ class UserCell: UICollectionViewCell {
     }
     
     // Function to space out social media icons evenly around the profile picture at an equal distance -dan
-    func presentSocialMediaButtons() {
+    func presentAngularSocialMediaButtons() {
         var my_imagesToPresent = [UIImageView]()
         for key in (myUserProfile?.entity.attributesByName.keys)! {
             if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
@@ -207,6 +298,6 @@ class UserCell: UICollectionViewCell {
             
         }
         
-        autoSpaceButtons(r: 220.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
+        autoAngularSpaceButtons(r: 220.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
     }
 }

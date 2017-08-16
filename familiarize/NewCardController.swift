@@ -16,8 +16,6 @@ protocol NewCardControllerDelegate {
     func deleteSocialMediaInput(socialMedia: SocialMedia) -> Void
 }
 
-
-
 class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NewCardControllerDelegate {
 
     var optionalSocialMediaInputs: [SocialMedia] = []
@@ -112,7 +110,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         } else {
             return CGSize(width: view.frame.width, height: 60)
         }
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -131,7 +128,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         collectionView?.register(SocialMediaSelectedCell.self, forCellWithReuseIdentifier: socialMediaSelectedCellId)
         collectionView?.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: socialMediaSelectionCellId)
         collectionView?.register(SocialMediaSelectHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: socialMediaHeaderCellId)
-
         collectionView?.backgroundColor = UIColor.white
     }
     

@@ -14,7 +14,6 @@ extension Notification.Name {
     static let reloadCards = Notification.Name("reloadCardsNotification")
 }
 
-
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     
@@ -26,7 +25,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         //self.reloadCards()
@@ -34,9 +32,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-
         
         let pickle:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000.0)
             print("This is time \(pickle)")

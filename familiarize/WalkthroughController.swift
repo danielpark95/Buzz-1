@@ -119,7 +119,7 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         //User Controller
         let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavigationController = UINavigationController(rootViewController: userController)
-        userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_me_grey_2"), selectedImage: UIImage(named: "dan_me_black"))
+        userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_me_grey"), selectedImage: UIImage(named: "dan_me_black"))
         //userNavigationController.tabBarItem.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 30)
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(0, 30, 0, -10)
         
@@ -132,7 +132,7 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         //Contacts Controller
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
         let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey_2"), selectedImage: UIImage(named: "dan_friends_black"))
+        contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey"), selectedImage: UIImage(named: "dan_friends_black"))
         //contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
         
         mainNavigationController.viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
