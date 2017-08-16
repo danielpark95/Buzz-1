@@ -73,7 +73,7 @@ class ViewProfileController: UIViewController {
     
     func setPopup() {
         view.addSubview(self.tintOverlay)
-        self.popupImageView = UIManager.makeImage(imageName: "dan_profilepopup_blue")
+        self.popupImageView = UIManager.makeImage(imageName: "dan_profilepopup_yellow")
         
         let tap = UITapGestureRecognizer()
         self.popupImageView.addGestureRecognizer(tap)

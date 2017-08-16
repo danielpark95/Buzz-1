@@ -93,13 +93,12 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     let scanProfileController = ScanProfileController()
     func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
         cameraScanView = scanView
-        
         if cameraActive == true {
             // Handle detected scannables
             if let scannable = scannables.first {
+                print(scannable.value)
                 
                 FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
-                    
 
                     self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
                     

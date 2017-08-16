@@ -8,6 +8,8 @@
 
 import UIKit
 import ESTabBarController_swift
+import RevealingSplashView
+
 extension ESTabBarController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
         return selectedViewController
@@ -18,31 +20,45 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         
-        let tabBarController = ESTabBarController()
-        tabBarController.tabBar.isTranslucent = false
-        
-        //User Controller
-        let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
-        let userNavigationController = UINavigationController(rootViewController: userController)
-        userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_salmon"))
-        userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0 )
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 215/255.0, blue: 0/255.0, alpha:1.0))
+        self.view.addSubview(revealingSplashView)
+        revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
+        revealingSplashView.startAnimation(){
+        }
         
         
-        //Scanner Controller
-        let scannerController = ScannerController()
-        let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_teal"), selectedImage: UIImage(named: "dan_tabbarcircle_teal"))
+        if isNotFirstTime() {
+            let tabBarController = ESTabBarController()
+            tabBarController.tabBar.isTranslucent = false
+            tabBarController.tabBar.barTintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha:1.0)
+            //User Controller
+            let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
+            let userNavigationController = UINavigationController(rootViewController: userController)
+            userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_me_grey"), selectedImage: UIImage(named: "dan_me_black"))
+            
+            //Scanner Controller
+            let scannerController = ScannerController()
+            let scannerNavigationController = UINavigationController(rootViewController: scannerController)
+            scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_yellow_25"), selectedImage: UIImage(named: "dan_tabbarcircle_yellow_25"))
+            
+            //Contacts Controller
+            let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+            let contactsNavigationController = UINavigationController(rootViewController: contactsController)
+            contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey"), selectedImage: UIImage(named: "dan_friends_black"))
+            
+            viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
+        } else {
+            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.01)
+        }
+    }
+    
+    fileprivate func isNotFirstTime() -> Bool {
+        return UserDefaults.standard.bool(forKey: "isNotFirstTime")
+    }
+    
+    func showWalkthroughController() {
         
-        
-        //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
-        
-        //Contacts Controller
-        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
-        let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Friends", image: UIImage(named: "dan_contacts_grey"), selectedImage: UIImage(named: "dan_contacts_salmon"))
-        contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
-        
-        viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
-        
+        let walkthroughController = WalkthroughController()
+        present(walkthroughController, animated: true, completion: nil)
     }
 }

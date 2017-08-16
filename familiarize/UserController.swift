@@ -14,7 +14,6 @@ extension Notification.Name {
     static let reloadCards = Notification.Name("reloadCardsNotification")
 }
 
-
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     private let cellId = "cellId"
     
@@ -26,7 +25,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         //self.reloadCards()
@@ -34,9 +32,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-
         
         let pickle:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000.0)
             print("This is time \(pickle)")
@@ -95,8 +91,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
         navigationItem.rightBarButtonItem = addButton
@@ -216,7 +212,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 cell.profileImage.image = UIImage(data: myUserProfile.profileImage!)
                 profileImageCache.setObject(cell.profileImage.image!, forKey: myUserProfile.profileImage?.base64EncodedString() as! NSString)
             }
-            
         }
         return cell
     }

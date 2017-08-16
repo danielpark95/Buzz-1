@@ -25,6 +25,9 @@ target 'familiarize' do
   #textfield effects
   pod 'TextFieldEffects'
   
+  #Twitter style launch screen
+  pod 'RevealingSplashView'
+  
   #Loading screen for fetching profile pictures
   pod 'NVActivityIndicatorView'
   

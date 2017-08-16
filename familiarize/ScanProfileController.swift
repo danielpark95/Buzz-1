@@ -94,15 +94,15 @@ class ScanProfileController: UIViewController {
         cb.boxType = .circle
         cb.markType = .checkmark
         cb.checkmarkLineWidth = 2.0
-        cb.secondaryTintColor = UIColor(red: 46/255, green: 202/255, blue: 209/255, alpha: 1.0)
-        cb.tintColor = UIColor(red: 46/255, green: 202/255, blue: 209/255, alpha: 1.0)
-        cb.secondaryCheckmarkTintColor = UIColor(red: 46/255, green: 202/255, blue: 209/255, alpha: 1.0)
+        cb.secondaryTintColor = UIColor(red: 247/255, green: 209/255, blue: 0/255, alpha: 1.0)
+        cb.tintColor = UIColor(red: 247/255, green: 209/255, blue: 0/255, alpha: 1.0)
+        cb.secondaryCheckmarkTintColor = UIColor(red: 247/255, green: 209/255, blue: 0/255, alpha: 1.0)
         cb.translatesAutoresizingMaskIntoConstraints = false
         return cb
     }()
     
     lazy var viewProfileButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_viewprofile_blue")
+        let button = UIManager.makeButton(imageName: "dan_viewprofile_yellow")
         button.addTarget(self, action: #selector(viewProfileClicked), for: .touchUpInside)
         return button
     }()

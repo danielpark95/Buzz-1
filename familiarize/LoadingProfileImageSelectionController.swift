@@ -97,7 +97,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     }()
     
     let cancelButton: UIButton = {
-       return UIManager.makeButton(imageName: "dan_close_text")
+       return UIManager.makeButton(imageName: "dan_close_text_white")
     }()
     
     func setupViews() {
@@ -162,8 +162,8 @@ class LoadingProfileImageSelectionController: UIViewController {
     
     func segueToProfileImageSelectionController(_ socialMediaProfileImages: [SocialMediaProfileImage]) {
         var socialMediaProfileImagesCopy = socialMediaProfileImages
-        let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "default", withInputName: "default", withAlreadySet: false)
-        let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "default")!)
+        let defaultSocialMediaInput : SocialMedia = SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false)
+        let defaultSocialMediaProfileImage = SocialMediaProfileImage(copyFrom: defaultSocialMediaInput, withImage: UIImage(named: "tjmiller7")!)
         socialMediaProfileImagesCopy.append(defaultSocialMediaProfileImage)
         
         let profileImageSelectionController = ProfileImageSelectionController(collectionViewLayout: UPCarouselFlowLayout())
