@@ -25,10 +25,6 @@ class ScanProfileController: UIViewController {
         self.setupBackground()
         self.addToBackground()
         self.setupGraphics()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         self.addToGraphics()
     }
     
@@ -61,7 +57,6 @@ class ScanProfileController: UIViewController {
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-        
         return imageView
     }()
     
@@ -137,7 +132,6 @@ class ScanProfileController: UIViewController {
     
     func addToBackground() {
         view.addSubview(self.checkBox)
-        
         self.checkBox.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.checkBox.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
         self.checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -149,13 +143,13 @@ class ScanProfileController: UIViewController {
         setName()
         setDismissButton()
     }
+    
     var profileImageCenterYAnchor: NSLayoutConstraint?
     func addToGraphics() {
         view.addSubview(self.viewProfileButton)
-        
         view.addSubview(self.nameLabel)
-        
         view.addSubview(self.profileImage)
+        
         profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         profileImageCenterYAnchor = profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50)
         profileImageCenterYAnchor?.isActive = true
@@ -191,13 +185,15 @@ class ScanProfileController: UIViewController {
     }
     
     // MARK: - Animating popup display
-    
     func setupDismiss() {
         self.dismiss(animated: false, completion: {
             // Brings the popup image to the bottom again.
             self.popupCenterYAnchor?.constant = self.view.frame.size.height
             // Unchecks the animation, so that on rescan, it does the animation again.
             self.checkBox.setCheckState(.unchecked, animated: false)
+            // Resets the profile image to always start from 50 pixels below so that it animates correctly on scan.
+            self.profileImageCenterYAnchor?.constant = -50
+            self.profileImage.isHidden = true
         })
     }
     
@@ -205,15 +201,12 @@ class ScanProfileController: UIViewController {
     var popupCenterYAnchor: NSLayoutConstraint?
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
-        
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.animateAfterPopup()
-            
         })
-        
     }
     
     // When the dismiss button is pressed, the function turns on the QR scanning function back in the
@@ -224,7 +217,6 @@ class ScanProfileController: UIViewController {
     }
     
     // MARK: - Assigning UI Properties (Label, Button, Lines)
-    
     func setDismissButton() {
         view.addSubview(self.dismissButton)
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
@@ -232,25 +224,18 @@ class ScanProfileController: UIViewController {
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
     }
     
-    
     func setName() {
         let attributedText = NSMutableAttributedString(string: (userProfile?.name)!, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
         nameLabel.attributedText = attributedText
     }
     
-    func setImage() {
-        if userProfile?.uniqueID != nil {
-            
-            if let profileImage = DiskManager.readImageFromLocal(withUniqueID: userProfile?.uniqueID as! UInt64) {
-                self.profileImage.image = profileImage
-            }
-            self.profileImage.clipsToBounds = true
-            profileImageCenterYAnchor?.constant = -100
-            profileImage.isHidden = false
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
+    func setImage(_ fetchedProfileImage: UIImage) {
+        self.profileImage.image = fetchedProfileImage
+        profileImageCenterYAnchor?.constant = -100
+        profileImage.isHidden = false
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     func animateAfterPopup() {

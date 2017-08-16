@@ -81,7 +81,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         }
         
         NotificationCenter.default.post(name: .reloadCards, object: nil)
-        
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
@@ -93,13 +92,11 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ProfileImageSelectionCell
         
         if let socialMediaProfileImage = socialMediaProfileImages?[indexPath.item] {
             cell.socialMediaProfileImage = socialMediaProfileImage
         }
-        
         return cell
     }
     
@@ -142,7 +139,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     
     // MARK: - UIImagePickerControllerDelegate Delegate Implementation
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-
         picker.dismiss(animated: false, completion: { () -> Void in
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 var imageCropVC : RSKImageCropViewController!
@@ -155,6 +151,7 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     
     // MARK: - RSKImageCropperSwift Delegate Implementation
     func didCropImage(_ croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+        print("tortilla")
         socialMediaProfileImages?[(collectionView?.numberOfItems(inSection: 0))!-1].profileImage = croppedImage
         collectionView?.reloadData()
         self.navigationController?.popViewController(animated: false)
