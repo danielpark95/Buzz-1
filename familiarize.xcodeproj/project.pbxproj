@@ -44,7 +44,6 @@
 		F65430701F3CEEC30047FC35 /* WalkthroughCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F654306F1F3CEEC30047FC35 /* WalkthroughCell.swift */; };
 		F65430721F3CEF150047FC35 /* Walkthrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65430711F3CEF150047FC35 /* Walkthrough.swift */; };
 		F65430741F3D04AB0047FC35 /* ProximaNovaSoft-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F65430731F3D04550047FC35 /* ProximaNovaSoft-Regular.otf */; };
-		F65430761F43B7A40047FC35 /* DisplaySocialMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65430751F43B7A30047FC35 /* DisplaySocialMediaCell.swift */; };
 		F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96231F1ACE05009F6EF8 /* TabBar.swift */; };
 		F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96251F1ACE25009F6EF8 /* TabBarController.swift */; };
 		F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */; };
@@ -93,7 +92,6 @@
 		F654306F1F3CEEC30047FC35 /* WalkthroughCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughCell.swift; sourceTree = "<group>"; };
 		F65430711F3CEF150047FC35 /* Walkthrough.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Walkthrough.swift; sourceTree = "<group>"; };
 		F65430731F3D04550047FC35 /* ProximaNovaSoft-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaSoft-Regular.otf"; sourceTree = "<group>"; };
-		F65430751F43B7A30047FC35 /* DisplaySocialMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplaySocialMediaCell.swift; sourceTree = "<group>"; };
 		F67D96231F1ACE05009F6EF8 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		F67D96251F1ACE25009F6EF8 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */,
 				F654306D1F3CEEB90047FC35 /* WalkthroughStartCell.swift */,
 				F654306F1F3CEEC30047FC35 /* WalkthroughCell.swift */,
-				F65430751F43B7A30047FC35 /* DisplaySocialMediaCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -442,7 +439,6 @@
 				F654306E1F3CEEB90047FC35 /* WalkthroughStartCell.swift in Sources */,
 				14A25B381F2B1890000F90BE /* FirebaseManager.swift in Sources */,
 				F654306C1F3CEE620047FC35 /* WalkthroughController.swift in Sources */,
-				F65430761F43B7A40047FC35 /* DisplaySocialMediaCell.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
 				F65430721F3CEF150047FC35 /* Walkthrough.swift in Sources */,

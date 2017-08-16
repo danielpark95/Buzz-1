@@ -27,7 +27,7 @@
                                 <color key="backgroundColor" red="1" green="0.84313725490000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bee-2" translatesAutoresizingMaskIntoConstraints="NO" id="J2W-ht-1LG">
-                                <rect key="frame" x="67" y="217" width="240" height="236"/>
+                                <rect key="frame" x="86.5" y="234.5" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
