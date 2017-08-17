@@ -63,11 +63,11 @@ class UserCell: UICollectionViewCell {
     func createQR(_ userProfile: UserProfile) {
         
         let skin = ScannableSkin()
-        skin.backgroundColor = "#ffe769"
+        skin.backgroundColor = "#FFD705"
         //skin.maskColor = "#2f2f2f"
-        skin.dotColor = "#2f2f2f"
+        skin.dotColor = "#ffffff"
         skin.borderColor = "#2f2f2f"
-        //skin.overlayColor = "#ffd705"
+        skin.overlayColor = "#2f2f2f"
         skin.imageUri = "http://i.imgur.com/JDpYmVp.gif"
         skin.imageFit = .templateDefault
         skin.logoUri = ""
