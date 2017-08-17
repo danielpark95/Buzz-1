@@ -10,22 +10,19 @@ import UIKit
 import CoreData
 
 class ViewProfileController: UIViewController {
+    
     var socialMediaButtons: [String : UIButton]?
     var userProfile: UserProfile?
+    let profileImageHeightAndWidth: CGFloat = 150.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setPopup()
-        self.setupBackground()
-        self.addToBackground()
-        self.setupGraphics()
-        self.addToGraphics()
-        self.setImage()
+        setupViews()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.animatePopup()
+        animatePopup()
     }
     
     // This makes the profile image into a circle.
@@ -36,12 +33,7 @@ class ViewProfileController: UIViewController {
     
     // MARK: - UI Properties
     
-    // Text gets it textual label from QRScannerController
-    // This is to just define it
-    let nameAndBioLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 2)
-    }()
-    
+    // Texts gets it textual label from ScannerController
     let nameLabel: UILabel = {
         return UIManager.makeLabel(numberOfLines: 1)
     }()
@@ -51,86 +43,67 @@ class ViewProfileController: UIViewController {
     }()
     
     var popupImageView: UIImageView = {
-        let imageView = UIManager.makeImage()
+        let imageView = UIManager.makeImage(imageName: "dan_profilepopup_blue")
+        let tap = UITapGestureRecognizer()
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOpacity = 1
+        imageView.layer.shadowOffset = CGSize.zero
+        imageView.layer.shadowRadius = 10
+        imageView.layer.shadowPath = UIBezierPath(rect: imageView.bounds).cgPath
         return imageView
     }()
     
     lazy var profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 75)
+        return UIManager.makeProfileImage(valueOfCornerRadius: self.profileImageHeightAndWidth/2)
     }()
     
     lazy var dismissButton: UIButton = {
-        return UIManager.makeButton()
+        return UIManager.makeButton(imageName: "dan_x_button_red")
+    }()
+    
+    lazy var tintOverlay: UIImageView = {
+        let visualEffect = UIManager.makeImage()
+        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.35)
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        visualEffect.frame = (delegate.window?.bounds)!
+        return visualEffect
     }()
     
     lazy var outsideButton: UIButton = {
-        let button = UIManager.makeButton()
+        let button = UIButton()
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Setting up views
-    
-    func setPopup() {
-        view.addSubview(self.tintOverlay)
-        self.popupImageView = UIManager.makeImage(imageName: "dan_profilepopup_blue")
-        
-        let tap = UITapGestureRecognizer()
-        self.popupImageView.addGestureRecognizer(tap)
-        self.popupImageView.isUserInteractionEnabled = true
-        
-        
-        self.popupImageView.layer.shadowColor = UIColor.black.cgColor
-        self.popupImageView.layer.shadowOpacity = 1
-        self.popupImageView.layer.shadowOffset = CGSize.zero
-        self.popupImageView.layer.shadowRadius = 10
-        self.popupImageView.layer.shadowPath = UIBezierPath(rect: popupImageView.bounds).cgPath
-        
-        view.addSubview(self.popupImageView)
-        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // Initially set all the way at the bottom so that it animates up.
-        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        self.popupCenterYAnchor?.isActive = true
-    }
-    
-    // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
-    func setupBackground() {
-        
-        view.addSubview(self.outsideButton)
-        
-        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
-        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
-    }
-    
-    func addToBackground() {
-        view.addSubview(tintOverlay)
-        view.sendSubview(toBack: tintOverlay)
-    }
-    
-    func setupGraphics() {
+    var popupCenterYAnchor: NSLayoutConstraint?
+    func setupViews() {
         setName()
         setBio()
-        setDismissButton()
-    }
-    
-    func addToGraphics() {
+        setImage()
         
-        view.addSubview(self.profileImage)
-        view.addSubview(self.nameLabel)
-        view.addSubview(self.bioLabel)
+        view.addSubview(tintOverlay)
+        view.addSubview(popupImageView)
+        view.addSubview(outsideButton)
+        view.addSubview(profileImage)
+        view.addSubview(nameLabel)
+        view.addSubview(bioLabel)
+        view.addSubview(dismissButton)
         
-        //drawMiddleLine()
-        createSocialMediaButtons()
-        presentSocialMediaButtons()
+        popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        popupCenterYAnchor?.isActive = true
+        
+        outsideButton.frame = view.frame
         
         profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 30).isActive = true
-        
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
-        profileImage.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
         
         nameLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
@@ -141,10 +114,19 @@ class ViewProfileController: UIViewController {
         bioLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
         bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
         bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
+        
+        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 14).isActive = true
+        
+        //drawMiddleLine()
+        createSocialMediaButtons()
+        presentSocialMediaButtons()
     }
     
     func setImage() {
-        
         guard let uniqueID = userProfile?.uniqueID else {
             print("unique id is null")
             return
@@ -156,12 +138,9 @@ class ViewProfileController: UIViewController {
         }
         
         self.profileImage.image = profileImage
-        self.profileImage.clipsToBounds = true
-        
     }
     
     // MARK: - Animating popup display
-    
     func dismissClicked() {
         self.popupCenterYAnchor?.constant = view.frame.size.height
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -174,26 +153,12 @@ class ViewProfileController: UIViewController {
     }
     
     // Slides up the popup from the bottom of the screen to the middle
-    var popupCenterYAnchor: NSLayoutConstraint?
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
             self.view.layoutIfNeeded()
         }, completion: nil)
-    }
-    
-    // MARK: - Assigning UI Properties (Label, Button, Lines)
-    
-    func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dan_x_button_red")
-        view.addSubview(self.dismissButton)
-        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
-        
-        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 14).isActive = true
     }
     
     func drawMiddleLine() {
@@ -220,12 +185,10 @@ class ViewProfileController: UIViewController {
     }
     
     // MARK: - Button Properties
-    
     func buttonLink(_ userURL: String) {
         
         // Lmao, in order to get profile id, just scrape the facebook page again.
         // <meta property="al:ios:url" content="fb://profile/100001667117543">
-        
         let fbURL = URL(string: "fb://profile?id=100001667117543")!
         
         let safariFBURL = URL(string: "https://www.facebook.com/100001667117543")!
@@ -263,14 +226,6 @@ class ViewProfileController: UIViewController {
     func didSelectPN() {
         buttonLink("Kabooya")
     }
-    
-    lazy var tintOverlay: UIImageView = {
-        let visualEffect = UIManager.makeImage()
-        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.35)
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        visualEffect.frame = (delegate.window?.bounds)!
-        return visualEffect
-    }()
     
     // FYI the button should be a facebook button
     lazy var fbButton: UIButton = {

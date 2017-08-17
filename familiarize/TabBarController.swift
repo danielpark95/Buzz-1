@@ -32,12 +32,10 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "dan_myinfo_grey"), selectedImage: UIImage(named: "dan_myinfo_salmon"))
         userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0 )
         
-        
         //Scanner Controller
         let scannerController = ScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
         scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_teal"), selectedImage: UIImage(named: "dan_tabbarcircle_teal"))
-        
         
         //Contacts Controller
         let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -46,11 +44,9 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
         
         viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
-        
     }
     
     func removeScanner() {
-        print("remove scanner has been called")
         viewControllers?.remove(at: 1)
         //Scanner Controller
         let scannerController = ScannerController()

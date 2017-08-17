@@ -15,6 +15,7 @@ import Quikkly
 
 protocol ScannerControllerDelegate {
     func startCameraScanning() -> Void
+    func stopCameraScanning() -> Void
 }
 
 class ScannerController: ScanViewController, ScannerControllerDelegate {
@@ -34,21 +35,27 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             count = count + 1
         }
         setupViews()
-        print("i have been loaded")
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("i am disappear")
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("I am appear")
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    // MARK: ScannerControllerDelegate Functions
+    func startCameraScanning() {
+        cameraScanView?.start()
+    }
+    
+    func stopCameraScanning() {
+        cameraScanView?.stop()
     }
     
     lazy var backButton: UIButton = {
@@ -61,21 +68,23 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     }()
     
     func didSelectBack() {
-        //self.dismiss(animated: false, completion: nil)
         let delegate = UIApplication.shared.delegate as! AppDelegate
         tabBarController?.selectedIndex = delegate.previousIndex!
         if let myCameraScanView = self.cameraScanView {
-            print("did select back!")
-            print("This is the scan view value right before ending \(myCameraScanView)")
             myCameraScanView.stop()
         }
-        //self.removeFromParentViewController()
+        // These three steps are vital in memory management and cpu usage.
+        // This is because quikkly has made it so fucking weird to turn off the fucking camera.
+        // Dismisses the view controller.
+        self.dismiss(animated: false, completion: nil)
+        // Removes the reference that the parent view controller has to this view controller. (Frees up memory)
+        self.removeFromParentViewController()
+        // Deletes the whole fucking view controller and initializes a new one.
         NotificationCenter.default.post(name: .removeScanner, object: nil)
     }
     
     func setupViews() {
         view.addSubview(backButton)
-        view.bringSubview(toFront: backButton)
         
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
@@ -83,35 +92,34 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
         backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    func startCameraScanning() {
-        cameraScanView?.start()
-    }
-    
     let scanProfileController = ScanProfileController()
     func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
         cameraScanView = scanView
-        print("This is the camera scan view \(cameraScanView)")
         
         // Handle detected scannables
         if let scannable = scannables.first {
             // If we dont stop the camera the cpu is going off the fucking charts . . .
-            self.cameraScanView?.stop()
+            cameraScanView?.stop()
+        
+            scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.scanProfileController.ScannerControllerDelegate = self
+            present(self.scanProfileController, animated: false)
+            
             FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
-                
+                // Save the fetched data into CoreData.
                 self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
                 
-                // Setting up the controller and animations
+                // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile
-                self.scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                self.scanProfileController.ScannerControllerDelegate = self
-                
+                self.scanProfileController.setUserName((self.userProfile?.name)!)
+
+                // For fetching the profile image picture.
                 let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                     let profileImage = fetchedSocialMediaProfileImages[0].profileImage
-                    self.scanProfileController.setImage(profileImage!)
+                    self.scanProfileController.setUserProfileImage(profileImage!)
                     UserProfile.saveProfileImage(UIImagePNGRepresentation(profileImage!)!, withUserProfile: self.userProfile!)
                 })
-                self.present(self.scanProfileController, animated: false)
             })
         }
     }
