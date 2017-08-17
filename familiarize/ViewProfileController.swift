@@ -77,6 +77,64 @@ class ViewProfileController: UIViewController {
         return button
     }()
     
+    func setImage() {
+        guard let uniqueID = userProfile?.uniqueID else {
+            print("unique id is null")
+            return
+        }
+        
+        guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID as! UInt64) else {
+            print("file was not able to be retrieved from disk")
+            return
+        }
+        
+        self.profileImage.image = profileImage
+    }
+    
+    func drawMiddleLine() {
+        let middleLine = UIManager.makeImage(imageName: "dan_middleline_wide")
+        view.addSubview(middleLine)
+        middleLine.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor).isActive = true
+        middleLine.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 40).isActive = true
+    }
+    
+    func setName(){
+        var attributedText = NSMutableAttributedString()
+        if let name = userProfile?.name {
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
+        }
+        nameLabel.attributedText = attributedText
+    }
+    
+    func setBio() {
+        var attributedText = NSMutableAttributedString()
+        if let bio = userProfile?.bio {
+            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
+        }
+        bioLabel.attributedText = attributedText
+    }
+    
+    // MARK: - Animating popup display
+    func dismissClicked() {
+        self.popupCenterYAnchor?.constant = view.frame.size.height
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        }, completion: { _ in
+            // After moving the background up to the middle, then load the name and buttons.
+            self.dismiss(animated: false)
+        })
+    }
+    
+    // Slides up the popup from the bottom of the screen to the middle
+    func animatePopup() {
+        self.popupCenterYAnchor?.constant = 0
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
     // MARK: - Setting up views
     var popupCenterYAnchor: NSLayoutConstraint?
     func setupViews() {
@@ -124,64 +182,6 @@ class ViewProfileController: UIViewController {
         //drawMiddleLine()
         createSocialMediaButtons()
         presentSocialMediaButtons()
-    }
-    
-    func setImage() {
-        guard let uniqueID = userProfile?.uniqueID else {
-            print("unique id is null")
-            return
-        }
-        
-        guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID as! UInt64) else {
-            print("file was not able to be retrieved from disk")
-            return
-        }
-        
-        self.profileImage.image = profileImage
-    }
-    
-    // MARK: - Animating popup display
-    func dismissClicked() {
-        self.popupCenterYAnchor?.constant = view.frame.size.height
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-        }, completion: { _ in
-            // After moving the background up to the middle, then load the name and buttons.
-            self.dismiss(animated: false)
-        })
-    }
-    
-    // Slides up the popup from the bottom of the screen to the middle
-    func animatePopup() {
-        self.popupCenterYAnchor?.constant = 0
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    func drawMiddleLine() {
-        let middleLine = UIManager.makeImage(imageName: "dan_middleline_wide")
-        view.addSubview(middleLine)
-        middleLine.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor).isActive = true
-        middleLine.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 40).isActive = true
-    }
-    
-    func setName(){
-        var attributedText = NSMutableAttributedString()
-        if let name = userProfile?.name {
-            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
-        }
-        nameLabel.attributedText = attributedText
-    }
-    
-    func setBio() {
-        var attributedText = NSMutableAttributedString()
-        if let bio = userProfile?.bio {
-            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
-        }
-        bioLabel.attributedText = attributedText
     }
     
     // MARK: - Button Properties

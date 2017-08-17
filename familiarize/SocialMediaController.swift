@@ -38,12 +38,6 @@ class SocialMediaController: UIViewController {
         return button
     }()
     
-    func addClicked() {
-        socialMedia?.inputName = inputTextField.text!
-        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
-        self.dismiss(animated: false, completion: nil)
-    }
-    
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
         imageView.image = UIImage(named: "dan_popup_smallest")
@@ -79,6 +73,12 @@ class SocialMediaController: UIViewController {
         textField.textAlignment = NSTextAlignment.center
         return textField
     }()
+    
+    func addClicked() {
+        socialMedia?.inputName = inputTextField.text!
+        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
+        self.dismiss(animated: false, completion: nil)
+    }
     
     func dismissClicked() {
         self.popupCenterYAnchor?.constant = view.frame.size.height

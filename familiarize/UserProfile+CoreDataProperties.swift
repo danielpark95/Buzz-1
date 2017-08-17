@@ -62,7 +62,7 @@ extension UserProfile {
             try(managedObjectContext.save())
             let newCardJSON: JSON = JSON(["profileImageApp":socialMediaProfileApp, "profileImageURL": socialMediaProfileURL])
             FirebaseManager.updateCard(newCardJSON, withUniqueID: userProfile.uniqueID as! UInt64)
-            NotificationCenter.default.post(name: .reload, object: nil)
+            NotificationCenter.default.post(name: .reloadContacts, object: nil)
         } catch let err {
             print(err)
         }
@@ -162,7 +162,7 @@ extension UserProfile {
         
         do {
             try(managedObjectContext.save())
-            NotificationCenter.default.post(name: .reload, object: nil)
+            NotificationCenter.default.post(name: .reloadContacts, object: nil)
         } catch let err {
             print(err)
         }
@@ -171,7 +171,7 @@ extension UserProfile {
     
     static func saveProfileImage(_ profileImage: Data, withUserProfile userProfile: UserProfile) {
         DiskManager.writeImageDataToLocal(withData: profileImage, withUniqueID: userProfile.uniqueID as! UInt64)
-        NotificationCenter.default.post(name: .reload, object: nil)
+        NotificationCenter.default.post(name: .reloadContacts, object: nil)
     }
     
     static func deleteProfile(user: UserProfile) {

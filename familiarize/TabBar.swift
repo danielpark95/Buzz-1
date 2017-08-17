@@ -10,25 +10,7 @@ import UIKit
 import pop
 import ESTabBarController_swift
 
-class ExampleBasicContentView: ESTabBarItemContentView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        //textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        //highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-       // backgroundColor = UIColor.init(white: 200.0 / 255.0, alpha: 1.0)
-       // backdropColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
-class ExampleBouncesContentView: ExampleBasicContentView {
+class ExampleBouncesContentView: ESTabBarItemContentView {
     
     public var duration = 0.15
     

@@ -100,49 +100,27 @@ class ScanProfileController: UIViewController {
         return button
     }()
     
-    var popupCenterYAnchor: NSLayoutConstraint?
-    var profileImageCenterYAnchor: NSLayoutConstraint?
-    func setupViews() {
-        view.addSubview(backgroundBlur)
-        view.addSubview(outsideButton)
-        view.addSubview(popupImageView)
-        view.addSubview(checkBox)
-        view.addSubview(viewProfileButton)
-        view.addSubview(nameLabel)
-        view.addSubview(profileImage)
-        view.addSubview(dismissButton)
-        
-        backgroundBlur.frame = view.bounds
-        
-        outsideButton.frame = view.bounds
-        
-        popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // Initially set all the way at the bottom so that it animates up.
-        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        popupCenterYAnchor?.isActive = true
-        
-        checkBox.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        checkBox.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 5).isActive = true
-        checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        profileImageCenterYAnchor = profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50)
-        profileImageCenterYAnchor?.isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
-        
-        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
-        
-        viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 45).isActive = true
-        
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 81).isActive = true
-        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
+    func setUserName(_ userProfileName: String) {
+        let userProfileName = NSMutableAttributedString(string: userProfileName, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+        nameLabel.attributedText = userProfileName
+        self.nameLabel.isHidden = false
+        self.viewProfileButton.isHidden = false
+        self.dismissButton.isHidden = false
+        self.checkBox.isHidden = false
+        UIView.animate(withDuration: 0, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.checkBox.setCheckState(.checked, animated: true)
+        }, completion: nil)
     }
-
+    
+    func setUserProfileImage(_ fetchedProfileImage: UIImage) {
+        self.profileImage.image = fetchedProfileImage
+        profileImageCenterYAnchor?.constant = -100
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.profileImage.isHidden = false
+        }, completion: nil)
+    }
+    
     func viewProfileClicked() {
         // Go to different VC
         if self.view.window?.rootViewController as? TabBarController != nil {
@@ -193,24 +171,46 @@ class ScanProfileController: UIViewController {
         }, completion: nil)
     }
     
-    func setUserName(_ userProfileName: String) {
-        let userProfileName = NSMutableAttributedString(string: userProfileName, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
-        nameLabel.attributedText = userProfileName
-        self.nameLabel.isHidden = false
-        self.viewProfileButton.isHidden = false
-        self.dismissButton.isHidden = false
-        self.checkBox.isHidden = false
-        UIView.animate(withDuration: 0, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.checkBox.setCheckState(.checked, animated: true)
-        }, completion: nil)
-    }
-    
-    func setUserProfileImage(_ fetchedProfileImage: UIImage) {
-        self.profileImage.image = fetchedProfileImage
-        profileImageCenterYAnchor?.constant = -100
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-            self.profileImage.isHidden = false
-        }, completion: nil)
+    var popupCenterYAnchor: NSLayoutConstraint?
+    var profileImageCenterYAnchor: NSLayoutConstraint?
+    func setupViews() {
+        view.addSubview(backgroundBlur)
+        view.addSubview(outsideButton)
+        view.addSubview(popupImageView)
+        view.addSubview(checkBox)
+        view.addSubview(viewProfileButton)
+        view.addSubview(nameLabel)
+        view.addSubview(profileImage)
+        view.addSubview(dismissButton)
+        
+        backgroundBlur.frame = view.bounds
+        
+        outsideButton.frame = view.bounds
+        
+        popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        popupCenterYAnchor?.isActive = true
+        
+        checkBox.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        checkBox.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 5).isActive = true
+        checkBox.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        checkBox.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        profileImageCenterYAnchor = profileImage.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50)
+        profileImageCenterYAnchor?.isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
+        
+        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -30).isActive = true
+        
+        viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 45).isActive = true
+        
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 81).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
     }
 }

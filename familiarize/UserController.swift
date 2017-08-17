@@ -104,7 +104,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
             UIApplication.shared.isStatusBarHidden = true            
         }, completion: nil)
-        settingsLauncher.showSettings()
+        settingsLauncher.setupViews()
     }
     
     func closingHamburger() {
