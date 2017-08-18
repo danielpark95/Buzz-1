@@ -65,7 +65,7 @@ class UserCell: UICollectionViewCell {
         let skin = ScannableSkin()
         skin.backgroundColor = "#FFD705"
         //skin.maskColor = "#2f2f2f"
-        skin.dotColor = "#ffffff"
+        skin.dotColor = "#2f2f2f"
         skin.borderColor = "#2f2f2f"
         skin.overlayColor = "#2f2f2f"
         skin.imageUri = "http://i.imgur.com/JDpYmVp.gif"

@@ -59,6 +59,6 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
     func showWalkthroughController() {
         
         let walkthroughController = WalkthroughController()
-        present(walkthroughController, animated: true, completion: nil)
+        present(walkthroughController, animated: false, completion: nil)
     }
 }
