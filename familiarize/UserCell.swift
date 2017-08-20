@@ -68,7 +68,7 @@ class UserCell: UICollectionViewCell {
         skin.dotColor = "#2f2f2f"
         skin.borderColor = "#2f2f2f"
         skin.overlayColor = "#2f2f2f"
-        skin.imageUri = "http://i.imgur.com/JDpYmVp.gif"
+        skin.imageUri = "bee-1"
         skin.imageFit = .templateDefault
         skin.logoUri = ""
         
