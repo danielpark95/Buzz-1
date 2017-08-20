@@ -38,6 +38,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             print("This is time \(pickle)")
         self.automaticallyAdjustsScrollViewInsets = false
         navigationItem.title = "Me"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)]
         
 //1502249752393
 //1502249785543

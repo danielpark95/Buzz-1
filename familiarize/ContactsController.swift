@@ -33,6 +33,7 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Friends"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)]
         
         searchBar.searchBarStyle = UISearchBarStyle.prominent
         searchBar.placeholder = " Search... "

@@ -44,7 +44,7 @@ class SocialMediaController: UIViewController {
     }
     
     lazy var addButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_close")
+        let button = UIManager.makeButton(imageName: "dan_save")
         button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
         return button
     }()
@@ -57,7 +57,7 @@ class SocialMediaController: UIViewController {
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
-        imageView.image = UIImage(named: "dan_popup_smallest")
+        imageView.image = UIImage(named: "dan_profilepopup_square")
         let tap = UITapGestureRecognizer()
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -125,7 +125,7 @@ class SocialMediaController: UIViewController {
         self.socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
         inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 10).isActive = true
+        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true
         inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
         inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
         
@@ -133,6 +133,7 @@ class SocialMediaController: UIViewController {
     
     let inputTextField : UITextField = {
         let textField = UITextField()
+        //change to "name" and "bio" for name and bio. username doesn't really make sense.
         textField.placeholder = "username"
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .no
