@@ -46,6 +46,7 @@ extension UserProfile {
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         do {
+            
             return try(managedObjectContext.fetch(fetchRequest)) as! [UserProfile]
         } catch let err {
             print(err)
