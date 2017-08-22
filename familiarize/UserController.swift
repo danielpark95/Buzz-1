@@ -25,7 +25,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         //self.reloadCards()
@@ -33,7 +32,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
         navigationItem.title = "Me"
@@ -87,8 +85,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        let addButton = UIBarButtonItem(image: UIImage(named:"add-button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
         navigationItem.rightBarButtonItem = addButton

@@ -14,11 +14,13 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
 
     private let cellId = "cellId"
     
-    
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false)
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
     ]
 
     override init(frame: CGRect) {
@@ -150,7 +152,7 @@ class SocialMediaCell: UICollectionViewCell {
     
     let socialMediaName: UILabel = {
         let label = UIManager.makeLabel()
-        label.font = UIFont.systemFont(ofSize: 7)
+        label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
     

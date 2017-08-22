@@ -95,7 +95,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     let scanProfileController = ScanProfileController()
     func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
         cameraScanView = scanView
-        
+      
         // Handle detected scannables
         if let scannable = scannables.first {
             // If we dont stop the camera the cpu is going off the fucking charts . . .
@@ -112,7 +112,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                 // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile
                 self.scanProfileController.setUserName((self.userProfile?.name)!)
-
+                                                                                       
                 // For fetching the profile image picture.
                 let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
