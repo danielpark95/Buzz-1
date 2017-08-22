@@ -49,18 +49,17 @@ class FirebaseManager {
     }
 
     static func uploadImage(_ socialMediaProfileImage: SocialMediaProfileImage, completionHandler: @escaping (String) -> Void) {
-        let profileImage = UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)
+        let profileImage = UIImageJPEGRepresentation(socialMediaProfileImage.profileImage!, 1.0)
         
         // Create a reference to the file you want to upload
         let profileImageRef = storageRef.child("\(UIDevice.current.identifierForVendor!.uuidString)/\(UUID().uuidString)")
 
-        let _ = profileImageRef.putData(profileImage!, metadata: nil) { (metadata, error) in
+        _ = profileImageRef.putData(profileImage!, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 // Uh-oh, an error occurred!
                 return
             }
             completionHandler((metadata.downloadURL()?.absoluteString)!)
-            
         }
     }
     

@@ -27,10 +27,8 @@ class TermsPrivacySettingController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView?.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = UIColor.white
-        
         setupNavBarButton()
     }
     
@@ -40,7 +38,6 @@ class TermsPrivacySettingController: UICollectionViewController, UICollectionVie
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath)
-        
         return cell
     }
     

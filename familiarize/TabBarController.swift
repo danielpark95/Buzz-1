@@ -15,6 +15,10 @@ extension ESTabBarController {
         return selectedViewController
     }
 }
+extension Notification.Name {
+    static let removeScanner = Notification.Name("removeScanner")
+}
+
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +29,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
         revealingSplashView.startAnimation(){
         }
-        
-        
+      
         if isNotFirstTime() {
             let tabBarController = ESTabBarController()
             tabBarController.tabBar.isTranslucent = false
@@ -57,8 +60,22 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
     }
     
     func showWalkthroughController() {
-        
         let walkthroughController = WalkthroughController()
         present(walkthroughController, animated: true, completion: nil)
+
     }
+
+    func removeScanner() {
+        viewControllers?.remove(at: 1)
+        //Scanner Controller
+        let scannerController = ScannerController()
+        let scannerNavigationController = UINavigationController(rootViewController: scannerController)
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_teal"), selectedImage: UIImage(named: "dan_tabbarcircle_teal"))
+        viewControllers?.insert(scannerNavigationController, at: 1)
+        self.updateFocusIfNeeded()
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 215/255.0, blue: 0/255.0, alpha:1.0))
+        self.view.addSubview(revealingSplashView)
+        revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
+        revealingSplashView.startAnimation(){
+        }
 }

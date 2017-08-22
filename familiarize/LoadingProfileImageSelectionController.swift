@@ -34,6 +34,7 @@ class LoadingProfileImageSelectionController: UIViewController {
     }
     
     override func viewDidLoad() {
+        view.backgroundColor = .white
         fetchImage()
     }
     

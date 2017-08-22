@@ -33,15 +33,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let pickle:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000.0)
-            print("This is time \(pickle)")
         self.automaticallyAdjustsScrollViewInsets = false
         navigationItem.title = "Me"
         
-//1502249752393
-//1502249785543
-//1502249875149
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCards), name: .reloadCards, object: nil)
         
@@ -108,8 +102,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
             UIApplication.shared.isStatusBarHidden = true            
         }, completion: nil)
-        
-        settingsLauncher.showSettings()
+        settingsLauncher.setupViews()
     }
     
     func closingHamburger() {
@@ -128,7 +121,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let layout = UICollectionViewFlowLayout()
         let controller: UIViewController
         
-        
         if setting.name == .TermsPrivacy {
             controller = TermsPrivacySettingController(collectionViewLayout: layout)
         } else if setting.name == .Contact {
@@ -140,14 +132,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         controller.hidesBottomBarWhenPushed = true
-        
-        
-//      how to change the font?
-//        let navigationTitleFont = UIFont(name: "Avenir", size: 30)
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: navigationTitleFont!,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         navigationController?.pushViewController(controller, animated: true)
     }
-    
     
     let headerBar: UIImageView = {
         let image = UIManager.makeImage(imageName: "dan_header_bar")
@@ -198,20 +184,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         return 0
     }
-    
-    let profileImageCache = NSCache<NSString, UIImage>()
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! UserCell
         if let myUserProfile = myUserProfiles?[indexPath.item] {
             cell.myUserProfile = myUserProfile
-            //cell.profileImage.image = UIImage(data: myUserProfile.profileImage!)
-
-            if let imagee = profileImageCache.object(forKey: myUserProfile.profileImage?.base64EncodedString() as! NSString) {
-                cell.profileImage.image = imagee
-            } else {
-                cell.profileImage.image = UIImage(data: myUserProfile.profileImage!)
-                profileImageCache.setObject(cell.profileImage.image!, forKey: myUserProfile.profileImage?.base64EncodedString() as! NSString)
-            }
         }
         return cell
     }
@@ -225,7 +202,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func reloadCards() {
         myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
-        profileImageCache.removeAllObjects()
         collectionView?.reloadData()
     }
 
