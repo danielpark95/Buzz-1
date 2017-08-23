@@ -63,18 +63,12 @@ class ViewProfileController: UIViewController {
         return UIManager.makeButton(imageName: "dan_x_button_red")
     }()
     
-    lazy var tintOverlay: UIImageView = {
-        let visualEffect = UIManager.makeImage()
-        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.35)
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        visualEffect.frame = (delegate.window?.bounds)!
+    lazy var tintOverlay: UIView = {
+        let visualEffect = UIView()
+        visualEffect.backgroundColor = UIColor(white: 0, alpha: 0.15)
+        visualEffect.alpha = 0
+        visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissClicked)))
         return visualEffect
-    }()
-    
-    lazy var outsideButton: UIButton = {
-        let button = UIButton()
-        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        return button
     }()
     
     func setImage() {
@@ -118,7 +112,7 @@ class ViewProfileController: UIViewController {
         self.popupCenterYAnchor?.constant = view.frame.size.height
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
-            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+            self.tintOverlay.alpha = 0
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.dismiss(animated: false)
@@ -129,7 +123,7 @@ class ViewProfileController: UIViewController {
     func animatePopup() {
         self.popupCenterYAnchor?.constant = 0
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+            self.tintOverlay.alpha = 1
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -141,20 +135,21 @@ class ViewProfileController: UIViewController {
         setBio()
         setImage()
         
+        if let window = UIApplication.shared.keyWindow {
+            tintOverlay.frame = window.frame
+        }
         view.addSubview(tintOverlay)
         view.addSubview(popupImageView)
-        view.addSubview(outsideButton)
         view.addSubview(profileImage)
         view.addSubview(nameLabel)
         view.addSubview(bioLabel)
         view.addSubview(dismissButton)
+
         
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
         popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
         popupCenterYAnchor?.isActive = true
-        
-        outsideButton.frame = view.frame
         
         profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 30).isActive = true

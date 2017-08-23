@@ -10,34 +10,49 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
-extension Notification.Name {
-    static let reloadCards = Notification.Name("reloadCardsNotification")
-}
-
-class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     private let cellId = "cellId"
+    var blockOperations = [BlockOperation]()
     
-    var myUserProfiles: [UserProfile]? {
-        didSet {
-            if let count = self.myUserProfiles?.count {
-                pageControl.numberOfPages = count
-            }
-        }
-    }
+    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
+    var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.hidesForSinglePage = true
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.isUserInteractionEnabled = false
+        return pc
+    }()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [UserProfile.userProfileSelection.myUser.rawValue])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.fetchBatchSize = 20
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        //self.reloadCards()
         delegate.previousIndex = 0
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let err {
+            print(err)
+        }
+        
         self.automaticallyAdjustsScrollViewInsets = false
         navigationItem.title = "Me"
-        
-        // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCards), name: .reloadCards, object: nil)
         
         let user1: JSON = [
             "name": "T.J. Miller",
@@ -65,7 +80,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)
 
-        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
         setupNavBarButton()
         setupCollectionView()
@@ -80,7 +94,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! UserCell
-        selectedCell.onQRImage = !selectedCell.onQRImage
+        selectedCell.onQRImage = !(selectedCell.onQRImage)
         selectedCell.flipCard()
     }
     
@@ -154,23 +168,29 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: self.cellId)
+        collectionView?.isPagingEnabled = true
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
         }
-        collectionView?.isPagingEnabled = true
     }
     
-    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
-    var pageControl: UIPageControl = {
-        let pc = UIPageControl()
-        pc.hidesForSinglePage = true
-        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
-        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
-        pc.translatesAutoresizingMaskIntoConstraints = false
-        pc.isUserInteractionEnabled = false
-        return pc
-    }()
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .insert {
+            blockOperations.append(BlockOperation(block: {
+                self.collectionView?.insertItems(at: [newIndexPath!])
+            }))
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView?.performBatchUpdates({
+            for operation in self.blockOperations {
+                operation.start()
+            }
+        }, completion: nil)
+    }
+    
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
@@ -179,7 +199,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // Modify this after you saved a user.
-        if let count = self.myUserProfiles?.count {
+        if let count = fetchedResultsController.sections?[0].numberOfObjects {
+            pageControl.numberOfPages = count
             return count
         }
         return 0
@@ -187,22 +208,17 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! UserCell
-        if let myUserProfile = myUserProfiles?[indexPath.item] {
-            cell.myUserProfile = myUserProfile
-        }
+        let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        cell.myUserProfile = userProfile
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView!.frame.size;
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
-    }
-    
-    func reloadCards() {
-        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
-        collectionView?.reloadData()
     }
 
 }

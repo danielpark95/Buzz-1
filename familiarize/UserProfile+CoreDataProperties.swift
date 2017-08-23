@@ -37,22 +37,6 @@ extension UserProfile {
     @NSManaged public var profileImageURL: String?
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
- 
-    static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
-        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        do {
-            
-            return try(managedObjectContext.fetch(fetchRequest)) as! [UserProfile]
-        } catch let err {
-            print(err)
-        }
-        return []
-    }
     
     static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
         let delegate = UIApplication.shared.delegate as! AppDelegate

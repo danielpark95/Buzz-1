@@ -76,11 +76,8 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         if (selectedSocialMediaProfileImage?.appName == "default") {
             FirebaseManager.uploadImage(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
                 UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage?.appName)!, withUserProfile: newUserProfile)
-                NotificationCenter.default.post(name: .reloadCards, object: nil)
             })
         }
-        
-        NotificationCenter.default.post(name: .reloadCards, object: nil)
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     

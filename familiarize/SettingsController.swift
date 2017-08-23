@@ -54,13 +54,11 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         return imageView
     }()
     
-    lazy var tintOverlay: UIImageView = {
-        let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+    lazy var tintOverlay: UIView = {
+        let visualEffect = UIView()
+        visualEffect.backgroundColor = UIColor(white: 0, alpha: 0.15)
+        visualEffect.alpha = 0
         visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
-        if let window = UIApplication.shared.keyWindow {
-            visualEffect.frame = window.bounds
-        }
         return visualEffect
     }()
     
@@ -84,8 +82,9 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             collectionView.addSubview(websiteQRCodeImage)
             
             window.addSubview(tintOverlay)
+            tintOverlay.frame = window.frame
             window.addSubview(collectionView)
-            
+
             let width: CGFloat = (window.frame.width)*(2/3)
             collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: width, height: window.frame.height)
 
@@ -95,7 +94,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.tintOverlay.alpha = 0.15
+                self.tintOverlay.alpha = 1
                 self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
             }, completion: nil)
         }
