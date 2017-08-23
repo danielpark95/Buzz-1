@@ -16,7 +16,14 @@ extension Notification.Name {
     static let viewProfile = Notification.Name("viewProfileNotification")
 }
 
-class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
+
+protocol ContactsControllerDelegate {
+    func closeHamburger()
+    func showControllerForSetting(setting: Setting)
+}
+
+class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, NSFetchedResultsControllerDelegate, ContactsControllerDelegate {
+    
     private let cellId = "cellId"
     var blockOperations = [BlockOperation]()
     
@@ -60,12 +67,57 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         //userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         setupCollectionView()
         setupRefreshingAndReloading()
+        setupNavBarButton()
+        
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let delegate = UIApplication.shared.delegate as! AppDelegate
         delegate.previousIndex = 2
+    }
+    
+    func setupNavBarButton() {
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(openHamburger))
+        navigationItem.rightBarButtonItem = hamburgerButton
+    }
+    
+    lazy var settingsLauncher: SettingsController = {
+        let launcher = SettingsController()
+        launcher.contactsControllerDelegate = self
+        return launcher
+    }()
+    
+    func closeHamburger() {
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    func openHamburger() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            UIApplication.shared.isStatusBarHidden = true
+        }, completion: nil)
+        settingsLauncher.setupViews()
+    }
+    
+    func showControllerForSetting(setting: Setting) {
+        
+        let layout = UICollectionViewFlowLayout()
+        let controller: UIViewController
+        
+        if setting.name == .TermsPrivacy {
+            controller = TermsPrivacySettingController(collectionViewLayout: layout)
+        } else if setting.name == .Contact {
+            controller = ContactSettingController(collectionViewLayout: layout)
+        } else if setting.name == .Help {
+            controller = HelpSettingController(collectionViewLayout: layout)
+        } else { // It is the feedback controller
+            controller = FeedbackSettingController(collectionViewLayout: layout)
+        }
+        
+        controller.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func viewProfileNotification() {

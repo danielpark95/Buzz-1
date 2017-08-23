@@ -29,7 +29,7 @@ enum SettingName: String {
 class SettingsController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     private let cellId = "cellId"
-    var userController: UserController?
+    var contactsControllerDelegate: ContactsControllerDelegate?
     
     override init() {
         super.init()
@@ -66,13 +66,12 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.tintOverlay.alpha = 0
             if let window = UIApplication.shared.keyWindow {
-                self.collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
+                self.collectionView.frame = CGRect(x: window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
             }
-            self.userController?.closingHamburger()
-            
+            self.contactsControllerDelegate?.closeHamburger()
         }, completion: { _ in
             if setting.name != .Blank {
-                self.userController?.showControllerForSetting(setting: setting)
+                self.contactsControllerDelegate?.showControllerForSetting(setting: setting)
             }
         })
     }
@@ -86,16 +85,16 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             window.addSubview(collectionView)
 
             let width: CGFloat = (window.frame.width)*(2/3)
-            collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: width, height: window.frame.height)
+            collectionView.frame = CGRect(x: window.frame.width, y: 0, width: width, height: window.frame.height)
 
-            websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
+            websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:window.frame.width/6).isActive = true
             websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
             websiteQRCodeImage.heightAnchor.constraint(equalToConstant: width).isActive = true
             websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1
-                self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
+                self.collectionView.frame = CGRect(x: window.frame.width-width, y: 0, width: width, height: window.frame.height)
             }, completion: nil)
         }
     }

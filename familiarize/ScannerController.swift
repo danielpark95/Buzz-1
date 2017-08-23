@@ -14,8 +14,8 @@ import CoreData
 import Quikkly
 
 protocol ScannerControllerDelegate {
-    func startCameraScanning() -> Void
-    func stopCameraScanning() -> Void
+    func startCameraScanning()
+    func stopCameraScanning()
 }
 
 class ScannerController: ScanViewController, ScannerControllerDelegate {

@@ -99,28 +99,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: nil)
         let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
         navigationItem.rightBarButtonItem = addButton
-    }
-    
-    lazy var settingsLauncher: SettingsController = {
-        let launcher = SettingsController()
-        launcher.userController = self
-        return launcher
-    }()
-    
-    func handleHamburger() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            UIApplication.shared.isStatusBarHidden = true            
-        }, completion: nil)
-        settingsLauncher.setupViews()
-    }
-    
-    func closingHamburger() {
-        UIApplication.shared.isStatusBarHidden = false
     }
     
     func handleNewCard() {
@@ -128,25 +111,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let newCardController = NewCardController(collectionViewLayout: layout)
         let navigationController = UINavigationController.init(rootViewController: newCardController)
         self.present(navigationController, animated: true)
-    }
-    
-    func showControllerForSetting(setting: Setting) {
-
-        let layout = UICollectionViewFlowLayout()
-        let controller: UIViewController
-        
-        if setting.name == .TermsPrivacy {
-            controller = TermsPrivacySettingController(collectionViewLayout: layout)
-        } else if setting.name == .Contact {
-            controller = ContactSettingController(collectionViewLayout: layout)
-        } else if setting.name == .Help {
-            controller = HelpSettingController(collectionViewLayout: layout)
-        } else { // It is the feedback controller
-            controller = FeedbackSettingController(collectionViewLayout: layout)
-        }
-        
-        controller.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(controller, animated: true)
     }
     
     let headerBar: UIImageView = {
