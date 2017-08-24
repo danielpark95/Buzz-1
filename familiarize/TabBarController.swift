@@ -48,7 +48,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             
             viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
         } else {
-            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.01)
+            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.96)
         }
     }
     
