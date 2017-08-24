@@ -11,7 +11,7 @@ import SwiftyJSON
 import UIKit
 import Quikkly
 
-
+var myUserProfileImageCache = NSCache<NSString, UIImage>()
 class UserCell: UICollectionViewCell {
     
     var fullBrightness: Bool = false
@@ -50,13 +50,23 @@ class UserCell: UICollectionViewCell {
             let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 21)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
             bioLabel.attributedText = bio
             
-            //self.profileImage.image = UIImage(data: (self.myUserProfile?.profileImage)!)
-            
-            //profileImage = UIManager.makeCardProfileImage((myUserProfile?.profileImage)!, withImageXCoordPadding: imageXCoordPadding)
-            
             // When myUserProfile is set within the UserController as a cell, then load up the required information that the user has.
             createQR(myUserProfile!)
             setupViews()
+            
+            if let profileImage = myUserProfileImageCache.object(forKey: "\(self.myUserProfile!.uniqueID!)" as NSString) {
+                self.profileImage.image = profileImage
+            } else {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    // if it is not in cache, then call from disk.
+                    if let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.myUserProfile!.uniqueID as! UInt64) {
+                        DispatchQueue.main.async {
+                            self.profileImage.image = profileImage
+                            myUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(self.myUserProfile!.uniqueID!)" as NSString)
+                        }
+                    }
+                }
+            }
         }
     }
 

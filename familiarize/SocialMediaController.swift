@@ -12,22 +12,11 @@ import CoreData
 class SocialMediaController: UIViewController {
     
     var newCardControllerDelegate: NewCardController?
-    var socialMedia: SocialMedia? {
-        didSet {
-            if let socialMediaImageName = socialMedia?.imageName {
-                socialMediaImageView.image = UIImage(named: socialMediaImageName)
-                
-                // Do we need this?
-                //socialMediaImageView.clipsToBounds = true
-            }
-            setupViews()
-        }
-    }
+    var socialMedia: SocialMedia?
     
-    // When everything is done loading, do this shabang.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupViews()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -37,8 +26,8 @@ class SocialMediaController: UIViewController {
     // After all of the views are setups, then animate the motion where the popup image
     // starts to rise up from the bottom of the screen to the middle.
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.animatePopup()
-        
         // Makes the inputTextField show up immendiately when the social media icon is pressed.
         inputTextField.becomeFirstResponder()
     }
@@ -48,12 +37,6 @@ class SocialMediaController: UIViewController {
         button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
         return button
     }()
-    
-    func addClicked() {
-        socialMedia?.inputName = inputTextField.text!
-        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
-        self.dismiss(animated: false, completion: nil)
-    }
     
     var popupImageView: UIImageView = {
         let imageView = UIManager.makeImage()
@@ -70,7 +53,7 @@ class SocialMediaController: UIViewController {
     
     lazy var tintOverlay: UIImageView = {
         let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         visualEffect.frame = self.view.bounds
         return visualEffect
     }()
@@ -80,56 +63,6 @@ class SocialMediaController: UIViewController {
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
-    
-    func dismissClicked() {
-        self.dismiss(animated: false, completion: nil)
-    }
-    
-    // Slides up the popup from the bottom of the screen to the middle
-    var popupCenterYAnchor: NSLayoutConstraint?
-    
-    func animatePopup() {
-        self.popupCenterYAnchor?.constant = 0
-        
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-        })
-    }
-
-    func setupViews() {
-        view.addSubview(self.tintOverlay)
-        view.addSubview(self.outsideButton)
-        view.addSubview(self.popupImageView)
-        view.addSubview(self.addButton)
-        view.addSubview(self.socialMediaImageView)
-        view.addSubview(self.inputTextField)
-
-        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
-        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
-        
-        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // Initially set all the way at the bottom so that it animates up.
-        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        self.popupCenterYAnchor?.isActive = true
-        
-        self.addButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        self.addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 75).isActive = true
-
-        
-        self.socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        self.socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
-        self.socialMediaImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        self.socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true
-        inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
-        
-    }
     
     let inputTextField : UITextField = {
         let textField = UITextField()
@@ -143,5 +76,67 @@ class SocialMediaController: UIViewController {
         return textField
     }()
     
+    
+    func addClicked() {
+        socialMedia?.inputName = inputTextField.text!
+        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
+    func dismissClicked() {
+        self.popupCenterYAnchor?.constant = view.frame.size.height
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+            self.inputTextField.endEditing(true)
+        }, completion: { _ in
+            // After moving the background up to the middle, then load the name and buttons.
+            self.dismiss(animated: false)
+        })
+    }
+    
+    // Slides up the popup from the bottom of the screen to the middle
+    func animatePopup() {
+        self.popupCenterYAnchor?.constant = 0
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        }, completion: nil)
+    }
+
+    var popupCenterYAnchor: NSLayoutConstraint?
+    func setupViews() {
+        view.addSubview(tintOverlay)
+        view.addSubview(outsideButton)
+        view.addSubview(popupImageView)
+        view.addSubview(addButton)
+        view.addSubview(socialMediaImageView)
+        view.addSubview(inputTextField)
+
+        outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
+        outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
+        
+        popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        popupCenterYAnchor?.isActive = true
+        
+        addButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 75).isActive = true
+        
+        socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
+        socialMediaImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true
+        inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
+        
+        socialMediaImageView.image = UIImage(named: (socialMedia?.imageName)!)
+    }
     
 }
