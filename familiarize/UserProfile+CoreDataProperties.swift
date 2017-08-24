@@ -166,6 +166,11 @@ extension UserProfile {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         managedObjectContext.delete(user)
+        do {
+            try managedObjectContext.save()
+        } catch let err {
+            print(err)
+        }
     }
     
     // This is just a test run on how we can utilize clearData within the contactsVC

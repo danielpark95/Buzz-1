@@ -25,13 +25,6 @@ protocol ContactsControllerDelegate {
 class ContactsController: UITableViewController, NSFetchedResultsControllerDelegate, ContactsControllerDelegate {
     
     private let cellId = "cellId"
-    var blockOperations = [BlockOperation]()
-    
-//    lazy var refreshControl: UIRefreshControl = {
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action:#selector(ContactsController.refreshTableData(sender:)), for: .valueChanged)
-//        return refreshControl
-//    }()
     
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -121,14 +114,11 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     
     func reloadTableData() {
-        //userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         tableView.reloadData()
     }
     
     func refreshTableData(sender: UIRefreshControl) {
-        // This is our refresh animator
-        //collectionView?.reloadData()
-        tableView.layoutIfNeeded()
+        tableView.reloadData()
         sender.endRefreshing()
     }
     
@@ -140,26 +130,25 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         tableView.allowsMultipleSelectionDuringEditing = true
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
+// This method is needed when a row is fixed to not be deleted.
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
         UserProfile.deleteProfile(user: userProfile)
     }
     
     func setupRefreshingAndReloading() {
-//        tableView?.insertSubview(refreshControl, at: 0)
-        
-        //collectionView?.sendSubview(toBack: refreshControl)
-//        //refresher.layer.zPosition = 3
-//        //refresher.isUserInteractionEnabled = false
-//        if #available(iOS 10.0, *)  {
-//            collectionView?.refreshControl = refreshControl
-//        } else {
-//            
-//        }
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action:#selector(ContactsController.refreshTableData(sender:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl!)
+        }
     }
     
     func viewProfile(_ indexPath: IndexPath = IndexPath(item: 0, section: 0)) {
@@ -169,8 +158,8 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         viewProfileController.userProfile = userProfile
         
-        self.definesPresentationContext = true
-        self.tabBarController?.present(viewProfileController, animated: false, completion: nil)
+        definesPresentationContext = true
+        tabBarController?.present(viewProfileController, animated: false, completion: nil)
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

@@ -32,4 +32,15 @@ class DiskManager {
         }
         return nil
     }
+    
+    static func deleteImageFromLocal(withUniqueID uniqueID: UInt64) {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let filePath = documentsURL.appendingPathComponent("\(uniqueID).png")
+        let fileManager = FileManager.default
+        do {
+            try fileManager.removeItem(at: filePath)
+        } catch let err {
+            print(err)
+        }
+    }
 }
