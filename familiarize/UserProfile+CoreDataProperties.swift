@@ -174,7 +174,6 @@ extension UserProfile {
         let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
-        
         do {
             let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
             for userProfile in userProfiles! {
@@ -184,7 +183,5 @@ extension UserProfile {
             print(err)
         }
     }
-    
-
 
 }

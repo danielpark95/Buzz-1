@@ -22,16 +22,16 @@ protocol ContactsControllerDelegate {
     func showControllerForSetting(setting: Setting)
 }
 
-class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, NSFetchedResultsControllerDelegate, ContactsControllerDelegate {
+class ContactsController: UITableViewController, NSFetchedResultsControllerDelegate, ContactsControllerDelegate {
     
     private let cellId = "cellId"
     var blockOperations = [BlockOperation]()
     
-    lazy var refreshControl: UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action:#selector(ContactsController.refreshTableData(sender:)), for: .valueChanged)
-        return refreshControl
-    }()
+//    lazy var refreshControl: UIRefreshControl = {
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget(self, action:#selector(ContactsController.refreshTableData(sender:)), for: .valueChanged)
+//        return refreshControl
+//    }()
     
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -45,11 +45,12 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         return frc
     }()
     
-    override init(collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(collectionViewLayout: layout)
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
         NotificationCenter.default.addObserver(self, selector: #selector(viewProfileNotification), name: .viewProfile, object: nil)
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reloadContacts, object: nil)
+        navigationItem.title = "Friends"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,15 +64,10 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         } catch let err {
             print(err)
         }
-        navigationItem.title = "Friends"
-        //userProfiles = UserProfile.getData(forUserProfile: .otherUser)
-        setupCollectionView()
+        setupTableView()
         setupRefreshingAndReloading()
         setupNavBarButton()
-        
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -126,24 +122,35 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
     
     func reloadTableData() {
         //userProfiles = UserProfile.getData(forUserProfile: .otherUser)
-        collectionView?.reloadData()
+        tableView.reloadData()
     }
     
     func refreshTableData(sender: UIRefreshControl) {
         // This is our refresh animator
         //collectionView?.reloadData()
-        collectionView?.layoutIfNeeded()
+        tableView.layoutIfNeeded()
         sender.endRefreshing()
     }
     
-    func setupCollectionView() {
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
+    func setupTableView() {
+        tableView.alwaysBounceVertical = true
+        tableView.backgroundColor = UIColor.white
+        tableView.register(ContactsCell.self, forCellReuseIdentifier: self.cellId)
+        tableView.separatorStyle = .none
+        tableView.allowsMultipleSelectionDuringEditing = true
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        UserProfile.deleteProfile(user: userProfile)
     }
     
     func setupRefreshingAndReloading() {
-        collectionView?.insertSubview(refreshControl, at: 0)
+//        tableView?.insertSubview(refreshControl, at: 0)
         
         //collectionView?.sendSubview(toBack: refreshControl)
 //        //refresher.layer.zPosition = 3
@@ -166,45 +173,42 @@ class ContactsController: UICollectionViewController, UICollectionViewDelegateFl
         self.tabBarController?.present(viewProfileController, animated: false, completion: nil)
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        if type == .insert {
-            blockOperations.append(BlockOperation(block: {
-                self.collectionView?.insertItems(at: [newIndexPath!])
-            }))
-        }
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        collectionView?.performBatchUpdates({
-            for operation in self.blockOperations {
-                operation.start()
-            }
-        }, completion: nil)
+        tableView.endUpdates()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .insert {
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        } else if type == .delete {
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = fetchedResultsController.sections?[0].numberOfObjects {
             return count
         }
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 70)
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewProfile(indexPath)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ContactsCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ContactsCell
         let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
         cell.userProfile = userProfile
+        cell.selectionStyle = .none
         return cell
     }
 }

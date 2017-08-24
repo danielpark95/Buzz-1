@@ -9,15 +9,7 @@
 import UIKit
 
 var otherUserProfileImageCache = NSCache<NSString, UIImage>()
-class ContactsCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        //setupViews()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+class ContactsCell: UITableViewCell {
     
     var userProfile: UserProfile? {
         didSet {
@@ -100,5 +92,13 @@ class ContactsCell: UICollectionViewCell {
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+    }
+    
+    override func willTransition(to state: UITableViewCellStateMask) {
+        super.willTransition(to: state)
+        
+        // TODO: Make a better looking delete button.
+        // https://stackoverflow.com/questions/1615469/custom-delete-button-on-editing-in-uitableview-cell
+        // This is where we will create our own unique delete button.
     }
 }

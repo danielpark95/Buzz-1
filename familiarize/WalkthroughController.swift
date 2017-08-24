@@ -130,7 +130,7 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
         
         //Contacts Controller
-        let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+        let contactsController = ContactsController(style: UITableViewStyle.plain)
         let contactsNavigationController = UINavigationController(rootViewController: contactsController)
         contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey"), selectedImage: UIImage(named: "dan_friends_black"))
         //contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
