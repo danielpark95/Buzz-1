@@ -84,7 +84,6 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true
         deleteButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
         deleteButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
     }
 
 }
