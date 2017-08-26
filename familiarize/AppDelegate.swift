@@ -11,6 +11,7 @@ import CoreData
 import ESTabBarController_swift
 import Firebase
 import Quikkly
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
@@ -18,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     var window: UIWindow?
     var previousIndex: Int?
     var userBrightnessLevel: CGFloat!
-
+    var noInternetAccessFrameTopAnchor: NSLayoutConstraint?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
@@ -30,25 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
         
-        
-//        UITabBar.appearance().layer.borderWidth = 1.0
-//        UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
-//        //UITabBar.appearance().clipsToBounds = true
-//        let tabBarController = window!.rootViewController as! TabBarController
-//        tabBarController.selectedIndex = 0
-//
-//       UINavigationBar.appearance().isTranslucent = false
-//        UINavigationBar.appearance().barStyle = UIBarStyle.black
-//        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1)
-//    
-//        //Change navigation font
-//        let navigationTitleFont = UIFont(name: "Avenir", size: 17)
-//        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-//        UIApplication.shared.statusBarStyle = .default
+        setupInternetAccessView()
         return true
- 
     }
-    
     
     // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -122,6 +108,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             }
         }
     }
-
+    
+    func setupInternetAccessView() {
+        let noInternetAccessFrame = UIImageView()
+        noInternetAccessFrame.backgroundColor = .red
+        noInternetAccessFrame.translatesAutoresizingMaskIntoConstraints = false
+        let noInternetAccessText = UILabel()
+        noInternetAccessText.textColor = .white
+        noInternetAccessText.translatesAutoresizingMaskIntoConstraints = false
+        noInternetAccessText.text = "No Fucking Internet Access"
+        
+        window?.addSubview(noInternetAccessFrame)
+        window?.addSubview(noInternetAccessText)
+        
+        noInternetAccessFrameTopAnchor = noInternetAccessFrame.topAnchor.constraint(equalTo: (window?.topAnchor)!, constant: -20)
+        noInternetAccessFrameTopAnchor?.isActive = true
+        noInternetAccessFrame.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        noInternetAccessFrame.leftAnchor.constraint(equalTo: (window?.leftAnchor)!).isActive = true
+        noInternetAccessFrame.rightAnchor.constraint(equalTo: (window?.rightAnchor)!).isActive = true
+        
+        noInternetAccessText.topAnchor.constraint(equalTo: noInternetAccessFrame.topAnchor).isActive = true
+        noInternetAccessText.centerXAnchor.constraint(equalTo: noInternetAccessFrame.centerXAnchor).isActive = true
+        
+        let manager = NetworkReachabilityManager(host: "www.google.com")
+        manager?.listener = { status in
+            // If the network is not reachable through internet, then show the no internet access sign.
+            if (manager?.isReachable == false) {
+                self.noInternetAccessFrameTopAnchor?.constant = 0
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.window?.windowLevel = UIWindowLevelStatusBar + 1
+                    self.window?.layoutIfNeeded()
+                }, completion: nil)
+            } else {
+            // If the network is reachable through internet, then show the no internet access sign.
+                self.noInternetAccessFrameTopAnchor?.constant = -20
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.window?.windowLevel = UIWindowLevelStatusBar - 1
+                    self.window?.layoutIfNeeded()
+                }, completion: nil)
+            }
+        }
+        manager?.startListening()
+    }
 }
 
