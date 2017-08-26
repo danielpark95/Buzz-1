@@ -41,8 +41,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         
     }()
 
-    let socialMediaCollectionView: UICollectionView = {
-        
+    lazy var socialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -50,7 +49,9 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceHorizontal = true
-        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(SocialMediaCell.self, forCellWithReuseIdentifier: self.cellId)
         return collectionView
     }()
     
@@ -60,9 +61,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         addSubview(socialMediaCollectionView)
         addSubview(separatorView)
         
-        socialMediaCollectionView.dataSource = self
-        socialMediaCollectionView.delegate = self
-        socialMediaCollectionView.register(SocialMediaCell.self, forCellWithReuseIdentifier: cellId)
+        //socialMediaCollectionView.frame = self.frame
         
         socialMediaCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         socialMediaCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true

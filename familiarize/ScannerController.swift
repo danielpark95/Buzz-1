@@ -22,6 +22,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     
     var cameraScanView: ScanView?
     var userProfile: UserProfile?
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             }
             count = count + 1
         }
+        generator.prepare()
         setupViews()
     }
 
@@ -98,6 +100,10 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
       
         // Handle detected scannables
         if let scannable = scannables.first {
+            
+            // Taptic engine enabled!
+            generator.impactOccurred()
+            
             // If we dont stop the camera the cpu is going off the fucking charts . . .
             cameraScanView?.stop()
         
@@ -118,7 +124,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                     let profileImage = fetchedSocialMediaProfileImages[0].profileImage
                     self.scanProfileController.setUserProfileImage(profileImage!)
-                    UserProfile.saveProfileImage(UIImagePNGRepresentation(profileImage!)!, withUserProfile: self.userProfile!)
+                    DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage!)!, withUniqueID: self.userProfile?.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
                 })
             })
         }

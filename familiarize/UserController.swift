@@ -10,6 +10,10 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
+extension Notification.Name {
+    static let reloadMeCards = Notification.Name("reloadMeCards")
+}
+
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     private let cellId = "cellId"
     var blockOperations = [BlockOperation]()
@@ -32,10 +36,20 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [UserProfile.userProfileSelection.myUser.rawValue])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         fetchRequest.fetchBatchSize = 20
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "userControllerCache")
         frc.delegate = self
         return frc
     }()
+    
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadMeCards), name: .reloadMeCards, object: nil)
+        navigationItem.title = "Me"
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -52,28 +66,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         self.automaticallyAdjustsScrollViewInsets = false
-        navigationItem.title = "Me"
-        
-        let user1: JSON = [
-            "name": "T.J. Miller",
-            "pn": "pn",
-            "fb": "100015503711138",
-            "sc": "sc",
-            "ig": "ig",
-            "so": "so",
-            "tw": "tw",
-            "bio": "Miller the professional chiller.",
-            "pia": "fb",
-            "piu": "100015503711138",
-        ]
-        
-        let user2: JSON = [
-            "name": "Todd Joseph Miller",
-            "bio": "Founder & CEO, Aviato.",
-            "pn": "pn",
-            "in": "in",
-            "em": "em",
-            ]
         
         //UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
@@ -87,6 +79,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let doubleTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(didDoubleTapCollectionView))
         doubleTapGesture.numberOfTapsRequired = 2
         collectionView?.addGestureRecognizer(doubleTapGesture)
+    }
+    
+    func reloadMeCards() {
+        // This does not fucking work ):
+        collectionView?.reloadData()
     }
     
     // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 

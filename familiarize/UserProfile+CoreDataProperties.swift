@@ -47,7 +47,6 @@ extension UserProfile {
             try(managedObjectContext.save())
             let newCardJSON: JSON = JSON(["profileImageApp":socialMediaProfileApp, "profileImageURL": socialMediaProfileURL])
             FirebaseManager.updateCard(newCardJSON, withUniqueID: userProfile.uniqueID as! UInt64)
-            NotificationCenter.default.post(name: .reloadContacts, object: nil)
         } catch let err {
             print(err)
         }
@@ -76,7 +75,6 @@ extension UserProfile {
             toSaveCard[currentSocialMediaName].string = eachConcantenatedSocialMediaInput.inputName
         }
         
-        
         // profileImageApp
         // When default profile image is chosen, then the appName is: default
         // profileImageURL
@@ -85,18 +83,10 @@ extension UserProfile {
         toSaveCard["profileImageURL"].string = socialMediaProfileImage.inputName
         
         let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
-        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)! , withImageXCoordPadding: -230)
-        UserProfile.saveProfileImage(profileImageData, withUserProfile: userProfile)
-        
-        //let profileImageData = UIManager.makeImage(imageName: ")
-        
         return userProfile
     }
     
     static func saveProfile(_ cardJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
-        
-        // TODO: A NEW CARD IS ALWAYS BEING UPLOADED ON SCAN!!! 
-        
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
@@ -147,19 +137,12 @@ extension UserProfile {
         }
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
-        
         do {
             try(managedObjectContext.save())
-            NotificationCenter.default.post(name: .reloadContacts, object: nil)
         } catch let err {
             print(err)
         }
         return newUser
-    }
-    
-    static func saveProfileImage(_ profileImage: Data, withUserProfile userProfile: UserProfile) {
-        DiskManager.writeImageDataToLocal(withData: profileImage, withUniqueID: userProfile.uniqueID as! UInt64)
-        NotificationCenter.default.post(name: .reloadContacts, object: nil)
     }
     
     static func deleteProfile(user: UserProfile) {

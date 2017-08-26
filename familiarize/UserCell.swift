@@ -57,15 +57,15 @@ class UserCell: UICollectionViewCell {
             if let profileImage = myUserProfileImageCache.object(forKey: "\(self.myUserProfile!.uniqueID!)" as NSString) {
                 self.profileImage.image = profileImage
             } else {
-                DispatchQueue.global(qos: .userInteractive).async {
-                    // if it is not in cache, then call from disk.
-                    if let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.myUserProfile!.uniqueID as! UInt64) {
-                        DispatchQueue.main.async {
-                            self.profileImage.image = profileImage
-                            myUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(self.myUserProfile!.uniqueID!)" as NSString)
-                        }
-                    }
+                
+                guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.myUserProfile!.uniqueID as! UInt64) else {
+                    print("file was not able to be retrieved from disk")
+                    return
                 }
+                
+                self.profileImage.image = profileImage
+                myUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(self.myUserProfile!.uniqueID!)" as NSString)
+
             }
         }
     }
@@ -157,7 +157,6 @@ class UserCell: UICollectionViewCell {
     func setupViews() {
         flipCard()
     }
-    
     
     lazy var socialMediaImages: [String: UIImageView] = [
         //temporary icons while we wait for new icons from our graphic designers

@@ -12,7 +12,7 @@ import SwiftyJSON
 import Foundation
 
 extension Notification.Name {
-    static let reloadContacts = Notification.Name("reloadNotification")
+    static let reloadFriendCards = Notification.Name("reloadFriendCards")
     static let viewProfile = Notification.Name("viewProfileNotification")
 }
 
@@ -42,7 +42,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         super.init(style: style)
         NotificationCenter.default.addObserver(self, selector: #selector(viewProfileNotification), name: .viewProfile, object: nil)
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reloadContacts, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadFriendCards), name: .reloadFriendCards, object: nil)
         navigationItem.title = "Friends"
     }
     
@@ -113,7 +113,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         viewProfile()
     }
     
-    func reloadTableData() {
+    func reloadFriendCards() {
         tableView.reloadData()
     }
     
@@ -175,6 +175,8 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
             tableView.insertRows(at: [newIndexPath!], with: .fade)
         } else if type == .delete {
             tableView.deleteRows(at: [indexPath!], with: .fade)
+        } else if type == .update {
+            tableView.reloadData()
         }
     }
     

@@ -133,7 +133,6 @@ class LoadingProfileImageSelectionController: UIViewController {
     
 
     func cancelButtonClicked() {
-        
         // When the skip cancel button is clicked, stop any URL tasks from happening
         Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
             dataTasks.forEach {
@@ -148,7 +147,6 @@ class LoadingProfileImageSelectionController: UIViewController {
         }
         
         URLSession.shared.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
-            
             dataTasks.forEach {
                 $0.cancel()
             }

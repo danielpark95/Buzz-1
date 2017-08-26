@@ -70,6 +70,10 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         
         // Save the new card information into core data.
         let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs!, withSocialMediaProfileImage: selectedSocialMediaProfileImage!)
+        
+        // Save the image to disk.
+        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage?.profileImage)!)!)
+        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: newUserProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
 
         // When the image chosen is from the camera roll, upload the image to firebase
         // And then update the URL link to that image.

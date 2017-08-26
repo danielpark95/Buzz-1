@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class FirebaseManager {
     
-    // MARK: - Shared Instance
+    // MARK: - Shared Instance - Singleton
     static let storageRef: StorageReference = {
         let storage = Storage.storage()
         return storage.reference()
@@ -24,21 +24,22 @@ class FirebaseManager {
     }()
     
     static func generateUniqueID() -> UInt64 {
-        
-        let timeIntervalSince1970InMilliseconds = UInt64(Date().timeIntervalSince1970 * 1000.0)
-        let randomNumber = Int(arc4random())%10000
-        let uniqueIDString = String(format: "%llu%i", arguments: [timeIntervalSince1970InMilliseconds, randomNumber])
-        return UInt64(uniqueIDString)!
+        return UInt64(arc4random()) + (UInt64(arc4random()) << 32)
+//        let timeIntervalSince1970InMilliseconds = UInt64(Date().timeIntervalSince1970 * 1000.0)
+//        let randomNumber = Int(arc4random())%10000
+//        let uniqueIDString = String(format: "%llu%i", arguments: [timeIntervalSince1970InMilliseconds, randomNumber])
+//        return UInt64(uniqueIDString)!
     }
-
     
-    static func uploadCard(_ cardJSON: JSON, withUniqueID uniqueID: UInt64) {
+    static func uploadCard(_ cardJSON: JSON, withUniqueID uniqueID: UInt64) -> Bool{
         let uniqueIDString = String(uniqueID)
         let userID = UIDevice.current.identifierForVendor!.uuidString
+        databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
         for (key,value):(String, JSON) in cardJSON {
             databaseRef.child("cards").child(uniqueIDString).child(key).setValue(value.string)
         }
-        databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
+        // TODO: Check for when the uniqueIDString is already in the database. Then return false and create a new unique id.
+        return true
     }
     
     static func updateCard(_ newCardJSON: JSON, withUniqueID uniqueID: UInt64) {

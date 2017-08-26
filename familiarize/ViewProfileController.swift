@@ -60,7 +60,14 @@ class ViewProfileController: UIViewController {
     }()
     
     lazy var dismissButton: UIButton = {
-        return UIManager.makeButton(imageName: "dan_x_button_red")
+        let button = UIManager.makeButton(imageName: "dan_x_button_red")
+        // Set the image to have a size of 14px.
+        // Then set the overall button to be larger around it -- To increase the hitbox.
+        // This is done in the autolayout portion.
+        button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        return button
     }()
     
     lazy var tintOverlay: UIView = {
@@ -80,7 +87,6 @@ class ViewProfileController: UIViewController {
             print("file was not able to be retrieved from disk")
             return
         }
-        
         self.profileImage.image = profileImage
     }
     
@@ -170,8 +176,8 @@ class ViewProfileController: UIViewController {
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         dismissButton.centerYAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 14).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
         //drawMiddleLine()
         createSocialMediaButtons()

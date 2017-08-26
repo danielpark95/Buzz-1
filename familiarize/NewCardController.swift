@@ -93,7 +93,6 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
             } else { //if indexPath.item >= optionalSocialMediaInputs.count
                 cell.selectedSocialMedia = optionalSocialMediaInputs[indexPath.item - requiredSocialMediaInputs.count]
             }
-
             return cell
         }
     }
