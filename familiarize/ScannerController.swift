@@ -111,9 +111,9 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             self.scanProfileController.ScannerControllerDelegate = self
             present(self.scanProfileController, animated: false)
             
-            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
+            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { card in
                 // Save the fetched data into CoreData.
-                self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
+                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser)
                 
                 // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile

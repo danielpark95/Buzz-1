@@ -3,19 +3,19 @@
     <entity name="UserProfile" representedClassName="UserProfile" syncable="YES">
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="faceBookProfile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="instagramProfile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="linkedInProfile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="faceBookProfile" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="instagramProfile" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="linkedInProfile" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="profileImageApp" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="profileImageURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="snapChatProfile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="soundCloudProfile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="twitterProfile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="snapChatProfile" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="soundCloudProfile" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="twitterProfile" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="userProfileSelection" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userProfileSelection" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
         <element name="UserProfile" positionX="-1422" positionY="-9" width="128" height="270"/>

@@ -71,7 +71,6 @@ class UserCell: UICollectionViewCell {
     }
 
     func createQR(_ userProfile: UserProfile) {
-        
         let skin = ScannableSkin()
         skin.backgroundColor = "#ffe769"
         //skin.maskColor = "#2f2f2f"
@@ -142,7 +141,6 @@ class UserCell: UICollectionViewCell {
         //nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         //nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 240).isActive = true
@@ -245,8 +243,6 @@ class UserCell: UICollectionViewCell {
         } else if size == 6 {
             
         }
-        
-
     }
     
     func autoLinearSpaceButtons(imagesToPresent: [UIImageView]) {
