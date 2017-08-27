@@ -104,9 +104,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func handleNewCard() {
-        let layout = UICollectionViewFlowLayout()
-        let newCardController = NewCardController(collectionViewLayout: layout)
-        let navigationController = UINavigationController.init(rootViewController: newCardController)
+        let newCardController = NewCardController(style: UITableViewStyle.plain)
+        let navigationController = UINavigationController(rootViewController: newCardController)
         self.present(navigationController, animated: true)
     }
     

@@ -97,8 +97,10 @@ class LoadingProfileImageSelectionController: UIViewController {
         return UIManager.makeImage(imageName: "bee")
     }()
     
-    let cancelButton: UIButton = {
-       return UIManager.makeButton(imageName: "dan_close_text_white")
+    lazy var cancelButton: UIButton = {
+        let button = UIManager.makeButton(imageName: "dan_close_text_white")
+        button.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
+        return button
     }()
     
     func setupViews() {
@@ -126,7 +128,7 @@ class LoadingProfileImageSelectionController: UIViewController {
 
         
         view.addSubview(self.cancelButton)
-        cancelButton.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
+        
         cancelButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
         cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
@@ -134,29 +136,7 @@ class LoadingProfileImageSelectionController: UIViewController {
 
     func cancelButtonClicked() {
         // When the skip cancel button is clicked, stop any URL tasks from happening
-        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
-            dataTasks.forEach {
-                $0.cancel()
-            }
-            uploadTasks.forEach {
-                $0.cancel()
-            }
-            downloadTasks.forEach {
-                $0.cancel()
-            }
-        }
-        
-        URLSession.shared.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
-            dataTasks.forEach {
-                $0.cancel()
-            }
-            uploadTasks.forEach {
-                $0.cancel()
-            }
-            downloadTasks.forEach {
-                $0.cancel()
-            }
-        }
+        ImageFetchingManager.cancelImageFetching()
     }
     
     func segueToProfileImageSelectionController(_ socialMediaProfileImages: [SocialMediaProfileImage]) {

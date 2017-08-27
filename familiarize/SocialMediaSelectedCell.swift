@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SocialMediaSelectedCell: UICollectionViewCell {
+class SocialMediaSelectedCell: UITableViewCell {
     
     var selectedSocialMedia: SocialMedia? {
         didSet {
@@ -28,8 +28,8 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
@@ -52,18 +52,11 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    let deleteButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_help")
-        return button
-    }()
-    
 
     func setupViews() {
         addSubview(separatorView)
         addSubview(socialMediaInputName)
         addSubview(socialMediaImageView)
-        addSubview(deleteButton)
         
         separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
@@ -79,11 +72,6 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
         socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
         socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        
-        deleteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -50).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
-        deleteButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
     }
 

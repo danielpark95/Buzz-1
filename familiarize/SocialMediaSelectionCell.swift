@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class SocialMediaSelectionCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var newCardControllerDelegate: NewCardControllerDelegate?
 
@@ -23,8 +23,8 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
         SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
     ]
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
