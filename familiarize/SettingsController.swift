@@ -19,7 +19,6 @@ class Setting: NSObject {
 }
 
 enum SettingName: String {
-    case Blank = ""
     case TermsPrivacy = "Terms & Privacy Policy"
     case Contact = "Contact"
     case Help = "Help"
@@ -39,12 +38,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     let settings: [Setting] = {
-        return [Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [ Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
     }()
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.contentInset = UIEdgeInsetsMake(40, 0, 0, 0)
         cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
         return cv
     }()
@@ -58,11 +58,15 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         let visualEffect = UIView()
         visualEffect.backgroundColor = UIColor(white: 0, alpha: 0.15)
         visualEffect.alpha = 0
-        visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
+        visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissClicked)))
         return visualEffect
     }()
     
-    func handleDismiss(setting: Setting) {
+    func dismissClicked() {
+        handleDismiss(setting: nil)
+    }
+    
+    func handleDismiss(setting: Setting?) {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.tintOverlay.alpha = 0
             if let window = UIApplication.shared.keyWindow {
@@ -70,7 +74,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             }
             self.contactsControllerDelegate?.closeHamburger()
         }, completion: { _ in
-            if setting.name != .Blank {
+            if let setting = setting {
                 self.contactsControllerDelegate?.showControllerForSetting(setting: setting)
             }
         })

@@ -88,13 +88,13 @@ extension UserProfile {
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
         for key in newUser.entity.propertiesByName.keys {
-            if cardJSON[key] != nil && multipleInputUserData.contains(key) == true {
+            if cardJSON[key] != nil && multipleInputUserData.contains(key) {
                 var input = [String]()
                 for eachInput in cardJSON[key]! {
                     input.append(eachInput)
                 }
                 newUser.setValue(input, forKeyPath: key)
-            } else if cardJSON[key] != nil && singleInputUserData.contains(key) == true {
+            } else if cardJSON[key] != nil && singleInputUserData.contains(key) {
                 newUser.setValue(cardJSON[key]?.first, forKeyPath: key)
             }
         }

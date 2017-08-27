@@ -111,7 +111,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
         
-        // Select the chosen image from the carousel.
+        // Select the chosen image from the collectionview
         let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
         let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
         
@@ -119,12 +119,12 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             guard let inputName = userProfile.value(forKey: key) else {
                 continue
             }
-            if UserProfile.editableMultipleInputUserData.contains(key) == true {
+            if UserProfile.editableMultipleInputUserData.contains(key) {
                 for eachInput in inputName as! [String] {
                     let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(eachInput)_black", withInputName: eachInput, withAlreadySet: true)
                     newCardController.socialMediaInputs.append(socialMediaInput)
                 }
-            } else if UserProfile.editableSingleInputUserData.contains(key) == true {
+            } else if UserProfile.editableSingleInputUserData.contains(key) {
                 let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(inputName)_black", withInputName: inputName as! String, withAlreadySet: true)
                 newCardController.socialMediaInputs.append(socialMediaInput)
             }

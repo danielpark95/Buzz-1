@@ -24,7 +24,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     // has provided.
     var socialMediaInputs: [SocialMedia]?
     
-    
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }

@@ -130,11 +130,6 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         tableView.allowsMultipleSelectionDuringEditing = true
     }
     
-// This method is needed when a row is fixed to not be deleted.
-//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
         DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)

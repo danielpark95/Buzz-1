@@ -116,11 +116,20 @@
 		140ECD831EF6167700E538E4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				141172181F52994000850AE6 /* WalkthroughVC */,
 				1432D9E41F0F40B200B2BF88 /* PopUpVC */,
 				1432D9E51F0F40C500B2BF88 /* SettingsVC */,
 				14DD43DE1F15AB030093DDB4 /* NewCardVC */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		141172181F52994000850AE6 /* WalkthroughVC */ = {
+			isa = PBXGroup;
+			children = (
+				F654306B1F3CEE620047FC35 /* WalkthroughController.swift */,
+			);
+			name = WalkthroughVC;
 			sourceTree = "<group>";
 		};
 		141CEEBB1EDCD02B0068B2B9 /* Views */ = {
@@ -146,7 +155,6 @@
 				140ECD811EF6165800E538E4 /* UserController.swift */,
 				140A40001EDFC42E00D4539E /* ScannerController.swift */,
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
-				F654306B1F3CEE620047FC35 /* WalkthroughController.swift */,
 			);
 			name = TabController;
 			sourceTree = "<group>";
