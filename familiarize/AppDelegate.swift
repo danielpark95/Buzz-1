@@ -110,13 +110,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     }
     
     func setupInternetAccessView() {
-        let noInternetAccessFrame = UIImageView()
+        let noInternetAccessFrame = UIManager.makeImage()
         noInternetAccessFrame.backgroundColor = .red
-        noInternetAccessFrame.translatesAutoresizingMaskIntoConstraints = false
-        let noInternetAccessText = UILabel()
+        let noInternetAccessText = UIManager.makeLabel(numberOfLines: 1, withText: "No Fucking Internet Access")
         noInternetAccessText.textColor = .white
-        noInternetAccessText.translatesAutoresizingMaskIntoConstraints = false
-        noInternetAccessText.text = "No Fucking Internet Access"
         
         window?.addSubview(noInternetAccessFrame)
         window?.addSubview(noInternetAccessText)

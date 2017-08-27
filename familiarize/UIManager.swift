@@ -32,11 +32,11 @@ class UIManager {
         return imageView
     }
     
-    static func makeLabel(numberOfLines: Int = 1) -> UILabel {
+    static func makeLabel(numberOfLines: Int = 1, withText text: String = " ") -> UILabel {
         let label =  UILabel()
         label.numberOfLines = numberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = " "
+        label.text = text
         return label
     }
     
