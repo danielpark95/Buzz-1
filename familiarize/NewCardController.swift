@@ -18,8 +18,8 @@ protocol NewCardControllerDelegate {
 class NewCardController: UITableViewController, NewCardControllerDelegate {
 
     var socialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "name_form", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "bio_form", withInputName: "Optional", withAlreadySet: true)
+        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "Optional", withAlreadySet: true)
     ]
     
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
@@ -27,7 +27,6 @@ class NewCardController: UITableViewController, NewCardControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "New Card"
         navigationController?.navigationBar.tintColor = UIColor.black
         setupTableView()
         setupNavBarButton()

@@ -96,58 +96,48 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
-        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(newCard))
+        let editButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
+        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
         
-        navigationItem.leftBarButtonItem = hamburgerButton
+        navigationItem.leftBarButtonItem = editButton
         navigationItem.rightBarButtonItem = addButton
     }
     
     func editCard() {
+        let newCardController = NewCardController(style: UITableViewStyle.plain)
+        let navigationController = UINavigationController(rootViewController: newCardController)
+        newCardController.socialMediaInputs.removeAll(keepingCapacity: true)
+        newCardController.navigationItem.title = "Edit Card"
         
         let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
         
         // Select the chosen image from the carousel.
         let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
-        
         let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
+        
         for key in userProfile.entity.propertiesByName.keys {
-            let value: Any? = userProfile.value(forKey: key)
-            print("\(key) = \(value)")
+            guard let inputName = userProfile.value(forKey: key) else {
+                continue
+            }
+            if UserProfile.editableMultipleInputUserData.contains(key) == true {
+                for eachInput in inputName as! [String] {
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(eachInput)_black", withInputName: eachInput, withAlreadySet: true)
+                    newCardController.socialMediaInputs.append(socialMediaInput)
+                }
+            } else if UserProfile.editableSingleInputUserData.contains(key) == true {
+                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(inputName)_black", withInputName: inputName as! String, withAlreadySet: true)
+                newCardController.socialMediaInputs.append(socialMediaInput)
+            }
         }
-//        
-//        for key in item.entity.propertiesByName.keys{
-//            let value: Any? = item.value(forKey: key)
-//            print("\(key) = \(value)")
-//        }
-
-
-        
-//        let selectedSocialMediaProfileImage = socialMediaProfileImages?[(selectedIndexPath?.item)!]
-//        
-//        
-//        let newCardController = NewCardController(style: UITableViewStyle.plain)
-//        let navigationController = UINavigationController(rootViewController: newCardController)
-//        self.present(navigationController, animated: true)
-//        
-//        var socialMediaInputs: [SocialMedia] = [
-//            SocialMedia(withAppName: "name", withImageName: "name_form", withInputName: "Required", withAlreadySet: true),
-//            SocialMedia(withAppName: "bio", withImageName: "bio_form", withInputName: "Optional", withAlreadySet: true)
-//        ]
-        
-    }
-    
-    func newCard() {
-        let newCardController = NewCardController(style: UITableViewStyle.plain)
-        let navigationController = UINavigationController(rootViewController: newCardController)
         self.present(navigationController, animated: true)
     }
     
-    let headerBar: UIImageView = {
-        let image = UIManager.makeImage(imageName: "dan_header_bar")
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
+    func addCard() {
+        let newCardController = NewCardController(style: UITableViewStyle.plain)
+        let navigationController = UINavigationController(rootViewController: newCardController)
+        newCardController.navigationItem.title = "New Card"
+        self.present(navigationController, animated: true)
+    }
 
     func setupView() {
         // Add the dots that animate your current location with the qrcodes into the view

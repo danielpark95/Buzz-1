@@ -38,9 +38,12 @@ extension UserProfile {
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
     
-    static let editableUserData: Set<String> = ["phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "email", "twitterProfile", "soundCloudProfile", "name", "bio"]
     static let singleInputUserData: Set<String> = ["name", "bio", "profileImageApp", "profileImageURL"]
- 
+    static let multipleInputUserData: Set<String> = ["email", "phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile"]
+    
+    static let editableSingleInputUserData: Set<String> = ["name", "bio"]
+    static let editableMultipleInputUserData: Set<String> = UserProfile.multipleInputUserData
+    
     static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
@@ -56,10 +59,7 @@ extension UserProfile {
     }
     
     static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) -> UserProfile {
-        
-        // There's always going to be a profile image. Either default or not.
-        // Previous errors with this => must be initialized with:
-        // [:] to create an empty dictionary. [] creates an empty array and is wrong.
+    
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
             if userCard[eachSocialMediaInput.appName!] == nil {
@@ -72,7 +72,6 @@ extension UserProfile {
         // When default profile image is chosen, then the appName is: default
         // profileImageURL
         // When default profile image is chosen, then the inputName is the url link to the image
-        
         userCard["profileImageApp"] = [String]()
         userCard["profileImageApp"]?.append(socialMediaProfileImage.appName!)
         userCard["profileImageURL"] = [String]()
@@ -89,21 +88,20 @@ extension UserProfile {
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
         for key in newUser.entity.propertiesByName.keys {
-            if cardJSON[key] != nil && singleInputUserData.contains(key) == false {
+            if cardJSON[key] != nil && multipleInputUserData.contains(key) == true {
                 var input = [String]()
                 for eachInput in cardJSON[key]! {
                     input.append(eachInput)
                 }
                 newUser.setValue(input, forKeyPath: key)
             } else if cardJSON[key] != nil && singleInputUserData.contains(key) == true {
-                newUser.setValue(cardJSON[key]?[0], forKeyPath: key)
+                newUser.setValue(cardJSON[key]?.first, forKeyPath: key)
             }
         }
 
         // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
         newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
-        newUser.uniqueID = 69
-        print("This is the unique ID: \(newUser.uniqueID)")
+        
         // If this is my user that I am saving, then push it to the cloud.
         if userProfile == .myUser {
             FirebaseManager.uploadCard(cardJSON, withUniqueID: newUser.uniqueID!.uint64Value)
