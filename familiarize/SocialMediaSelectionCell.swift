@@ -105,10 +105,13 @@ class SocialMedia: NSObject {
     var inputName: String?
     var isSet: Bool?
     
+    let myAttribute = [ NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 12.0)! ]
+    
     init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName
         self.appName = appName
         self.inputName = inputName
+        //self.inputName = NSAttributedString(string: inputName, attributes: myAttribute)
         self.isSet = isSet
     }
     
@@ -152,7 +155,8 @@ class SocialMediaCell: UICollectionViewCell {
     
     let socialMediaName: UILabel = {
         let label = UIManager.makeLabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 11)
+        label.text = label.text?.uppercased()
         return label
     }()
     

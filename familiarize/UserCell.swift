@@ -67,6 +67,20 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
                     }
                 }
             }
+            if let profileImage2 = myUserProfileImageCache.object(forKey: "\(self.myUserProfile!.uniqueID!)" as NSString) {
+                self.profileImage2.image = profileImage2
+            } else {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    // if it is not in cache, then call from disk.
+                    if let profileImage2 = DiskManager.readImageFromLocal(withUniqueID: self.myUserProfile!.uniqueID as! UInt64) {
+                        DispatchQueue.main.async {
+                            self.profileImage2.image = profileImage2
+                            myUserProfileImageCache.setObject(self.profileImage2.image!, forKey: "\(self.myUserProfile!.uniqueID!)" as NSString)
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -78,7 +92,7 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         skin.dotColor = "#2f2f2f"
         skin.borderColor = "#2f2f2f"
         skin.overlayColor = "#2f2f2f"
-        skin.imageUri = "bee-1"
+        skin.imageUri = ""
         skin.imageFit = .templateDefault
         skin.logoUri = ""
         
@@ -87,9 +101,12 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     }
     
     var profileImage: UIImageView = {
-        let image = UIManager.makeImage()
-        image.clipsToBounds = true
-        image.contentMode = UIViewContentMode.scaleAspectFill
+        let image = UIManager.makeProfileImage(valueOfCornerRadius: 150)
+        return image
+    }()
+    
+    var profileImage2: UIImageView = {
+        let image = UIManager.makeProfileImage(valueOfCornerRadius: 97)
         return image
     }()
     
@@ -117,17 +134,22 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     
     func presentScannableCode() {
         self.addSubview(self.scannableView)
+        self.addSubview(profileImage2)
         scannableView.translatesAutoresizingMaskIntoConstraints = false
         scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         scannableView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         scannableView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
+        
+        profileImage2.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
+        profileImage2.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
+        profileImage2.heightAnchor.constraint(equalToConstant: 194).isActive = true
+        profileImage2.widthAnchor.constraint(equalToConstant: 194).isActive = true
     }
     
     func setupViews() {
         flipCard()
     }
-    
     
     lazy var socialMediaImages: [String: UIImageView] = [
         //temporary icons while we wait for new icons from our graphic designers
@@ -289,18 +311,20 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         layout.scrollDirection = .horizontal
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
+        
+        collectionView.isPagingEnabled = true
         //collectionView.alwaysBounceHorizontal = true
         return collectionView
     }()
     
     private let cellId = "appCellId"
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black_text", withInputName: "", withAlreadySet: false),
         ]
 
     func presentProfile() {
@@ -318,14 +342,14 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         addSubview(bioLabel)
         
         nameLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 180).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 170).isActive = true
         //nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         //nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 240).isActive = true
+        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 230).isActive = true
         //bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         //bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -338,11 +362,11 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         addSubview(appsCollectionView)
         appsCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         appsCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        appsCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 480).isActive = true
-        appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -130).isActive = true
+        appsCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 470).isActive = true
+        appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -115).isActive = true
         appsCollectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        appsCollectionView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        appsCollectionView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        appsCollectionView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        appsCollectionView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         //addConstraint(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
         
@@ -351,9 +375,6 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
-        
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -453,7 +474,6 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         let interitemPadding = max(0.0, itemsPerRow - 1) * interitemSpace
         let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
         let widthPerItem = availableWidth / itemsPerRow
-        
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     
@@ -472,8 +492,6 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return interitemSpace
     }
-    
-
 }
 
 
@@ -481,6 +499,9 @@ class AppCell: UICollectionViewCell {
     
     var socialMedia: SocialMedia? {
         didSet {
+//            if let appName = socialMedia?.appName {
+//                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
+//            }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)
             }
@@ -498,25 +519,24 @@ class AppCell: UICollectionViewCell {
     }
     
     let socialMediaImage: UIImageView = {
-        let image = UIManager.makeImage(imageName: "dan_facebook_black")
+        let image = UIManager.makeImage()
         image.contentMode = .scaleAspectFill
-        
-        
-        
         return image
+    }()
+    
+    let socialMediaName: UILabel = {
+        let label = UIManager.makeLabel()
+        label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 11)
+        label.text = label.text?.uppercased()
+        return label
     }()
     
     func setupViews() {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
-        
-        
-        
-        
+        //addSubview(socialMediaName)
         
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
