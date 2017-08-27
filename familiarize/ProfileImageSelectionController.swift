@@ -14,7 +14,6 @@ import RSKImageCropperSwift
 class ProfileImageSelectionController: UICollectionViewController, UIImagePickerControllerDelegate, RSKImageCropViewControllerDelegate, UINavigationControllerDelegate {
 
     private let cellId = "cellId"
-    private let footerCellId = "footerCellId"
     
     // socialMediaProfileImages contains information about which social media it is from and 
     // the data of the social media image.
@@ -92,7 +91,7 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ProfileImageSelectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileImageSelectionCell
         
         if let socialMediaProfileImage = socialMediaProfileImages?[indexPath.item] {
             cell.socialMediaProfileImage = socialMediaProfileImage

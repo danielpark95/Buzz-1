@@ -15,6 +15,7 @@ extension Notification.Name {
 }
 
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
+    
     private let cellId = "cellId"
     var blockOperations = [BlockOperation]()
     

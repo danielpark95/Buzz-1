@@ -15,6 +15,7 @@ protocol walkThroughControllerDelegate : class {
 }
 
 class WalkthroughController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, walkThroughControllerDelegate {
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal

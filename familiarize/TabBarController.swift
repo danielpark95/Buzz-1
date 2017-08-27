@@ -20,6 +20,7 @@ extension Notification.Name {
 }
 
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self

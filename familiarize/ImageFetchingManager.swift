@@ -11,12 +11,9 @@ import Alamofire
 import Kanna
 
 class ImageFetchingManager {
-    
+
     // TODO: Migrate everything from urlsession to alamofire.
-    
-    
     static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
-    
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
         for eachSocialMediaInput in socialMediaInputs {
@@ -38,7 +35,6 @@ class ImageFetchingManager {
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     static fileprivate func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage?) -> Void) {
         if socialMediaInput.appName == "faceBookProfile" {
-            
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
                 if let html = response.result.value {
                     self.parseHTML(html: html, withSocialMediaInput: socialMediaInput, completionHandlerForParse: { profileImage in
