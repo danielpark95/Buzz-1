@@ -96,14 +96,48 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: nil)
-        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
+        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(newCard))
         
         navigationItem.leftBarButtonItem = hamburgerButton
         navigationItem.rightBarButtonItem = addButton
     }
     
-    func handleNewCard() {
+    func editCard() {
+        
+        let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
+        
+        // Select the chosen image from the carousel.
+        let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
+        
+        let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
+        for key in userProfile.entity.propertiesByName.keys {
+            let value: Any? = userProfile.value(forKey: key)
+            print("\(key) = \(value)")
+        }
+//        
+//        for key in item.entity.propertiesByName.keys{
+//            let value: Any? = item.value(forKey: key)
+//            print("\(key) = \(value)")
+//        }
+
+
+        
+//        let selectedSocialMediaProfileImage = socialMediaProfileImages?[(selectedIndexPath?.item)!]
+//        
+//        
+//        let newCardController = NewCardController(style: UITableViewStyle.plain)
+//        let navigationController = UINavigationController(rootViewController: newCardController)
+//        self.present(navigationController, animated: true)
+//        
+//        var socialMediaInputs: [SocialMedia] = [
+//            SocialMedia(withAppName: "name", withImageName: "name_form", withInputName: "Required", withAlreadySet: true),
+//            SocialMedia(withAppName: "bio", withImageName: "bio_form", withInputName: "Optional", withAlreadySet: true)
+//        ]
+        
+    }
+    
+    func newCard() {
         let newCardController = NewCardController(style: UITableViewStyle.plain)
         let navigationController = UINavigationController(rootViewController: newCardController)
         self.present(navigationController, animated: true)

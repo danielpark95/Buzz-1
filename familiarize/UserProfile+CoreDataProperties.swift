@@ -22,32 +22,6 @@ extension UserProfile {
         case otherUser
     }
     
-    
-    /*
- 
- 
- //        if (cardJSON["snapChatProfile"] != nil) {
- //            newUser.snapChatProfile = cardJSON["snapChatProfile"].string
- //        }
- //        if (cardJSON["instagramProfile"] != nil) {
- //            newUser.instagramProfile = cardJSON["instagramProfile"].string
- //        }
- //        if (cardJSON["email"] != nil) {
- //            newUser.email = cardJSON["email"].string
- //        }
- //        if (cardJSON["phoneNumber"] != nil) {
- //            newUser.phoneNumber = cardJSON["phoneNumber"].string
- //        }
- //        if (cardJSON["linkedInProfile"] != nil) {
- //            newUser.linkedInProfile = cardJSON["linkedInProfile"].string
- //        }
- //        if (cardJSON["twitterProfile"] != nil) {
- //            newUser.twitterProfile = cardJSON["twitterProfile"].string
- //        }
- //        if (cardJSON["soundCloudProfile"] != nil) {
- //            newUser.soundCloudProfile = cardJSON["soundCloudProfile"].string
- 
- */
     @NSManaged public var name: String?
     @NSManaged public var bio: String?
     @NSManaged public var date: NSDate?
@@ -64,6 +38,9 @@ extension UserProfile {
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
     
+    static let editableUserData: Set<String> = ["phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "email", "twitterProfile", "soundCloudProfile", "name", "bio"]
+    static let singleInputUserData: Set<String> = ["name", "bio", "profileImageApp", "profileImageURL"]
+ 
     static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
@@ -111,77 +88,22 @@ extension UserProfile {
         let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
-        if (cardJSON["name"] != nil) {
-            for eachInput in cardJSON["name"]! {
-                newUser.name = eachInput
-            }
-        }
-        if (cardJSON["bio"] != nil) {
-            for eachInput in cardJSON["bio"]! {
-                newUser.bio = eachInput
-            }
-        }
-        if (cardJSON["faceBookProfile"] != nil) {
-            newUser.faceBookProfile = [String]()
-            for eachInput in cardJSON["faceBookProfile"]! {
-                newUser.faceBookProfile?.append(eachInput)
-            }
-        }
-        if (cardJSON["snapChatProfile"] != nil) {
-            newUser.snapChatProfile = [String]()
-            for eachInput in cardJSON["snapChatProfile"]! {
-                newUser.snapChatProfile?.append(eachInput)
-            }
-        }
-        if (cardJSON["instagramProfile"] != nil) {
-            newUser.instagramProfile = [String]()
-            for eachInput in cardJSON["instagramProfile"]! {
-                newUser.instagramProfile?.append(eachInput)
-            }
-        }
-        if (cardJSON["email"] != nil) {
-            newUser.email = [String]()
-            for eachInput in cardJSON["email"]! {
-                newUser.email?.append(eachInput)
-            }
-        }
-        if (cardJSON["phoneNumber"] != nil) {
-            newUser.phoneNumber = [String]()
-            for eachInput in cardJSON["phoneNumber"]! {
-                newUser.phoneNumber?.append(eachInput)
-            }
-        }
-        if (cardJSON["linkedInProfile"] != nil) {
-            newUser.linkedInProfile = [String]()
-            for eachInput in cardJSON["linkedInProfile"]! {
-                newUser.linkedInProfile?.append(eachInput)
-            }
-        }
-        if (cardJSON["twitterProfile"] != nil) {
-            newUser.twitterProfile = [String]()
-            for eachInput in cardJSON["twitterProfile"]! {
-                newUser.twitterProfile?.append(eachInput)
-            }
-        }
-        if (cardJSON["soundCloudProfile"] != nil) {
-            newUser.soundCloudProfile = [String]()
-            for eachInput in cardJSON["soundCloudProfile"]! {
-                newUser.soundCloudProfile?.append(eachInput)
-            }
-        }
-        if (cardJSON["profileImageApp"] != nil) {
-            for eachInput in cardJSON["profileImageApp"]! {
-                newUser.profileImageApp = eachInput
-            }
-        }
-        if (cardJSON["profileImageURL"] != nil) {
-            for eachInput in cardJSON["profileImageURL"]! {
-                newUser.profileImageURL = eachInput
+        for key in newUser.entity.propertiesByName.keys {
+            if cardJSON[key] != nil && singleInputUserData.contains(key) == false {
+                var input = [String]()
+                for eachInput in cardJSON[key]! {
+                    input.append(eachInput)
+                }
+                newUser.setValue(input, forKeyPath: key)
+            } else if cardJSON[key] != nil && singleInputUserData.contains(key) == true {
+                newUser.setValue(cardJSON[key]?[0], forKeyPath: key)
             }
         }
 
         // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
         newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
+        newUser.uniqueID = 69
+        print("This is the unique ID: \(newUser.uniqueID)")
         // If this is my user that I am saving, then push it to the cloud.
         if userProfile == .myUser {
             FirebaseManager.uploadCard(cardJSON, withUniqueID: newUser.uniqueID!.uint64Value)
