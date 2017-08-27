@@ -35,7 +35,7 @@ target 'familiarize' do
   pod 'UPCarouselFlowLayout'
   
   #Quikkly QR Code
-  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
+#  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
   #Firebase baby (:
   pod 'Firebase/Storage'
@@ -44,4 +44,8 @@ target 'familiarize' do
 
   #Circular Image Cropper -- Looks suprisingly like aquaints. FUCKKCKCKCKCKKCKC
   pod 'RSKImageCropperSwift', '1.5.1.swift3'
+
+  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
+
+
 end
