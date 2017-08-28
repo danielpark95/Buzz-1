@@ -31,15 +31,6 @@ class SocialMediaSelectionCell: UITableViewCell, UICollectionViewDataSource, UIC
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // This creates the line in between each of the cells.
-    let separatorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.95, alpha:1)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-        
-    }()
 
     lazy var socialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -59,7 +50,6 @@ class SocialMediaSelectionCell: UITableViewCell, UICollectionViewDataSource, UIC
         backgroundColor = UIColor.white
         
         addSubview(socialMediaCollectionView)
-        addSubview(separatorView)
         
         //socialMediaCollectionView.frame = self.frame
         
@@ -67,11 +57,6 @@ class SocialMediaSelectionCell: UITableViewCell, UICollectionViewDataSource, UIC
         socialMediaCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         socialMediaCollectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         socialMediaCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        
-        separatorView.topAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        separatorView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -124,9 +109,6 @@ class SocialMediaCell: UICollectionViewCell {
     
     var socialMedia: SocialMedia? {
         didSet {
-            if let appName = socialMedia?.appName {
-                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
-            }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)
             }
@@ -149,27 +131,13 @@ class SocialMediaCell: UICollectionViewCell {
         return image
     }()
     
-    let socialMediaName: UILabel = {
-        let label = UIManager.makeLabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
-    }()
-    
     func setupViews() {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
-        addSubview(socialMediaName)
-        
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
         socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        socialMediaName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        socialMediaName.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
-        socialMediaName.heightAnchor.constraint(equalToConstant: socialMediaName.intrinsicContentSize.height).isActive = true
-        socialMediaName.widthAnchor.constraint(equalToConstant: socialMediaName.intrinsicContentSize.width).isActive = true
-        
     }
 }
 

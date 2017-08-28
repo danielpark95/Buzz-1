@@ -105,7 +105,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func editCard() {
-        let newCardController = NewCardController(style: UITableViewStyle.plain)
+        
+        let newCardController = NewCardController()
         let navigationController = UINavigationController(rootViewController: newCardController)
         newCardController.socialMediaInputs.removeAll(keepingCapacity: true)
         newCardController.navigationItem.title = "Edit Card"
@@ -134,7 +135,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func addCard() {
-        let newCardController = NewCardController(style: UITableViewStyle.plain)
+        let newCardController = NewCardController()
         let navigationController = UINavigationController(rootViewController: newCardController)
         newCardController.navigationItem.title = "New Card"
         self.present(navigationController, animated: true)
