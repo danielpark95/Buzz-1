@@ -8,79 +8,40 @@
 
 import UIKit
 
-class SocialMediaSelectionCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    var newCardControllerDelegate: NewCardControllerDelegate?
+class SocialMediaSelectionCell: UICollectionViewCell {
 
-    private let cellId = "cellId"
+    var socialMedia: SocialMedia? {
+        didSet {
+            if let imageName = socialMedia?.imageName {
+                socialMediaImage.image = UIImage(named: imageName)
+            }
+            setupViews()
+        }
+    }
     
-    let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
-    ]
-
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    lazy var socialMediaCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.alwaysBounceHorizontal = true
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(SocialMediaCell.self, forCellWithReuseIdentifier: self.cellId)
-        return collectionView
+    
+    let socialMediaImage: UIImageView = {
+        let image = UIManager.makeImage()
+        image.contentMode = .scaleAspectFill
+        return image
     }()
     
     func setupViews() {
         backgroundColor = UIColor.white
-        
-        addSubview(socialMediaCollectionView)
-        
-        //socialMediaCollectionView.frame = self.frame
-        
-        socialMediaCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        socialMediaCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        socialMediaCollectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        socialMediaCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        addSubview(socialMediaImage)
+        socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return socialMediaChoices.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SocialMediaCell
-        cell.socialMedia = socialMediaChoices[indexPath.item]
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: frame.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 14, 0, 14)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.newCardControllerDelegate?.presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
-    }
-    
 }
 
 class SocialMedia: NSObject {
@@ -101,43 +62,6 @@ class SocialMedia: NSObject {
         self.appName = copyFrom.appName
         self.inputName = copyFrom.inputName
         self.isSet = copyFrom.isSet
-    }
-}
-
-
-class SocialMediaCell: UICollectionViewCell {
-    
-    var socialMedia: SocialMedia? {
-        didSet {
-            if let imageName = socialMedia?.imageName {
-                socialMediaImage.image = UIImage(named: imageName)
-            }
-            setupViews()
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let socialMediaImage: UIImageView = {
-        let image = UIManager.makeImage()
-        image.contentMode = .scaleAspectFill
-        return image
-    }()
-    
-    func setupViews() {
-        backgroundColor = UIColor.white
-        addSubview(socialMediaImage)
-        socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
 

@@ -185,7 +185,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // Modify this after you saved a user.
-        if let count = fetchedResultsController.sections?[0].numberOfObjects {
+        if let count = fetchedResultsController.sections?.first?.numberOfObjects {
             pageControl.numberOfPages = count
             return count
         }

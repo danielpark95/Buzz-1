@@ -38,7 +38,6 @@
 		14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */; };
 		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
-		14F5A0581F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5A0571F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
 		F654306C1F3CEE620047FC35 /* WalkthroughController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F654306B1F3CEE620047FC35 /* WalkthroughController.swift */; };
 		F654306E1F3CEEB90047FC35 /* WalkthroughStartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F654306D1F3CEEB90047FC35 /* WalkthroughStartCell.swift */; };
@@ -85,7 +84,6 @@
 		14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
-		14F5A0571F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectHeaderCell.swift; sourceTree = "<group>"; };
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83167A1DA625A6B9D2ADB8AA /* Pods-familiarize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.debug.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9F8F068348E6338A4481B4 /* Pods-familiarize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-familiarize.release.xcconfig"; path = "Pods/Target Support Files/Pods-familiarize/Pods-familiarize.release.xcconfig"; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 				14323B801F04EBAD004694A6 /* SettingsCell.swift */,
 				14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */,
 				14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */,
-				14F5A0571F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift */,
 				1414A11F1F1862CD00289EEB /* ProfileImageSelectionCell.swift */,
 				F654306D1F3CEEB90047FC35 /* WalkthroughStartCell.swift */,
 				F654306F1F3CEEC30047FC35 /* WalkthroughCell.swift */,
@@ -467,7 +464,6 @@
 				144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
-				14F5A0581F1B03F60047A5E2 /* SocialMediaSelectHeaderCell.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
 				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
