@@ -37,7 +37,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
         ]
     
-    lazy var socialMediaCollectionView: UICollectionView = {
+    lazy var socialMediaSelectionCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -48,10 +48,11 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: self.socialMediaSelectionCellId)
-        collectionView.layer.cornerRadius = 27
+        collectionView.layer.cornerRadius = 32
         collectionView.layer.masksToBounds = true
-        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
+        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         return collectionView
+
     }()
     
 //    lazy var profileImageSelectionTableView: UITableView = {
@@ -65,20 +66,31 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 //        return tableView
 //    }()
     
-    lazy var containerView: UIView = {
+    lazy var socialMediaSelectionContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
         view.layer.shadowColor = UIColor.darkGray.cgColor
-        view.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        view.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
         view.layer.shadowOpacity = 1.0
         view.layer.shadowRadius = 2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var socialMediaSelectedContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowOffset = CGSize(width: 1.0, height: 3.0)
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 3
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     lazy var socialMediaSelectedTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
-        tableView.alwaysBounceVertical = false
+        tableView.alwaysBounceVertical = true
         tableView.register(SocialMediaSelectedCell.self, forCellReuseIdentifier: self.socialMediaSelectedCellId)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
@@ -86,7 +98,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tag = tableViewTag.socialMediaSelectedTableView.rawValue
-        
+        tableView.allowsMultipleSelectionDuringEditing = true
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
@@ -105,26 +118,32 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     
     func setupView() {
-        view.addSubview(containerView)
-        view.addSubview(socialMediaCollectionView)
-        view.addSubview(socialMediaSelectedTableView)
+        view.addSubview(socialMediaSelectionContainerView)
+        view.addSubview(socialMediaSelectedContainerView)
         
-        containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        containerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        containerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180).isActive = true
+        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 280).isActive = true
         
-        containerView.addSubview(socialMediaCollectionView)
+        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: view.frame.height - 360).isActive = true
+        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 360).isActive = true
         
-        socialMediaCollectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        socialMediaCollectionView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        socialMediaCollectionView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-        socialMediaCollectionView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
+        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
         
-        socialMediaSelectedTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        socialMediaSelectedTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        socialMediaSelectedTableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        socialMediaSelectedTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 300).isActive = true
+        
+        socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
+        socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
+        socialMediaSelectionCollectionView.rightAnchor.constraint(equalTo: socialMediaSelectionContainerView.rightAnchor).isActive = true
+        socialMediaSelectionCollectionView.topAnchor.constraint(equalTo: socialMediaSelectionContainerView.topAnchor).isActive = true
+        
+        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
+        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
+        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
+        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
     }
     
     //# MARK: - Body Collection View
@@ -165,6 +184,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: socialMediaSelectedCellId, for: indexPath) as! SocialMediaSelectedCell
         cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
+        cell.selectionStyle = .none
         return cell
     }
     

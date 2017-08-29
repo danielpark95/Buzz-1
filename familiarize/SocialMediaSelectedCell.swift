@@ -65,14 +65,10 @@ class SocialMediaSelectedCell: UITableViewCell {
         
         socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         socialMediaInputName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
-        socialMediaInputName.heightAnchor.constraint(equalToConstant: socialMediaInputName.intrinsicContentSize.height).isActive = true
-        socialMediaInputName.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
         
         socialMediaImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
         socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
         socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        
     }
-
 }
