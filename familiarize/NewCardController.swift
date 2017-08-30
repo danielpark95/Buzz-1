@@ -88,8 +88,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     lazy var profileImageSelectionCollectionView: UICollectionView = {
         let layout = UPCarouselFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -120)
+        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -150)
         layout.itemSize = CGSize(width: 400, height: 400)
+        layout.sideItemAlpha = 0.75
+        layout.sideItemScale = 0.75
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -138,8 +140,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 15).isActive = true
+        profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 75).isActive = true
         
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
