@@ -35,7 +35,6 @@
 		14A25B381F2B1890000F90BE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A25B371F2B1890000F90BE /* FirebaseManager.swift */; };
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
-		14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */; };
 		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
@@ -46,7 +45,6 @@
 		F65430741F3D04AB0047FC35 /* ProximaNovaSoft-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F65430731F3D04550047FC35 /* ProximaNovaSoft-Regular.otf */; };
 		F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96231F1ACE05009F6EF8 /* TabBar.swift */; };
 		F67D96261F1ACE25009F6EF8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96251F1ACE25009F6EF8 /* TabBarController.swift */; };
-		F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */; };
 		F6926F8E1F0A5FBA006E312C /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6926F8D1F0A5FBA006E312C /* pop.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +79,6 @@
 		14A25B371F2B1890000F90BE /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
-		14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,7 +91,6 @@
 		F65430731F3D04550047FC35 /* ProximaNovaSoft-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaSoft-Regular.otf"; sourceTree = "<group>"; };
 		F67D96231F1ACE05009F6EF8 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		F67D96251F1ACE25009F6EF8 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageSelectionController.swift; sourceTree = "<group>"; };
 		F6926F8D1F0A5FBA006E312C /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = ../animated_tabbar_custom/ESTabBarControllerExample/ESTabBarControllerExample/Framework/pop.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,8 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				14AF10EE1F0DD691004E0CEB /* NewCardController.swift */,
-				14DD43DF1F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift */,
-				F67D96271F1ACE65009F6EF8 /* ProfileImageSelectionController.swift */,
 			);
 			name = NewCardVC;
 			sourceTree = "<group>";
@@ -443,7 +437,6 @@
 				1497A22B1EEF7B2D00366303 /* UIManager.swift in Sources */,
 				14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */,
 				140ECD821EF6165800E538E4 /* UserController.swift in Sources */,
-				14DD43E01F15AB320093DDB4 /* LoadingProfileImageSelectionController.swift in Sources */,
 				F654306E1F3CEEB90047FC35 /* WalkthroughStartCell.swift in Sources */,
 				14A25B381F2B1890000F90BE /* FirebaseManager.swift in Sources */,
 				F654306C1F3CEE620047FC35 /* WalkthroughController.swift in Sources */,
@@ -467,7 +460,6 @@
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,
 				14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */,
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
-				F67D96281F1ACE65009F6EF8 /* ProfileImageSelectionController.swift in Sources */,
 				149A54DF1F421719007BA1F3 /* DiskManager.swift in Sources */,
 				F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */,
 			);

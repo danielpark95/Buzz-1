@@ -1,4 +1,5 @@
 PODS:
+  - AAPhotoCircleCrop (1.2.0)
   - Alamofire (4.5.0)
   - ESTabBarController-swift (2.4)
   - Firebase/Core (4.0.4):
@@ -49,6 +50,7 @@ PODS:
   - UPCarouselFlowLayout (1.1.1)
 
 DEPENDENCIES:
+  - AAPhotoCircleCrop
   - Alamofire (~> 4.4)
   - ESTabBarController-swift
   - Firebase/Core
@@ -76,6 +78,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/quikkly/ios-sdk.git
 
 SPEC CHECKSUMS:
+  AAPhotoCircleCrop: 61371491e3db6d295f6402b40d4ab481129ddf43
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   ESTabBarController-swift: af496895039ba10ae60bf825473c45f23fc5c8b6
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
@@ -99,6 +102,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: fb96fe2393f2ce910fcd65deef9b4df3e1ebb0d0
+PODFILE CHECKSUM: 97ffd7d31fd8a80560a4536862d0be7d3e9b9d42
 
 COCOAPODS: 1.2.1

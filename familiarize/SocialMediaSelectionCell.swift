@@ -49,6 +49,7 @@ class SocialMedia: NSObject {
     var appName: String?
     var inputName: String?
     var isSet: Bool?
+    var socialMediaProfileImage: SocialMediaProfileImage?
     
     init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName

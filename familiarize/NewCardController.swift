@@ -10,13 +10,23 @@ import UIKit
 import SwiftyJSON
 import CoreData
 import UPCarouselFlowLayout
+import AAPhotoCircleCrop
 
 protocol NewCardControllerDelegate {
     func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
     func addSocialMediaInput(socialMedia: SocialMedia) -> Void
 }
 
-class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class SocialMediaProfileImage: SocialMedia {
+    var profileImage: UIImage?
+    
+    init(copyFrom: SocialMedia, withImage profileImage: UIImage) {
+        super.init(copyFrom: copyFrom)
+        self.profileImage = profileImage
+    }
+}
+
+class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate {
     
     private let profileImageSelectionCellId = "profileImageSelectionCellId"
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
@@ -38,9 +48,12 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     var socialMediaProfileImages: [SocialMediaProfileImage] = [
         SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!),
-        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!),
-        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!),
         SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!)
+    ]
+    
+    var socialMediaInputs: [SocialMedia] = [
+        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "Optional", withAlreadySet: true)
     ]
     
     lazy var socialMediaSelectionContainerView: UIView = {
@@ -118,11 +131,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
-
-    var socialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "Optional", withAlreadySet: true)
-    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -200,11 +208,17 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
             presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+        } else {
+            if indexPath.item == socialMediaProfileImages.count-2 {
+                let imagePicker: UIImagePickerController = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(imagePicker, animated: true)
+            }
         }
     }
 
     //# MARK: - Body Table View
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -236,14 +250,39 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func setupNavBarButton() {
         let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
-        let nextButton = UIBarButtonItem.init(title: "next", style: .plain, target: self, action: #selector(nextClicked))
+        let saveButton = UIBarButtonItem.init(title: "save", style: .plain, target: self, action: #selector(saveClicked))
         
         navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = nextButton
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     func cancelClicked() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // For adding it to the coredata
+    func saveClicked() {
+        let initialPinchPoint = CGPoint(x: (profileImageSelectionCollectionView.center.x) + (profileImageSelectionCollectionView.contentOffset.x), y: (profileImageSelectionCollectionView.center.y) + (profileImageSelectionCollectionView.contentOffset.y))
+        
+        // Select the chosen image from the carousel.
+        let selectedIndexPath = profileImageSelectionCollectionView.indexPathForItem(at: initialPinchPoint)
+        let selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
+        
+        // Save the new card information into core data.
+        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withSocialMediaProfileImage: selectedSocialMediaProfileImage)
+        
+        // Save the image to disk.
+        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage.profileImage)!)!)
+        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: newUserProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
+        
+        // When the image chosen is from the camera roll, upload the image to firebase
+        // And then update the URL link to that image.
+        if (selectedSocialMediaProfileImage.appName == "default") {
+            FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
+                UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage.appName)!, withUserProfile: newUserProfile)
+            })
+        }
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     func presentSocialMediaPopup(socialMedia: SocialMedia) {
@@ -258,6 +297,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     //# Mark: - Stored Info
     
     // For adding it to the Table view.
+    // This is a delegate protocol. . .
     func addSocialMediaInput(socialMedia: SocialMedia) {
         // TODO: Valid name checker. 
         // i.e. no blank usernames.
@@ -265,17 +305,43 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             let newSocialMediaInput = SocialMedia(copyFrom: socialMedia)
             newSocialMediaInput.isSet = true
             socialMediaInputs.append(newSocialMediaInput)
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                let profileImage = fetchedSocialMediaProfileImages.first?.profileImage
+                let socialMediaProfileImage = SocialMediaProfileImage(copyFrom: newSocialMediaInput, withImage: profileImage!)
+                self.socialMediaProfileImages.insert(socialMediaProfileImage, at: 0)
+                newSocialMediaInput.socialMediaProfileImage = socialMediaProfileImage
+                DispatchQueue.main.async {
+                    self.profileImageSelectionCollectionView.reloadData()
+                }
+            })
+        } else {
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                let profileImage = fetchedSocialMediaProfileImages.first?.profileImage
+                socialMedia.socialMediaProfileImage?.profileImage = profileImage
+                DispatchQueue.main.async {
+                    self.profileImageSelectionCollectionView.reloadData()
+                }
+            })
         }
         socialMediaSelectedTableView.reloadData()
     }
     
-    // For adding it to the coredata
-    func nextClicked() {
-        //socialMediaInputs.sort(by: { $0.appName! < $1.appName! })
-        //# MARK: - Presenting ProfileImageSelectionController
-        let loadingProfileImageSelectionController = LoadingProfileImageSelectionController()
-        loadingProfileImageSelectionController.socialMediaInputs = socialMediaInputs
-        navigationController?.pushViewController(loadingProfileImageSelectionController, animated: true)
+    // MARK: - UIImagePickerControllerDelegate Delegate Implementation
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: false, completion: { () -> Void in
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                let circleCropController = AACircleCropViewController()
+                circleCropController.image = image
+                circleCropController.delegate = self
+                self.present(circleCropController, animated: false)
+            }
+        })
+    }
+    
+    func circleCropDidCropImage(_ image: UIImage) {
+        socialMediaProfileImages[socialMediaProfileImages.count-2].profileImage = image
+        profileImageSelectionCollectionView.reloadData()
+        self.dismiss(animated: false)
     }
 }
 
