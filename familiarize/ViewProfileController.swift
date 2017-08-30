@@ -9,11 +9,29 @@
 import UIKit
 import CoreData
 
-class ViewProfileController: UIViewController {
+class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var socialMediaButtons: [String : UIButton]?
+    var socialMediaInputs: [SocialMedia]?
+    
     var userProfile: UserProfile?
     let profileImageHeightAndWidth: CGFloat = 150.0
+    fileprivate let viewProfileCellId = "viewProfileCellId"
+    
+    lazy var userSocialMediaCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        //layout.itemSize = CGSize(width: 300, height: 300)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceHorizontal = true
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(ViewProfileCell.self, forCellWithReuseIdentifier: self.viewProfileCellId)
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +85,7 @@ class ViewProfileController: UIViewController {
         button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
         button.contentVerticalAlignment = .center
         button.contentHorizontalAlignment = .center
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
     
@@ -150,7 +169,7 @@ class ViewProfileController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(bioLabel)
         view.addSubview(dismissButton)
-
+        view.addSubview(userSocialMediaCollectionView)
         
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
@@ -173,16 +192,63 @@ class ViewProfileController: UIViewController {
         bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
         bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
         
-        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         dismissButton.centerYAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
         dismissButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
-        //drawMiddleLine()
-        createSocialMediaButtons()
-        presentSocialMediaButtons()
+  
+        userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: 50).isActive = true
+        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        userSocialMediaCollectionView.widthAnchor.constraint(equalTo: popupImageView.widthAnchor, multiplier: 1.0).isActive = true
+//        
+//        userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
+//        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+//        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//
+//        //drawMiddleLine()
+//        createSocialMediaButtons()
+//        presentSocialMediaButtons()
     }
+    
+    
+    
+    //# MARK: - Body Collection View
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let count = socialMediaInputs?.count {
+            return count
+        }
+        return 0
+    }
+
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsetsMake(0, 14, 0, 14)
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewProfileCellId, for: indexPath) as! ViewProfileCell
+        cell.socialMedia = socialMediaInputs?[indexPath.item]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+//            presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+//        } else {
+//            if indexPath.item == socialMediaProfileImages.count-2 {
+//                let imagePicker: UIImagePickerController = UIImagePickerController()
+//                imagePicker.delegate = self
+//                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+//                self.present(imagePicker, animated: true)
+//            }
+//        }
+    }
+    
+    
+    
     
     // MARK: - Button Properties
     func buttonLink(_ userURL: String) {
@@ -257,6 +323,7 @@ class ViewProfileController: UIViewController {
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
+    
     lazy var inButton: UIButton = {
         let button = UIManager.makeButton(imageName: "dan_linkedin_black")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)

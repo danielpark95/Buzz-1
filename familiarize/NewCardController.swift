@@ -38,7 +38,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }
 
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_faceBookProfile_black", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
@@ -306,8 +306,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             newSocialMediaInput.isSet = true
             socialMediaInputs.append(newSocialMediaInput)
             ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
-                let profileImage = fetchedSocialMediaProfileImages.first?.profileImage
-                let socialMediaProfileImage = SocialMediaProfileImage(copyFrom: newSocialMediaInput, withImage: profileImage!)
+                guard let profileImage = fetchedSocialMediaProfileImages.first?.profileImage else {
+                    return
+                }
+                let socialMediaProfileImage = SocialMediaProfileImage(copyFrom: newSocialMediaInput, withImage: profileImage)
                 self.socialMediaProfileImages.insert(socialMediaProfileImage, at: 0)
                 newSocialMediaInput.socialMediaProfileImage = socialMediaProfileImage
                 DispatchQueue.main.async {
@@ -316,7 +318,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             })
         } else {
             ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
-                let profileImage = fetchedSocialMediaProfileImages.first?.profileImage
+                guard let profileImage = fetchedSocialMediaProfileImages.first?.profileImage else {
+                    return
+                }
                 socialMedia.socialMediaProfileImage?.profileImage = profileImage
                 DispatchQueue.main.async {
                     self.profileImageSelectionCollectionView.reloadData()

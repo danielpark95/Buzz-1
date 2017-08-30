@@ -87,7 +87,6 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     
     func setupViews() {
         view.addSubview(backButton)
-        
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -111,7 +110,14 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             self.scanProfileController.ScannerControllerDelegate = self
             present(self.scanProfileController, animated: false)
             
+            print("The scannable value is: \(scannable.value)")
+            
             FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { card in
+                if card.count == 0 {
+                    // Perform some animation to show that the quikkly code is invalid.
+                    return
+                }
+                
                 // Save the fetched data into CoreData.
                 self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser)
                 

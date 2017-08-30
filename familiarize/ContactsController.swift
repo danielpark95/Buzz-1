@@ -149,7 +149,25 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     func viewProfile(_ indexPath: IndexPath = IndexPath(item: 0, section: 0)) {
         //userProfiles = UserProfile.getData(forUserProfile: .otherUser)
         let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        
         let viewProfileController = ViewProfileController()
+        viewProfileController.socialMediaInputs = [SocialMedia]()
+        for key in userProfile.entity.propertiesByName.keys {
+            guard let inputName = userProfile.value(forKey: key) else {
+                continue
+            }
+            if UserProfile.editableMultipleInputUserData.contains(key) {
+                for eachInput in inputName as! [String] {
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: eachInput, withAlreadySet: true)
+                    print(socialMediaInput.imageName!)
+                    viewProfileController.socialMediaInputs?.append(socialMediaInput)
+                }
+            }
+//            } else if UserProfile.editableSingleInputUserData.contains(key) {
+//                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: inputName as! String, withAlreadySet: true)
+//                viewProfileController.socialMediaInputs?.append(socialMediaInput)
+//            }
+        }
         viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         viewProfileController.userProfile = userProfile
         
