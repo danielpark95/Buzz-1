@@ -66,8 +66,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }()
     
     lazy var socialMediaSelectionCollectionView: UICollectionView = {
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +88,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     lazy var profileImageSelectionCollectionView: UICollectionView = {
         let layout = UPCarouselFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 200, height: 200)
+        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -120)
+        layout.itemSize = CGSize(width: 400, height: 400)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +98,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ProfileImageSelectionCell.self, forCellWithReuseIdentifier: self.profileImageSelectionCellId)
-        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.tag = collectionViewTag.profileImageSelectionTableView.rawValue
         return collectionView
         
@@ -128,16 +130,16 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         setupNavBarButton()
     }
     
-    
     func setupView() {
-        view.addSubview(profileImageSelectionCollectionView)
+        
         view.addSubview(socialMediaSelectionContainerView)
         view.addSubview(socialMediaSelectedContainerView)
+        view.addSubview(profileImageSelectionCollectionView)
         
+        profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        profileImageSelectionCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        profileImageSelectionCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
+        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 15).isActive = true
         
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
@@ -185,18 +187,24 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 14, 0, 14)
+        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+            return UIEdgeInsetsMake(0, 14, 0, 14)
+        } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+            presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+        }
     }
 
     //# MARK: - Body Table View
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
