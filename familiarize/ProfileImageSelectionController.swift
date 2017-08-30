@@ -99,6 +99,17 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         return cell
     }
     
+    // When only the last default cell is clicked, then the photolibrary pops up.
+    // The defaul cell is created within the Image Fetching Manager.
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
+            let imagePicker: UIImagePickerController = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(imagePicker, animated: false, completion: nil)
+        }
+    }
+    
     func setupCollectionView() {
         self.collectionView?.backgroundColor = UIColor.white
         let layout = UPCarouselFlowLayout()
@@ -123,17 +134,6 @@ class ProfileImageSelectionController: UICollectionViewController, UIImagePicker
         selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
         selectButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
         selectButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    }
-    
-    // When only the last default cell is clicked, then the photolibrary pops up. 
-    // The defaul cell is created within the Image Fetching Manager.
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
-            let imagePicker: UIImagePickerController = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            self.present(imagePicker, animated: false, completion: nil)
-        }
     }
     
     // MARK: - UIImagePickerControllerDelegate Delegate Implementation
