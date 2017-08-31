@@ -131,6 +131,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 newCardController.socialMediaInputs.append(socialMediaInput)
             }
         }
+        
+        for socialMediaInput in newCardController.socialMediaInputs {
+            newCardController.addSocialMediaInput(socialMedia: socialMediaInput, new: true)
+        }
+        
         self.present(navigationController, animated: true)
     }
     

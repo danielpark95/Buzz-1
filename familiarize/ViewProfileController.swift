@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     
     var socialMediaButtons: [String : UIButton]?
     var socialMediaInputs: [SocialMedia]?
@@ -18,18 +18,30 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     let profileImageHeightAndWidth: CGFloat = 150.0
     fileprivate let viewProfileCellId = "viewProfileCellId"
     
+    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
+    var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.hidesForSinglePage = true
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
+        pc.alpha = 0.4
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.isUserInteractionEnabled = false
+        return pc
+    }()
+
     lazy var userSocialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        //layout.itemSize = CGSize(width: 300, height: 300)
+        layout.itemSize = CGSize(width: 350, height: 200)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceHorizontal = true
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ViewProfileCell.self, forCellWithReuseIdentifier: self.viewProfileCellId)
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
@@ -170,6 +182,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         view.addSubview(bioLabel)
         view.addSubview(dismissButton)
         view.addSubview(userSocialMediaCollectionView)
+        view.addSubview(pageControl)
         
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // Initially set all the way at the bottom so that it animates up.
@@ -197,58 +210,49 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         dismissButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
         dismissButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
-  
         userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: 50).isActive = true
-        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        userSocialMediaCollectionView.widthAnchor.constraint(equalTo: popupImageView.widthAnchor, multiplier: 1.0).isActive = true
-//        
-//        userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 10).isActive = true
-//        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-//        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//
-//        //drawMiddleLine()
-//        createSocialMediaButtons()
-//        presentSocialMediaButtons()
+        userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -60).isActive = true
+        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: (popupImageView.image?.size.width)!).isActive = true
+        
+        pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
     
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
+        pageControl.currentPage = pageNumber
+    }
     
     //# MARK: - Body Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = socialMediaInputs?.count {
+        if var count = socialMediaInputs?.count {
+            count = Int((Double(count)/6.0).rounded(.up))
+            pageControl.numberOfPages = count
+            
             return count
         }
         return 0
     }
-
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsetsMake(0, 14, 0, 14)
-//    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewProfileCellId, for: indexPath) as! ViewProfileCell
-        cell.socialMedia = socialMediaInputs?[indexPath.item]
+        if cell.socialMediaInputs == nil {
+            cell.socialMediaInputs = [SocialMedia]()
+        }
+        for index in indexPath.item...indexPath.item+5 {
+            if index >= (socialMediaInputs?.count)! {
+                break
+            }
+            print(index)
+            cell.socialMediaInputs?.append((socialMediaInputs?[index])!)
+        }
+        cell.userSocialMediaCollectionView.reloadData()
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
-//            presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
-//        } else {
-//            if indexPath.item == socialMediaProfileImages.count-2 {
-//                let imagePicker: UIImagePickerController = UIImagePickerController()
-//                imagePicker.delegate = self
-//                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-//                self.present(imagePicker, animated: true)
-//            }
-//        }
-    }
-    
-    
-    
     
     // MARK: - Button Properties
     func buttonLink(_ userURL: String) {

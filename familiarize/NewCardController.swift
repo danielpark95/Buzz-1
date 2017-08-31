@@ -14,7 +14,7 @@ import AAPhotoCircleCrop
 
 protocol NewCardControllerDelegate {
     func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
-    func addSocialMediaInput(socialMedia: SocialMedia) -> Void
+    func addSocialMediaInput(socialMedia: SocialMedia, new: Bool) -> Void
 }
 
 class SocialMediaProfileImage: SocialMedia {
@@ -298,10 +298,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     // For adding it to the Table view.
     // This is a delegate protocol. . .
-    func addSocialMediaInput(socialMedia: SocialMedia) {
+    func addSocialMediaInput(socialMedia: SocialMedia, new: Bool) {
         // TODO: Valid name checker. 
         // i.e. no blank usernames.
-        if socialMedia.inputName != "" && socialMedia.isSet == false {
+        if (socialMedia.inputName != "" && socialMedia.isSet == false)  ||  new {
             let newSocialMediaInput = SocialMedia(copyFrom: socialMedia)
             newSocialMediaInput.isSet = true
             socialMediaInputs.append(newSocialMediaInput)

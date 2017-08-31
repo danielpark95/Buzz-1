@@ -44,4 +44,7 @@ target 'familiarize' do
 
   #Circular Image Cropper -- Looks suprisingly like aquaints. FUCKKCKCKCKCKKCKC
   pod 'RSKImageCropperSwift', '1.5.1.swift3'
+
+  #Circular image cropper
+  pod 'AAPhotoCircleCrop'
 end

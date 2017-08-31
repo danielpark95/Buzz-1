@@ -76,7 +76,7 @@ class SocialMediaController: UIViewController {
     
     func addClicked() {
         socialMedia?.inputName = inputTextField.text!
-        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
+        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!, new: false)
         self.dismiss(animated: false, completion: nil)
     }
     

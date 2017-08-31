@@ -23,6 +23,7 @@ class ProfileImageSelectionCell: UICollectionViewCell {
         return UIManager.makeProfileImage(valueOfCornerRadius: 83)
     }()
     
+    
     lazy var profileImageContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
