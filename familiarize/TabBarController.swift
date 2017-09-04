@@ -57,10 +57,6 @@ extension RevealingSplashView {
 }
 
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -79,12 +75,11 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        
         let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: .clear)
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
         revealingSplashView.startAnimation(){
-            //backgroundImage.removeFromSuperview()
+             backgroundImage.removeFromSuperview()
         }
       
         if isNotFirstTime() {
@@ -99,7 +94,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             //Scanner Controller
             let scannerController = ScannerController()
             let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-            scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_yellow_25"), selectedImage: UIImage(named: "dan_tabbarcircle_yellow_25"))
+            scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
             
             //Contacts Controller
             let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -108,8 +103,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             
             viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
         } else {
-            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0)
-            //backgroundImage.removeFromSuperview()
+            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.93)
         }
     }
     
@@ -128,7 +122,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //Scanner Controller
         let scannerController = ScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_yellow_25"), selectedImage: UIImage(named: "dan_tabbarcircle_yellow_25"))
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
         viewControllers?.insert(scannerNavigationController, at: 1)
     }
 }

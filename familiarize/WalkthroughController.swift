@@ -48,9 +48,9 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
     
     let pageControl: UIPageControl = {
         let pc = UIPageControl()
-        pc.pageIndicatorTintColor = .lightGray
-        pc.currentPageIndicatorTintColor = UIColor(red:255/255.0, green: 215/255.0, blue: 0/255.0, alpha: 1.0)
-        pc.numberOfPages = 3
+        pc.pageIndicatorTintColor = UIColor(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:255/255.0, green: 191/255.0, blue: 21/255.0, alpha: 1.0)
+        pc.numberOfPages = 4
         return pc
     }()
     
@@ -94,8 +94,8 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         
         if pageNumber == walkthroughs.count {
             //pageControlBottomAnchor?.constant = 0
-            pageControl.pageIndicatorTintColor = .clear
-            pageControl.currentPageIndicatorTintColor = .clear
+            //pageControl.pageIndicatorTintColor = .clear
+            //pageControl.currentPageIndicatorTintColor = .clear
             isLastPage = true
             print ("bool = " , isLastPage)
             
@@ -111,9 +111,9 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
                 cheerView.start()
             }
         } else {
-            pageControlBottomAnchor?.constant = 40
-            pageControl.pageIndicatorTintColor = .lightGray
-            pageControl.currentPageIndicatorTintColor = UIColor(red:255/255.0, green: 215/255.0, blue: 0/255.0, alpha: 1.0)
+            //pageControlBottomAnchor?.constant = 40
+            pageControl.pageIndicatorTintColor = UIColor(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
+            pageControl.currentPageIndicatorTintColor = UIColor(red:255/255.0, green: 191/255.0, blue: 21/255.0, alpha: 1.0)
             isLastPage = false
             if isLastPage == false {
                 cheerView.stop()
