@@ -31,6 +31,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         delegate.previousIndex = 0
     }
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false

@@ -312,6 +312,10 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         
+        
+        //collectionView.collectionViewLayout = columnLayout
+        
+        
         collectionView.isPagingEnabled = true
         //collectionView.alwaysBounceHorizontal = true
         return collectionView
@@ -368,10 +372,7 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         appsCollectionView.widthAnchor.constraint(equalToConstant: 75).isActive = true
         appsCollectionView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
-        //addConstraint(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
-        
-        //addConstraint(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
-        
+
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
@@ -443,6 +444,15 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
 //    }
     
     
+    
+    
+    
+    
+    
+   /*
+    COMMENT
+    */
+    
     fileprivate var sectionInsets: UIEdgeInsets {
         return .zero
     }
@@ -457,9 +467,9 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         }
         print("count = ", my_imagesToPresent.count)
         
-        if my_imagesToPresent.count > 5 {
-            return 5
-        }
+//        if my_imagesToPresent.count > 5 {
+//            return 5
+//        }
         return CGFloat(my_imagesToPresent.count)
     }
     
@@ -470,17 +480,52 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let sectionPadding = sectionInsets.left * (itemsPerRow + 1)
-        let interitemPadding = max(0.0, itemsPerRow - 1) * interitemSpace
+        var my_itemsPerRow : CGFloat = itemsPerRow
+        if (itemsPerRow > 4 ) {
+            my_itemsPerRow = 4
+        }
+        let sectionPadding = sectionInsets.left * (my_itemsPerRow + 1)
+        let interitemPadding = max(0.0, my_itemsPerRow - 1) * interitemSpace
         let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
-        let widthPerItem = availableWidth / itemsPerRow
+        let widthPerItem = availableWidth / my_itemsPerRow
+        print("width: " , widthPerItem, " height: ", widthPerItem)
+        
+        if (itemsPerRow > 4) {
+            return CGSize(width: 71.0, height: 71.0)
+        }
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
+        
+        var my_imagesToPresent = [UIImageView]()
+        for key in (myUserProfile?.entity.attributesByName.keys)! {
+            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
+                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
+            }
+        }
+        var my_sectionInsets : UIEdgeInsets
+        
+        if (my_imagesToPresent.count == 1 ) {
+            //Good
+            my_sectionInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        } else if (my_imagesToPresent.count == 2 ) {
+            //Good
+            my_sectionInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        } else if (my_imagesToPresent.count == 3 ) {
+            //Good
+            my_sectionInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        } else if (my_imagesToPresent.count == 4 ) {
+            my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+        } else if (my_imagesToPresent.count == 5 ) {
+            my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+        } else {
+            my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+        }
+        
+        return my_sectionInsets
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -488,10 +533,14 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
+
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return interitemSpace
-    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return interitemSpace
+//    }
+//    
+    
 }
 
 

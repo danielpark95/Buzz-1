@@ -19,17 +19,72 @@ extension Notification.Name {
     static let removeScanner = Notification.Name("removeScanner")
 }
 
+extension RevealingSplashView {
+    
+    
+    /**
+     Retuns the default zoom out transform to be use mixed with other transform
+     
+     - returns: ZoomOut fransfork
+     */
+    fileprivate func getZoomOutTranform() -> CGAffineTransform
+    {
+        let zoomOutTranform: CGAffineTransform = CGAffineTransform(scaleX: 20, y: 20)
+        return zoomOutTranform
+    }
+    
+    func playZoomOutAnimation(_ completion: SplashAnimatableCompletion? = nil)
+    {
+        if let imageView =  imageView
+        {
+            let growDuration: TimeInterval =  duration * 0.3
+            
+            UIView.animate(withDuration: growDuration, animations:{
+                
+                imageView.transform = self.getZoomOutTranform()
+                self.alpha = 0
+                
+                //When animation completes remote self from super view
+            }, completion: { finished in
+                
+                self.removeFromSuperview()
+                
+                //backgroundImage.removeFromSuperview()
+                completion?()
+            })
+        }
+    }
+}
+
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
         
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 215/255.0, blue: 0/255.0, alpha:1.0))
+        let backgroundImage: UIImageView = {
+            let image = UIManager.makeImage(imageName: "background")
+            image.contentMode = .scaleAspectFill
+            return image
+        }()
+        
+        self.view.addSubview(backgroundImage)
+        backgroundImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: .clear)
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
         revealingSplashView.startAnimation(){
+            //backgroundImage.removeFromSuperview()
         }
       
         if isNotFirstTime() {
@@ -53,9 +108,11 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             
             viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
         } else {
-            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.96)
+            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0)
+            //backgroundImage.removeFromSuperview()
         }
     }
+    
     
     fileprivate func isNotFirstTime() -> Bool {
         return UserDefaults.standard.bool(forKey: "isNotFirstTime")
