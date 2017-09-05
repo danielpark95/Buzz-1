@@ -150,7 +150,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         view.addSubview(pageControl)
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     

@@ -44,6 +44,7 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     
     var myUserProfile: UserProfile? {
         didSet {
+            
             let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
             nameLabel.attributedText = name
             
@@ -106,7 +107,7 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     }()
     
     var profileImage2: UIImageView = {
-        let image = UIManager.makeProfileImage(valueOfCornerRadius: 97)
+        let image = UIManager.makeProfileImage(valueOfCornerRadius: 100)
         return image
     }()
     
@@ -143,8 +144,8 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         
         profileImage2.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
         profileImage2.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
-        profileImage2.heightAnchor.constraint(equalToConstant: 194).isActive = true
-        profileImage2.widthAnchor.constraint(equalToConstant: 194).isActive = true
+        profileImage2.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        profileImage2.widthAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     func setupViews() {
@@ -367,12 +368,11 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         appsCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         appsCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         appsCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 470).isActive = true
-        appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -115).isActive = true
+        appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100).isActive = true
         appsCollectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
         appsCollectionView.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        appsCollectionView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        appsCollectionView.heightAnchor.constraint(equalToConstant: 210).isActive = true
         
-
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
@@ -453,47 +453,47 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     COMMENT
     */
     
-    fileprivate var sectionInsets: UIEdgeInsets {
-        return .zero
-    }
-    
-    fileprivate var itemsPerRow: CGFloat {
-        //print("count = ", socialMediaChoices.count)
-        var my_imagesToPresent = [UIImageView]()
-        for key in (myUserProfile?.entity.attributesByName.keys)! {
-            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
-            }
-        }
-        print("count = ", my_imagesToPresent.count)
-        
-//        if my_imagesToPresent.count > 5 {
-//            return 5
+//    fileprivate var sectionInsets: UIEdgeInsets {
+//        return .zero
+//    }
+//    
+//    fileprivate var itemsPerRow: CGFloat {
+//        //print("count = ", socialMediaChoices.count)
+//        var my_imagesToPresent = [UIImageView]()
+//        for key in (myUserProfile?.entity.attributesByName.keys)! {
+//            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
+//                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
+//            }
 //        }
-        return CGFloat(my_imagesToPresent.count)
-    }
+//        print("count = ", my_imagesToPresent.count)
+//        
+////        if my_imagesToPresent.count > 5 {
+////            return 5
+////        }
+//        return CGFloat(my_imagesToPresent.count)
+//    }
     
-    fileprivate var interitemSpace: CGFloat {
-        return 5.0
-    }
-    
+//    fileprivate var interitemSpace: CGFloat {
+//        return 5.0
+//    }
+//    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var my_itemsPerRow : CGFloat = itemsPerRow
-        if (itemsPerRow > 4 ) {
-            my_itemsPerRow = 4
-        }
-        let sectionPadding = sectionInsets.left * (my_itemsPerRow + 1)
-        let interitemPadding = max(0.0, my_itemsPerRow - 1) * interitemSpace
-        let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
-        let widthPerItem = availableWidth / my_itemsPerRow
-        print("width: " , widthPerItem, " height: ", widthPerItem)
-        
-        if (itemsPerRow > 4) {
-            return CGSize(width: 71.0, height: 71.0)
-        }
-        return CGSize(width: widthPerItem, height: widthPerItem)
+//        var my_itemsPerRow : CGFloat = itemsPerRow
+//        if (itemsPerRow > 4 ) {
+//            my_itemsPerRow = 4
+//        }
+//        let sectionPadding = sectionInsets.left * (my_itemsPerRow + 1)
+//        let interitemPadding = max(0.0, my_itemsPerRow - 1) * interitemSpace
+//        let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
+//        let widthPerItem = availableWidth / my_itemsPerRow
+//        print("width: " , widthPerItem, " height: ", widthPerItem)
+//        
+        //if (itemsPerRow > 4) {
+            return CGSize(width: 80.0, height: 100.0)
+        //}
+        //return CGSize(width: widthPerItem, height: widthPerItem)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -528,11 +528,11 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         return my_sectionInsets
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
-    }
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 0.0
+//    }
 
     
 //    

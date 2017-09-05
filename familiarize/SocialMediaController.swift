@@ -9,13 +9,15 @@
 import UIKit
 import CoreData
 
-class SocialMediaController: UIViewController {
+class SocialMediaController: UIViewController, UITextFieldDelegate {
     
     var newCardControllerDelegate: NewCardController?
     var socialMedia: SocialMedia?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //inputTextField.delegate = self
+        
         setupViews()
     }
     
@@ -30,6 +32,11 @@ class SocialMediaController: UIViewController {
         self.animatePopup()
         // Makes the inputTextField show up immendiately when the social media icon is pressed.
         inputTextField.becomeFirstResponder()
+        
+        //inputTextField.delegate = self
+        //inputTextField.delegate = self
+        
+        
     }
     
     lazy var addButton: UIButton = {
@@ -73,9 +80,10 @@ class SocialMediaController: UIViewController {
         textField.tintColor = UIColor(white: 0.55, alpha: 1)
         textField.textAlignment = NSTextAlignment.center
         
+        
+        
         return textField
     }()
-    
     
     func addClicked() {
         socialMedia?.inputName = inputTextField.text!
@@ -97,13 +105,20 @@ class SocialMediaController: UIViewController {
     
     // Slides up the popup from the bottom of the screen to the middle
     func animatePopup() {
-        self.popupCenterYAnchor?.constant = 0
+        self.popupCenterYAnchor?.constant = -40
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
         }, completion: nil)
     }
-
+    
+//    let limitLength = 20
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        guard let text = textField.text else { return true }
+//        let newLength = text.characters.count + string.characters.count - range.length
+//        return newLength <= limitLength
+//    }
+//    
     var popupCenterYAnchor: NSLayoutConstraint?
     func setupViews() {
         view.addSubview(tintOverlay)
@@ -134,7 +149,7 @@ class SocialMediaController: UIViewController {
         inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true
         inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.width).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: popupImageView.intrinsicContentSize.width - 80).isActive = true
         
         socialMediaImageView.image = UIImage(named: (socialMedia?.imageName)!)
     }

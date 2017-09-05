@@ -86,7 +86,7 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: frame.height)
+        return CGSize(width: 60, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -109,6 +109,7 @@ class SocialMedia: NSObject {
     
     init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName
+        //let upperAppName = appName.uppercased()
         self.appName = appName
         self.inputName = inputName
         //self.inputName = NSAttributedString(string: inputName, attributes: myAttribute)
@@ -123,13 +124,12 @@ class SocialMedia: NSObject {
     }
 }
 
-
 class SocialMediaCell: UICollectionViewCell {
     
     var socialMedia: SocialMedia? {
         didSet {
             if let appName = socialMedia?.appName {
-                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
+                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)?.uppercased()
             }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)

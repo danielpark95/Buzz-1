@@ -39,13 +39,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     let settings: [Setting] = {
-        return [Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [Setting(name: .Blank, imageName: "dan_buzz_baloo_text"), Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
     }()
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+        cv.backgroundColor = UIColor(red: 255/255, green: 191/255, blue: 21/255, alpha: 1.0)
         return cv
     }()
     
@@ -62,6 +62,11 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             visualEffect.frame = window.bounds
         }
         return visualEffect
+    }()
+    
+    let buzzText: UIImageView = {
+        let imageView = UIManager.makeImage(imageName: "dan_buzz_baloo_text")
+        return imageView
     }()
     
     func handleDismiss(setting: Setting) {
@@ -81,18 +86,25 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     
     func setupViews() {
         if let window = UIApplication.shared.keyWindow {
-            collectionView.addSubview(websiteQRCodeImage)
+            //collectionView.addSubview(websiteQRCodeImage)
             
             window.addSubview(tintOverlay)
             window.addSubview(collectionView)
+            collectionView.addSubview(buzzText)
             
             let width: CGFloat = (window.frame.width)*(2/3)
             collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: width, height: window.frame.height)
 
-            websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
-            websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
-            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: width).isActive = true
-            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
+            
+            buzzText.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant: -window.frame.width/6).isActive = true
+            buzzText.topAnchor.constraint(equalTo: window.topAnchor, constant: 20).isActive = true
+            buzzText.widthAnchor.constraint(equalToConstant: 170).isActive = true
+            buzzText.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            
+            //websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
+            //websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
+            //websiteQRCodeImage.heightAnchor.constraint(equalToConstant: width).isActive = true
+            //websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 0.15
