@@ -34,7 +34,6 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             }
             count = count + 1
         }
-        setupViews()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,6 +46,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = true
+        setupViews()
     }
     
     // MARK: ScannerControllerDelegate Functions
@@ -67,6 +67,10 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
         return button
     }()
     
+    lazy var cameraFrame: UIImageView = {
+        return UIManager.makeImage(imageName: "dan_quikkly_circle_frame")
+    }()
+    
     func didSelectBack() {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         tabBarController?.selectedIndex = delegate.previousIndex!
@@ -85,11 +89,15 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     
     func setupViews() {
         view.addSubview(backButton)
+        view.addSubview(cameraFrame)
         
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        cameraFrame.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        cameraFrame.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
     }
     
     let scanProfileController = ScanProfileController()

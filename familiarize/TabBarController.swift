@@ -26,10 +26,23 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
         
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 215/255.0, blue: 0/255.0, alpha:1.0))
-        self.view.addSubview(revealingSplashView)
+        let backgroundImage: UIImageView = {
+            let image = UIManager.makeImage(imageName: "background")
+            image.contentMode = .scaleAspectFill
+            return image
+        }()
+        
+        self.view.addSubview(backgroundImage)
+        backgroundImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: .clear)
+        //self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
         revealingSplashView.startAnimation(){
+             backgroundImage.removeFromSuperview()
         }
       
         if isNotFirstTime() {
@@ -44,7 +57,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             //Scanner Controller
             let scannerController = ScannerController()
             let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-            scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_yellow_25"), selectedImage: UIImage(named: "dan_tabbarcircle_yellow_25"))
+            scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
             
             //Contacts Controller
             let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -53,9 +66,10 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             
             viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
         } else {
-            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.01)
+            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.93)
         }
     }
+    
     
     fileprivate func isNotFirstTime() -> Bool {
         return UserDefaults.standard.bool(forKey: "isNotFirstTime")
@@ -63,7 +77,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
     
     func showWalkthroughController() {
         let walkthroughController = WalkthroughController()
-        present(walkthroughController, animated: true, completion: nil)
+        present(walkthroughController, animated: false, completion: nil)
     }
 
     func removeScanner() {
@@ -71,7 +85,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         //Scanner Controller
         let scannerController = ScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_yellow_25"), selectedImage: UIImage(named: "dan_tabbarcircle_yellow_25"))
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
         viewControllers?.insert(scannerNavigationController, at: 1)
     }
 }

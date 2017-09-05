@@ -33,6 +33,7 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
         super.viewDidLoad()
         navigationItem.title = "New Card"
         navigationController?.navigationBar.tintColor = UIColor.black
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20), NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
         setupCollectionView()
         setupNavBarButton()
     }
@@ -44,9 +45,9 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: socialMediaHeaderCellId, for: indexPath) as! SocialMediaSelectHeader
         if indexPath.section == 0 {
-            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "Add", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 14)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "  Add", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
         } else {
-            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "My Info", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 14)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "  My Info", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
         }
         return cell
     }
@@ -132,9 +133,10 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     func setupNavBarButton() {
-        let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
-        let nextButton = UIBarButtonItem.init(title: "next", style: .plain, target: self, action: #selector(nextClicked))
-        
+        let cancelButton = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
+        cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
+        let nextButton = UIBarButtonItem.init(title: "Next", style: .plain, target: self, action: #selector(nextClicked))
+        nextButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = nextButton
     }

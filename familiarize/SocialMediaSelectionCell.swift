@@ -15,12 +15,12 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     private let cellId = "cellId"
     
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_color", withInputName: "", withAlreadySet: false),
     ]
 
     override init(frame: CGRect) {
@@ -86,11 +86,11 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: frame.height)
+        return CGSize(width: 60, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 14, 0, 14)
+        return UIEdgeInsetsMake(0, 18, 0, 18)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -105,10 +105,14 @@ class SocialMedia: NSObject {
     var inputName: String?
     var isSet: Bool?
     
+    let myAttribute = [ NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 12.0)! ]
+    
     init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName
+        //let upperAppName = appName.uppercased()
         self.appName = appName
         self.inputName = inputName
+        //self.inputName = NSAttributedString(string: inputName, attributes: myAttribute)
         self.isSet = isSet
     }
     
@@ -120,13 +124,12 @@ class SocialMedia: NSObject {
     }
 }
 
-
 class SocialMediaCell: UICollectionViewCell {
     
     var socialMedia: SocialMedia? {
         didSet {
             if let appName = socialMedia?.appName {
-                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
+                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)?.uppercased()
             }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)
@@ -152,7 +155,8 @@ class SocialMediaCell: UICollectionViewCell {
     
     let socialMediaName: UILabel = {
         let label = UIManager.makeLabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 11)
+        label.text = label.text?.uppercased()
         return label
     }()
     

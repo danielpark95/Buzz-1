@@ -54,7 +54,7 @@ class SocialMediaSelectedCell: UICollectionViewCell {
     }()
     
     let deleteButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_help")
+        let button = UIManager.makeButton(imageName: "dan_deletebutton")
         return button
     }()
     
@@ -65,12 +65,12 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         addSubview(socialMediaImageView)
         addSubview(deleteButton)
         
-        separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
+        separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         
-        socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 5).isActive = true
         socialMediaInputName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
         socialMediaInputName.heightAnchor.constraint(equalToConstant: socialMediaInputName.intrinsicContentSize.height).isActive = true
         socialMediaInputName.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
@@ -80,11 +80,10 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
         socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
-        deleteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -50).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
-        deleteButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
+        deleteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
+        deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true
+        deleteButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
 
 }
