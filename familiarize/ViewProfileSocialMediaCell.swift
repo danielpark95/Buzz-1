@@ -57,7 +57,7 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
             appURL = URL(string: "fb://profile?id=\((socialMedia?.inputName)!)")!
             safariURL = URL(string: "https://www.facebook.com/\((socialMedia?.inputName)!)")!
             
-        case buttonType.snapChatProfile.rawValue:
+        //case buttonType.snapChatProfile.rawValue:
 //            /https://stackoverflow.com/questions/22632121/snapchat-url-scheme-not-working-properly-camera-opens-but-not-profile
             
         default: break
