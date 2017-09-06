@@ -11,9 +11,11 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
 
     private enum buttonType: Int {
         case faceBookProfile
+        case snapChatProfile
     }
     
-    let socialMediaAppNameToEnum: [String : Int] = ["faceBookProfile" : buttonType.faceBookProfile.rawValue]
+    let socialMediaAppNameToEnum: [String : Int] = ["faceBookProfile" : buttonType.faceBookProfile.rawValue,
+                                                    "snapChatProfile" : buttonType.snapChatProfile.rawValue]
     
     fileprivate let viewProfileSocialMediaCellId = "viewProfileSocialMediaCellId"
     var socialMedia: SocialMedia? {
@@ -21,7 +23,9 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
             if let imageName = socialMedia?.imageName {
                 let image = UIImage(named: imageName)
                 socialMediaButton.setImage(image, for: .normal)
-                socialMediaButton.tag = socialMediaAppNameToEnum[(socialMedia?.appName)!]!
+                if let buttonTag = socialMediaAppNameToEnum[(socialMedia?.appName)!] {
+                    socialMediaButton.tag = buttonTag
+                }
                 setupViews()
             }
         }
@@ -52,6 +56,10 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
             // <meta property="al:ios:url" content="fb://profile/100001667117543">
             appURL = URL(string: "fb://profile?id=\((socialMedia?.inputName)!)")!
             safariURL = URL(string: "https://www.facebook.com/\((socialMedia?.inputName)!)")!
+            
+        case buttonType.snapChatProfile.rawValue:
+//            /https://stackoverflow.com/questions/22632121/snapchat-url-scheme-not-working-properly-camera-opens-but-not-profile
+            
         default: break
         }
         
