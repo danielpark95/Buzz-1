@@ -51,10 +51,14 @@ class SocialMedia: NSObject {
     var isSet: Bool?
     var socialMediaProfileImage: SocialMediaProfileImage?
     
+    let myAttribute = [ NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 12.0)! ]
+    
     init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
         self.imageName = imageName
+        //let upperAppName = appName.uppercased()
         self.appName = appName
         self.inputName = inputName
+        //self.inputName = NSAttributedString(string: inputName, attributes: myAttribute)
         self.isSet = isSet
     }
     

@@ -45,7 +45,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.contentInset = UIEdgeInsetsMake(40, 0, 0, 0)
-        cv.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+        cv.backgroundColor = UIColor(red: 255/255, green: 191/255, blue: 21/255, alpha: 1.0)
         return cv
     }()
     
@@ -60,11 +60,16 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         visualEffect.alpha = 0
         visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissClicked)))
         return visualEffect
-    }()
-    
+    }()    
+
     func dismissClicked() {
         handleDismiss(setting: nil)
     }
+  
+    let buzzText: UIImageView = {
+        let imageView = UIManager.makeImage(imageName: "dan_buzz_baloo_text")
+        return imageView
+    }()
     
     func handleDismiss(setting: Setting?) {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -82,19 +87,19 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     
     func setupViews() {
         if let window = UIApplication.shared.keyWindow {
-            collectionView.addSubview(websiteQRCodeImage)
+            //collectionView.addSubview(websiteQRCodeImage)
             
             window.addSubview(tintOverlay)
             tintOverlay.frame = window.frame
             window.addSubview(collectionView)
-
+            collectionView.addSubview(buzzText)
             let width: CGFloat = (window.frame.width)*(2/3)
             collectionView.frame = CGRect(x: window.frame.width, y: 0, width: width, height: window.frame.height)
-
-            websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:window.frame.width/6).isActive = true
-            websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
-            websiteQRCodeImage.heightAnchor.constraint(equalToConstant: width).isActive = true
-            websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
+            
+            buzzText.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant: -window.frame.width/6).isActive = true
+            buzzText.topAnchor.constraint(equalTo: window.topAnchor, constant: 20).isActive = true
+            buzzText.widthAnchor.constraint(equalToConstant: 170).isActive = true
+            buzzText.heightAnchor.constraint(equalToConstant: 100).isActive = true
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.tintOverlay.alpha = 1

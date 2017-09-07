@@ -46,6 +46,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.init(collectionViewLayout: layout)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMeCards), name: .reloadMeCards, object: nil)
         navigationItem.title = "Me"
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,6 +57,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let delegate = UIApplication.shared.delegate as! AppDelegate
         delegate.previousIndex = 0
     }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,7 +155,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         view.addSubview(pageControl)
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     

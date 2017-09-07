@@ -37,6 +37,7 @@
 	<string>We need to grab a smexy profile pic from you (:</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Baloo-Regular.ttf</string>
 		<string>ProximaNovaSoft-Regular.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

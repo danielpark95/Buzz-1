@@ -58,12 +58,12 @@ class SocialMediaSelectedCell: UITableViewCell {
         addSubview(socialMediaInputName)
         addSubview(socialMediaImageView)
         
-        separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
+        separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         
-        socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 5).isActive = true
         socialMediaInputName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
         
         socialMediaImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true

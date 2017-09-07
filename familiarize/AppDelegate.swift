@@ -15,7 +15,6 @@ import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
-
     var window: UIWindow?
     var previousIndex: Int?
     var userBrightnessLevel: CGFloat!
