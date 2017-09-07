@@ -26,7 +26,6 @@ class ContactsCell: UITableViewCell {
             
             nameLabelAndTime.attributedText = attributedText
             
-            
             // For fetching profile images from disk.
             if let profileImage = otherUserProfileImageCache.object(forKey: "\(self.userProfile!.uniqueID!)" as NSString) {
                 self.profileImage.image = profileImage
@@ -47,7 +46,6 @@ class ContactsCell: UITableViewCell {
                 self.profileImage.contentMode = .scaleAspectFill
                 self.profileImage.clipsToBounds = true
             }
-            
             
             // Views is set after knowing how long the texts are.
             setupViews()

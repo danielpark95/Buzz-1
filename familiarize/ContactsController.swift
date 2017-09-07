@@ -44,6 +44,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadFriendCards), name: .reloadFriendCards, object: nil)
         navigationItem.title = "Friends"
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
     }
     
     required init?(coder aDecoder: NSCoder) {

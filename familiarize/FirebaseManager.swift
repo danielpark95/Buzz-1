@@ -74,9 +74,8 @@ class FirebaseManager {
                 for more in snap.children {
                     let moreSnap = more as! DataSnapshot
                     card[snap.key]?.append(moreSnap.value as! String)
+                    print(moreSnap.value as! String)
                 }
-                //card[snap.key]?.append(snap.value as! String)
-                //card[snap.key]?.append(snap.value)
             }
             completionHandler(card)
         }) { (error) in
