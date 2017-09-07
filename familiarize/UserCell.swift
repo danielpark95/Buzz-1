@@ -13,7 +13,7 @@ import Quikkly
 
 var myUserProfileImageCache = NSCache<NSString, UIImage>()
 
-class UserCell: UICollectionViewCell {
+class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var fullBrightness: Bool = false
     
