@@ -14,14 +14,15 @@ import CoreData
 import Quikkly
 
 protocol ScannerControllerDelegate {
-    func startCameraScanning() -> Void
-    func stopCameraScanning() -> Void
+    func startCameraScanning()
+    func stopCameraScanning()
 }
 
 class ScannerController: ScanViewController, ScannerControllerDelegate {
     
     var cameraScanView: ScanView?
     var userProfile: UserProfile?
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,8 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             }
             count = count + 1
         }
+        generator.prepare()
+        setupViews()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,6 +109,10 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
       
         // Handle detected scannables
         if let scannable = scannables.first {
+            
+            // Taptic engine enabled!
+            generator.impactOccurred()
+            
             // If we dont stop the camera the cpu is going off the fucking charts . . .
             cameraScanView?.stop()
         
@@ -113,20 +120,27 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             self.scanProfileController.ScannerControllerDelegate = self
             present(self.scanProfileController, animated: false)
             
-            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { cardJSON in
+            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { card in
+                if card.count == 0 {
+                    print("we are here!")
+                    // Perform some animation to show that the quikkly code is invalid.
+                    return
+                }
+                
                 // Save the fetched data into CoreData.
-                self.userProfile = UserProfile.saveProfile(cardJSON, forProfile: .otherUser)
+                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser)
                 
                 // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile
                 self.scanProfileController.setUserName((self.userProfile?.name)!)
-                                                                                       
+                
                 // For fetching the profile image picture.
                 let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
-                    let profileImage = fetchedSocialMediaProfileImages[0].profileImage
-                    self.scanProfileController.setUserProfileImage(profileImage!)
-                    UserProfile.saveProfileImage(UIImagePNGRepresentation(profileImage!)!, withUserProfile: self.userProfile!)
+                    if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
+                        self.scanProfileController.setUserProfileImage(profileImage)
+                        DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: self.userProfile?.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                    }
                 })
             })
         }

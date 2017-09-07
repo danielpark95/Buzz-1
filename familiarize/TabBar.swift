@@ -11,6 +11,7 @@ import pop
 import ESTabBarController_swift
 
 class ExampleBouncesContentView: ESTabBarItemContentView {
+    
     public var duration = 0.15
     
     override init(frame: CGRect) {

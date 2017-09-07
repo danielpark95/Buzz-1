@@ -20,15 +20,34 @@ class ProfileImageSelectionCell: UICollectionViewCell {
     }
     
     let profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 100)
+        return UIManager.makeProfileImage(valueOfCornerRadius: 83)
+    }()
+    
+    
+    lazy var profileImageContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
 
     func setupViews() {
         self.backgroundColor = UIColor.clear
-        addSubview(profileImage)
-        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        addSubview(profileImageContainerView)
+        
+        profileImageContainerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        profileImageContainerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageContainerView.widthAnchor.constraint(equalToConstant: 166).isActive = true
+        profileImageContainerView.heightAnchor.constraint(equalToConstant: 166).isActive = true
+
+        profileImageContainerView.addSubview(profileImage)
+        profileImage.bottomAnchor.constraint(equalTo: profileImageContainerView.bottomAnchor).isActive = true
+        profileImage.leftAnchor.constraint(equalTo: profileImageContainerView.leftAnchor).isActive = true
+        profileImage.rightAnchor.constraint(equalTo: profileImageContainerView.rightAnchor).isActive = true
+        profileImage.topAnchor.constraint(equalTo: profileImageContainerView.topAnchor).isActive = true
     }
 }

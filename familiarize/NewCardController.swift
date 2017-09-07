@@ -9,140 +9,283 @@
 import UIKit
 import SwiftyJSON
 import CoreData
+import UPCarouselFlowLayout
+import AAPhotoCircleCrop
 
 protocol NewCardControllerDelegate {
     func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
-    func addSocialMediaInput(socialMedia: SocialMedia) -> Void
-    func deleteSocialMediaInput(socialMedia: SocialMedia) -> Void
+    func addSocialMediaInput(socialMedia: SocialMedia, new: Bool) -> Void
 }
 
-class NewCardController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NewCardControllerDelegate {
-
-    var optionalSocialMediaInputs: [SocialMedia] = []
-
-    var requiredSocialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "name_form", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "bio_form", withInputName: "Optional", withAlreadySet: true)
-    ]
+class SocialMediaProfileImage: SocialMedia {
+    var profileImage: UIImage?
     
+    init(copyFrom: SocialMedia, withImage profileImage: UIImage) {
+        super.init(copyFrom: copyFrom)
+        self.profileImage = profileImage
+    }
+}
+
+class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate {
+    
+    private let profileImageSelectionCellId = "profileImageSelectionCellId"
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
     private let socialMediaSelectedCellId = "socialMediaSelectedCellId"
-    private let socialMediaHeaderCellId = "socialMediaHeaderCellId"
+    
+    private enum collectionViewTag: Int {
+        case profileImageSelectionTableView
+        case socialMediaSelectionTableView
+    }
+
+    let socialMediaChoices: [SocialMedia] = [
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_faceBookProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
+        ]
+    
+    var socialMediaProfileImages: [SocialMediaProfileImage] = [
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!)
+    ]
+    
+    var socialMediaInputs: [SocialMedia] = [
+        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "Required", withAlreadySet: true),
+        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "Optional", withAlreadySet: true)
+    ]
+    
+    lazy var socialMediaSelectionContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var socialMediaSelectedContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowOffset = CGSize(width: 1.0, height: 3.0)
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 3
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var socialMediaSelectionCollectionView: UICollectionView = {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceHorizontal = true
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: self.socialMediaSelectionCellId)
+        collectionView.layer.cornerRadius = 32
+        collectionView.layer.masksToBounds = true
+        collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
+        collectionView.tag = collectionViewTag.socialMediaSelectionTableView.rawValue
+        return collectionView
+    }()
+    
+    lazy var profileImageSelectionCollectionView: UICollectionView = {
+        let layout = UPCarouselFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -150)
+        layout.itemSize = CGSize(width: 400, height: 400)
+        layout.sideItemAlpha = 0.75
+        layout.sideItemScale = 0.75
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceHorizontal = true
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(ProfileImageSelectionCell.self, forCellWithReuseIdentifier: self.profileImageSelectionCellId)
+        collectionView.tag = collectionViewTag.profileImageSelectionTableView.rawValue
+        return collectionView
+        
+    }()
+    
+    lazy var socialMediaSelectedTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
+        tableView.alwaysBounceVertical = true
+        tableView.register(SocialMediaSelectedCell.self, forCellReuseIdentifier: self.socialMediaSelectedCellId)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsMultipleSelectionDuringEditing = true
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "New Card"
+        view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = UIColor.black
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20), NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-        setupCollectionView()
+        setupView()
         setupNavBarButton()
     }
     
-    //# MARK: - Header Collection View
-    
-    // This is our header. Independent of the social media inputs. 
-    // This calls the SocialMediaSelectionCell class.
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: socialMediaHeaderCellId, for: indexPath) as! SocialMediaSelectHeader
-        if indexPath.section == 0 {
-            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "  Add", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
-        } else {
-            cell.sectionTitle.attributedText = NSMutableAttributedString(string: "  My Info", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
-    }
-    
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    func setupView() {
+        
+        view.addSubview(socialMediaSelectionContainerView)
+        view.addSubview(socialMediaSelectedContainerView)
+        view.addSubview(profileImageSelectionCollectionView)
+        
+        profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 75).isActive = true
+        
+        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 280).isActive = true
+        
+        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: view.frame.height - 360).isActive = true
+        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 360).isActive = true
+        
+        socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
+        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
+
+        socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
+        socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
+        socialMediaSelectionCollectionView.rightAnchor.constraint(equalTo: socialMediaSelectionContainerView.rightAnchor).isActive = true
+        socialMediaSelectionCollectionView.topAnchor.constraint(equalTo: socialMediaSelectionContainerView.topAnchor).isActive = true
+        
+        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
+        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
+        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
+        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
     }
     
     //# MARK: - Body Collection View
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return optionalSocialMediaInputs.count + requiredSocialMediaInputs.count
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+            return socialMediaChoices.count
+        } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
+            return socialMediaProfileImages.count
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaSelectionCellId, for: indexPath) as! SocialMediaSelectionCell
-            cell.newCardControllerDelegate = self
+            cell.socialMedia = socialMediaChoices[indexPath.item]
             return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaSelectedCellId, for: indexPath) as! SocialMediaSelectedCell
-
-            cell.deleteButton.layer.setValue(indexPath.item, forKey: "index")
-            cell.deleteButton.addTarget(self, action: #selector(deleteClicked), for: .touchUpInside)
-            cell.deleteButton.isHidden = false
-            
-            if indexPath.item < 2 {
-                cell.deleteButton.isHidden = true
-            }
-            
-            if indexPath.item < requiredSocialMediaInputs.count {
-                cell.selectedSocialMedia = requiredSocialMediaInputs[indexPath.item]
-            } else { //if indexPath.item >= optionalSocialMediaInputs.count
-                cell.selectedSocialMedia = optionalSocialMediaInputs[indexPath.item - requiredSocialMediaInputs.count]
-            }
-
+        } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileImageSelectionCellId, for: indexPath) as! ProfileImageSelectionCell
+            cell.socialMediaProfileImage = socialMediaProfileImages[indexPath.item]
             return cell
         }
     }
-
-    func deleteClicked(_ sender: UIButton) {
-        let indexPathItem : Int = (sender.layer.value(forKey: "index")) as! Int
-        deleteSocialMediaInput(socialMedia: optionalSocialMediaInputs[indexPathItem-2])
-    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+            return UIEdgeInsetsMake(0, 14, 0, 14)
+        } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        }
         
-        if indexPath.section == 0 {
-            return CGSize(width: view.frame.width, height: 100)
-        } else {
-            return CGSize(width: view.frame.width, height: 60)
-        }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            if indexPath.item < requiredSocialMediaInputs.count {
-                self.presentSocialMediaPopup(socialMedia: requiredSocialMediaInputs[indexPath.item])
-            } else {
-                self.presentSocialMediaPopup(socialMedia: optionalSocialMediaInputs[indexPath.item - requiredSocialMediaInputs.count])
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+            presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+        } else {
+            if indexPath.item == socialMediaProfileImages.count-2 {
+                let imagePicker: UIImagePickerController = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(imagePicker, animated: true)
             }
         }
     }
+
+    //# MARK: - Body Table View
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
     
-    //# MARK: - Setup Views
-    func setupCollectionView() {
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.register(SocialMediaSelectedCell.self, forCellWithReuseIdentifier: socialMediaSelectedCellId)
-        collectionView?.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: socialMediaSelectionCellId)
-        collectionView?.register(SocialMediaSelectHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: socialMediaHeaderCellId)
-        collectionView?.backgroundColor = UIColor.white
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return socialMediaInputs.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: socialMediaSelectedCellId, for: indexPath) as! SocialMediaSelectedCell
+        cell.selectedSocialMedia = socialMediaInputs[indexPath.item]
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.presentSocialMediaPopup(socialMedia: socialMediaInputs[indexPath.item])
+    }
+    
+    // This method is needed when a row is fixed to not be deleted.
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        socialMediaInputs.remove(at: indexPath.item)
+        tableView.reloadData()
     }
     
     func setupNavBarButton() {
-        let cancelButton = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
+        let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
+        let saveButton = UIBarButtonItem.init(title: "save", style: .plain, target: self, action: #selector(saveClicked))
         cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
-        let nextButton = UIBarButtonItem.init(title: "Next", style: .plain, target: self, action: #selector(nextClicked))
-        nextButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
+        saveButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
+
         navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = nextButton
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     func cancelClicked() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // For adding it to the coredata
+    func saveClicked() {
+        let initialPinchPoint = CGPoint(x: (profileImageSelectionCollectionView.center.x) + (profileImageSelectionCollectionView.contentOffset.x), y: (profileImageSelectionCollectionView.center.y) + (profileImageSelectionCollectionView.contentOffset.y))
+        
+        // Select the chosen image from the carousel.
+        let selectedIndexPath = profileImageSelectionCollectionView.indexPathForItem(at: initialPinchPoint)
+        let selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
+        
+        // Save the new card information into core data.
+        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withSocialMediaProfileImage: selectedSocialMediaProfileImage)
+        
+        // Save the image to disk.
+        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage.profileImage)!)!)
+        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: newUserProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
+        
+        // When the image chosen is from the camera roll, upload the image to firebase
+        // And then update the URL link to that image.
+        if (selectedSocialMediaProfileImage.appName == "default") {
+            FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
+                UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage.appName)!, withUserProfile: newUserProfile)
+            })
+        }
+        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     func presentSocialMediaPopup(socialMedia: SocialMedia) {
@@ -156,44 +299,56 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
     
     //# Mark: - Stored Info
     
-    // For adding it to the collection view.
-    func addSocialMediaInput(socialMedia: SocialMedia) {
+    // For adding it to the Table view.
+    // This is a delegate protocol. . .
+    func addSocialMediaInput(socialMedia: SocialMedia, new: Bool) {
         // TODO: Valid name checker. 
         // i.e. no blank usernames.
-        if socialMedia.inputName != "" && socialMedia.isSet == false {
+        if (socialMedia.inputName != "" && socialMedia.isSet == false)  ||  new {
             let newSocialMediaInput = SocialMedia(copyFrom: socialMedia)
             newSocialMediaInput.isSet = true
-            optionalSocialMediaInputs.append(newSocialMediaInput)
+            socialMediaInputs.append(newSocialMediaInput)
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                guard let profileImage = fetchedSocialMediaProfileImages.first?.profileImage else {
+                    return
+                }
+                let socialMediaProfileImage = SocialMediaProfileImage(copyFrom: newSocialMediaInput, withImage: profileImage)
+                self.socialMediaProfileImages.insert(socialMediaProfileImage, at: 0)
+                newSocialMediaInput.socialMediaProfileImage = socialMediaProfileImage
+                DispatchQueue.main.async {
+                    self.profileImageSelectionCollectionView.reloadData()
+                }
+            })
+        } else {
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                guard let profileImage = fetchedSocialMediaProfileImages.first?.profileImage else {
+                    return
+                }
+                socialMedia.socialMediaProfileImage?.profileImage = profileImage
+                DispatchQueue.main.async {
+                    self.profileImageSelectionCollectionView.reloadData()
+                }
+            })
         }
-        collectionView?.reloadData()
+        socialMediaSelectedTableView.reloadData()
     }
     
-    // For adding it to the coredata
-    func nextClicked() {
-        
-        requiredSocialMediaInputs.append(contentsOf: optionalSocialMediaInputs)
-        requiredSocialMediaInputs.sort(by: { $0.appName! < $1.appName! })
-        let socialMediaInputs: [SocialMedia] = requiredSocialMediaInputs
-        
-        
-        //# MARK: - Presenting ProfileImageSelectionController
-    
-        let loadingProfileImageSelectionController = LoadingProfileImageSelectionController()
-        loadingProfileImageSelectionController.socialMediaInputs = socialMediaInputs
-        navigationController?.pushViewController(loadingProfileImageSelectionController, animated: true)
-    }
-    
-    //# Mark: - Delete Info
-    func deleteSocialMediaInput(socialMedia: SocialMedia) {
-        for index in 0...optionalSocialMediaInputs.count {
-            if (optionalSocialMediaInputs[index] == socialMedia) {
-                optionalSocialMediaInputs.remove(at: index)
-                collectionView?.reloadData()
-                return
+    // MARK: - UIImagePickerControllerDelegate Delegate Implementation
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: false, completion: { () -> Void in
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                let circleCropController = AACircleCropViewController()
+                circleCropController.image = image
+                circleCropController.delegate = self
+                self.present(circleCropController, animated: false)
             }
-        }
+        })
     }
     
-    
+    func circleCropDidCropImage(_ image: UIImage) {
+        socialMediaProfileImages[socialMediaProfileImages.count-2].profileImage = image
+        profileImageSelectionCollectionView.reloadData()
+        self.dismiss(animated: false)
+    }
 }
 

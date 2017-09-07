@@ -11,23 +11,50 @@ import CoreData
 import SwiftyJSON
 
 extension Notification.Name {
-    static let reloadCards = Notification.Name("reloadCardsNotification")
+    static let reloadMeCards = Notification.Name("reloadMeCards")
 }
 
-class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    private let cellId = "cellId"
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
-    var myUserProfiles: [UserProfile]? {
-        didSet {
-            if let count = self.myUserProfiles?.count {
-                pageControl.numberOfPages = count
-            }
-        }
+    private let cellId = "cellId"
+    var blockOperations = [BlockOperation]()
+    
+    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
+    var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.hidesForSinglePage = true
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.isUserInteractionEnabled = false
+        return pc
+    }()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [UserProfile.userProfileSelection.myUser.rawValue])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.fetchBatchSize = 20
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadMeCards), name: .reloadMeCards, object: nil)
+        navigationItem.title = "Me"
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)]
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        //self.reloadCards()
         delegate.previousIndex = 0
     }
     
@@ -36,40 +63,20 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let err {
+            print(err)
+        }
+        
         self.automaticallyAdjustsScrollViewInsets = false
-        navigationItem.title = "Me"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)]
-        
-        // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCards), name: .reloadCards, object: nil)
-        
-        let user1: JSON = [
-            "name": "T.J. Miller",
-            "pn": "pn",
-            "fb": "100015503711138",
-            "sc": "sc",
-            "ig": "ig",
-            "so": "so",
-            "tw": "tw",
-            "bio": "Miller the professional chiller.",
-            "pia": "fb",
-            "piu": "100015503711138",
-        ]
-        
-        let user2: JSON = [
-            "name": "Todd Joseph Miller",
-            "bio": "Founder & CEO, Aviato.",
-            "pn": "pn",
-            "in": "in",
-            "em": "em",
-            ]
         
         //UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
         //UserProfile.saveProfile(user2, forProfile: .myUser)
         //UserProfile.saveProfile(user1, forProfile: .myUser)
 
-        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
         setupView()
         setupNavBarButton()
         setupCollectionView()
@@ -79,71 +86,69 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.addGestureRecognizer(doubleTapGesture)
     }
     
+    func reloadMeCards() {
+        // This does not fucking work ):
+        collectionView?.reloadData()
+    }
+    
     // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 
     func didDoubleTapCollectionView(_ gesture: UITapGestureRecognizer) {
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! UserCell
-        selectedCell.onQRImage = !selectedCell.onQRImage
+        selectedCell.onQRImage = !(selectedCell.onQRImage)
         selectedCell.flipCard()
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_orange")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleHamburger))
-        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_orange")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNewCard))
+        let editButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
+        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
         
-        navigationItem.leftBarButtonItem = hamburgerButton
+        navigationItem.leftBarButtonItem = editButton
         navigationItem.rightBarButtonItem = addButton
     }
     
-    lazy var settingsLauncher: SettingsController = {
-        let launcher = SettingsController()
-        launcher.userController = self
-        return launcher
-    }()
-    
-    func handleHamburger() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            UIApplication.shared.isStatusBarHidden = true            
-        }, completion: nil)
-        settingsLauncher.setupViews()
-    }
-    
-    func closingHamburger() {
-        UIApplication.shared.isStatusBarHidden = false
-    }
-    
-    func handleNewCard() {
-        let layout = UICollectionViewFlowLayout()
-        let newCardController = NewCardController(collectionViewLayout: layout)
-        let navigationController = UINavigationController.init(rootViewController: newCardController)
+    func editCard() {
+        
+        let newCardController = NewCardController()
+        let navigationController = UINavigationController(rootViewController: newCardController)
+        newCardController.socialMediaInputs.removeAll(keepingCapacity: true)
+        newCardController.navigationItem.title = "Edit Card"
+        
+        let initialPinchPoint = CGPoint(x: (self.collectionView?.center.x)! + (self.collectionView?.contentOffset.x)!, y: (self.collectionView?.center.y)! + (self.collectionView?.contentOffset.y)!)
+        
+        // Select the chosen image from the collectionview
+        let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
+        let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
+        
+        for key in userProfile.entity.propertiesByName.keys {
+            guard let inputName = userProfile.value(forKey: key) else {
+                continue
+            }
+            if UserProfile.editableMultipleInputUserData.contains(key) {
+                for eachInput in inputName as! [String] {
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(eachInput)_black", withInputName: eachInput, withAlreadySet: true)
+                    newCardController.socialMediaInputs.append(socialMediaInput)
+                }
+            } else if UserProfile.editableSingleInputUserData.contains(key) {
+                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(inputName)_black", withInputName: inputName as! String, withAlreadySet: true)
+                newCardController.socialMediaInputs.append(socialMediaInput)
+            }
+        }
+        
+        for socialMediaInput in newCardController.socialMediaInputs {
+            newCardController.addSocialMediaInput(socialMedia: socialMediaInput, new: true)
+        }
+        
         self.present(navigationController, animated: true)
     }
     
-    func showControllerForSetting(setting: Setting) {
-
-        let layout = UICollectionViewFlowLayout()
-        let controller: UIViewController
-        
-        if setting.name == .TermsPrivacy {
-            controller = TermsPrivacySettingController(collectionViewLayout: layout)
-        } else if setting.name == .Contact {
-            controller = ContactSettingController(collectionViewLayout: layout)
-        } else if setting.name == .Help {
-            controller = HelpSettingController(collectionViewLayout: layout)
-        } else { // It is the feedback controller
-            controller = FeedbackSettingController(collectionViewLayout: layout)
-        }
-        
-        controller.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(controller, animated: true)
+    func addCard() {
+        let newCardController = NewCardController()
+        let navigationController = UINavigationController(rootViewController: newCardController)
+        newCardController.navigationItem.title = "New Card"
+        self.present(navigationController, animated: true)
     }
-    
-    let headerBar: UIImageView = {
-        let image = UIManager.makeImage(imageName: "dan_header_bar")
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
 
     func setupView() {
         // Add the dots that animate your current location with the qrcodes into the view
@@ -158,23 +163,29 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: self.cellId)
+        collectionView?.isPagingEnabled = true
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
         }
-        collectionView?.isPagingEnabled = true
     }
     
-    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
-    var pageControl: UIPageControl = {
-        let pc = UIPageControl()
-        pc.hidesForSinglePage = true
-        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
-        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
-        pc.translatesAutoresizingMaskIntoConstraints = false
-        pc.isUserInteractionEnabled = false
-        return pc
-    }()
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .insert {
+            blockOperations.append(BlockOperation(block: {
+                self.collectionView?.insertItems(at: [newIndexPath!])
+            }))
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView?.performBatchUpdates({
+            for operation in self.blockOperations {
+                operation.start()
+            }
+        }, completion: nil)
+    }
+    
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
@@ -183,7 +194,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // Modify this after you saved a user.
-        if let count = self.myUserProfiles?.count {
+        if let count = fetchedResultsController.sections?.first?.numberOfObjects {
+            pageControl.numberOfPages = count
             return count
         }
         return 0
@@ -191,22 +203,17 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! UserCell
-        if let myUserProfile = myUserProfiles?[indexPath.item] {
-            cell.myUserProfile = myUserProfile
-        }
+        let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        cell.myUserProfile = userProfile
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView!.frame.size;
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
-    }
-    
-    func reloadCards() {
-        myUserProfiles = UserProfile.getData(forUserProfile: .myUser)
-        collectionView?.reloadData()
     }
 
 }

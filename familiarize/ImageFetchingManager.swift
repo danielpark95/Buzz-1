@@ -11,12 +11,9 @@ import Alamofire
 import Kanna
 
 class ImageFetchingManager {
-    
+
     // TODO: Migrate everything from urlsession to alamofire.
-    
-    
     static func fetchImages(withSocialMediaInputs socialMediaInputs: [SocialMedia], completionHandler: @escaping ([SocialMediaProfileImage]) -> Void) {
-    
         let asyncDispatchGroup = DispatchGroup()
         var socialMediaProfileImages: [SocialMediaProfileImage] = []
         for eachSocialMediaInput in socialMediaInputs {
@@ -38,7 +35,6 @@ class ImageFetchingManager {
     // Purpose is to grab an html page for each respective social media account so that we can find their social media images.
     static fileprivate func scrapeSocialMedia(withSocialMediaInput socialMediaInput: SocialMedia, completionHandlerForScrape: @escaping (SocialMediaProfileImage?) -> Void) {
         if socialMediaInput.appName == "faceBookProfile" {
-            
             Alamofire.request("https://www.facebook.com/" + socialMediaInput.inputName!).responseString { response in
                 if let html = response.result.value {
                     self.parseHTML(html: html, withSocialMediaInput: socialMediaInput, completionHandlerForParse: { profileImage in
@@ -75,7 +71,7 @@ class ImageFetchingManager {
                 if let show = doc.at_css("meta[property^='al:ios:url']") {
                     let facebook_url = show["content"]?.components(separatedBy: "/")
                     let facebook_id = facebook_url?[3]
-                    let profileImageUrl = "http://graph.facebook.com/\(facebook_id!)/picture?width=1080&height=1080"
+                    let profileImageUrl = "https://graph.facebook.com/\(facebook_id!)/picture?width=1080&height=1080"
                     let formattedProfileImageUrl  = URL(string: profileImageUrl)
                     URLSession.shared.dataTask(with: formattedProfileImageUrl!, completionHandler: { data, response, error in
                         if let profileImageData = data {
@@ -107,6 +103,31 @@ class ImageFetchingManager {
             }
         }
         return massagedSocialMediaInputs
+    }
+    
+    static func cancelImageFetching() {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
+            dataTasks.forEach {
+                $0.cancel()
+            }
+            uploadTasks.forEach {
+                $0.cancel()
+            }
+            downloadTasks.forEach {
+                $0.cancel()
+            }
+        }
+        URLSession.shared.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
+            dataTasks.forEach {
+                $0.cancel()
+            }
+            uploadTasks.forEach {
+                $0.cancel()
+            }
+            downloadTasks.forEach {
+                $0.cancel()
+            }
+        }
     }
 }
 

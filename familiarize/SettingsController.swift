@@ -19,7 +19,6 @@ class Setting: NSObject {
 }
 
 enum SettingName: String {
-    case Blank = ""
     case TermsPrivacy = "Terms & Privacy Policy"
     case Contact = "Contact"
     case Help = "Help"
@@ -29,7 +28,7 @@ enum SettingName: String {
 class SettingsController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     private let cellId = "cellId"
-    var userController: UserController?
+    var contactsControllerDelegate: ContactsControllerDelegate?
     
     override init() {
         super.init()
@@ -39,12 +38,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     let settings: [Setting] = {
-        return [Setting(name: .Blank, imageName: "dan_buzz_baloo_text"), Setting(name: .Blank, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [ Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
     }()
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.contentInset = UIEdgeInsetsMake(40, 0, 0, 0)
         cv.backgroundColor = UIColor(red: 255/255, green: 191/255, blue: 21/255, alpha: 1.0)
         return cv
     }()
@@ -54,32 +54,33 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
         return imageView
     }()
     
-    lazy var tintOverlay: UIImageView = {
-        let visualEffect = UIManager.makeImage()
-        visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-        visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
-        if let window = UIApplication.shared.keyWindow {
-            visualEffect.frame = window.bounds
-        }
+    lazy var tintOverlay: UIView = {
+        let visualEffect = UIView()
+        visualEffect.backgroundColor = UIColor(white: 0, alpha: 0.15)
+        visualEffect.alpha = 0
+        visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissClicked)))
         return visualEffect
-    }()
-    
+    }()    
+
+    func dismissClicked() {
+        handleDismiss(setting: nil)
+    }
+  
     let buzzText: UIImageView = {
         let imageView = UIManager.makeImage(imageName: "dan_buzz_baloo_text")
         return imageView
     }()
     
-    func handleDismiss(setting: Setting) {
+    func handleDismiss(setting: Setting?) {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.tintOverlay.alpha = 0
             if let window = UIApplication.shared.keyWindow {
-                self.collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
+                self.collectionView.frame = CGRect(x: window.frame.width, y: 0, width: (window.frame.width)*(2/3), height: window.frame.height)
             }
-            self.userController?.closingHamburger()
-            
+            self.contactsControllerDelegate?.closeHamburger()
         }, completion: { _ in
-            if setting.name != .Blank {
-                self.userController?.showControllerForSetting(setting: setting)
+            if let setting = setting {
+                self.contactsControllerDelegate?.showControllerForSetting(setting: setting)
             }
         })
     }
@@ -89,26 +90,20 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
             //collectionView.addSubview(websiteQRCodeImage)
             
             window.addSubview(tintOverlay)
+            tintOverlay.frame = window.frame
             window.addSubview(collectionView)
             collectionView.addSubview(buzzText)
-            
             let width: CGFloat = (window.frame.width)*(2/3)
-            collectionView.frame = CGRect(x: -window.frame.width, y: 0, width: width, height: window.frame.height)
-
+            collectionView.frame = CGRect(x: window.frame.width, y: 0, width: width, height: window.frame.height)
             
             buzzText.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant: -window.frame.width/6).isActive = true
             buzzText.topAnchor.constraint(equalTo: window.topAnchor, constant: 20).isActive = true
             buzzText.widthAnchor.constraint(equalToConstant: 170).isActive = true
             buzzText.heightAnchor.constraint(equalToConstant: 100).isActive = true
             
-            //websiteQRCodeImage.centerXAnchor.constraint(equalTo: window.centerXAnchor, constant:-window.frame.width/6).isActive = true
-            //websiteQRCodeImage.bottomAnchor.constraint(equalTo:  window.bottomAnchor).isActive = true
-            //websiteQRCodeImage.heightAnchor.constraint(equalToConstant: width).isActive = true
-            //websiteQRCodeImage.widthAnchor.constraint(equalToConstant: width).isActive = true
-            
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.tintOverlay.alpha = 0.15
-                self.collectionView.frame = CGRect(x: 0, y: 0, width: width, height: window.frame.height)
+                self.tintOverlay.alpha = 1
+                self.collectionView.frame = CGRect(x: window.frame.width-width, y: 0, width: width, height: window.frame.height)
             }, completion: nil)
         }
     }
