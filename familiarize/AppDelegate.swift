@@ -11,13 +11,15 @@ import CoreData
 import ESTabBarController_swift
 import Firebase
 import Quikkly
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
     var window: UIWindow?
     var previousIndex: Int?
     var userBrightnessLevel: CGFloat!
-
+    var noInternetAccessFrameTopAnchor: NSLayoutConstraint?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
@@ -28,10 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
+
+        
+        setupInternetAccessView()
         return true
- 
     }
-    
     
     // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -105,6 +108,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             }
         }
     }
-
+    
+    func setupInternetAccessView() {
+        let noInternetAccessFrame = UIManager.makeImage()
+        noInternetAccessFrame.backgroundColor = .red
+        let noInternetAccessText = UIManager.makeLabel(numberOfLines: 1, withText: "No Fucking Internet Access")
+        noInternetAccessText.textColor = .white
+        
+        window?.addSubview(noInternetAccessFrame)
+        window?.addSubview(noInternetAccessText)
+        
+        noInternetAccessFrameTopAnchor = noInternetAccessFrame.topAnchor.constraint(equalTo: (window?.topAnchor)!, constant: -20)
+        noInternetAccessFrameTopAnchor?.isActive = true
+        noInternetAccessFrame.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        noInternetAccessFrame.leftAnchor.constraint(equalTo: (window?.leftAnchor)!).isActive = true
+        noInternetAccessFrame.rightAnchor.constraint(equalTo: (window?.rightAnchor)!).isActive = true
+        
+        noInternetAccessText.topAnchor.constraint(equalTo: noInternetAccessFrame.topAnchor).isActive = true
+        noInternetAccessText.centerXAnchor.constraint(equalTo: noInternetAccessFrame.centerXAnchor).isActive = true
+        
+        let manager = NetworkReachabilityManager(host: "www.google.com")
+        manager?.listener = { status in
+            // If the network is not reachable through internet, then show the no internet access sign.
+            if (manager?.isReachable == false) {
+                self.noInternetAccessFrameTopAnchor?.constant = 0
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.window?.windowLevel = UIWindowLevelStatusBar + 1
+                    self.window?.layoutIfNeeded()
+                }, completion: nil)
+            } else {
+            // If the network is reachable through internet, then show the no internet access sign.
+                self.noInternetAccessFrameTopAnchor?.constant = -20
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.window?.windowLevel = UIWindowLevelStatusBar - 1
+                    self.window?.layoutIfNeeded()
+                }, completion: nil)
+            }
+        }
+        manager?.startListening()
+    }
 }
 

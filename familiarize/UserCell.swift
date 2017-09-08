@@ -12,7 +12,8 @@ import UIKit
 import Quikkly
 
 var myUserProfileImageCache = NSCache<NSString, UIImage>()
-class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
+class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var fullBrightness: Bool = false
     
@@ -61,15 +62,15 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
             if let profileImage = myUserProfileImageCache.object(forKey: "\(self.myUserProfile!.uniqueID!)" as NSString) {
                 self.profileImage.image = profileImage
             } else {
-                DispatchQueue.global(qos: .userInteractive).async {
-                    // if it is not in cache, then call from disk.
-                    if let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.myUserProfile!.uniqueID as! UInt64) {
-                        DispatchQueue.main.async {
-                            self.profileImage.image = profileImage
-                            myUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(self.myUserProfile!.uniqueID!)" as NSString)
-                        }
-                    }
+                
+                guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.myUserProfile!.uniqueID as! UInt64) else {
+                    print("file was not able to be retrieved from disk")
+                    return
                 }
+                
+                self.profileImage.image = profileImage
+                myUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(self.myUserProfile!.uniqueID!)" as NSString)
+
             }
             if let profileImage2 = myUserProfileImageCache.object(forKey: "\(self.myUserProfile!.uniqueID!)" as NSString) {
                 self.profileImage2.image = profileImage2
@@ -105,7 +106,6 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     }
 
     func createQR(_ userProfile: UserProfile) {
-        
         let skin = ScannableSkin()
         skin.backgroundColor = "#FFD705"
         //skin.maskColor = "#2f2f2f"
@@ -182,7 +182,7 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
         "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
-    
+   
     let appsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

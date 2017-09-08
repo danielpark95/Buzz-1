@@ -8,8 +8,8 @@
 
 import UIKit
 class ContactSettingController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    private let cellId = "cellId"
     
+    private let cellId = "cellId"
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Contact"

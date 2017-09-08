@@ -20,6 +20,7 @@ extension Notification.Name {
 }
 
 class TabBarController: ESTabBarController, UITabBarControllerDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -64,7 +65,8 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
             
             //Contacts Controller
-            let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+            //let contactsController = ContactsController(collectionViewLayout: UICollectionViewFlowLayout())
+            let contactsController = ContactsController(style: UITableViewStyle.plain)
             let contactsNavigationController = UINavigationController(rootViewController: contactsController)
             contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey"), selectedImage: UIImage(named: "dan_friends_black"))
             

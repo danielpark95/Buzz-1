@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SocialMediaSelectedCell: UICollectionViewCell {
+class SocialMediaSelectedCell: UITableViewCell {
     
     var selectedSocialMedia: SocialMedia? {
         didSet {
@@ -28,8 +28,8 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
@@ -52,18 +52,11 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    let deleteButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_deletebutton")
-        return button
-    }()
-    
 
     func setupViews() {
         addSubview(separatorView)
         addSubview(socialMediaInputName)
         addSubview(socialMediaImageView)
-        addSubview(deleteButton)
         
         separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
@@ -72,18 +65,10 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         
         socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 5).isActive = true
         socialMediaInputName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
-        socialMediaInputName.heightAnchor.constraint(equalToConstant: socialMediaInputName.intrinsicContentSize.height).isActive = true
-        socialMediaInputName.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
         
         socialMediaImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
         socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
         socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        
-        deleteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true
-        deleteButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
-
 }

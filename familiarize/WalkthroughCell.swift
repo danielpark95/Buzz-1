@@ -23,8 +23,6 @@ class WalkthroughCell: UICollectionViewCell {
             
             let attributedText = NSMutableAttributedString(string: walkthrough.title, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 26)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
             
-            print("hello")
-            
             attributedText.append(NSAttributedString(string: "\n\n\(walkthrough.message)", attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 19)!, NSForegroundColorAttributeName: UIColor(red:110/255.0, green: 110/255.0, blue: 110/255.0, alpha: 1.0)]))
             
             let paragraphStyle = NSMutableParagraphStyle()
@@ -43,13 +41,6 @@ class WalkthroughCell: UICollectionViewCell {
     }
     
     let imageView: UIImageView = {
-//        let iv = UIImageView()
-//        //iv.contentMode = .scaleAspectFit
-//        iv.image = UIImage(named: "walkthrough1")
-//        //iv.contentScaleFactor = 0.6
-//        //iv.clipsToBounds = true
-//        return iv
-        
         return UIManager.makeImage(imageName: "walkthrough1")
     }()
     
