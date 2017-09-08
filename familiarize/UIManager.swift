@@ -75,14 +75,14 @@ class UIManager {
         let shortHandForQR = [
             "name": "Name",
             "bio": "Bio",
+            "phoneNumber": "Phone",
             "email": "Email",
-            "phoneNumber": "Phone Number",
             "faceBookProfile": "Facebook",
-            "snapChatProfile": "Snapchat" ,
             "instagramProfile": "Instagram",
+            "snapChatProfile": "Snapchat" ,
+            "twitterProfile": "Twitter",
             "linkedInProfile": "LinkedIn",
             "soundCloudProfile": "Soundcloud",
-            "twitterProfile": "Twitter",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName
@@ -112,12 +112,15 @@ extension UIImage
     {
         let newImage = self.copy() as! UIImage
         let cornerRadius = self.size.height/2
+        
+        
         UIGraphicsBeginImageContextWithOptions(self.size, false, 1.0)
         let bounds = CGRect(origin: CGPoint.zero, size: self.size)
         UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).addClip()
         newImage.draw(in: bounds)
         let finalImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
         return finalImage!
     }
 }

@@ -37,7 +37,7 @@ extension UserProfile {
     @NSManaged public var profileImageURL: String?
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
- 
+    
     static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
         
         let delegate = UIApplication.shared.delegate as! AppDelegate

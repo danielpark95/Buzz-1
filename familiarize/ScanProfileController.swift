@@ -44,7 +44,7 @@ class ScanProfileController: UIViewController {
     }()
     
     var popupImageView: UIImageView = {
-        let imageView = UIManager.makeImage(imageName: "dan_profilepopup_square")
+        let imageView = UIManager.makeImage(imageName: "dan_profilepopup_square_v2")
         let tap = UITapGestureRecognizer()
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -58,7 +58,7 @@ class ScanProfileController: UIViewController {
     }()
     
     lazy var dismissButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_close_text")
+        let button = UIManager.makeButton(imageName: "dan_close_button_v2")
         button.isHidden = true
         return button
     }()
@@ -94,14 +94,31 @@ class ScanProfileController: UIViewController {
     }()
     
     lazy var viewProfileButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_viewprofile_yellow")
+        let button = UIManager.makeButton(imageName: "dan_add_friend_button")
         button.addTarget(self, action: #selector(viewProfileClicked), for: .touchUpInside)
         button.isHidden = true
         return button
     }()
     
     func setUserName(_ userProfileName: String) {
-        let userProfileName = NSMutableAttributedString(string: userProfileName, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 26)])
+       //print(userProfileName.lengthOfBytes(using: <#T##String.Encoding#>))
+        
+        var fontSize : CGFloat = 26.0
+        
+        print ("CHARACTERS = ", userProfileName.characters.count)
+        print ("WIDTH = ", nameLabel.frame.width)
+        if (userProfileName.characters.count > 17) {
+            fontSize = 22.0
+        }
+        if (userProfileName.characters.count > 21) {
+            fontSize = 20
+        }
+        if (userProfileName.characters.count > 25) {
+            fontSize = 18
+        }
+
+        
+        let userProfileName = NSMutableAttributedString(string: userProfileName, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: fontSize)])
         nameLabel.attributedText = userProfileName
         self.nameLabel.isHidden = false
         self.viewProfileButton.isHidden = false
@@ -209,7 +226,7 @@ class ScanProfileController: UIViewController {
         viewProfileButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         viewProfileButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 45).isActive = true
         
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 81).isActive = true
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 83).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
     }

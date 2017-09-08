@@ -193,7 +193,5 @@ class NewCardController: UICollectionViewController, UICollectionViewDelegateFlo
             }
         }
     }
-    
-    
 }
 

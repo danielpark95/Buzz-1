@@ -15,12 +15,15 @@ class SocialMediaSelectionCell: UICollectionViewCell, UICollectionViewDataSource
     private let cellId = "cellId"
     
     let socialMediaChoices: [SocialMedia] = [
+        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phone_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "email", withImageName: "dan_email_color", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_color", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_color", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_color", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_color", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_color", withInputName: "", withAlreadySet: false),
+        
     ]
 
     override init(frame: CGRect) {

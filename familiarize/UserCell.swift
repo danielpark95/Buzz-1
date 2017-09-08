@@ -22,11 +22,14 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     let imageXCoordPadding: CGFloat = -230
     var onQRImage: Bool = true
     var scannableView:ScannableView!
+    var socialMediaInputs = [SocialMedia]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         scannableView = ScannableView()
         NotificationCenter.default.addObserver(self, selector: #selector(manageBrightness), name: .UIScreenBrightnessDidChange, object: nil)
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,6 +85,22 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
                 }
             }
 
+            
+            
+            
+//            for key in myUserProfile!.entity.propertiesByName.keys {
+//                guard let inputName = myUserProfile!.value(forKey: key) else {
+//                    continue
+//                }
+//                if UserProfile.editableMultipleInputUserData.contains(key) {
+//                    for eachInput in inputName as! [String] {
+//                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: eachInput, withAlreadySet: true)
+//                        print(socialMediaInput.imageName!)
+//                        socialMediaInputs?.append(socialMediaInput)
+//                    }
+//                }
+//            }
+//            
         }
     }
 
@@ -107,7 +126,7 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     }()
     
     var profileImage2: UIImageView = {
-        let image = UIManager.makeProfileImage(valueOfCornerRadius: 100)
+        let image = UIManager.makeProfileImage(valueOfCornerRadius: 97)
         return image
     }()
     
@@ -120,8 +139,8 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         return UIManager.makeLabel(numberOfLines: 1)
     }()
     
-    
     func flipCard() {
+        
         for v in (self.subviews){
             v.removeFromSuperview()
         }
@@ -144,8 +163,8 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         
         profileImage2.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
         profileImage2.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
-        profileImage2.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImage2.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        profileImage2.heightAnchor.constraint(equalToConstant: 194).isActive = true
+        profileImage2.widthAnchor.constraint(equalToConstant: 194).isActive = true
     }
     
     func setupViews() {
@@ -155,155 +174,14 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     lazy var socialMediaImages: [String: UIImageView] = [
         //temporary icons while we wait for new icons from our graphic designers
         "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
+        "email": UIManager.makeImage(imageName: "dan_email_black"),
         "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_black"),
         "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_black"),
         "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_black"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
-        "email": UIManager.makeImage(imageName: "dan_email_black"),
         "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
+        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
         "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
         ]
-    
-    //todo: this is old code - change to collectionview
-    func presentLinearSocialMediaButtons() {
-        var imagesToPresent = [UIImageView]()
-        for key in (myUserProfile?.entity.attributesByName.keys)! {
-            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                imagesToPresent.insert(socialMediaImages[key]!, at: 0)
-            }
-        }
-        let size = imagesToPresent.count
-        var xConstant : CGFloat = 0
-        var count = 0
-        if size == 1 {
-            for image in imagesToPresent {
-                self.addSubview(image)
-                image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor).isActive = true
-                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
-                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
-            }
-        } else if size == 2 {
-            xConstant = 50
-            count = 0
-            for image in imagesToPresent {
-                self.addSubview(image)
-                if count == 0 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -xConstant).isActive = true
-                } else if count == 1 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: xConstant).isActive = true
-                }
-                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
-                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
-                count += 1
-            }
-        } else if size == 3 {
-            xConstant = 80
-            count = 0
-            for image in imagesToPresent {
-                self.addSubview(image)
-                if count == 0 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -xConstant).isActive = true
-                } else if count == 1 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor).isActive = true
-                } else if count == 2 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: xConstant).isActive = true
-                }
-                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
-                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
-                count += 1
-            }
-        } else if size == 4 {
-            xConstant = 40
-            count = 0
-            for image in imagesToPresent {
-                self.addSubview(image)
-                if count == 0 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -3*xConstant).isActive = true
-                } else if count == 1 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: -xConstant).isActive = true
-                } else if count == 2 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: xConstant).isActive = true
-                } else if count == 3 {
-                    image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: 3*xConstant).isActive = true
-                }
-                image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 55).isActive = true
-                image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                image.widthAnchor.constraint(equalToConstant: 40).isActive = true
-                count += 1
-            }
-        } else if size == 5 {
-            
-        } else if size == 6 {
-            
-        }
-        
-
-    }
-    
-    func autoLinearSpaceButtons(imagesToPresent: [UIImageView]) {
-        var count = 0
-        for image in imagesToPresent {
-            self.addSubview(image)
-            image.centerXAnchor.constraint(equalTo: bioLabel.centerXAnchor, constant: 50 ).isActive = true
-            image.centerYAnchor.constraint(equalTo: bioLabel.centerYAnchor, constant: 50).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        }
-    }
-    
-    // Helper function to space out social media icons - dan
-    func autoAngularSpaceButtons(r: Double, theta1: Double, theta2: Double, imagesToPresent: [UIImageView]){
-        var count = 0
-        for image in imagesToPresent{
-            self.addSubview(image)
-            image.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor, constant: CGFloat(r * cos(theta1 + Double(count) * theta2) + 30)).isActive = true
-            image.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor, constant: CGFloat(r * sin(theta1 + Double(count) * theta2))).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            count += 1
-        }
-    }
-    
-    // Function to space out social media icons evenly around the profile picture at an equal distance -dan
-    func presentAngularSocialMediaButtons() {
-        var my_imagesToPresent = [UIImageView]()
-        for key in (myUserProfile?.entity.attributesByName.keys)! {
-            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
-            }
-        }
-        let size = my_imagesToPresent.count
-        var my_theta1 = 0.0
-        var my_theta2 = 0.0
-        let rad = 57.2958
-        if size == 1 {
-            my_theta1 = 110.0
-            my_theta2 = 35.0
-        } else if size == 2 {
-            my_theta1 = 110.0
-            my_theta2 = 35.0
-        } else if size == 3 {
-            my_theta1 = 110.0
-            my_theta2 = 35.0
-        } else if size == 4 {
-            my_theta1 = 110.0
-            my_theta2 = 30.0
-        } else if size == 5 {
-            my_theta1 = 95.0
-            my_theta2 = 25.0
-        } else if size == 6 {
-            my_theta1 = 80.0
-            my_theta2 = 25.0
-        } else {
-            
-        }
-        
-        autoAngularSpaceButtons(r: 220.0, theta1: my_theta1 / rad, theta2: my_theta2 / rad, imagesToPresent: my_imagesToPresent)
-    }
-    
     
     let appsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -324,6 +202,8 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     
     private let cellId = "appCellId"
     let socialMediaChoices: [SocialMedia] = [
+        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phone_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "email", withImageName: "dan_email_black_text", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black_text", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black_text", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black_text", withInputName: "", withAlreadySet: false),
@@ -331,9 +211,8 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black_text", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black_text", withInputName: "", withAlreadySet: false),
         ]
-
+    
     func presentProfile() {
-        
         addSubview(profileImage)
         profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -100).isActive = true
@@ -380,12 +259,30 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var my_imagesToPresent = [UIImageView]()
+        //var count = 0
         for key in (myUserProfile?.entity.attributesByName.keys)! {
             if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
                 my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
+                //count+=1
             }
         }
         return my_imagesToPresent.count
+        
+        
+//        
+//        
+//        for key in (self.userProfile?.entity.attributesByName.keys)! {
+//            if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
+//                shortHandArray.append(socialMedia[key]!)
+//            }
+//        }
+//        let size = shortHandArray.count
+//        var count = 0
+//        
+//        if size == 1 {
+//            count = 0
+//            for shortHand in shortHandArray {
+//                view.addSubview((socialMediaButtons?[shortHand])!)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -395,105 +292,26 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-////        let cellWidth = 332
-////        let numberOfCells = (frame.size.width / CGFloat(cellWidth))
-////        let edgeInsets = (frame.size.width - (numberOfCells * CGFloat(cellWidth))) / (numberOfCells + 1)
-////        
-//
-//        var leftEdgeInsets : CGFloat = 40
-//        var rightEdgeInsets : CGFloat = 40
-//        if socialMediaChoices.count == 1 {
-//            
-//        } else if socialMediaChoices.count == 2 {
-//            print("hello")
-//        } else if socialMediaChoices.count == 3 {
-//            
-//        } else if socialMediaChoices.count == 4 {
-//            
-//        } else if socialMediaChoices.count == 5 {
-//            leftEdgeInsets = 40
-//            rightEdgeInsets = 40
-//        } else if socialMediaChoices.count == 6 {
-//            
-//        } else {
-//            
-//        }
-//        return UIEdgeInsetsMake(0, leftEdgeInsets, 0, rightEdgeInsets)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        
-//        var spacing: CGFloat = 20
-//        if socialMediaChoices.count == 1 {
-//            
-//        } else if socialMediaChoices.count == 2 {
-//            spacing = 40
-//        } else if socialMediaChoices.count == 3 {
-//            
-//        } else if socialMediaChoices.count == 4 {
-//            
-//        } else if socialMediaChoices.count == 5 {
-//            
-//        } else if socialMediaChoices.count == 6 {
-//            
-//        } else {
-//            
-//        }
-//        return spacing
-//    }
     
-    
-    
-    
-    
-    
-    
-   /*
-    COMMENT
-    */
-    
-//    fileprivate var sectionInsets: UIEdgeInsets {
-//        return .zero
-//    }
-//    
-//    fileprivate var itemsPerRow: CGFloat {
-//        //print("count = ", socialMediaChoices.count)
-//        var my_imagesToPresent = [UIImageView]()
-//        for key in (myUserProfile?.entity.attributesByName.keys)! {
-//            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-//                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
-//            }
-//        }
-//        print("count = ", my_imagesToPresent.count)
-//        
-////        if my_imagesToPresent.count > 5 {
-////            return 5
-////        }
-//        return CGFloat(my_imagesToPresent.count)
-//    }
-    
-//    fileprivate var interitemSpace: CGFloat {
-//        return 5.0
-//    }
-//    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        var my_itemsPerRow : CGFloat = itemsPerRow
-//        if (itemsPerRow > 4 ) {
-//            my_itemsPerRow = 4
-//        }
-//        let sectionPadding = sectionInsets.left * (my_itemsPerRow + 1)
-//        let interitemPadding = max(0.0, my_itemsPerRow - 1) * interitemSpace
-//        let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
-//        let widthPerItem = availableWidth / my_itemsPerRow
-//        print("width: " , widthPerItem, " height: ", widthPerItem)
-//        
-        //if (itemsPerRow > 4) {
+        var my_imagesToPresent = [UIImageView]()
+        for key in (myUserProfile?.entity.attributesByName.keys)! {
+            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
+                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
+            }
+        }
+        
+        
+        if (my_imagesToPresent.count == 2 ) {
+            return CGSize(width: 140.0, height: 100)
+        }
+        if (my_imagesToPresent.count >= 4) {
             return CGSize(width: 80.0, height: 100.0)
-        //}
-        //return CGSize(width: widthPerItem, height: widthPerItem)
+        }
+        
+        return CGSize(width: 120.0, height: 100.0)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -509,38 +327,17 @@ class UserCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionVi
         var my_sectionInsets : UIEdgeInsets
         
         if (my_imagesToPresent.count == 1 ) {
-            //Good
-            my_sectionInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+            my_sectionInsets = UIEdgeInsetsMake(0, 127, 0, 127)
         } else if (my_imagesToPresent.count == 2 ) {
-            //Good
-            my_sectionInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+            my_sectionInsets = UIEdgeInsetsMake(0, 42, 0, 42)
         } else if (my_imagesToPresent.count == 3 ) {
-            //Good
-            my_sectionInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        } else if (my_imagesToPresent.count == 4 ) {
-            my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
-        } else if (my_imagesToPresent.count == 5 ) {
-            my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+            my_sectionInsets = UIEdgeInsetsMake(0, -1.5, 0, -1.5)
         } else {
             my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
         }
         
         return my_sectionInsets
     }
-    
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0.0
-//    }
-
-    
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return interitemSpace
-//    }
-//    
-    
 }
 
 
@@ -548,9 +345,9 @@ class AppCell: UICollectionViewCell {
     
     var socialMedia: SocialMedia? {
         didSet {
-//            if let appName = socialMedia?.appName {
-//                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
-//            }
+            if let appName = socialMedia?.appName {
+                socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
+            }
             if let imageName = socialMedia?.imageName {
                 socialMediaImage.image = UIImage(named: imageName)
             }
@@ -566,6 +363,7 @@ class AppCell: UICollectionViewCell {
     required init? (coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     let socialMediaImage: UIImageView = {
         let image = UIManager.makeImage()
@@ -584,7 +382,6 @@ class AppCell: UICollectionViewCell {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
         //addSubview(socialMediaName)
-        
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
