@@ -344,7 +344,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             }
         })
     }
-    
     func circleCropDidCropImage(_ image: UIImage) {
         socialMediaProfileImages[socialMediaProfileImages.count-2].profileImage = image
         profileImageSelectionCollectionView.reloadData()

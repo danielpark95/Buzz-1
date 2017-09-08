@@ -299,74 +299,74 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     
     // FYI the button should be a facebook button
     lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_facebook_black")
+        let button = UIManager.makeButton(imageName: "dan_facebook_black_text")
         button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
         return button
     }()
     
     lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram_black")
+        let button = UIManager.makeButton(imageName: "dan_instagram_black_text")
         button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
         return button
     }()
     
     lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchat_black")
+        let button = UIManager.makeButton(imageName: "dan_snapchat_black_text")
         button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
         return button
     }()
     
     lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone_black")
+        let button = UIManager.makeButton(imageName: "dan_phone_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     lazy var emButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_email_black")
+        let button = UIManager.makeButton(imageName: "dan_email_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_linkedin_black")
+        let button = UIManager.makeButton(imageName: "dan_linkedin_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     lazy var soButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_soundcloud_black")
+        let button = UIManager.makeButton(imageName: "dan_soundcloud_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     lazy var twButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_twitter_black")
+        let button = UIManager.makeButton(imageName: "dan_twitter_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     func createSocialMediaButtons() {
         socialMediaButtons = [
+            "pn": pnButton,
+            "em": inButton,
             "fb": fbButton,
             "ig": igButton,
             "sc": scButton,
-            "pn": pnButton,
-            "in": emButton,
-            "em": inButton,
-            "so": soButton,
             "tw": twButton,
+            "in": emButton,
+            "so": soButton,
         ]
     }
     
     let socialMedia = [
+        "phoneNumber": "pn",
+        "email": "em",
         "faceBookProfile": "fb",
         "instagramProfile": "ig",
         "snapChatProfile": "sc" ,
-        "phoneNumber": "pn",
-        "email": "em",
+        "twitterProfile": "tw",
         "linkedInProfile": "in",
         "soundCloudProfile": "so",
-        "twitterProfile": "tw",
         ]
     
     func presentSocialMediaButtons() {
@@ -380,14 +380,16 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             }
         }
         let size = shortHandArray.count
+        let iconX = 80
+        let iconY = 100
         var count = 0
         
         if size == 1 {
             count = 0
             for shortHand in shortHandArray {
                 view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                //(socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                //(socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
                 (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
                 count += 1
@@ -399,8 +401,8 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             count = 0
             for shortHand in shortHandArray {
                 view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                //(socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                //(socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
                 (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
                 xSpacing = xSpacing * (-1)
@@ -414,13 +416,13 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         } else if size == 3 {
             count = 0
             ySpacing = 20
-            
+            xSpacing = 75
             
             for shortHand in shortHandArray {
                 
                 view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                //(socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                //(socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 if count < 2 {
                     (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
                     (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true

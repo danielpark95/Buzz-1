@@ -33,17 +33,21 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             return image
         }()
         
-        self.view.addSubview(backgroundImage)
-        backgroundImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        //self.view.addSubview(backgroundImage)
+        //backgroundImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        //backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        //backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        //backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: .clear)
-        //self.view.addSubview(revealingSplashView)
-        revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
+        self.view.addSubview(revealingSplashView)
+        //revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
+        //revealingSplashView.animationType = SplashAnimationType.wobbleAndZoomOut
+        //revealingSplashView.animationType = SplashAnimationType.swingAndZoomOut
+        //revealingSplashView.animationType = SplashAnimationType.rotateOut
+        //revealingSplashView.animationType = SplashAnimationType.popAndZoomOut
         revealingSplashView.startAnimation(){
-             backgroundImage.removeFromSuperview()
+             //backgroundImage.removeFromSuperview()
         }
       
         if isNotFirstTime() {
@@ -71,7 +75,6 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
             perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.93)
         }
     }
-    
     
     fileprivate func isNotFirstTime() -> Bool {
         return UserDefaults.standard.bool(forKey: "isNotFirstTime")

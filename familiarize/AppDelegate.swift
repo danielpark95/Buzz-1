@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
+
         
         setupInternetAccessView()
         return true
