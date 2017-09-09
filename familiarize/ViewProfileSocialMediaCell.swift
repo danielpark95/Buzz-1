@@ -8,17 +8,7 @@
 import UIKit
 
 class ViewProfileSocialMediaCell: UICollectionViewCell {
-
-    /*
- 
- @NSManaged public var faceBookProfile: [String]?
- @NSManaged public var instagramProfile: [String]?
- @NSManaged public var snapChatProfile: [String]?
- @NSManaged public var linkedInProfile: [String]?
- @NSManaged public var soundCloudProfile: [String]?
- @NSManaged public var twitterProfile: [String]?
- 
- */
+    
     private enum buttonType: Int {
         case faceBookProfile
         case snapChatProfile

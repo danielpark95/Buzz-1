@@ -44,21 +44,21 @@ extension UserProfile {
     static let editableSingleInputUserData: Set<String> = ["name", "bio"]
     static let editableMultipleInputUserData: Set<String> = UserProfile.multipleInputUserData
     
-    static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
+    static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withUserProfile userProfile: UserProfile) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
-        userProfile.profileImageApp = socialMediaProfileApp
+        userProfile.profileImageApp = "default"
         userProfile.profileImageURL = socialMediaProfileURL
         do {
             try(managedObjectContext.save())
-            let newCardJSON: JSON = JSON(["profileImageApp":socialMediaProfileApp, "profileImageURL": socialMediaProfileURL])
-            FirebaseManager.updateCard(newCardJSON, withUniqueID: userProfile.uniqueID as! UInt64)
+            let profileImageInfo: [String:String] = ["profileImageApp": userProfile.profileImageApp!, "profileImageURL": userProfile.profileImageURL!]
+            FirebaseManager.updateCard(profileImageInfo, withUniqueID: userProfile.uniqueID as! UInt64)
         } catch let err {
             print(err)
         }
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) -> UserProfile {
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia]) -> UserProfile {
     
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
@@ -67,15 +67,6 @@ extension UserProfile {
             }
             userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
         }
-    
-        // profileImageApp
-        // When default profile image is chosen, then the appName is: default
-        // profileImageURL
-        // When default profile image is chosen, then the inputName is the url link to the image
-        userCard["profileImageApp"] = [String]()
-        userCard["profileImageApp"]?.append(socialMediaProfileImage.appName!)
-        userCard["profileImageURL"] = [String]()
-        userCard["profileImageURL"]?.append(socialMediaProfileImage.inputName!)
         
         let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser)
         return userProfile

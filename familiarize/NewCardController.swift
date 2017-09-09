@@ -272,7 +272,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
         
         // Save the new card information into core data.
-        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withSocialMediaProfileImage: selectedSocialMediaProfileImage)
+        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs)
         
         // Save the image to disk.
         let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage.profileImage)!)!)
@@ -280,11 +280,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         // When the image chosen is from the camera roll, upload the image to firebase
         // And then update the URL link to that image.
-        if (selectedSocialMediaProfileImage.appName == "default") {
-            FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
-                UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withSocialMediaProfileApp: (selectedSocialMediaProfileImage.appName)!, withUserProfile: newUserProfile)
-            })
-        }
+        FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
+            UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withUserProfile: newUserProfile)
+        })
+        
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     

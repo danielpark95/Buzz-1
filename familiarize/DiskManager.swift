@@ -11,19 +11,23 @@ import UIKit
 
 class DiskManager {
     
+    static let documentsURL: URL = {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    }()
+    
     static func writeImageDataToLocal(withData data:Data, withUniqueID uniqueID: UInt64, withUserProfileSelection userProfileSelection: UserProfile.userProfileSelection) {
         do {
-            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let fileURL = documentsURL.appendingPathComponent("\(uniqueID).png")
             let profileImage = UIImage(data: data)
             if let pngImageData = UIImageJPEGRepresentation(profileImage!, 1.0){
                 try pngImageData.write(to: fileURL, options: .atomic)
-                print("The image has been written to disk!")
-            }
-            if userProfileSelection == .myUser {
-                NotificationCenter.default.post(name: .reloadMeCards, object: nil)
-            } else if userProfileSelection == .otherUser {
-                NotificationCenter.default.post(name: .reloadFriendCards, object: nil)
+                DispatchQueue.main.async {
+                    if userProfileSelection == .myUser {
+                        NotificationCenter.default.post(name: .reloadMeCards, object: nil)
+                    } else if userProfileSelection == .otherUser {
+                        NotificationCenter.default.post(name: .reloadFriendCards, object: nil)
+                    }
+                }
             }
         } catch let err {
             print(err)
@@ -31,7 +35,6 @@ class DiskManager {
     }
     
     static func readImageFromLocal(withUniqueID uniqueID: UInt64) -> UIImage? {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let filePath = documentsURL.appendingPathComponent("\(uniqueID).png").path
         if FileManager.default.fileExists(atPath: filePath) {
             return UIImage(contentsOfFile: filePath)
@@ -42,7 +45,6 @@ class DiskManager {
     }
     
     static func deleteImageFromLocal(withUniqueID uniqueID: UInt64) {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let filePath = documentsURL.appendingPathComponent("\(uniqueID).png")
         let fileManager = FileManager.default
         do {

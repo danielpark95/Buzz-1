@@ -23,6 +23,30 @@ class FirebaseManager {
         return database.reference()
     }()
     
+    /* Attempt at trying to find unique id.
+    static func generateUniqueID(completionHandler: @escaping (UInt64) -> Void) {
+        let asyncDispatchGroup = DispatchGroup()
+        while true {
+            asyncDispatchGroup.enter()
+            let uniqueID = UInt64(arc4random()) + (UInt64(arc4random()) << 32)
+            let uniqueIDString = String(uniqueID)
+            var isTruelyUnique = false
+            databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
+                if snapshot.value == nil {
+                    isTruelyUnique = true
+                    asyncDispatchGroup.leave()
+                }
+            })
+            asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                if isTruelyUnique {
+                    completionHandler(uniqueID)
+                    return
+                }
+            })
+        }
+    }
+ */
+    
     static func generateUniqueID() -> UInt64 {
         return UInt64(arc4random()) + (UInt64(arc4random()) << 32)
     }
@@ -40,10 +64,10 @@ class FirebaseManager {
         return true
     }
     
-    static func updateCard(_ newCardJSON: JSON, withUniqueID uniqueID: UInt64) {
+    static func updateCard(_ profileImageInfo: [String:String], withUniqueID uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
-        for (key,value):(String, JSON) in newCardJSON {
-            databaseRef.child("cards").child(uniqueIDString).child(key).setValue(value.string)
+        for (key,value):(String, String) in profileImageInfo {
+            databaseRef.child("cards").child(uniqueIDString).child(key).childByAutoId().setValue(value)
         }
     }
 

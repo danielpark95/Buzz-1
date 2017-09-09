@@ -164,10 +164,6 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
                     viewProfileController.socialMediaInputs?.append(socialMediaInput)
                 }
             }
-//            } else if UserProfile.editableSingleInputUserData.contains(key) {
-//                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: inputName as! String, withAlreadySet: true)
-//                viewProfileController.socialMediaInputs?.append(socialMediaInput)
-//            }
         }
         viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         viewProfileController.userProfile = userProfile
