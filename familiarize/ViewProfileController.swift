@@ -30,10 +30,12 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         return pc
     }()
 
+    // Width is 326 -> Cause the width of the popupImageView is 326.
+    // Height is 150 -> Cause the height was set to 150 within setupviews
     lazy var userSocialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 350, height: 200)
+        layout.itemSize = CGSize(width: 326, height: 150)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -41,6 +43,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ViewProfileCell.self, forCellWithReuseIdentifier: self.viewProfileCellId)
+        collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -253,6 +256,9 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         cell.userSocialMediaCollectionView.reloadData()
         return cell
     }
+    
+    
+    /*
     
     // MARK: - Button Properties
     func buttonLink(_ userURL: String) {
@@ -523,4 +529,6 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             //write code for when there are more than 6 linked accounts
         }
     }
+ 
+ */
 }

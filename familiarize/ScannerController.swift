@@ -122,7 +122,6 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             
             FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { card in
                 if card.count == 0 {
-                    print("we are here!")
                     // Perform some animation to show that the quikkly code is invalid.
                     return
                 }
@@ -136,6 +135,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                 
                 // For fetching the profile image picture.
                 let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
+                
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                     if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
                         self.scanProfileController.setUserProfileImage(profileImage)
