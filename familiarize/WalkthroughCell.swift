@@ -74,7 +74,6 @@ class WalkthroughCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
-        
         //textView.anchorWithConstantsToTop(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16)
         //textView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25).isActive = true
         

@@ -89,19 +89,19 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
             
             
             
-//            for key in myUserProfile!.entity.propertiesByName.keys {
-//                guard let inputName = myUserProfile!.value(forKey: key) else {
-//                    continue
-//                }
-//                if UserProfile.editableMultipleInputUserData.contains(key) {
-//                    for eachInput in inputName as! [String] {
-//                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: eachInput, withAlreadySet: true)
-//                        print(socialMediaInput.imageName!)
-//                        socialMediaInputs?.append(socialMediaInput)
-//                    }
-//                }
-//            }
-//            
+            for key in myUserProfile!.entity.propertiesByName.keys {
+                guard let inputName = myUserProfile!.value(forKey: key) else {
+                    continue
+                }
+                if UserProfile.editableMultipleInputUserData.contains(key) {
+                    for eachInput in inputName as! [String] {
+                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black_text", withInputName: eachInput, withAlreadySet: true)
+                        print(socialMediaInput.imageName!)
+                        socialMediaInputs.append(socialMediaInput)
+                    }
+                }
+            }
+            
         }
     }
 
@@ -173,14 +173,14 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     
     lazy var socialMediaImages: [String: UIImageView] = [
         //temporary icons while we wait for new icons from our graphic designers
-        "phoneNumber": UIManager.makeImage(imageName: "dan_phone_black"),
+        "phoneNumber": UIManager.makeImage(imageName: "dan_phoneNumber_black"),
         "email": UIManager.makeImage(imageName: "dan_email_black"),
-        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebook_black"),
-        "instagramProfile": UIManager.makeImage(imageName: "dan_instagram_black"),
-        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapchat_black"),
-        "twitterProfile": UIManager.makeImage(imageName: "dan_twitter_black"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedin_black"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundcloud_black"),
+        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebookProfile_black"),
+        "instagramProfile": UIManager.makeImage(imageName: "dan_instagramProfile_black"),
+        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapChatProfile_black"),
+        "twitterProfile": UIManager.makeImage(imageName: "dan_twitterProfile_black"),
+        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedInProfile_black"),
+        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundCloudProfile_black"),
         ]
    
     let appsCollectionView: UICollectionView = {
@@ -202,14 +202,14 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     
     private let cellId = "appCellId"
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phone_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_black_text", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "email", withImageName: "dan_email_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebook_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebookProfile_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_black_text", withInputName: "", withAlreadySet: false),
         ]
     
     func presentProfile() {
@@ -258,37 +258,14 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var my_imagesToPresent = [UIImageView]()
-        //var count = 0
-        for key in (myUserProfile?.entity.attributesByName.keys)! {
-            if (myUserProfile?.value(forKey: key) != nil && socialMediaImages[key] != nil) {
-                my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
-                //count+=1
-            }
-        }
-        return my_imagesToPresent.count
-        
-        
-//        
-//        
-//        for key in (self.userProfile?.entity.attributesByName.keys)! {
-//            if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
-//                shortHandArray.append(socialMedia[key]!)
-//            }
-//        }
-//        let size = shortHandArray.count
-//        var count = 0
-//        
-//        if size == 1 {
-//            count = 0
-//            for shortHand in shortHandArray {
-//                view.addSubview((socialMediaButtons?[shortHand])!)
+        return socialMediaInputs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppCell
-        cell.socialMedia = socialMediaChoices[indexPath.item]
+        print(socialMediaInputs[indexPath.item].imageName)
+        cell.socialMedia = socialMediaInputs[indexPath.item]
         return cell
     }
     

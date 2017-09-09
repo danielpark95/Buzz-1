@@ -305,25 +305,25 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     
     // FYI the button should be a facebook button
     lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_facebook_black_text")
+        let button = UIManager.makeButton(imageName: "dan_facebookProfile_black_text")
         button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
         return button
     }()
     
     lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram_black_text")
+        let button = UIManager.makeButton(imageName: "dan_instagramProfile_black_text")
         button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
         return button
     }()
     
     lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchat_black_text")
+        let button = UIManager.makeButton(imageName: "dan_snapchatProfile_black_text")
         button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
         return button
     }()
     
     lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone_black_text")
+        let button = UIManager.makeButton(imageName: "dan_phoneNumber_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
@@ -335,18 +335,18 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     }()
     
     lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_linkedin_black_text")
+        let button = UIManager.makeButton(imageName: "dan_linkedInProfile_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     
     lazy var soButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_soundcloud_black_text")
+        let button = UIManager.makeButton(imageName: "dan_soundCloudProfile_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()
     lazy var twButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_twitter_black_text")
+        let button = UIManager.makeButton(imageName: "dan_twitterProfile_black_text")
         button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
         return button
     }()

@@ -159,7 +159,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
             }
             if UserProfile.editableMultipleInputUserData.contains(key) {
                 for eachInput in inputName as! [String] {
-                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: eachInput, withAlreadySet: true)
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: true)
                     print(socialMediaInput.imageName!)
                     viewProfileController.socialMediaInputs?.append(socialMediaInput)
                 }

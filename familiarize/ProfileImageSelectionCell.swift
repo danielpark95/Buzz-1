@@ -28,9 +28,9 @@ class ProfileImageSelectionCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = UIColor.clear
         view.layer.shadowColor = UIColor.darkGray.cgColor
-        view.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
-        view.layer.shadowOpacity = 1.0
-        view.layer.shadowRadius = 2
+        //view.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        //view.layer.shadowOpacity = 1.0
+        //view.layer.shadowRadius = 1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
