@@ -38,17 +38,20 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }
 
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_faceBookProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "", withImageName: "dan_addbutton_orange", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "email", withImageName: "dan_email_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebookProfile_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_color", withInputName: "", withAlreadySet: false),
         ]
     
     var socialMediaProfileImages: [SocialMediaProfileImage] = [
         SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!),
-        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!)
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "dan_addprofileimage_orange", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "dan_addprofileimage_orange")!)
     ]
     
     var socialMediaInputs: [SocialMedia] = [
@@ -60,9 +63,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let view = UIView()
         view.backgroundColor = UIColor.clear
         view.layer.shadowColor = UIColor.darkGray.cgColor
-        view.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
+        view.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         view.layer.shadowOpacity = 1.0
-        view.layer.shadowRadius = 2
+        view.layer.shadowRadius = 3
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -71,7 +74,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let view = UIView()
         view.backgroundColor = UIColor.clear
         view.layer.shadowColor = UIColor.darkGray.cgColor
-        view.layer.shadowOffset = CGSize(width: 1.0, height: 3.0)
+        view.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         view.layer.shadowOpacity = 1.0
         view.layer.shadowRadius = 3
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +94,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: self.socialMediaSelectionCellId)
-        collectionView.layer.cornerRadius = 32
+        //collectionView.layer.cornerRadius = 5
         collectionView.layer.masksToBounds = true
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.tag = collectionViewTag.socialMediaSelectionTableView.rawValue
@@ -103,8 +106,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         layout.scrollDirection = .horizontal
         layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -150)
         layout.itemSize = CGSize(width: 400, height: 400)
-        layout.sideItemAlpha = 0.75
-        layout.sideItemScale = 0.75
+        //layout.sideItemAlpha = 0.75
+        //layout.sideItemScale = 0.75
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,17 +153,17 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 75).isActive = true
+        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
         socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 280).isActive = true
+        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 260).isActive = true
         
         socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: view.frame.height - 360).isActive = true
-        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 360).isActive = true
+        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: view.frame.height - 350).isActive = true
+        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 340).isActive = true
         
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
@@ -250,8 +253,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }
     
     func setupNavBarButton() {
-        let cancelButton = UIBarButtonItem.init(title: "cancel", style: .plain, target: self, action: #selector(cancelClicked))
-        let saveButton = UIBarButtonItem.init(title: "save", style: .plain, target: self, action: #selector(saveClicked))
+        let cancelButton = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
+        let saveButton = UIBarButtonItem.init(title: "Save", style: .plain, target: self, action: #selector(saveClicked))
         cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
         saveButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
 
