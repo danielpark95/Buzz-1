@@ -39,11 +39,11 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_faceBookProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapchat_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagram_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitter_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedin_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundcloud_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_black", withInputName: "", withAlreadySet: false),
         ]
     
     var socialMediaProfileImages: [SocialMediaProfileImage] = [

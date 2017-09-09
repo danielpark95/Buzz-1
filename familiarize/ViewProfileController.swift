@@ -41,7 +41,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ViewProfileCell.self, forCellWithReuseIdentifier: self.viewProfileCellId)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .red
         return collectionView
     }()
     
@@ -253,6 +253,9 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         cell.userSocialMediaCollectionView.reloadData()
         return cell
     }
+    
+    
+    /*
     
     // MARK: - Button Properties
     func buttonLink(_ userURL: String) {
@@ -523,4 +526,6 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             //write code for when there are more than 6 linked accounts
         }
     }
+ 
+ */
 }
