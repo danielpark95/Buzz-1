@@ -18,6 +18,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     let profileImageHeightAndWidth: CGFloat = 150.0
     fileprivate let viewProfileCellId = "viewProfileCellId"
     
+    // TODO: We have to wrap the pagecontrol around a uiview, or else it fucks up with the whole background
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     var pageControl: UIPageControl = {
         let pc = UIPageControl()
@@ -32,10 +33,12 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
 
     // Width is 326 -> Cause the width of the popupImageView is 326.
     // Height is 150 -> Cause the height was set to 150 within setupviews
+    let userSocialMediaCollectionViewWidth: CGFloat = 326
+    let userSocialMediaCollectionViewHeight: CGFloat = 150
     lazy var userSocialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 326, height: 150)
+        layout.itemSize = CGSize(width: self.userSocialMediaCollectionViewWidth, height: self.userSocialMediaCollectionViewHeight)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -154,7 +157,6 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             self.view.layoutIfNeeded()
             self.tintOverlay.alpha = 0
         }, completion: { _ in
-            // After moving the background up to the middle, then load the name and buttons.
             self.dismiss(animated: false)
         })
     }
@@ -215,7 +217,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         
         userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -60).isActive = true
-        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: userSocialMediaCollectionViewHeight).isActive = true
         userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: (popupImageView.image?.size.width)!).isActive = true
         
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -226,7 +228,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
+        let pageNumber = Int(targetContentOffset.pointee.x / userSocialMediaCollectionViewWidth)
         pageControl.currentPage = pageNumber
     }
     
@@ -246,7 +248,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         if cell.socialMediaInputs == nil {
             cell.socialMediaInputs = [SocialMedia]()
         }
-        for index in indexPath.item...indexPath.item+5 {
+        for index in (indexPath.item*6)...(indexPath.item*6)+5 {
             if index >= (socialMediaInputs?.count)! {
                 break
             }
@@ -256,279 +258,4 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         cell.userSocialMediaCollectionView.reloadData()
         return cell
     }
-    
-    
-    /*
-    
-    // MARK: - Button Properties
-    func buttonLink(_ userURL: String) {
-        
-        // Lmao, in order to get profile id, just scrape the facebook page again.
-        // <meta property="al:ios:url" content="fb://profile/100001667117543">
-        let fbURL = URL(string: "fb://profile?id=100001667117543")!
-        
-        let safariFBURL = URL(string: "https://www.facebook.com/100001667117543")!
-        
-        if UIApplication.shared.canOpenURL(fbURL)
-        {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(fbURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(fbURL)
-            }
-            
-        } else {
-            //redirect to safari because the user doesn't have facebook application
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(safariFBURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(safariFBURL)
-            }
-        }
-    }
-    
-    func didSelectFB() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectIG() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectSC() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectPN() {
-        buttonLink("Kabooya")
-    }
-    
-    // FYI the button should be a facebook button
-    lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_facebookProfile_black_text")
-        button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagramProfile_black_text")
-        button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchatProfile_black_text")
-        button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phoneNumber_black_text")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var emButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_email_black_text")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_linkedInProfile_black_text")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var soButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_soundCloudProfile_black_text")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    lazy var twButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_twitterProfile_black_text")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    func createSocialMediaButtons() {
-        socialMediaButtons = [
-            "pn": pnButton,
-            "em": inButton,
-            "fb": fbButton,
-            "ig": igButton,
-            "sc": scButton,
-            "tw": twButton,
-            "in": emButton,
-            "so": soButton,
-        ]
-    }
-    
-    let socialMedia = [
-        "phoneNumber": "pn",
-        "email": "em",
-        "faceBookProfile": "fb",
-        "instagramProfile": "ig",
-        "snapChatProfile": "sc" ,
-        "twitterProfile": "tw",
-        "linkedInProfile": "in",
-        "soundCloudProfile": "so",
-        ]
-    
-    func presentSocialMediaButtons() {
-        var xSpacing: CGFloat = 50
-        var ySpacing: CGFloat = 10
-        let yConstant: CGFloat = 90
-        var shortHandArray = [String]()
-        for key in (self.userProfile?.entity.attributesByName.keys)! {
-            if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
-                shortHandArray.append(socialMedia[key]!)
-            }
-        }
-        let size = shortHandArray.count
-        let iconX = 80
-        let iconY = 100
-        var count = 0
-        
-        if size == 1 {
-            count = 0
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                //(socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                //(socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
-                count += 1
-                if count == 1{
-                    break
-                }
-            }
-        } else if size == 2 {
-            count = 0
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                //(socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                //(socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
-                xSpacing = xSpacing * (-1)
-                count += 1
-                if count == 2{
-                    break
-                }
-                
-            }
-            
-        } else if size == 3 {
-            count = 0
-            ySpacing = 20
-            xSpacing = 75
-            
-            for shortHand in shortHandArray {
-                
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                //(socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                //(socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                if count < 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + yConstant).isActive = true
-                }
-                
-                count += 1
-                if count == 3 {
-                    break
-                }
-            }
-        } else if size == 4 {
-            count = 0
-            ySpacing = 20
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                if count < 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                }
-                else if count < 4 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                }
-                count += 1
-                if count == 4 {
-                    break
-                }
-            }
-        } else if size == 5 { //5 looks good
-            count = 0
-            xSpacing = 80
-            ySpacing = 11
-            
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                if count == 0 || count == 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 1 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                } else if count == 3 {
-                    xSpacing = 45
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                } else if count == 4 {
-                    xSpacing = 45
-                    xSpacing = xSpacing * (-1)
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                }
-                count += 1
-                if count == 5 {
-                    break
-                }
-            }
-        } else if size == 6 { //6 looks good
-            count = 0
-            xSpacing = 100
-            ySpacing = 17
-            
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 58).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 58).isActive = true
-                if count == 0 || count == 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 1 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                } else if count == 3 || count == 5 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 4 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                }
-                count += 1
-                if count == 6 {
-                    break
-                }
-            }
-        } else {
-            //write code for when there are more than 6 linked accounts
-        }
-    }
- 
- */
 }
