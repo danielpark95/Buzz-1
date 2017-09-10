@@ -43,18 +43,17 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }()
     
     lazy var editButton: UIBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
+        return UIBarButtonItem(image: UIImage(named:"dan_editbutton_orange")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
     }()
     
     lazy var addButton: UIBarButtonItem = {
-       return UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
+       return UIBarButtonItem(image: UIImage(named:"dan_addbutton_orange")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
     }()
     
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMeCards), name: .reloadMeCards, object: nil)
         navigationItem.title = "Me"
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,6 +68,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
         do {
             try fetchedResultsController.performFetch()
         } catch let err {
@@ -134,11 +134,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
             if UserProfile.editableMultipleInputUserData.contains(key) {
                 for eachInput in inputName as! [String] {
-                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(eachInput)_black", withInputName: eachInput, withAlreadySet: true)
+                    print("eachInput = ", eachInput)
+                    print("key = ", key)
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: true)
                     newCardController.socialMediaInputs.append(socialMediaInput)
                 }
             } else if UserProfile.editableSingleInputUserData.contains(key) {
-                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(inputName)_black", withInputName: inputName as! String, withAlreadySet: true)
+                print("inputName = ", inputName)
+                print("key = ", key)
+                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: inputName as! String, withAlreadySet: true)
                 newCardController.socialMediaInputs.append(socialMediaInput)
             }
         }
