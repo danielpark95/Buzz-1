@@ -10,9 +10,13 @@ import UIKit
 
 class SettingsCell: UICollectionViewCell {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+    let nameLabel: UILabel = {
+        return UIManager.makeLabel()
+    }()
+    
+    let iconImageView: UIImageView = {
+        return UIManager.makeImage()
+    }()
     
     override var isHighlighted: Bool {
         didSet {
@@ -28,18 +32,6 @@ class SettingsCell: UICollectionViewCell {
             setupViews()
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let nameLabel: UILabel = {
-        return UIManager.makeLabel()
-    }()
-    
-    let iconImageView: UIImageView = {
-        return UIManager.makeImage()
-    }()
     
     func setupViews() {
         
