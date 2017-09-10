@@ -8,14 +8,22 @@
 import UIKit
 
 class ViewProfileSocialMediaCell: UICollectionViewCell {
-
+    
     private enum buttonType: Int {
         case faceBookProfile
         case snapChatProfile
+        case instagramProfile
+        case linkedInProfile
+        case soundCloudProfile
+        case twitterProfile
     }
     
     let socialMediaAppNameToEnum: [String : Int] = ["faceBookProfile" : buttonType.faceBookProfile.rawValue,
-                                                    "snapChatProfile" : buttonType.snapChatProfile.rawValue]
+                                                    "snapChatProfile" : buttonType.snapChatProfile.rawValue,
+                                                    "instagramProfile" : buttonType.instagramProfile.rawValue,
+                                                    "linkedInProfile" : buttonType.linkedInProfile.rawValue,
+                                                    "soundCloudProfile" : buttonType.soundCloudProfile.rawValue,
+                                                    "twitterProfile" : buttonType.twitterProfile.rawValue]
     
     fileprivate let viewProfileSocialMediaCellId = "viewProfileSocialMediaCellId"
     var socialMedia: SocialMedia? {
@@ -50,16 +58,33 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
         var appURL: URL?
         var safariURL: URL?
 
+        guard let inputName = socialMedia?.inputName else {
+            return
+        }
+        
         switch socialMediaButton.tag {
         case buttonType.faceBookProfile.rawValue:
             // Lmao, in order to get profile id, just scrape the facebook page again.
             // <meta property="al:ios:url" content="fb://profile/100001667117543">
-            appURL = URL(string: "fb://profile?id=\((socialMedia?.inputName)!)")!
-            safariURL = URL(string: "https://www.facebook.com/\((socialMedia?.inputName)!)")!
-            
-        //case buttonType.snapChatProfile.rawValue:
-//            /https://stackoverflow.com/questions/22632121/snapchat-url-scheme-not-working-properly-camera-opens-but-not-profile
-            
+            appURL = URL(string: "fb://profile?id=\(inputName)")
+            safariURL = URL(string: "https://www.facebook.com/\(inputName)")
+        case buttonType.snapChatProfile.rawValue:
+            appURL = URL(string: "snapchat://add/\(inputName)")
+            safariURL = URL(string: "https://snapchat.com/add/\(inputName)")
+        case buttonType.instagramProfile.rawValue:
+            appURL = URL(string: "instagram://user?username=\(inputName)")
+            safariURL = URL(string: "https://www.instagram.com/\(inputName)")
+        case buttonType.linkedInProfile.rawValue:
+            appURL = URL(string: "voyager://in/\(inputName)")
+            safariURL = URL(string: "https://www.linkedin.com/in/\(inputName)")
+        case buttonType.soundCloudProfile.rawValue:
+            // For soundcloud we have to get a specific user id that's parsed from the webpage. 
+            // The appurl will be different from the safari url -- in terms of the user input.
+            appURL = URL(string: "soundcloud://users:\(inputName)")
+            safariURL = URL(string: "https://soundcloud.com/\(inputName)")
+        case buttonType.twitterProfile.rawValue:
+            appURL = URL(string: "twitter://user?screen_name=\(inputName)")
+            safariURL = URL(string: "https://twitter.com/\(inputName)")
         default: break
         }
         
@@ -72,7 +97,7 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
                     UIApplication.shared.openURL(appURL)
                 }
             } else if UIApplication.shared.canOpenURL(safariURL) {
-                //redirect to safari because the user doesn't have facebook application
+                //redirect to safari because the user doesn't have application
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(safariURL)
                 } else {

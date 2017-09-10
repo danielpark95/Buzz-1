@@ -301,19 +301,17 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
                 my_imagesToPresent.insert(socialMediaImages[key]!, at: 0)
             }
         }
-        var my_sectionInsets : UIEdgeInsets
-        
+
         if (my_imagesToPresent.count == 1 ) {
-            my_sectionInsets = UIEdgeInsetsMake(0, 127, 0, 127)
+            return UIEdgeInsetsMake(0, 127, 0, 127)
         } else if (my_imagesToPresent.count == 2 ) {
-            my_sectionInsets = UIEdgeInsetsMake(0, 42, 0, 42)
+            return UIEdgeInsetsMake(0, 42, 0, 42)
         } else if (my_imagesToPresent.count == 3 ) {
-            my_sectionInsets = UIEdgeInsetsMake(0, -1.5, 0, -1.5)
+            return UIEdgeInsetsMake(0, -1.5, 0, -1.5)
         } else {
-            my_sectionInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+            return UIEdgeInsetsMake(0, 10, 0, 10)
         }
         
-        return my_sectionInsets
     }
 }
 

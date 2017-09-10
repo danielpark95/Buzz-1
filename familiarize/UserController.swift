@@ -42,11 +42,19 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return frc
     }()
     
+    lazy var editButton: UIBarButtonItem = {
+        return UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
+    }()
+    
+    lazy var addButton: UIBarButtonItem = {
+       return UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
+    }()
+    
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMeCards), name: .reloadMeCards, object: nil)
         navigationItem.title = "Me"
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)]
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,9 +66,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         delegate.previousIndex = 0
     }
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,8 +74,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } catch let err {
             print(err)
         }
-        
-        self.automaticallyAdjustsScrollViewInsets = false
         
         //UserProfile.clearData(forProfile: .myUser)
         //UserProfile.clearData(forProfile: .otherUser)
@@ -88,10 +91,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func reloadMeCards() {
         // This does not fucking work ):
-        collectionView?.reloadData()
+        do {
+            try fetchedResultsController.performFetch()
+            setupNavBarButton()
+        } catch let err {
+            print(err)
+        }
     }
     
-    // This is for when use double taps on the screen, then the card flips around to reveal whatever the behind screen is. 
+    // This is for when you use double taps on the screen, then the card flips around to reveal whatever the behind screen is.
     func didDoubleTapCollectionView(_ gesture: UITapGestureRecognizer) {
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
@@ -101,10 +109,9 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func setupNavBarButton() {
-        let editButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
-        let addButton = UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
-        
-        navigationItem.leftBarButtonItem = editButton
+        if fetchedResultsController.fetchedObjects?.count != 0 {
+            navigationItem.leftBarButtonItem = editButton
+        }
         navigationItem.rightBarButtonItem = addButton
     }
     
@@ -174,6 +181,10 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         if type == .insert {
             blockOperations.append(BlockOperation(block: {
                 self.collectionView?.insertItems(at: [newIndexPath!])
+            }))
+        } else if type == .update {
+            blockOperations.append(BlockOperation(block: {
+                self.collectionView?.reloadItems(at: [newIndexPath!])
             }))
         }
     }
