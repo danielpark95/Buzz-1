@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import SwiftyJSON
 
 class FirebaseManager {
     
@@ -51,7 +50,7 @@ class FirebaseManager {
         return UInt64(arc4random()) + (UInt64(arc4random()) << 32)
     }
     
-    @discardableResult static func uploadCard(_ cardJSON: [String:[String]], withUniqueID uniqueID: UInt64) -> Bool{
+    static func uploadCard(_ cardJSON: [String:[String]], withUniqueID uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
         let userID = UIDevice.current.identifierForVendor!.uuidString
         databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
@@ -61,7 +60,6 @@ class FirebaseManager {
             }
         }
         // TODO: Check for when the uniqueIDString is already in the database. Then return false and create a new unique id.
-        return true
     }
     
     static func updateCard(_ profileImageInfo: [String:String], withUniqueID uniqueID: UInt64) {

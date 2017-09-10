@@ -16,7 +16,6 @@ extension Notification.Name {
     static let viewProfile = Notification.Name("viewProfileNotification")
 }
 
-
 protocol ContactsControllerDelegate {
     func closeHamburger()
     func showControllerForSetting(setting: Setting)

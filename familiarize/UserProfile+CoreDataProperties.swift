@@ -58,7 +58,7 @@ extension UserProfile {
         }
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia]) -> UserProfile {
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64) -> UserProfile {
     
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
@@ -68,11 +68,11 @@ extension UserProfile {
             userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
         }
         
-        let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser)
+        let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser, withUniqueID: uniqueID)
         return userProfile
     }
     
-    static func saveProfile(_ cardJSON: [String:[String]], forProfile userProfile: userProfileSelection) -> UserProfile {
+    static func saveProfile(_ cardJSON: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
@@ -91,7 +91,7 @@ extension UserProfile {
         }
 
         // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
-        newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
+        newUser.uniqueID = NSNumber(value: uniqueID)
         
         // If this is my user that I am saving, then push it to the cloud.
         if userProfile == .myUser {

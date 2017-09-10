@@ -274,8 +274,13 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let selectedIndexPath = profileImageSelectionCollectionView.indexPathForItem(at: initialPinchPoint)
         let selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
         
+        let uniqueID = FirebaseManager.generateUniqueID()
+        print("Assigning image to cache")
+        print("\(uniqueID) is the uniqueID")
+        myUserProfileImageCache.setObject((selectedSocialMediaProfileImage.profileImage)!, forKey: "\(uniqueID)" as NSString)
+        
         // Save the new card information into core data.
-        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs)
+        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID)
         
         // Save the image to disk.
         let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage.profileImage)!)!)
@@ -286,7 +291,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
             UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withUserProfile: newUserProfile)
         })
-        
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
