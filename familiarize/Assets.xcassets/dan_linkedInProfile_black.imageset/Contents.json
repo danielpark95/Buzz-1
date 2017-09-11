@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "dan_linkedin_black.png",
+      "filename" : "dan_linkedInProfile_black.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dan_linkedin_black@2x.png",
+      "filename" : "dan_linkedInProfile_black@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dan_linkedin_black@3x.png",
+      "filename" : "dan_linkedInProfile_black@3x.png",
       "scale" : "3x"
     }
   ],

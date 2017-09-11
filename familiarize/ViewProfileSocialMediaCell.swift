@@ -16,14 +16,34 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
         case linkedInProfile
         case soundCloudProfile
         case twitterProfile
+        
+        
+        case phoneNumber
+        case email
+        case venmoProfile
+        case slackProfile
+        case gitHubProfile
+        case spotifyProfile
+        case kakaoTalkProfile
+        case whatsAppProfile
     }
     
-    let socialMediaAppNameToEnum: [String : Int] = ["faceBookProfile" : buttonType.faceBookProfile.rawValue,
-                                                    "snapChatProfile" : buttonType.snapChatProfile.rawValue,
-                                                    "instagramProfile" : buttonType.instagramProfile.rawValue,
-                                                    "linkedInProfile" : buttonType.linkedInProfile.rawValue,
-                                                    "soundCloudProfile" : buttonType.soundCloudProfile.rawValue,
-                                                    "twitterProfile" : buttonType.twitterProfile.rawValue]
+    let socialMediaAppNameToEnum: [String : Int] = [
+        "phoneNumber" : buttonType.phoneNumber.rawValue,
+        "email" : buttonType.phoneNumber.rawValue,
+        "faceBookProfile" : buttonType.faceBookProfile.rawValue,
+        "snapChatProfile" : buttonType.snapChatProfile.rawValue,
+        "instagramProfile" : buttonType.instagramProfile.rawValue,
+        "linkedInProfile" : buttonType.linkedInProfile.rawValue,
+        "soundCloudProfile" : buttonType.soundCloudProfile.rawValue,
+        "twitterProfile" : buttonType.twitterProfile.rawValue,
+        "venmoProfile" : buttonType.venmoProfile.rawValue,
+        "slackProfile" : buttonType.slackProfile.rawValue,
+        "gitHubProfile" : buttonType.gitHubProfile.rawValue,
+        "spotifyProfile" : buttonType.gitHubProfile.rawValue,
+        "kakaoTalkProfile" : buttonType.kakaoTalkProfile.rawValue,
+        "whatsAppProfile" : buttonType.kakaoTalkProfile.rawValue,
+        ]
     
     fileprivate let viewProfileSocialMediaCellId = "viewProfileSocialMediaCellId"
     var socialMedia: SocialMedia? {
@@ -63,6 +83,7 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
         }
         
         switch socialMediaButton.tag {
+            
         case buttonType.faceBookProfile.rawValue:
             // Lmao, in order to get profile id, just scrape the facebook page again.
             // <meta property="al:ios:url" content="fb://profile/100001667117543">
@@ -85,6 +106,10 @@ class ViewProfileSocialMediaCell: UICollectionViewCell {
         case buttonType.twitterProfile.rawValue:
             appURL = URL(string: "twitter://user?screen_name=\(inputName)")
             safariURL = URL(string: "https://twitter.com/\(inputName)")
+            
+        
+            
+            
         default: break
         }
         
