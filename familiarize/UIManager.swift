@@ -74,6 +74,12 @@ class UIManager {
             "twitterProfile": "Twitter",
             "linkedInProfile": "LinkedIn",
             "soundCloudProfile": "Soundcloud",
+            "venmoProfile": "Venmo",
+            "slackProfile": "Slack",
+            "gitHubProfile": "GitHub",
+            "spotifyProfile": "Spotify",
+            "kakaoTalkProfile": "Kakao Talk",
+            "whatsAppProfile": "WhatsApp",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName

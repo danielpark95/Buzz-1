@@ -21,7 +21,7 @@ class TermsPrivacySettingController: UICollectionViewController, UICollectionVie
 //
 //        
 //        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0), NSFontAttributeName: UIFont(name: "Avenir", size: 30)!]
-        //navigationItem.title = "Terms & Privacy Policy"
+        navigationItem.title = "Terms & Privacy Policy"
         
     }
     
@@ -30,6 +30,7 @@ class TermsPrivacySettingController: UICollectionViewController, UICollectionVie
         collectionView?.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = UIColor.white
         setupNavBarButton()
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

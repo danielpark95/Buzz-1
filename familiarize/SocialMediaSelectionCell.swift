@@ -44,7 +44,7 @@ class SocialMediaSelectionCell: UICollectionViewCell {
     }
 }
 
-class SocialMedia: NSObject {
+class SocialMedia: NSObject, UICollectionViewDelegateFlowLayout {
     var imageName: String?
     var appName: String?
     var inputName: String?
@@ -68,5 +68,11 @@ class SocialMedia: NSObject {
         self.inputName = copyFrom.inputName
         self.isSet = copyFrom.isSet
     }
+    
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 50)
+    }
+
 }
 

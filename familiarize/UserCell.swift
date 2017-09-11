@@ -95,8 +95,8 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
                 }
                 if UserProfile.editableMultipleInputUserData.contains(key) {
                     for eachInput in inputName as! [String] {
-                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black_text", withInputName: eachInput, withAlreadySet: true)
-                        print(socialMediaInput.imageName!)
+                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: eachInput, withAlreadySet: true)
+                        //print(socialMediaInput.imageName!)
                         socialMediaInputs.append(socialMediaInput)
                     }
                 }
@@ -181,6 +181,12 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         "twitterProfile": UIManager.makeImage(imageName: "dan_twitterProfile_black"),
         "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedInProfile_black"),
         "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundCloudProfile_black"),
+        "venmoProfile": UIManager.makeImage(imageName: "dan_venmoProfile_black"),
+        "slackProfile": UIManager.makeImage(imageName: "dan_slackProfile_black"),
+        "gitHubProfile": UIManager.makeImage(imageName: "dan_gitHubProfile_black"),
+        "spotifyProfile": UIManager.makeImage(imageName: "dan_spotifyProfile_black"),
+        "kakaoTalkProfile": UIManager.makeImage(imageName: "dan_kakaoTalkProfile_black"),
+        "whatsAppProfile": UIManager.makeImage(imageName: "dan_whatsAppProfile_black"),
         ]
    
     let appsCollectionView: UICollectionView = {
@@ -202,14 +208,20 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     
     private let cellId = "appCellId"
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "email", withImageName: "dan_email_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebookProfile_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_black_text", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_black_text", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "email", withImageName: "dan_email_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebookProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "venmoProfile", withImageName: "dan_venmoProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "slackProfile", withImageName: "dan_slackProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "gitHubProfile", withImageName: "dan_gitHubProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "spotifyProfile", withImageName: "dan_spotifyProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "kakaoTalkProfile", withImageName: "dan_kakaoTalkProfile_black", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "whatsAppProfile", withImageName: "dan_whatsAppProfile_black", withInputName: "", withAlreadySet: false),
         ]
     
     func presentProfile() {
@@ -321,6 +333,8 @@ class AppCell: UICollectionViewCell {
     var socialMedia: SocialMedia? {
         didSet {
             if let appName = socialMedia?.appName {
+                print(appName)
+                print(appName.uppercased())
                 socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
             }
             if let imageName = socialMedia?.imageName {
@@ -349,6 +363,9 @@ class AppCell: UICollectionViewCell {
     let socialMediaName: UILabel = {
         let label = UIManager.makeLabel()
         label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 11)
+        print("label.text = " , label.text!)
+        print("label.text.uppercased() = " , label.text!.uppercased())
+        
         label.text = label.text?.uppercased()
         return label
     }()
@@ -356,8 +373,13 @@ class AppCell: UICollectionViewCell {
     func setupViews() {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
-        //addSubview(socialMediaName)
+        addSubview(socialMediaName)
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant : -10).isActive = true
+        
+        
+        socialMediaName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        socialMediaName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30).isActive = true
+        
     }
 }
