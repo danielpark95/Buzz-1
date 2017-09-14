@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "dan_instagramProfile_add.png",
+      "filename" : "dan_profilepopup_orange.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dan_instagramProfile_add@2x.png",
+      "filename" : "dan_profilepopup_orange@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dan_instagramProfile_add@3x.png",
+      "filename" : "dan_profilepopup_orange@3x.png",
       "scale" : "3x"
     }
   ],

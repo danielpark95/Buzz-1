@@ -15,7 +15,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     var socialMediaInputs: [SocialMedia]?
     
     var userProfile: UserProfile?
-    let profileImageHeightAndWidth: CGFloat = 150.0
+    let profileImageHeightAndWidth: CGFloat = 100.0
     fileprivate let viewProfileCellId = "viewProfileCellId"
     
     // TODO: We have to wrap the pagecontrol around a uiview, or else it fucks up with the whole background
@@ -34,19 +34,22 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     // Width is 326 -> Cause the width of the popupImageView is 326.
     // Height is 150 -> Cause the height was set to 150 within setupviews
     let userSocialMediaCollectionViewWidth: CGFloat = 326
-    let userSocialMediaCollectionViewHeight: CGFloat = 150
+    let userSocialMediaCollectionViewHeight: CGFloat = 100
     lazy var userSocialMediaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: self.userSocialMediaCollectionViewWidth, height: self.userSocialMediaCollectionViewHeight)
+        layout.scrollDirection = .vertical
+        //layout.itemSize = CGSize(width: self.userSocialMediaCollectionViewWidth, height: self.userSocialMediaCollectionViewHeight)
+        layout.itemSize = CGSize(width: 50, height: 50)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.alwaysBounceHorizontal = true
+        //collectionView.showsHorizontalScrollIndicator = false
+        //collectionView.alwaysBounceHorizontal = true
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ViewProfileCell.self, forCellWithReuseIdentifier: self.viewProfileCellId)
-        collectionView.isPagingEnabled = true
+        //collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -79,7 +82,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     }()
     
     var popupImageView: UIImageView = {
-        let imageView = UIManager.makeImage(imageName: "dan_profilepopup_blue")
+        let imageView = UIManager.makeImage(imageName: "dan_profilepopup_small_blue")
         let tap = UITapGestureRecognizer()
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -136,16 +139,18 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
     
     func setName(){
         var attributedText = NSMutableAttributedString()
+        //change font size based on length of name
         if let name = userProfile?.name {
-            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 30), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
         }
         nameLabel.attributedText = attributedText
     }
     
     func setBio() {
         var attributedText = NSMutableAttributedString()
+        //change font size based on length of bio
         if let bio = userProfile?.bio {
-            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
+            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
         }
         bioLabel.attributedText = attributedText
     }
@@ -180,6 +185,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         if let window = UIApplication.shared.keyWindow {
             tintOverlay.frame = window.frame
         }
+        
         view.addSubview(tintOverlay)
         view.addSubview(popupImageView)
         view.addSubview(profileImage)
@@ -190,23 +196,25 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         view.addSubview(pageControl)
         
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        popupImageView.widthAnchor.constraint(equalToConstant: 326).isActive = true
+        popupImageView.heightAnchor.constraint(equalToConstant: 388).isActive = true
         // Initially set all the way at the bottom so that it animates up.
-        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
+        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 388)
         popupCenterYAnchor?.isActive = true
         
-        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: -100).isActive = true
         profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 30).isActive = true
         // Set to 80 --> Then you also have to change the corner radius to 40 ..
         profileImage.heightAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
         
-        nameLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 40).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: 50).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.width).isActive = true
         
-        bioLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 3).isActive = true
-        bioLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
+        bioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 135).isActive = true
+        bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
         bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
         
@@ -216,9 +224,10 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         dismissButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
         userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        userSocialMediaCollectionView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 80).isActive = true
         userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -60).isActive = true
-        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: userSocialMediaCollectionViewHeight).isActive = true
-        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: (popupImageView.image?.size.width)!).isActive = true
+        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true

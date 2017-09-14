@@ -362,7 +362,7 @@ class AppCell: UICollectionViewCell {
     
     let socialMediaName: UILabel = {
         let label = UIManager.makeLabel()
-        label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 11)
+        label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 12)
         print("label.text = " , label.text!)
         print("label.text.uppercased() = " , label.text!.uppercased())
         
@@ -378,7 +378,7 @@ class AppCell: UICollectionViewCell {
         socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant : -10).isActive = true
         
         
-        socialMediaName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        socialMediaName.centerXAnchor.constraint(equalTo: socialMediaImage.centerXAnchor, constant: 0.5).isActive = true
         socialMediaName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30).isActive = true
         
     }
