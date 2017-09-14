@@ -9,6 +9,9 @@ PODS:
   - Firebase/Database (4.1.0):
     - Firebase/Core
     - FirebaseDatabase (= 4.0.1)
+  - Firebase/Messaging (4.1.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.1)
   - Firebase/Storage (4.1.0):
     - Firebase/Core
     - FirebaseStorage (= 2.0.1)
@@ -26,11 +29,19 @@ PODS:
     - leveldb-library (~> 1.18)
   - FirebaseInstanceID (2.0.1):
     - FirebaseCore (~> 4.0)
+  - FirebaseMessaging (2.0.1):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - FirebaseStorage (2.0.1):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/Logger (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GTMSessionFetcher/Core (1.1.11)
@@ -46,6 +57,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 3.7.0)
   - NVActivityIndicatorView/Presenter (3.7.0)
   - pop (1.0.10)
+  - Protobuf (3.4.0)
   - QRCode (2.0)
   - Quikkly (1.2.0)
   - RevealingSplashView (0.4.0)
@@ -60,6 +72,7 @@ DEPENDENCIES:
   - ESTabBarController-swift
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - Firebase/Storage
   - Kanna (~> 2.1.0)
   - M13Checkbox
@@ -91,6 +104,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 7d876ea97a830cbe62ba7fbbe7670c833a324ba0
   FirebaseDatabase: 94c38c783d23dc6679441050772d42e801d06e9e
   FirebaseInstanceID: 0500e3cb54a1a4e01a8cffcc09323b8bb8fc7e1e
+  FirebaseMessaging: b45ff9ef5d932600d3f78ff43168e7c5707aa7dc
   FirebaseStorage: 661fc1f8d4131891d256b62e82a45ace8b3f0c3b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
@@ -100,6 +114,7 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: d3738df7e2e476aca0ba6bf32a8c9fbcfc33d64b
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
   Quikkly: 4256fa2c2b44586ea0a0097c0086aceb46f73bb4
   RevealingSplashView: 72be158ad5e1bc72713e8f78383dc3e1803ce4d1
@@ -107,6 +122,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: c3db06e4275069e72d794252e540045fe00e3fa6
+PODFILE CHECKSUM: 77f742258a229799d8604cfcfdb1341a6cf534d0
 
 COCOAPODS: 1.2.1

@@ -26,7 +26,6 @@
 		1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51A1F0979DD00F173DE /* ContactSettingController.swift */; };
 		1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51C1F097A1400F173DE /* HelpSettingController.swift */; };
 		1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */; };
-		1459F7971F2B0F8F00372DCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1459F7961F2B0F8F00372DCA /* GoogleService-Info.plist */; };
 		14773E011EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */; };
 		14773E021EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */; };
 		14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14773E031EE604D7000D6AA9 /* Extensions.swift */; };
@@ -37,6 +36,7 @@
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
 		14CE71261F575D5C006B8C97 /* ViewProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */; };
+		14E6A1AB1F68904900931676 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E6A1AA1F68904900931676 /* GoogleService-Info.plist */; };
 		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
 		245E4DE1F71FB46373A15C6B /* Pods_familiarize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */; };
@@ -73,7 +73,6 @@
 		1458B51A1F0979DD00F173DE /* ContactSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSettingController.swift; sourceTree = "<group>"; };
 		1458B51C1F097A1400F173DE /* HelpSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpSettingController.swift; sourceTree = "<group>"; };
 		1458B51E1F097A2A00F173DE /* FeedbackSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackSettingController.swift; sourceTree = "<group>"; };
-		1459F7961F2B0F8F00372DCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14773DFF1EE51AAB000D6AA9 /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		14773E001EE51AAB000D6AA9 /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14773E031EE604D7000D6AA9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -84,6 +83,8 @@
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
 		14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileCell.swift; sourceTree = "<group>"; };
+		14E6A1AA1F68904900931676 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		14E6A1AC1F68919F00931676 /* familiarize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = familiarize.entitlements; sourceTree = "<group>"; };
 		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
 		14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanProfileController.swift; sourceTree = "<group>"; };
 		7D8031FE1A206B004D180F76 /* Pods_familiarize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_familiarize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +204,7 @@
 		1435323F1EDA9CC2000507DB /* familiarize */ = {
 			isa = PBXGroup;
 			children = (
+				14E6A1AC1F68919F00931676 /* familiarize.entitlements */,
 				F62960F71F5E2B0F00227AC7 /* Baloo-Regular.ttf */,
 				F65430731F3D04550047FC35 /* ProximaNovaSoft-Regular.otf */,
 				143532401EDA9CC2000507DB /* AppDelegate.swift */,
@@ -215,7 +217,7 @@
 				1435324A1EDA9CC2000507DB /* Assets.xcassets */,
 				1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */,
 				1435324F1EDA9CC2000507DB /* Info.plist */,
-				1459F7961F2B0F8F00372DCA /* GoogleService-Info.plist */,
+				14E6A1AA1F68904900931676 /* GoogleService-Info.plist */,
 				14773E031EE604D7000D6AA9 /* Extensions.swift */,
 			);
 			path = familiarize;
@@ -314,6 +316,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 4UKQ49SD55;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -342,9 +349,9 @@
 			files = (
 				F62960F81F5E2B1C00227AC7 /* Baloo-Regular.ttf in Resources */,
 				1435324E1EDA9CC2000507DB /* LaunchScreen.storyboard in Resources */,
+				14E6A1AB1F68904900931676 /* GoogleService-Info.plist in Resources */,
 				F65430741F3D04AB0047FC35 /* ProximaNovaSoft-Regular.otf in Resources */,
 				1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */,
-				1459F7971F2B0F8F00372DCA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +601,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = familiarize/familiarize.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 4UKQ49SD55;
@@ -611,7 +619,7 @@
 				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize1332;
+				PRODUCT_BUNDLE_IDENTIFIER = com.buzzenterprise.buzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "";
@@ -625,6 +633,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = familiarize/familiarize.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 4UKQ49SD55;
@@ -643,7 +652,7 @@
 				);
 				INFOPLIST_FILE = familiarize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nosleep.familiarize1332;
+				PRODUCT_BUNDLE_IDENTIFIER = com.buzzenterprise.buzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "";
