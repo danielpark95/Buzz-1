@@ -95,8 +95,8 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
                 }
                 if UserProfile.editableMultipleInputUserData.contains(key) {
                     for eachInput in inputName as! [String] {
-                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black_text", withInputName: eachInput, withAlreadySet: true)
-                        print(socialMediaInput.imageName!)
+                        let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: eachInput, withAlreadySet: true)
+                        //print(socialMediaInput.imageName!)
                         socialMediaInputs.append(socialMediaInput)
                     }
                 }
@@ -214,6 +214,8 @@ class AppCell: UICollectionViewCell {
     var socialMedia: SocialMedia? {
         didSet {
             if let appName = socialMedia?.appName {
+                print(appName)
+                print(appName.uppercased())
                 socialMediaName.text = UIManager.makeRegularHandForDisplay(appName)
             }
             if let imageName = socialMedia?.imageName {
@@ -232,6 +234,9 @@ class AppCell: UICollectionViewCell {
     let socialMediaName: UILabel = {
         let label = UIManager.makeLabel()
         label.font = UIFont(name: "ProximaNovaSoft-Regular", size: 11)
+        print("label.text = " , label.text!)
+        print("label.text.uppercased() = " , label.text!.uppercased())
+        
         label.text = label.text?.uppercased()
         return label
     }()
@@ -239,8 +244,13 @@ class AppCell: UICollectionViewCell {
     func setupViews() {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
-        //addSubview(socialMediaName)
+        addSubview(socialMediaName)
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant : -10).isActive = true
+        
+        
+        socialMediaName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        socialMediaName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30).isActive = true
+        
     }
 }

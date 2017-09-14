@@ -43,18 +43,17 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }()
     
     lazy var editButton: UIBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
+        return UIBarButtonItem(image: UIImage(named:"dan_editbutton_orange")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(editCard))
     }()
     
     lazy var addButton: UIBarButtonItem = {
-       return UIBarButtonItem(image: UIImage(named:"dan_addbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
+       return UIBarButtonItem(image: UIImage(named:"dan_addbutton_orange")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCard))
     }()
     
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMeCards), name: .reloadMeCards, object: nil)
         navigationItem.title = "Me"
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,6 +68,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
         do {
             try fetchedResultsController.performFetch()
         } catch let err {

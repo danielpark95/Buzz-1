@@ -167,7 +167,7 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         //Scanner Controller
         let scannerController = ScannerController()
         let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_yellow_25"), selectedImage: UIImage(named: "dan_tabbarcircle_yellow_25"))
+        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
         //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
         
         //Contacts Controller
