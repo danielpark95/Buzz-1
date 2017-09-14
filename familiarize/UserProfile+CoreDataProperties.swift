@@ -44,9 +44,10 @@ extension UserProfile {
     static let editableSingleInputUserData: Set<String> = ["name", "bio"]
     static let editableMultipleInputUserData: Set<String> = UserProfile.multipleInputUserData
     
+    static let delegate = UIApplication.shared.delegate as! AppDelegate
+    static let managedObjectContext = delegate.persistentContainer.viewContext
+    
     static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withUserProfile userProfile: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         userProfile.profileImageApp = "default"
         userProfile.profileImageURL = socialMediaProfileURL
         do {
@@ -59,8 +60,6 @@ extension UserProfile {
     }
     
     static func updateProfile(_ socialMediaInputs: [SocialMedia], userProfile: UserProfile) -> UserProfile {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
@@ -117,8 +116,6 @@ extension UserProfile {
     
     static func saveProfile(_ userCard: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
         for key in newUser.entity.propertiesByName.keys {
@@ -151,8 +148,6 @@ extension UserProfile {
     }
     
     static func deleteProfile(user: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         managedObjectContext.delete(user)
         do {
             try managedObjectContext.save()
@@ -163,8 +158,6 @@ extension UserProfile {
     
     // This is just a test run on how we can utilize clearData within the contactsVC
     static func clearData(forProfile userProfile: userProfileSelection) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
         do {
