@@ -19,15 +19,6 @@ class SocialMediaSelectionCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     let socialMediaImage: UIImageView = {
         let image = UIManager.makeImage()
         image.contentMode = .scaleAspectFill
@@ -48,18 +39,20 @@ class SocialMedia: NSObject, UICollectionViewDelegateFlowLayout {
     var imageName: String?
     var appName: String?
     var inputName: String?
+    var placeHolder: String?
     var isSet: Bool?
     var socialMediaProfileImage: SocialMediaProfileImage?
     
     let myAttribute = [ NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 12.0)! ]
     
-    init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool) {
+    init(withAppName appName: String, withImageName imageName: String, withInputName inputName: String, withAlreadySet isSet: Bool, withPlaceHolder placeHolder: String = "") {
         self.imageName = imageName
         //let upperAppName = appName.uppercased()
         self.appName = appName
         self.inputName = inputName
         //self.inputName = NSAttributedString(string: inputName, attributes: myAttribute)
         self.isSet = isSet
+        self.placeHolder = placeHolder
     }
     
     init(copyFrom: SocialMedia) {

@@ -34,6 +34,9 @@ target 'familiarize' do
   #Carousel layout for selecting profile image
   pod 'UPCarouselFlowLayout'
   
+  #Confetti
+  pod 'Cheers'
+  
   #Quikkly QR Code
   pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
@@ -41,9 +44,7 @@ target 'familiarize' do
   pod 'Firebase/Storage'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
-
-  #Circular Image Cropper -- Looks suprisingly like aquaints. FUCKKCKCKCKCKKCKC
-  pod 'RSKImageCropperSwift', '1.5.1.swift3'
+  pod 'Firebase/Messaging'
 
   #Circular image cropper
   pod 'AAPhotoCircleCrop'

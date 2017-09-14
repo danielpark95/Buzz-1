@@ -44,6 +44,8 @@ target 'familiarize' do
   pod 'Firebase/Storage'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Auth'  
 
   #Circular image cropper
   pod 'AAPhotoCircleCrop'

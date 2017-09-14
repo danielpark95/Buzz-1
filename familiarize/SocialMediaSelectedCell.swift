@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SocialMediaSelectedCell: UITableViewCell {
+class SocialMediaSelectedCell: UITableViewCell, UITextFieldDelegate {
     
     var selectedSocialMedia: SocialMedia? {
         didSet {
@@ -20,29 +20,26 @@ class SocialMediaSelectedCell: UITableViewCell {
             
             if let selectedSocialMediaImageName = selectedSocialMedia?.imageName {
                 socialMediaImageView.image = UIImage(named: selectedSocialMediaImageName)
-                
-                // Do we need this?
-                //socialMediaImageView.clipsToBounds = true
             }
+            socialMediaInputName.placeholder = selectedSocialMedia?.appName
             setupViews()
         }
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     let socialMediaImageView: UIImageView = {
        return UIManager.makeImage()
     }()
     
-    let socialMediaInputName: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 1)
+    lazy var socialMediaInputName : UITextField = {
+        let textField = UITextField()
+        //change to "name" and "bio" for name and bio. username doesn't really make sense.
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = .no
+        textField.tintColor = UIColor(white: 0.55, alpha: 1)
+        textField.textAlignment = NSTextAlignment.left
+        textField.delegate = self
+        textField.isEnabled = false
+        return textField
     }()
     
     // This creates the line in between each of the cells.
