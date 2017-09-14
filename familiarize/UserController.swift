@@ -111,7 +111,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func editCard() {
-
         let newCardController = NewCardController()
         let navigationController = UINavigationController(rootViewController: newCardController)
         newCardController.socialMediaInputs.removeAll(keepingCapacity: true)
@@ -122,6 +121,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         // Select the chosen image from the collectionview
         let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
         let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
+        newCardController.editingUserProfile = userProfile
         
         for key in userProfile.entity.propertiesByName.keys {
             guard let inputName = userProfile.value(forKey: key) else {
@@ -129,20 +129,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
             if UserProfile.editableMultipleInputUserData.contains(key) {
                 for eachInput in inputName as! [String] {
-                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(eachInput)_black", withInputName: eachInput, withAlreadySet: true)
-                    newCardController.socialMediaInputs.append(socialMediaInput)
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: false)
+                    newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
                 }
             } else if UserProfile.editableSingleInputUserData.contains(key) {
-                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(inputName)_black", withInputName: inputName as! String, withAlreadySet: true)
-                newCardController.socialMediaInputs.append(socialMediaInput)
+                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: inputName as! String, withAlreadySet: false)
+                newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
             }
         }
-        
-        for socialMediaInput in newCardController.socialMediaInputs {
-            newCardController.addSocialMediaInput(socialMedia: socialMediaInput, new: true)
-        }
-        
-        self.present(navigationController, animated: true)
+        present(navigationController, animated: true)
     }
     
     func addCard() {

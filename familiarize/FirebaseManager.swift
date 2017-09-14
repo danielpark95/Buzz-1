@@ -50,16 +50,26 @@ class FirebaseManager {
         return UInt64(arc4random()) + (UInt64(arc4random()) << 32)
     }
     
-    static func uploadCard(_ cardJSON: [String:[String]], withUniqueID uniqueID: UInt64) {
+    static func uploadCard(_ userCard: [String:[String]], withUniqueID uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
         let userID = UIDevice.current.identifierForVendor!.uuidString
         databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
-        for (eachKey, manyValues) in cardJSON {
+        for (eachKey, manyValues) in userCard {
             for eachValue in manyValues{
                 databaseRef.child("cards").child(uniqueIDString).child(eachKey).childByAutoId().setValue(eachValue)
             }
         }
         // TODO: Check for when the uniqueIDString is already in the database. Then return false and create a new unique id.
+    }
+    
+    static func updateCard(_ userCard: [String:[String]], withUniqueID uniqueID: UInt64) {
+        let uniqueIDString = String(uniqueID)
+        databaseRef.child("cards").child(uniqueIDString).removeValue()
+        for (eachKey, manyValues) in userCard {
+            for eachValue in manyValues {
+                databaseRef.child("cards").child(uniqueIDString).child(eachKey).childByAutoId().setValue(eachValue)
+            }
+        }
     }
     
     static func updateCard(_ profileImageInfo: [String:String], withUniqueID uniqueID: UInt64) {

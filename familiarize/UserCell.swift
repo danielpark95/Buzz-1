@@ -25,12 +25,12 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     var scannableView = ScannableView()
     var socialMediaInputs = [SocialMedia]()
     
-    var profileImage: UIImageView = {
+    var cardProfileImage: UIImageView = {
         let image = UIManager.makeProfileImage(valueOfCornerRadius: 150)
         return image
     }()
     
-    var profileImage2: UIImageView = {
+    var codeProfileImage: UIImageView = {
         let image = UIManager.makeProfileImage(valueOfCornerRadius: 97)
         return image
     }()
@@ -60,8 +60,8 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
 
     var myUserProfile: UserProfile? {
         didSet {
-            
             let name = NSMutableAttributedString(string: (myUserProfile?.name)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 25)!, NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)])
+
             nameLabel.attributedText = name
             
             let bio = NSMutableAttributedString(string: (myUserProfile?.bio)!, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 21)!, NSForegroundColorAttributeName: UIColor(red:144/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)])
@@ -72,35 +72,23 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
             setupViews()
             
             let uniqueID = UInt64(self.myUserProfile!.uniqueID!)
-            print("This is the unique ID \(uniqueID)")
             if let profileImage = myUserProfileImageCache.object(forKey: "\(uniqueID)" as NSString) {
-                self.profileImage.image = profileImage
-                print("I hit the cache")
+                cardProfileImage.image = profileImage
             } else {
-                print("I didn't hit the cache")
                 guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID) else {
                     print("file was not able to be retrieved from disk")
                     return
                 }
-                
-                self.profileImage.image = profileImage
-                myUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(uniqueID)" as NSString)
+                cardProfileImage.image = profileImage
+                myUserProfileImageCache.setObject(cardProfileImage.image!, forKey: "\(uniqueID)" as NSString)
             }
-            
-            if let profileImage2 = myUserProfileImageCache.object(forKey: "\(uniqueID)" as NSString) {
-                self.profileImage2.image = profileImage2
-            } else {
-                DispatchQueue.global(qos: .userInteractive).async {
-                    // if it is not in cache, then call from disk.
-                    if let profileImage2 = DiskManager.readImageFromLocal(withUniqueID: uniqueID) {
-                        DispatchQueue.main.async {
-                            self.profileImage2.image = profileImage2
-                            myUserProfileImageCache.setObject(self.profileImage2.image!, forKey: "\(uniqueID)" as NSString)
-                        }
-                    }
-                }
-            }
-            
+            codeProfileImage.image = cardProfileImage.image
+    
+            // We must purge all the data that is in socialMediaInputs due 
+            // to the fact that user cells aren't destroyed when you move it out from view.
+            // Instead, the cell is being recycled, and thus you need to remove all contents that it 
+            // may have from previous cells.
+            socialMediaInputs.removeAll(keepingCapacity: true)
             for key in myUserProfile!.entity.propertiesByName.keys {
                 guard let inputName = myUserProfile!.value(forKey: key) else {
                     continue
@@ -114,6 +102,8 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
                 }
             }
             
+            // Refresh collectionview content with the social media inputs.
+            appsCollectionView.reloadData()
         }
     }
     
@@ -121,7 +111,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         for v in (self.subviews) {
             v.removeFromSuperview()
         }
-        
         if onQuikklyCode == false {
             presentProfile()
         } else {
@@ -132,7 +121,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     func createQR(_ userProfile: UserProfile) {
         let skin = ScannableSkin()
         skin.backgroundColor = "#FFD705"
-        //skin.maskColor = "#2f2f2f"
         skin.dotColor = "#2f2f2f"
         skin.borderColor = "#2f2f2f"
         skin.overlayColor = "#2f2f2f"
@@ -146,30 +134,30 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     
     func presentScannableCode() {
         self.addSubview(scannableView)
-        self.addSubview(profileImage2)
+        self.addSubview(codeProfileImage)
         scannableView.translatesAutoresizingMaskIntoConstraints = false
         scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         scannableView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         scannableView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
         
-        profileImage2.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
-        profileImage2.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
-        profileImage2.heightAnchor.constraint(equalToConstant: 194).isActive = true
-        profileImage2.widthAnchor.constraint(equalToConstant: 194).isActive = true
+        codeProfileImage.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
+        codeProfileImage.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
+        codeProfileImage.heightAnchor.constraint(equalToConstant: 194).isActive = true
+        codeProfileImage.widthAnchor.constraint(equalToConstant: 194).isActive = true
     }
     
     func presentProfile() {
-        addSubview(profileImage)
+        addSubview(cardProfileImage)
         addSubview(nameLabel)
         addSubview(bioLabel)
         addSubview(appsCollectionView)
         
-        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -100).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        cardProfileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        cardProfileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -100).isActive = true
+        cardProfileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
         //profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        cardProfileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
         // We have to do imageXCoordPadding/4 because we are removing some pieces on the right side and have to compensate for it.
         
         //Namelabel position upated using NSLayoutConstraint -dan
@@ -181,9 +169,10 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 230).isActive = true
         bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
-        appsCollectionView.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
-        appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100).isActive = true
-        appsCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        appsCollectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        appsCollectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        appsCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -100).isActive = true
+        appsCollectionView.heightAnchor.constraint(equalToConstant: 101).isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -191,29 +180,22 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppCell
         cell.socialMedia = socialMediaInputs[indexPath.item]
         return cell
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if (socialMediaInputs.count == 2 ) {
             return CGSize(width: 140.0, height: 100)
         }
         if (socialMediaInputs.count >= 4) {
             return CGSize(width: 80.0, height: 100.0)
         }
-        
         return CGSize(width: 120.0, height: 100.0)
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if (socialMediaInputs.count == 1 ) {
             return UIEdgeInsetsMake(0, 127, 0, 127)
         } else if (socialMediaInputs.count == 2 ) {

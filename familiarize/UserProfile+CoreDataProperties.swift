@@ -58,8 +58,51 @@ extension UserProfile {
         }
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64) -> UserProfile {
+    static func updateProfile(_ socialMediaInputs: [SocialMedia], userProfile: UserProfile) -> UserProfile {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+        var userCard = [String:[String]]()
+        for eachSocialMediaInput in socialMediaInputs {
+            if userCard[eachSocialMediaInput.appName!] == nil {
+                userCard[eachSocialMediaInput.appName!] = [String]()
+            }
+            userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
+        }
+        
+        // Zero out all the data.
+        for key in userProfile.entity.propertiesByName.keys {
+            if multipleInputUserData.contains(key) {
+                userProfile.setValue(nil, forKeyPath: key)
+            }
+        }
+        
+        // Put in new data.
+        for key in userProfile.entity.propertiesByName.keys {
+            if userCard[key] != nil && multipleInputUserData.contains(key) {
+                var input = [String]()
+                for eachInput in userCard[key]! {
+                    input.append(eachInput)
+                }
+                userProfile.setValue(input, forKeyPath: key)
+            } else if userCard[key] != nil && singleInputUserData.contains(key) {
+                userProfile.setValue(userCard[key]?.first, forKeyPath: key)
+            }
+        }
+        
+        userProfile.date = NSDate()
+        
+        FirebaseManager.updateCard(userCard, withUniqueID: userProfile.uniqueID!.uint64Value)
+        
+        do {
+            try(managedObjectContext.save())
+        } catch let err {
+            print(err)
+        }
+        return userProfile
+    }
     
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64) -> UserProfile {
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
             if userCard[eachSocialMediaInput.appName!] == nil {
@@ -72,21 +115,21 @@ extension UserProfile {
         return userProfile
     }
     
-    static func saveProfile(_ cardJSON: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
+    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
         for key in newUser.entity.propertiesByName.keys {
-            if cardJSON[key] != nil && multipleInputUserData.contains(key) {
+            if userCard[key] != nil && multipleInputUserData.contains(key) {
                 var input = [String]()
-                for eachInput in cardJSON[key]! {
+                for eachInput in userCard[key]! {
                     input.append(eachInput)
                 }
                 newUser.setValue(input, forKeyPath: key)
-            } else if cardJSON[key] != nil && singleInputUserData.contains(key) {
-                newUser.setValue(cardJSON[key]?.first, forKeyPath: key)
+            } else if userCard[key] != nil && singleInputUserData.contains(key) {
+                newUser.setValue(userCard[key]?.first, forKeyPath: key)
             }
         }
 
@@ -95,7 +138,7 @@ extension UserProfile {
         
         // If this is my user that I am saving, then push it to the cloud.
         if userProfile == .myUser {
-            FirebaseManager.uploadCard(cardJSON, withUniqueID: newUser.uniqueID!.uint64Value)
+            FirebaseManager.uploadCard(userCard, withUniqueID: newUser.uniqueID!.uint64Value)
         }
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
