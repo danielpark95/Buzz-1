@@ -14,7 +14,7 @@ import AAPhotoCircleCrop
 
 protocol NewCardControllerDelegate {
     func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
-    func addSocialMediaInput(socialMedia: SocialMedia, new: Bool) -> Void
+    func addSocialMediaInput(socialMedia: SocialMedia) -> Void
 }
 
 class SocialMediaProfileImage: SocialMedia {
@@ -36,6 +36,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         case profileImageSelectionTableView
         case socialMediaSelectionTableView
     }
+    
+    var editingUserProfile: UserProfile?
 
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_add", withInputName: "", withAlreadySet: false),
@@ -65,8 +67,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     ]
     
     var socialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "Required", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "Optional", withAlreadySet: true)
+        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "", withAlreadySet: true),
+        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true)
     ]
     
     lazy var socialMediaSelectionContainerView: UIView = {
@@ -297,19 +299,32 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let selectedIndexPath = profileImageSelectionCollectionView.indexPathForItem(at: initialPinchPoint)
         let selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
         
-        // Save the new card information into core data.
-        let newUserProfile = UserProfile.saveProfileWrapper(socialMediaInputs)
+        var uniqueID: UInt64?
+        if editingUserProfile != nil {
+            uniqueID = editingUserProfile?.uniqueID!.uint64Value
+        } else {
+            uniqueID = FirebaseManager.generateUniqueID()
+        }
+        
+        myUserProfileImageCache.setObject((selectedSocialMediaProfileImage.profileImage)!, forKey: "\(uniqueID!)" as NSString)
+        
+        var userProfile: UserProfile?
+        if editingUserProfile != nil {
+            userProfile = UserProfile.updateProfile(socialMediaInputs, userProfile: editingUserProfile!)
+        } else {
+            // Save the new card information into core data.
+            userProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID!)
+        }
         
         // Save the image to disk.
         let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage.profileImage)!)!)
-        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: newUserProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
+        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: userProfile!.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
         
         // When the image chosen is from the camera roll, upload the image to firebase
         // And then update the URL link to that image.
         FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
-            UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withUserProfile: newUserProfile)
+            UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withUserProfile: userProfile!)
         })
-        
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
@@ -326,10 +341,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     // For adding it to the Table view.
     // This is a delegate protocol. . .
-    func addSocialMediaInput(socialMedia: SocialMedia, new: Bool) {
+    func addSocialMediaInput(socialMedia: SocialMedia) {
         // TODO: Valid name checker. 
         // i.e. no blank usernames.
-        if (socialMedia.inputName != "" && socialMedia.isSet == false)  ||  new {
+        if socialMedia.inputName != "" && socialMedia.isSet == false {
             let newSocialMediaInput = SocialMedia(copyFrom: socialMedia)
             newSocialMediaInput.isSet = true
             socialMediaInputs.append(newSocialMediaInput)

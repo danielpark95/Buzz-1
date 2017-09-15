@@ -132,29 +132,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         scannableView.scannable = scannable
     }
     
-    var profileImage: UIImageView = {
-        let image = UIManager.makeProfileImage(valueOfCornerRadius: 150)
-        return image
-    }()
-    
-    var profileImage2: UIImageView = {
-        let image = UIManager.makeProfileImage(valueOfCornerRadius: 97)
-        return image
-    }()
-    
-    func flipCard() {
-        
-        for v in (self.subviews){
-            v.removeFromSuperview()
-        }
-        
-        if onQuikklyCode == false {
-            presentProfile()
-        } else {
-            presentScannableCode()
-        }
-    }
-    
     func presentScannableCode() {
         self.addSubview(scannableView)
         self.addSubview(codeProfileImage)
@@ -170,43 +147,13 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         codeProfileImage.widthAnchor.constraint(equalToConstant: 194).isActive = true
     }
     
-    
-    lazy var socialMediaImages: [String: UIImageView] = [
-        //temporary icons while we wait for new icons from our graphic designers
-        "phoneNumber": UIManager.makeImage(imageName: "dan_phoneNumber_black"),
-        "email": UIManager.makeImage(imageName: "dan_email_black"),
-        "faceBookProfile": UIManager.makeImage(imageName: "dan_facebookProfile_black"),
-        "instagramProfile": UIManager.makeImage(imageName: "dan_instagramProfile_black"),
-        "snapChatProfile": UIManager.makeImage(imageName: "dan_snapChatProfile_black"),
-        "twitterProfile": UIManager.makeImage(imageName: "dan_twitterProfile_black"),
-        "linkedInProfile": UIManager.makeImage(imageName: "dan_linkedInProfile_black"),
-        "soundCloudProfile": UIManager.makeImage(imageName: "dan_soundCloudProfile_black"),
-        "venmoProfile": UIManager.makeImage(imageName: "dan_venmoProfile_black"),
-        "slackProfile": UIManager.makeImage(imageName: "dan_slackProfile_black"),
-        "gitHubProfile": UIManager.makeImage(imageName: "dan_gitHubProfile_black"),
-        "spotifyProfile": UIManager.makeImage(imageName: "dan_spotifyProfile_black"),
-        "kakaoTalkProfile": UIManager.makeImage(imageName: "dan_kakaoTalkProfile_black"),
-        "whatsAppProfile": UIManager.makeImage(imageName: "dan_whatsAppProfile_black"),
-        ]
-   
-    let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "email", withImageName: "dan_email_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebookProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "venmoProfile", withImageName: "dan_venmoProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "slackProfile", withImageName: "dan_slackProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "gitHubProfile", withImageName: "dan_gitHubProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "spotifyProfile", withImageName: "dan_spotifyProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "kakaoTalkProfile", withImageName: "dan_kakaoTalkProfile_black", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "whatsAppProfile", withImageName: "dan_whatsAppProfile_black", withInputName: "", withAlreadySet: false),
-        ]
-    
     func presentProfile() {
+<<<<<<< HEAD
+        addSubview(profileImage)
+        profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -110).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
+=======
         addSubview(cardProfileImage)
         addSubview(nameLabel)
         addSubview(bioLabel)
@@ -215,16 +162,48 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         cardProfileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         cardProfileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -100).isActive = true
         cardProfileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
+>>>>>>> b6967921dc538c2608e0e8682c65741020931218
         //profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
         cardProfileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
         // We have to do imageXCoordPadding/4 because we are removing some pieces on the right side and have to compensate for it.
         
         //Namelabel position upated using NSLayoutConstraint -dan
         nameLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+<<<<<<< HEAD
+        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 160).isActive = true
+        //nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
+        //nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+=======
         nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 170).isActive = true
+>>>>>>> b6967921dc538c2608e0e8682c65741020931218
         nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+<<<<<<< HEAD
+        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 220).isActive = true
+        //bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
+        //bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
+        //presentAngularSocialMediaButtons()
+        //presentLinearSocialMediaButtons()
+        
+        
+        
+        addSubview(appsCollectionView)
+        appsCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        appsCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        appsCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 470).isActive = true
+        //appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        //appsCollectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        //appsCollectionView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+        appsCollectionView.widthAnchor.constraint(equalToConstant: 210).isActive = true
+        appsCollectionView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        appsCollectionView.dataSource = self
+        appsCollectionView.delegate = self
+        appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
+=======
         bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 230).isActive = true
         bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
@@ -232,6 +211,7 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         appsCollectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         appsCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -100).isActive = true
         appsCollectionView.heightAnchor.constraint(equalToConstant: 101).isActive = true
+>>>>>>> b6967921dc538c2608e0e8682c65741020931218
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

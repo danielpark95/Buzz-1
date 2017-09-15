@@ -53,9 +53,10 @@ extension UserProfile {
     static let editableSingleInputUserData: Set<String> = ["name", "bio"]
     static let editableMultipleInputUserData: Set<String> = UserProfile.multipleInputUserData
     
+    static let delegate = UIApplication.shared.delegate as! AppDelegate
+    static let managedObjectContext = delegate.persistentContainer.viewContext
+    
     static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withUserProfile userProfile: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         userProfile.profileImageApp = "default"
         userProfile.profileImageURL = socialMediaProfileURL
         do {
@@ -67,8 +68,8 @@ extension UserProfile {
         }
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia]) -> UserProfile {
-    
+    static func updateProfile(_ socialMediaInputs: [SocialMedia], userProfile: UserProfile) -> UserProfile {
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
             if userCard[eachSocialMediaInput.appName!] == nil {
@@ -77,34 +78,73 @@ extension UserProfile {
             userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
         }
         
-        let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser)
+        // Zero out all the data.
+        for key in userProfile.entity.propertiesByName.keys {
+            if multipleInputUserData.contains(key) {
+                userProfile.setValue(nil, forKeyPath: key)
+            }
+        }
+        
+        // Put in new data.
+        for key in userProfile.entity.propertiesByName.keys {
+            if userCard[key] != nil && multipleInputUserData.contains(key) {
+                var input = [String]()
+                for eachInput in userCard[key]! {
+                    input.append(eachInput)
+                }
+                userProfile.setValue(input, forKeyPath: key)
+            } else if userCard[key] != nil && singleInputUserData.contains(key) {
+                userProfile.setValue(userCard[key]?.first, forKeyPath: key)
+            }
+        }
+        
+        userProfile.date = NSDate()
+        
+        FirebaseManager.updateCard(userCard, withUniqueID: userProfile.uniqueID!.uint64Value)
+        
+        do {
+            try(managedObjectContext.save())
+        } catch let err {
+            print(err)
+        }
         return userProfile
     }
     
-    static func saveProfile(_ cardJSON: [String:[String]], forProfile userProfile: userProfileSelection) -> UserProfile {
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64) -> UserProfile {
+        var userCard = [String:[String]]()
+        for eachSocialMediaInput in socialMediaInputs {
+            if userCard[eachSocialMediaInput.appName!] == nil {
+                userCard[eachSocialMediaInput.appName!] = [String]()
+            }
+            userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
+        }
+        
+        let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser, withUniqueID: uniqueID)
+        return userProfile
+    }
+    
+    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
         for key in newUser.entity.propertiesByName.keys {
-            if cardJSON[key] != nil && multipleInputUserData.contains(key) {
+            if userCard[key] != nil && multipleInputUserData.contains(key) {
                 var input = [String]()
-                for eachInput in cardJSON[key]! {
+                for eachInput in userCard[key]! {
                     input.append(eachInput)
                 }
                 newUser.setValue(input, forKeyPath: key)
-            } else if cardJSON[key] != nil && singleInputUserData.contains(key) {
-                newUser.setValue(cardJSON[key]?.first, forKeyPath: key)
+            } else if userCard[key] != nil && singleInputUserData.contains(key) {
+                newUser.setValue(userCard[key]?.first, forKeyPath: key)
             }
         }
 
         // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
-        newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
+        newUser.uniqueID = NSNumber(value: uniqueID)
         
         // If this is my user that I am saving, then push it to the cloud.
         if userProfile == .myUser {
-            FirebaseManager.uploadCard(cardJSON, withUniqueID: newUser.uniqueID!.uint64Value)
+            FirebaseManager.uploadCard(userCard, withUniqueID: newUser.uniqueID!.uint64Value)
         }
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
@@ -117,8 +157,6 @@ extension UserProfile {
     }
     
     static func deleteProfile(user: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         managedObjectContext.delete(user)
         do {
             try managedObjectContext.save()
@@ -129,8 +167,6 @@ extension UserProfile {
     
     // This is just a test run on how we can utilize clearData within the contactsVC
     static func clearData(forProfile userProfile: userProfileSelection) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
         do {

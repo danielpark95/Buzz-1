@@ -127,7 +127,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                 }
                 
                 // Save the fetched data into CoreData.
-                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser)
+                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: scannable.value)
                 
                 // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile

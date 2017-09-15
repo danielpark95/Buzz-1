@@ -12,17 +12,27 @@ import CoreData
 class SocialMediaController: UIViewController, UITextFieldDelegate {
     
     var newCardControllerDelegate: NewCardController?
-    var socialMedia: SocialMedia?
+    
+    var socialMedia: SocialMedia? {
+        didSet {
+            inputTextField.placeholder = socialMedia?.appName
+            inputTextField.text = socialMedia?.inputName
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //inputTextField.delegate = self
-        
         setupViews()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true) //This will hide the keyboard
+    }
+    
+    // When the "done" button is pressed, dismiss the vc
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        addClicked()
+        return false
     }
     
     // After all of the views are setups, then animate the motion where the popup image
@@ -32,11 +42,6 @@ class SocialMediaController: UIViewController, UITextFieldDelegate {
         self.animatePopup()
         // Makes the inputTextField show up immendiately when the social media icon is pressed.
         inputTextField.becomeFirstResponder()
-        
-        //inputTextField.delegate = self
-        //inputTextField.delegate = self
-        
-        
     }
     
     lazy var addButton: UIButton = {
@@ -71,23 +76,21 @@ class SocialMediaController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    let inputTextField : UITextField = {
+    lazy var inputTextField : UITextField = {
         let textField = UITextField()
-        //change to "name" and "bio" for name and bio. username doesn't really make sense.
         textField.placeholder = "username"
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .no
         textField.tintColor = UIColor(white: 0.55, alpha: 1)
         textField.textAlignment = NSTextAlignment.center
-        
-        
-        
+        textField.delegate = self
+        textField.returnKeyType = .done
         return textField
     }()
     
     func addClicked() {
         socialMedia?.inputName = inputTextField.text!
-        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!, new: false)
+        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
         self.dismiss(animated: false, completion: nil)
     }
     

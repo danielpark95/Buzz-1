@@ -264,10 +264,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             if index >= (socialMediaInputs?.count)! {
                 break
             }
-<<<<<<< HEAD
             //print(index)
-=======
->>>>>>> b6967921dc538c2608e0e8682c65741020931218
             cell.socialMediaInputs?.append((socialMediaInputs?[index])!)
         }
         cell.userSocialMediaCollectionView.reloadData()

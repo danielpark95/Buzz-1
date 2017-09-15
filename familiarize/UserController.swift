@@ -18,7 +18,7 @@ extension Notification.Name {
 class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate  {
     
     private let cellId = "cellId"
-    var blockOperations = [BlockOperation]()
+    private var blockOperations = [BlockOperation]()
     
     // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
     var pageControl: UIPageControl = {
@@ -76,11 +76,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } catch let err {
             print(err)
         }
-        
-        //UserProfile.clearData(forProfile: .myUser)
-        //UserProfile.clearData(forProfile: .otherUser)
-        //UserProfile.saveProfile(user2, forProfile: .myUser)
-        //UserProfile.saveProfile(user1, forProfile: .myUser)
 
         setupView()
         setupNavBarButton()
@@ -92,7 +87,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func reloadMeCards() {
-        // This does not fucking work ):
         do {
             try fetchedResultsController.performFetch()
             setupNavBarButton()
@@ -106,10 +100,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let pointInCollectionView = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView?.indexPathForItem(at: pointInCollectionView)
         let selectedCell = collectionView?.cellForItem(at: selectedIndexPath!) as! UserCell
-        selectedCell.onQRImage = !(selectedCell.onQRImage)
-        selectedCell.flipCard()
+        selectedCell.onQuikklyCode = !(selectedCell.onQuikklyCode)
+        selectedCell.setupViews()
     }
     
+    // Only display the edit button when the user has created at least one card
     func setupNavBarButton() {
         if fetchedResultsController.fetchedObjects?.count != 0 {
             navigationItem.leftBarButtonItem = editButton
@@ -118,7 +113,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func editCard() {
-        
         let newCardController = NewCardController()
         let navigationController = UINavigationController(rootViewController: newCardController)
         newCardController.socialMediaInputs.removeAll(keepingCapacity: true)
@@ -129,6 +123,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         // Select the chosen image from the collectionview
         let selectedIndexPath = collectionView?.indexPathForItem(at: initialPinchPoint)
         let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
+        newCardController.editingUserProfile = userProfile
         
         for key in userProfile.entity.propertiesByName.keys {
             guard let inputName = userProfile.value(forKey: key) else {
@@ -136,24 +131,15 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
             if UserProfile.editableMultipleInputUserData.contains(key) {
                 for eachInput in inputName as! [String] {
-                    print("eachInput = ", eachInput)
-                    print("key = ", key)
-                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: true)
-                    newCardController.socialMediaInputs.append(socialMediaInput)
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: false)
+                    newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
                 }
             } else if UserProfile.editableSingleInputUserData.contains(key) {
-                print("inputName = ", inputName)
-                print("key = ", key)
-                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: inputName as! String, withAlreadySet: true)
-                newCardController.socialMediaInputs.append(socialMediaInput)
+                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: inputName as! String, withAlreadySet: false)
+                newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
             }
         }
-        
-        for socialMediaInput in newCardController.socialMediaInputs {
-            newCardController.addSocialMediaInput(socialMedia: socialMediaInput, new: true)
-        }
-        
-        self.present(navigationController, animated: true)
+        present(navigationController, animated: true)
     }
     
     func addCard() {
@@ -202,7 +188,6 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
         }, completion: nil)
     }
-    
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
