@@ -52,6 +52,8 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     
     override func viewDidLoad() {
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
+        
+        
         super.viewDidLoad()
         do {
             try fetchedResultsController.performFetch()

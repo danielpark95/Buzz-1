@@ -60,6 +60,7 @@ class SocialMediaSelectedCell: UITableViewCell {
         
         separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
+        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 15).isActive = true
         separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         

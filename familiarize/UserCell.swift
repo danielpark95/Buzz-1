@@ -227,7 +227,7 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     func presentProfile() {
         addSubview(profileImage)
         profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -100).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -110).isActive = true
         profileImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
         //profileImage.widthAnchor.constraint(equalToConstant: 350 + (imageXCoordPadding/4)).isActive = true
         profileImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
@@ -238,14 +238,14 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         addSubview(bioLabel)
         
         nameLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 170).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 160).isActive = true
         //nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         //nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
         
         bioLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 230).isActive = true
+        bioLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 220).isActive = true
         //bioLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35).isActive = true
         //bioLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         bioLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -259,10 +259,11 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         appsCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         appsCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         appsCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 470).isActive = true
-        appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100).isActive = true
-        appsCollectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        appsCollectionView.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        appsCollectionView.heightAnchor.constraint(equalToConstant: 210).isActive = true
+        //appsCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        //appsCollectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        //appsCollectionView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+        appsCollectionView.widthAnchor.constraint(equalToConstant: 210).isActive = true
+        appsCollectionView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self

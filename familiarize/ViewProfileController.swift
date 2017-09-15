@@ -195,6 +195,9 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         view.addSubview(userSocialMediaCollectionView)
         view.addSubview(pageControl)
         
+        print("width = ", popupImageView.image?.size.width)
+        print("height = ", popupImageView.image?.size.height)
+        
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         popupImageView.widthAnchor.constraint(equalToConstant: 326).isActive = true
         popupImageView.heightAnchor.constraint(equalToConstant: 388).isActive = true
@@ -225,9 +228,9 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         
         userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         userSocialMediaCollectionView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 80).isActive = true
-        userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -60).isActive = true
-        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        //userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -60).isActive = true
+        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
         pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -261,7 +264,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             if index >= (socialMediaInputs?.count)! {
                 break
             }
-            print(index)
+            //print(index)
             cell.socialMediaInputs?.append((socialMediaInputs?[index])!)
         }
         cell.userSocialMediaCollectionView.reloadData()

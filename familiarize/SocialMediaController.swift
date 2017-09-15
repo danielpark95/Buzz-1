@@ -143,8 +143,8 @@ class SocialMediaController: UIViewController, UITextFieldDelegate {
         
         socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
-        socialMediaImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        //socialMediaImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        //socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
         inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true

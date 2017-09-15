@@ -9,12 +9,13 @@
 import UIKit
 import CoreData
 import SwiftyJSON
+import Instructions
 
 extension Notification.Name {
     static let reloadMeCards = Notification.Name("reloadMeCards")
 }
 
-class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
+class UserController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate  {
     
     private let cellId = "cellId"
     var blockOperations = [BlockOperation]()
@@ -67,6 +68,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
         do {

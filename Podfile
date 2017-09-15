@@ -47,4 +47,8 @@ target 'familiarize' do
 
   #Circular image cropper
   pod 'AAPhotoCircleCrop'
+  
+  #Instructions
+  pod 'Instructions', '~> 1.0.0'
+  
 end
