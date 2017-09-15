@@ -33,13 +33,22 @@ extension UserProfile {
     @NSManaged public var linkedInProfile: [String]?
     @NSManaged public var soundCloudProfile: [String]?
     @NSManaged public var twitterProfile: [String]?
+    
+    @NSManaged public var venmoProfile: [String]?
+    @NSManaged public var slackProfile: [String]?
+    @NSManaged public var gitHubProfile: [String]?
+    @NSManaged public var spotifyProfile: [String]?
+    @NSManaged public var kakaoTalkProfile: [String]?
+    @NSManaged public var whatsAppProfile: [String]?
+    
+    
     @NSManaged public var profileImageApp: String?
     @NSManaged public var profileImageURL: String?
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
     
     static let singleInputUserData: Set<String> = ["name", "bio", "profileImageApp", "profileImageURL"]
-    static let multipleInputUserData: Set<String> = ["email", "phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile"]
+    static let multipleInputUserData: Set<String> = ["email", "phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile", "venmoProfile", "slackProfile", "gitHubProfile", "spotifyProfile", "kakaoTalkProfile", "whatsAppProfile"]
     
     static let editableSingleInputUserData: Set<String> = ["name", "bio"]
     static let editableMultipleInputUserData: Set<String> = UserProfile.multipleInputUserData

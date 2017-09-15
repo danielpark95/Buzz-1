@@ -40,15 +40,20 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     var editingUserProfile: UserProfile?
 
     let socialMediaChoices: [SocialMedia] = [
-        SocialMedia(withAppName: "", withImageName: "dan_addbutton_orange", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "email", withImageName: "dan_email_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_facebookProfile_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_color", withInputName: "", withAlreadySet: false),
-        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_color", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "email", withImageName: "dan_email_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "faceBookProfile", withImageName: "dan_faceBookProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "snapChatProfile", withImageName: "dan_snapChatProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "instagramProfile", withImageName: "dan_instagramProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "twitterProfile", withImageName: "dan_twitterProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "linkedInProfile", withImageName: "dan_linkedInProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "soundCloudProfile", withImageName: "dan_soundCloudProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "venmoProfile", withImageName: "dan_venmoProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "slackProfile", withImageName: "dan_slackProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "gitHubProfile", withImageName: "dan_gitHubProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "spotifyProfile", withImageName: "dan_spotifyProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "kakaoTalkProfile", withImageName: "dan_kakaoTalkProfile_add", withInputName: "", withAlreadySet: false),
+        SocialMedia(withAppName: "whatsAppProfile", withImageName: "dan_whatsAppProfile_add", withInputName: "", withAlreadySet: false),
         ]
     
     var socialMediaProfileImages: [SocialMediaProfileImage] = [
@@ -83,10 +88,15 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return view
     }()
     
+    
     lazy var socialMediaSelectionCollectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        //let cellSize = CGSize(width: 70, height: 50)
+        //layout.itemSize = cellSize
+        layout.minimumLineSpacing = 15.0
+        layout.minimumInteritemSpacing = 10.0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
@@ -96,12 +106,15 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: self.socialMediaSelectionCellId)
+        
+
         //collectionView.layer.cornerRadius = 5
         collectionView.layer.masksToBounds = true
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.tag = collectionViewTag.socialMediaSelectionTableView.rawValue
         return collectionView
     }()
+    
     
     lazy var profileImageSelectionCollectionView: UICollectionView = {
         let layout = UPCarouselFlowLayout()
@@ -363,6 +376,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             }
         })
     }
+    
     func circleCropDidCropImage(_ image: UIImage) {
         socialMediaProfileImages[socialMediaProfileImages.count-2].profileImage = image
         profileImageSelectionCollectionView.reloadData()

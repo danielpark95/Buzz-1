@@ -43,7 +43,6 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
         // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
         NotificationCenter.default.addObserver(self, selector: #selector(reloadFriendCards), name: .reloadFriendCards, object: nil)
         navigationItem.title = "Friends"
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,6 +50,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     
     override func viewDidLoad() {
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
         super.viewDidLoad()
         do {
             try fetchedResultsController.performFetch()
@@ -69,7 +69,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     
     func setupNavBarButton() {
-        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_editbutton_yellow")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(openHamburger))
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(openHamburger))
         navigationItem.rightBarButtonItem = hamburgerButton
     }
     
