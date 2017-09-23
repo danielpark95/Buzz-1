@@ -60,6 +60,7 @@ class ScanProfileController: UIViewController {
     lazy var dismissButton: UIButton = {
         let button = UIManager.makeButton(imageName: "dan_close_button_v2")
         button.isHidden = true
+        button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
     
@@ -228,6 +229,5 @@ class ScanProfileController: UIViewController {
         
         dismissButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 83).isActive = true
         dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
     }
 }

@@ -26,30 +26,11 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate {
         self.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
-        
-        let backgroundImage: UIImageView = {
-            let image = UIManager.makeImage(imageName: "background")
-            image.contentMode = .scaleAspectFill
-            return image
-        }()
-        
-        //self.view.addSubview(backgroundImage)
-        //backgroundImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        //backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        //backgroundImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        //backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
-        self.view.addSubview(revealingSplashView)
-        //revealingSplashView.animationType = SplashAnimationType.squeezeAndZoomOut
-        //revealingSplashView.animationType = SplashAnimationType.wobbleAndZoomOut
-        //revealingSplashView.animationType = SplashAnimationType.swingAndZoomOut
-        //revealingSplashView.animationType = SplashAnimationType.rotateOut
-        //revealingSplashView.animationType = SplashAnimationType.popAndZoomOut
-        revealingSplashView.startAnimation(){
-             //backgroundImage.removeFromSuperview()
-        }
       
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
+        view.addSubview(revealingSplashView)
+        revealingSplashView.startAnimation()
+        
         if isNotFirstTime() {
             let tabBarController = ESTabBarController()
             tabBarController.tabBar.isTranslucent = false

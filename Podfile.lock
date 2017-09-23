@@ -1,8 +1,18 @@
 PODS:
   - AAPhotoCircleCrop (1.2.0)
   - Alamofire (4.5.0)
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
   - Cheers (1.2.0)
   - ESTabBarController-swift (2.5)
+  - FBSDKCoreKit (4.26.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.26.0):
+    - FBSDKCoreKit
   - Firebase/Auth (4.1.0):
     - Firebase/Core
     - FirebaseAuth (= 4.1.0)
@@ -84,6 +94,8 @@ DEPENDENCIES:
   - Alamofire (~> 4.4)
   - Cheers
   - ESTabBarController-swift
+  - FBSDKCoreKit
+  - FBSDKLoginKit
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -112,8 +124,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AAPhotoCircleCrop: 61371491e3db6d295f6402b40d4ab481129ddf43
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Cheers: 860c061defd9bb10124b091ee1584a5761dbac23
   ESTabBarController-swift: 8daa432f2a9be8ebd25101dc46c84472fd760512
+  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
+  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
   Firebase: ebebf41db7f10e0c7668b6eaaa857fbe599aa478
   FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
   FirebaseAuth: 8d1d2389cf82f891048d6d50d27d044f55ae09a6
@@ -138,6 +153,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: fcb7bc2080043b220e8b4909abefa83b6380830a
+PODFILE CHECKSUM: c6a317f51f9376616458e3d2d8f326b7d0adfc97
 
 COCOAPODS: 1.2.1

@@ -12,6 +12,7 @@ import ESTabBarController_swift
 import Firebase
 import Quikkly
 import Alamofire
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
@@ -24,16 +25,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
         
-        // Firebase Setup 
+        // Firebase setup
         FirebaseApp.configure()
+        
+        // Facebook login setup
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = TabBarController()
-
         
+        if Auth.auth().currentUser != nil {
+            window?.rootViewController = TabBarController()
+        } else {
+            window?.rootViewController = LoginController()
+        }
+
         setupInternetAccessView()
+        
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        return handled
     }
     
     // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
