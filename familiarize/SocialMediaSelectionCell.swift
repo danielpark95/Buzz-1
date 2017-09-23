@@ -31,7 +31,7 @@ class SocialMediaSelectionCell: UICollectionViewCell {
         socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        //socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
 

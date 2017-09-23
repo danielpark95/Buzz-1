@@ -19,7 +19,11 @@ class SocialMediaSelectedCell: UITableViewCell, UITextFieldDelegate {
             }
             
             if let selectedSocialMediaImageName = selectedSocialMedia?.imageName {
-                socialMediaImageView.image = UIImage(named: selectedSocialMediaImageName)
+                var name = selectedSocialMediaImageName
+                if (name != "dan_name_black" && name != "dan_bio_black") {
+                    name = String(selectedSocialMediaImageName.characters.dropLast(3)) + "color"
+                }
+                socialMediaImageView.image = UIImage(named: name)
             }
             socialMediaInputName.placeholder = selectedSocialMedia?.appName
             setupViews()
@@ -57,15 +61,15 @@ class SocialMediaSelectedCell: UITableViewCell, UITextFieldDelegate {
         
         separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
-        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         
         socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 5).isActive = true
         socialMediaInputName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
         
         socialMediaImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
-        socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        socialMediaImageView.heightAnchor.constraint(equalToConstant: 47).isActive = true
+        socialMediaImageView.widthAnchor.constraint(equalToConstant: 47).isActive = true
     }
 }

@@ -57,7 +57,12 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         ]
     
     var socialMediaProfileImages: [SocialMediaProfileImage] = [
-        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "tjmiller7", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "tjmiller7")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "man1", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "man1")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "man2", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "man2")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "man3", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "man3")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "woman1", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "woman1")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "woman2", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "woman2")!),
+        SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "woman3", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "woman3")!),
         SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "dan_addprofileimage_orange", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "dan_addprofileimage_orange")!)
     ]
     
@@ -69,10 +74,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     lazy var socialMediaSelectionContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
-        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowColor = UIColor.lightGray.cgColor
         view.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         view.layer.shadowOpacity = 1.0
-        view.layer.shadowRadius = 3
+        view.layer.shadowRadius = 2
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -80,10 +85,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     lazy var socialMediaSelectedContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
-        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowColor = UIColor.lightGray.cgColor
         view.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         view.layer.shadowOpacity = 1.0
-        view.layer.shadowRadius = 3
+        view.layer.shadowRadius = 2
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -93,10 +98,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        //let cellSize = CGSize(width: 70, height: 50)
-        //layout.itemSize = cellSize
+        let cellSize = CGSize(width: 55, height: 50)
+        layout.itemSize = cellSize
         layout.minimumLineSpacing = 15.0
-        layout.minimumInteritemSpacing = 10.0
+        //layout.minimumInteritemSpacing = 7
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
@@ -107,12 +112,30 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.delegate = self
         collectionView.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: self.socialMediaSelectionCellId)
         
-
-        //collectionView.layer.cornerRadius = 5
+        
+        collectionView.layer.cornerRadius = 8
         collectionView.layer.masksToBounds = true
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
         collectionView.tag = collectionViewTag.socialMediaSelectionTableView.rawValue
         return collectionView
+    }()
+
+    
+    lazy var socialMediaSelectedTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
+        tableView.alwaysBounceVertical = true
+        tableView.register(SocialMediaSelectedCell.self, forCellReuseIdentifier: self.socialMediaSelectedCellId)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsMultipleSelectionDuringEditing = true
+        tableView.showsVerticalScrollIndicator = false
+        
+        tableView.layer.cornerRadius = 8
+        tableView.layer.masksToBounds = true
+        return tableView
     }()
     
     
@@ -135,20 +158,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return collectionView
         
     }()
-    
-    lazy var socialMediaSelectedTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
-        tableView.alwaysBounceVertical = true
-        tableView.register(SocialMediaSelectedCell.self, forCellReuseIdentifier: self.socialMediaSelectedCellId)
-        tableView.backgroundColor = .white
-        tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.allowsMultipleSelectionDuringEditing = true
-        tableView.showsVerticalScrollIndicator = false
-        return tableView
-    }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,6 +169,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         setupNavBarButton()
     }
     
+    
     func setupView() {
         
         view.addSubview(socialMediaSelectionContainerView)
@@ -168,21 +179,21 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
+        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
         
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 260).isActive = true
+        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
         
         socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
         socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: view.frame.height - 350).isActive = true
-        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 340).isActive = true
+        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 335).isActive = true
         
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
-
+        
         socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
         socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
         socialMediaSelectionCollectionView.rightAnchor.constraint(equalTo: socialMediaSelectionContainerView.rightAnchor).isActive = true
@@ -193,7 +204,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
         socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
     }
-    
     //# MARK: - Body Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
@@ -228,7 +238,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
             presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
         } else {
-            if indexPath.item == socialMediaProfileImages.count-2 {
+            if indexPath.item == socialMediaProfileImages.count-1 {
                 let imagePicker: UIImagePickerController = UIImagePickerController()
                 imagePicker.delegate = self
                 imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
@@ -236,7 +246,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             }
         }
     }
-
+    
     //# MARK: - Body Table View
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
@@ -272,7 +282,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let saveButton = UIBarButtonItem.init(title: "Save", style: .plain, target: self, action: #selector(saveClicked))
         cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
         saveButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
-
+        
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = saveButton
     }
@@ -332,7 +342,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     // For adding it to the Table view.
     // This is a delegate protocol. . .
     func addSocialMediaInput(socialMedia: SocialMedia) {
-        // TODO: Valid name checker. 
+        // TODO: Valid name checker.
         // i.e. no blank usernames.
         if socialMedia.inputName != "" && socialMedia.isSet == false {
             let newSocialMediaInput = SocialMedia(copyFrom: socialMedia)
