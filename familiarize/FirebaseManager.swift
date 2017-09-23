@@ -113,6 +113,14 @@ class FirebaseManager {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    static func logOutUser() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print(error)
+        }
         
     }
 }
