@@ -119,14 +119,12 @@ class FirebaseManager {
     static func logOutUser() {
         do {
             try Auth.auth().signOut()
-            print("The current user is:\(Auth.auth().currentUser)")
         } catch let error {
             print(error)
         }
     }
     
     static func isUserLoggedIn() -> User? {
-        print("Launch: The current user is: \(Auth.auth().currentUser)")
         return Auth.auth().currentUser
     }
     
@@ -157,6 +155,18 @@ class FirebaseManager {
                 }
                 loginCompleted()
             })
+        }
+    }
+    
+    static func signUp(email: String, password: String, completionHandler: @escaping (User?, Error?) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            completionHandler(user, error)
+        }
+    }
+    
+    static func signIn(_ email: String, _ password: String, completionHandler: @escaping (User?, Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            completionHandler(user, error)
         }
     }
 }

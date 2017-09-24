@@ -18,14 +18,23 @@ class LoginController: UIViewController {
     
     lazy var emailLoginButton: UIButton = {
         let button = UIManager.makeTextButton(buttonText: "Sign up with email")
-        button.addTarget(self, action: #selector(emailLoginClicked), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpClicked), for: .touchUpInside)
         return button
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationController?.navigationBar.isHidden = true
         
         view.addSubview(faceBookLoginButton)
         view.addSubview(emailLoginButton)
@@ -35,8 +44,6 @@ class LoginController: UIViewController {
         
         emailLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         emailLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 60).isActive = true
-        emailLoginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        emailLoginButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
     func facebookLoginClicked() {
@@ -50,7 +57,7 @@ class LoginController: UIViewController {
         })
     }
     
-    func emailLoginClicked() {
-        
+    func signUpClicked() {
+        navigationController?.pushViewController(SignUpEmailController(), animated: true)
     }
 }

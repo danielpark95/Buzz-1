@@ -91,7 +91,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
     func showWalkthroughController() {
         let walkthroughController = WalkthroughController()
         walkthroughController.tabBarControllerDelegate = self
-        present(walkthroughController, animated: false, completion: nil)
+        present(walkthroughController, animated: false)
     }
 
     func removeScanner() {
