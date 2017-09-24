@@ -136,4 +136,27 @@ class FirebaseManager {
             completionHandler(user, error)
         }
     }
+    
+    static func facebookLogIn(controller: LoginController, loginCompleted: @escaping () -> Void) {
+        let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: controller) { (result, error) in
+            if let error = error {
+                print("Failed to login: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let accessToken = FBSDKAccessToken.current() else {
+                print("Failed to get access token")
+                return
+            }
+            // Perform login by calling Firebase APIs
+            FirebaseManager.logInUser(with: accessToken.tokenString, completionHandler: { (user, error) in
+                if let error = error {
+                    print("Login error: \(error.localizedDescription)")
+                    return
+                }
+                loginCompleted()
+            })
+        }
+    }
 }

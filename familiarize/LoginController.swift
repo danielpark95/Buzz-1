@@ -11,7 +11,10 @@ import FBSDKLoginKit
 class LoginController: UIViewController {
     
     lazy var faceBookLoginButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_close_button_v2")
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Sign in With Facebook", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(facebookLoginClicked), for: .touchUpInside)
         return button
     }()
@@ -20,8 +23,8 @@ class LoginController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign up with email", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(emailLoginClicked), for: .touchUpInside)
-        button.backgroundColor = .black
         return button
     }()
     
@@ -41,36 +44,15 @@ class LoginController: UIViewController {
     }
     
     func facebookLoginClicked() {
-        let fbLoginManager = FBSDKLoginManager()
-        let accessToken = FBSDKAccessToken.current()
-        print("This is the current access token!: \(accessToken?.tokenString)")
-        
-        fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
-            if let error = error {
-                print("Failed to login: \(error.localizedDescription)")
-                return
+        FirebaseManager.facebookLogIn(controller: self, loginCompleted: {
+            // Present the good shit
+            if let window = UIApplication.shared.keyWindow {
+                let tabBarController = TabBarController()
+                tabBarController.justLoggedIn = true
+                print("The tab bar has justLoggedIn set to TRUE")
+                window.rootViewController = tabBarController
             }
-
-            guard let accessToken = FBSDKAccessToken.current() else {
-                print("Failed to get access token")
-                return
-            }
-            
-            // Perform login by calling Firebase APIs
-            FirebaseManager.logInUser(with: accessToken.tokenString, completionHandler: { (user, error) in
-                if let error = error {
-                    print("Login error: \(error.localizedDescription)")
-                    return
-                }
-                // Present the good shit
-                if let window = UIApplication.shared.keyWindow {
-                    let tabBarController = TabBarController()
-                    tabBarController.justLoggedIn = true
-                    print("The tab bar has justLoggedIn set to TRUE")
-                    window.rootViewController = tabBarController
-                }
-            })
-        }
+        })
     }
     
     func emailLoginClicked() {
