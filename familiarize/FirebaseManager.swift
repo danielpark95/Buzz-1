@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
 class FirebaseManager {
     
@@ -118,12 +119,14 @@ class FirebaseManager {
     static func logOutUser() {
         do {
             try Auth.auth().signOut()
+            print("The current user is:\(Auth.auth().currentUser)")
         } catch let error {
             print(error)
         }
     }
     
     static func isUserLoggedIn() -> User? {
+        print("Launch: The current user is: \(Auth.auth().currentUser)")
         return Auth.auth().currentUser
     }
     

@@ -26,16 +26,14 @@ protocol TabBarControllerDelegate: class {
 
 class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarControllerDelegate {
     
+    var justLoggedIn:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
-      
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
-        view.addSubview(revealingSplashView)
-        revealingSplashView.startAnimation()
-        
+
         if isNotFirstTime() {
             setupTabBarControllers()
         } else {
@@ -43,14 +41,26 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // If you just logged in, then the revealing splashview will not show.
+        if justLoggedIn != true {
+            let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
+            view.addSubview(revealingSplashView)
+            revealingSplashView.startAnimation()
+        }
+    }
+    
     func setupTabBarControllers() {
         // If user is not already logged in, present the login controller.
         // Else, if user is already logged in, go and present the tab bar controller.
         if FirebaseManager.isUserLoggedIn() == nil {
-            guard let window = UIApplication.shared.keyWindow else {
-                return
-            }
-            window.rootViewController = LoginController()
+            let loginController = LoginController()
+            let loginNavigationController = UINavigationController(rootViewController: loginController)
+            viewControllers = [loginNavigationController]
+            tabBar.isHidden = true
+            return
         }
         let tabBarController = ESTabBarController()
         tabBarController.tabBar.isTranslucent = false

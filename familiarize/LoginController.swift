@@ -7,7 +7,6 @@
 //
 
 import FBSDKLoginKit
-import Firebase
 
 class LoginController: UIViewController {
     
@@ -31,6 +30,7 @@ class LoginController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(faceBookLoginButton)
         view.addSubview(emailLoginButton)
+        navigationController?.navigationBar.isHidden = true
         faceBookLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         faceBookLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
@@ -42,7 +42,9 @@ class LoginController: UIViewController {
     
     func facebookLoginClicked() {
         let fbLoginManager = FBSDKLoginManager()
-        fbLoginManager.loginBehavior = FBSDKLoginBehavior.native
+        let accessToken = FBSDKAccessToken.current()
+        print("This is the current access token!: \(accessToken?.tokenString)")
+        
         fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
             if let error = error {
                 print("Failed to login: \(error.localizedDescription)")
@@ -60,9 +62,12 @@ class LoginController: UIViewController {
                     print("Login error: \(error.localizedDescription)")
                     return
                 }
-                // Present the main view
+                // Present the good shit
                 if let window = UIApplication.shared.keyWindow {
-                    window.rootViewController = TabBarController()
+                    let tabBarController = TabBarController()
+                    tabBarController.justLoggedIn = true
+                    print("The tab bar has justLoggedIn set to TRUE")
+                    window.rootViewController = tabBarController
                 }
             })
         }
