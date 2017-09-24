@@ -11,11 +11,13 @@ import UIKit
 import ESTabBarController_swift
 import Cheers
 
-protocol walkThroughControllerDelegate : class {
+protocol walkThroughControllerDelegate: class {
     func finishWalkthrough()
 }
 
 class WalkthroughController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, walkThroughControllerDelegate {
+    
+    weak var tabBarControllerDelegate: TabBarControllerDelegate?
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -69,9 +71,7 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         
         collectionView.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         registerCells()
-        
-        
-        
+
         if isLastPage == true {
             cheerView.config.particle = .confetti
             view.addSubview(cheerView)
@@ -147,40 +147,15 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
     
     
     func finishWalkthrough() {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-        
+        // Do not show the walkthrough again.
         UserDefaults.standard.set(true, forKey: "isNotFirstTime")
         UserDefaults.standard.synchronize()
-        
-        guard let mainNavigationController = rootViewController as? TabBarController else { return }
-        
-        let tabBarController = ESTabBarController()
-        tabBarController.tabBar.isTranslucent = false
-        tabBarController.tabBar.barTintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha:1.0)
-        //User Controller
-        let userController = UserController(collectionViewLayout: UICollectionViewFlowLayout())
-        let userNavigationController = UINavigationController(rootViewController: userController)
-        userController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_me_grey"), selectedImage: UIImage(named: "dan_me_black"))
-        //userNavigationController.tabBarItem.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 30)
-        userNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(0, 30, 0, -10)
-        
-        //Scanner Controller
-        let scannerController = ScannerController()
-        let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
-        //scannerNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(-16,0,0,0)
-        
-        //Contacts Controller
-        let contactsController = ContactsController(style: UITableViewStyle.plain)
-        let contactsNavigationController = UINavigationController(rootViewController: contactsController)
-        contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey"), selectedImage: UIImage(named: "dan_friends_black"))
-        //contactsNavigationController.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
-        
-        mainNavigationController.viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
-        
-        //mainNavigationController.viewControllers = [TabBarController()]
-        
-        dismiss(animated: true, completion: nil)
+        if tabBarControllerDelegate != nil {
+            // Setup the tab bar controllers
+            tabBarControllerDelegate?.setupTabBarControllers()
+        }
+        // Dismiss this view!
+        dismiss(animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
