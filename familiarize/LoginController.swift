@@ -11,19 +11,13 @@ import FBSDKLoginKit
 class LoginController: UIViewController {
     
     lazy var faceBookLoginButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Sign in With Facebook", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        let button = UIManager.makeTextButton(buttonText: "Sign in with Facebook")
         button.addTarget(self, action: #selector(facebookLoginClicked), for: .touchUpInside)
         return button
     }()
     
     lazy var emailLoginButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Sign up with email", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        let button = UIManager.makeTextButton(buttonText: "Sign up with email")
         button.addTarget(self, action: #selector(emailLoginClicked), for: .touchUpInside)
         return button
     }()
@@ -31,9 +25,11 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
+        
         view.addSubview(faceBookLoginButton)
         view.addSubview(emailLoginButton)
-        navigationController?.navigationBar.isHidden = true
+        
         faceBookLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         faceBookLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
@@ -49,7 +45,6 @@ class LoginController: UIViewController {
             if let window = UIApplication.shared.keyWindow {
                 let tabBarController = TabBarController()
                 tabBarController.justLoggedIn = true
-                print("The tab bar has justLoggedIn set to TRUE")
                 window.rootViewController = tabBarController
             }
         })

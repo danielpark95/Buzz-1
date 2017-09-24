@@ -25,6 +25,14 @@ class UIManager {
         return button
     }
     
+    static func makeTextButton(buttonText: String) -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(buttonText, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }
+    
     static func makeImage(imageName: String = "") -> UIImageView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)
