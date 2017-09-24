@@ -23,6 +23,7 @@
 		144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144372AC1F1710840052C544 /* ImageFetchingManager.swift */; };
 		144F192A1EE0FD1300A9250E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F19291EE0FD1300A9250E /* UserCell.swift */; };
 		144F7DB41F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F7DB31F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift */; };
+		1455620F1F776EE600769BB7 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1455620E1F776EE600769BB7 /* SignUpController.swift */; };
 		1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */; };
 		1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51A1F0979DD00F173DE /* ContactSettingController.swift */; };
 		1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51C1F097A1400F173DE /* HelpSettingController.swift */; };
@@ -71,6 +72,7 @@
 		144372AC1F1710840052C544 /* ImageFetchingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFetchingManager.swift; sourceTree = "<group>"; };
 		144F19291EE0FD1300A9250E /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		144F7DB31F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileSocialMediaCell.swift; sourceTree = "<group>"; };
+		1455620E1F776EE600769BB7 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsPrivacySettingController.swift; sourceTree = "<group>"; };
 		1458B51A1F0979DD00F173DE /* ContactSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSettingController.swift; sourceTree = "<group>"; };
 		1458B51C1F097A1400F173DE /* HelpSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpSettingController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		140ECD831EF6167700E538E4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1455620D1F776EB500769BB7 /* LoginVC */,
 				141172181F52994000850AE6 /* WalkthroughVC */,
 				1432D9E41F0F40B200B2BF88 /* PopUpVC */,
 				1432D9E51F0F40C500B2BF88 /* SettingsVC */,
@@ -159,7 +162,6 @@
 				140ECD811EF6165800E538E4 /* UserController.swift */,
 				140A40001EDFC42E00D4539E /* ScannerController.swift */,
 				143532421EDA9CC2000507DB /* ContactsController.swift */,
-				142FA69A1F761962004598E9 /* LoginController.swift */,
 			);
 			name = TabController;
 			sourceTree = "<group>";
@@ -234,6 +236,15 @@
 				143532471EDA9CC2000507DB /* familiarize.xcdatamodeld */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		1455620D1F776EB500769BB7 /* LoginVC */ = {
+			isa = PBXGroup;
+			children = (
+				142FA69A1F761962004598E9 /* LoginController.swift */,
+				1455620E1F776EE600769BB7 /* SignUpController.swift */,
+			);
+			name = LoginVC;
 			sourceTree = "<group>";
 		};
 		1497A22C1EEF7B3900366303 /* Managers */ = {
@@ -465,6 +476,7 @@
 				14A25B381F2B1890000F90BE /* FirebaseManager.swift in Sources */,
 				144F7DB41F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift in Sources */,
 				F654306C1F3CEE620047FC35 /* WalkthroughController.swift in Sources */,
+				1455620F1F776EE600769BB7 /* SignUpController.swift in Sources */,
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				142FA69B1F761962004598E9 /* LoginController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,

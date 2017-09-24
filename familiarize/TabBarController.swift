@@ -47,10 +47,10 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         // If user is not already logged in, present the login controller.
         // Else, if user is already logged in, go and present the tab bar controller.
         if FirebaseManager.isUserLoggedIn() == nil {
-            if let window = UIApplication.shared.keyWindow {
-                window.rootViewController = LoginController()
+            guard let window = UIApplication.shared.keyWindow else {
+                return
             }
-            return
+            window.rootViewController = LoginController()
         }
         let tabBarController = ESTabBarController()
         tabBarController.tabBar.isTranslucent = false

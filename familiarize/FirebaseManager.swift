@@ -126,4 +126,11 @@ class FirebaseManager {
     static func isUserLoggedIn() -> User? {
         return Auth.auth().currentUser
     }
+    
+    static func logInUser(with accessToken: String, completionHandler: @escaping (User?, Error?) -> Void) {
+        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            completionHandler(user, error)
+        }
+    }
 }
