@@ -33,14 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
-        // If user is already logged in, then present the tab bar controller.
-        // Else, if there is no user logged in, present the login controller.
-        if Auth.auth().currentUser != nil {
-            window?.rootViewController = TabBarController()
-        } else {
-            window?.rootViewController = LoginController()
-        }
+        window?.rootViewController = TabBarController()
 
         setupInternetAccessView()
         

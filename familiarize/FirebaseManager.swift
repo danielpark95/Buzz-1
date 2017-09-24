@@ -121,6 +121,9 @@ class FirebaseManager {
         } catch let error {
             print(error)
         }
-        
+    }
+    
+    static func isUserLoggedIn() -> User? {
+        return Auth.auth().currentUser
     }
 }

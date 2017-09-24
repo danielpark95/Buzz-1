@@ -44,6 +44,14 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
     }
     
     func setupTabBarControllers() {
+        // If user is not already logged in, present the login controller.
+        // Else, if user is already logged in, go and present the tab bar controller.
+        if FirebaseManager.isUserLoggedIn() == nil {
+            if let window = UIApplication.shared.keyWindow {
+                window.rootViewController = LoginController()
+            }
+            return
+        }
         let tabBarController = ESTabBarController()
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.barTintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha:1.0)
