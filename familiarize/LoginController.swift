@@ -16,9 +16,15 @@ class LoginController: UIViewController {
         return button
     }()
     
-    lazy var emailLoginButton: UIButton = {
+    lazy var signUpEmailButton: UIButton = {
         let button = UIManager.makeTextButton(buttonText: "Sign up with email")
-        button.addTarget(self, action: #selector(signUpClicked), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpEmailClicked), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var logInEmailButton: UIButton = {
+        let button = UIManager.makeTextButton(buttonText: "Already have an account? Log In")
+        button.addTarget(self, action: #selector(logInEmailClicked), for: .touchUpInside)
         return button
     }()
     
@@ -37,13 +43,17 @@ class LoginController: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(faceBookLoginButton)
-        view.addSubview(emailLoginButton)
+        view.addSubview(signUpEmailButton)
+        view.addSubview(logInEmailButton)
         
         faceBookLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         faceBookLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        emailLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailLoginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 60).isActive = true
+        signUpEmailButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        signUpEmailButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 60).isActive = true
+        
+        logInEmailButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logInEmailButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func facebookLoginClicked() {
@@ -54,7 +64,11 @@ class LoginController: UIViewController {
         })
     }
     
-    func signUpClicked() {
+    func signUpEmailClicked() {
         navigationController?.pushViewController(SignUpEmailController(), animated: true)
+    }
+    
+    func logInEmailClicked() {
+        navigationController?.pushViewController(LogInEmailController(), animated: true)
     }
 }

@@ -169,4 +169,8 @@ class FirebaseManager {
             completionHandler(user, error)
         }
     }
+    
+    static func resetPassword(email: String) {
+
+    }
 }
