@@ -18,6 +18,8 @@ extension ESTabBarController {
 
 extension Notification.Name {
     static let removeScanner = Notification.Name("removeScanner")
+    static let logInController = Notification.Name("logInController")
+    static let loggedInController = Notification.Name("loggedInController")
 }
 
 protocol TabBarControllerDelegate: class {
@@ -26,13 +28,13 @@ protocol TabBarControllerDelegate: class {
 
 class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarControllerDelegate {
     
-    var justLoggedIn:Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setupLogInController), name: .logInController, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setupLoggedInController), name: .loggedInController, object: nil)
 
         if isNotFirstTime() {
             setupTabBarControllers()
@@ -45,23 +47,31 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         super.viewWillAppear(animated)
         
         // If you just logged in, then the revealing splashview will not show.
-        if justLoggedIn != true {
-            let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
-            view.addSubview(revealingSplashView)
-            revealingSplashView.startAnimation()
-        }
+        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
+        view.addSubview(revealingSplashView)
+        revealingSplashView.startAnimation()
+        
     }
     
     func setupTabBarControllers() {
         // If user is not already logged in, present the login controller.
         // Else, if user is already logged in, go and present the tab bar controller.
         if FirebaseManager.isUserLoggedIn() == nil {
-            let loginController = LoginController()
-            let loginNavigationController = UINavigationController(rootViewController: loginController)
-            viewControllers = [loginNavigationController]
-            tabBar.isHidden = true
-            return
+            setupLogInController()
+        } else {
+            setupLoggedInController()
         }
+    }
+    
+    func setupLogInController() {
+        let loginController = LoginController()
+        let loginNavigationController = UINavigationController(rootViewController: loginController)
+        tabBar.isHidden = true
+        viewControllers?.removeAll()
+        viewControllers = [loginNavigationController]
+    }
+    
+    func setupLoggedInController() {
         let tabBarController = ESTabBarController()
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.barTintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha:1.0)
@@ -81,6 +91,8 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         let contactsNavigationController = UINavigationController(rootViewController: contactsController)
         contactsController.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: nil, image: UIImage(named: "dan_friends_grey"), selectedImage: UIImage(named: "dan_friends_black"))
         
+        tabBar.isHidden = false
+        viewControllers?.removeAll()
         viewControllers = [userNavigationController, scannerNavigationController, contactsNavigationController]
     }
     

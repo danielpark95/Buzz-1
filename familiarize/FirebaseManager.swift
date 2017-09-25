@@ -164,7 +164,7 @@ class FirebaseManager {
         }
     }
     
-    static func signIn(_ email: String, _ password: String, completionHandler: @escaping (User?, Error?) -> Void) {
+    static func signIn(email: String, password: String, completionHandler: @escaping (User?, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             completionHandler(user, error)
         }

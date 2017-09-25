@@ -106,9 +106,8 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
             controller = FeedbackSettingController(collectionViewLayout: layout)
         case .Logout:
             FirebaseManager.logOutUser()
-            if let window = UIApplication.shared.keyWindow {
-                window.rootViewController = LoginController()
-            }
+            navigationController?.popToRootViewController(animated: true)
+            NotificationCenter.default.post(name: .logInController, object: nil)
             return
         }
     

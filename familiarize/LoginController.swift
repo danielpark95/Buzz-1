@@ -49,11 +49,8 @@ class LoginController: UIViewController {
     func facebookLoginClicked() {
         FirebaseManager.facebookLogIn(controller: self, loginCompleted: {
             // Present the good shit
-            if let window = UIApplication.shared.keyWindow {
-                let tabBarController = TabBarController()
-                tabBarController.justLoggedIn = true
-                window.rootViewController = tabBarController
-            }
+            self.navigationController?.popToRootViewController(animated: false)
+            NotificationCenter.default.post(name: .loggedInController, object: nil)
         })
     }
     
