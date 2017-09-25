@@ -236,13 +236,15 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
-            presentSocialMediaPopup(socialMedia: socialMediaChoices[indexPath.item])
+            let selectedSocialMediaChoice = socialMediaChoices[indexPath.item]
+            selectedSocialMediaChoice.inputName = ""
+            presentSocialMediaPopup(socialMedia: selectedSocialMediaChoice)
         } else {
             if indexPath.item == socialMediaProfileImages.count-1 {
                 let imagePicker: UIImagePickerController = UIImagePickerController()
                 imagePicker.delegate = self
                 imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-                self.present(imagePicker, animated: true)
+                present(imagePicker, animated: true)
             }
         }
     }

@@ -93,20 +93,28 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     func showControllerForSetting(setting: Setting) {
         
         let layout = UICollectionViewFlowLayout()
-        let controller: UIViewController
+        var controller: UIViewController?
         
-        if setting.name == .TermsPrivacy {
+        switch setting.name {
+        case .TermsPrivacy:
             controller = TermsPrivacySettingController(collectionViewLayout: layout)
-        } else if setting.name == .Contact {
+        case .Contact:
             controller = ContactSettingController(collectionViewLayout: layout)
-        } else if setting.name == .Help {
+        case .Help:
             controller = HelpSettingController(collectionViewLayout: layout)
-        } else { // It is the feedback controller
+        case .Feedback:
             controller = FeedbackSettingController(collectionViewLayout: layout)
+        case .Logout:
+            FirebaseManager.logOutUser()
+            navigationController?.popToRootViewController(animated: true)
+            NotificationCenter.default.post(name: .logInController, object: nil)
+            return
         }
-        
-        controller.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(controller, animated: true)
+    
+        if controller != nil {
+            controller?.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(controller!, animated: true)
+        }
     }
     
     func viewProfileNotification() {

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
 class FirebaseManager {
     
@@ -113,6 +114,63 @@ class FirebaseManager {
         }) { (error) in
             print(error.localizedDescription)
         }
-        
+    }
+    
+    static func logOutUser() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    static func isUserLoggedIn() -> User? {
+        return Auth.auth().currentUser
+    }
+    
+    static func logInUser(with accessToken: String, completionHandler: @escaping (User?, Error?) -> Void) {
+        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            completionHandler(user, error)
+        }
+    }
+    
+    static func facebookLogIn(controller: LoginController, loginCompleted: @escaping () -> Void) {
+        let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: controller) { (result, error) in
+            if let error = error {
+                print("Failed to login: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let accessToken = FBSDKAccessToken.current() else {
+                print("Failed to get access token")
+                return
+            }
+            // Perform login by calling Firebase APIs
+            FirebaseManager.logInUser(with: accessToken.tokenString, completionHandler: { (user, error) in
+                if let error = error {
+                    print("Login error: \(error.localizedDescription)")
+                    return
+                }
+                loginCompleted()
+            })
+        }
+    }
+    
+    static func signUp(email: String, password: String, completionHandler: @escaping (User?, Error?) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            completionHandler(user, error)
+        }
+    }
+    
+    static func signIn(email: String, password: String, completionHandler: @escaping (User?, Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            completionHandler(user, error)
+        }
+    }
+    
+    static func resetPassword(email: String) {
+
     }
 }

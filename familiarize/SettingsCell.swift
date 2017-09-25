@@ -34,10 +34,6 @@ class SettingsCell: UICollectionViewCell {
     }
     
     func setupViews() {
-        
-
-        if (nameLabel.text != "") {
-
             addSubview(iconImageView)
             addSubview(nameLabel)
             
@@ -52,10 +48,5 @@ class SettingsCell: UICollectionViewCell {
             nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
             nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
             nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        }
-        
-    
     }
-    
-    
 }

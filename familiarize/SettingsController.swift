@@ -19,11 +19,11 @@ class Setting: NSObject {
 }
 
 enum SettingName: String {
-    case Null = ""
     case TermsPrivacy = "Terms & Privacy Policy"
     case Contact = "Contact"
     case Help = "Help"
     case Feedback = "Feedback"
+    case Logout = "Logout"
 }
 
 class SettingsController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -39,13 +39,13 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     let settings: [Setting] = {
-        return [ Setting(name: .Null, imageName: ""), Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback")]
+        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback"), Setting(name: .Logout, imageName: "")]
     }()
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.contentInset = UIEdgeInsetsMake(40, 0, 0, 0)
+        cv.contentInset = UIEdgeInsetsMake(90, 0, 0, 0)
         cv.backgroundColor = UIColor(red: 255/255, green: 191/255, blue: 21/255, alpha: 1.0)
         return cv
     }()
@@ -64,6 +64,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }()    
 
     func dismissClicked() {
+        // Dismiss the hamburger bar without clicking on any of the collectionview items.
         handleDismiss(setting: nil)
     }
   
@@ -88,8 +89,6 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     
     func setupViews() {
         if let window = UIApplication.shared.keyWindow {
-            //collectionView.addSubview(websiteQRCodeImage)
-            
             window.addSubview(tintOverlay)
             tintOverlay.frame = window.frame
             window.addSubview(collectionView)

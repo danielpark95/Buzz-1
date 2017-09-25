@@ -22,12 +22,20 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+        
+        <!-- For deeplinking applications -->
 		<string>fb</string>
 		<string>snapchat</string>
 		<string>instagram</string>
 		<string>soundcloud</string>
 		<string>voyager</string>
 		<string>twitter</string>
+        
+        <!-- For facebook login -->
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -59,5 +67,20 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    
+    <!-- For facebook login -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb1993525404249493</string>
+            </array>
+        </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>1993525404249493</string>
+    <key>FacebookDisplayName</key>
+    <string>Buzz</string>
 </dict>
 </plist>

@@ -49,4 +49,9 @@ target 'familiarize' do
 
   #Circular image cropper
   pod 'AAPhotoCircleCrop'
+
+  #Facebook login
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+
 end
