@@ -53,7 +53,8 @@ class FirebaseManager {
     
     static func uploadCard(_ userCard: [String:[String]], withUniqueID uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
-        let userID = UIDevice.current.identifierForVendor!.uuidString
+        let user = Auth.auth().currentUser
+        guard let userID = user?.uid else { return }
         databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
         for (eachKey, manyValues) in userCard {
             for eachValue in manyValues{
@@ -82,15 +83,14 @@ class FirebaseManager {
 
     static func uploadImage(_ socialMediaProfileImage: SocialMediaProfileImage, completionHandler: @escaping (String) -> Void) {
         let profileImage = UIImageJPEGRepresentation(socialMediaProfileImage.profileImage!, 1.0)
+        let user = Auth.auth().currentUser
+        guard let userID = user?.uid else { return }
         
         // Create a reference to the file you want to upload
-        let profileImageRef = storageRef.child("\(UIDevice.current.identifierForVendor!.uuidString)/\(UUID().uuidString)")
+        let profileImageRef = storageRef.child("\(userID)/\(UUID().uuidString)")
 
         _ = profileImageRef.putData(profileImage!, metadata: nil) { (metadata, error) in
-            guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
-                return
-            }
+            guard let metadata = metadata else { return }
             completionHandler((metadata.downloadURL()?.absoluteString)!)
         }
     }
