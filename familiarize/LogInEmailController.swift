@@ -43,6 +43,12 @@ class LogInEmailController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    lazy var forgotPasswordButton: UIButton = {
+       let button = UIManager.makeTextButton(buttonText: "Forgot Password?")
+        button.addTarget(self, action: #selector(forgotPasswordClicked), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var outsideButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(outsideClicked), for: .touchUpInside)
@@ -58,6 +64,7 @@ class LogInEmailController: UIViewController, UITextFieldDelegate {
         view.addSubview(passwordTextField)
         view.addSubview(logInButton)
         view.addSubview(dontHaveAccountButton)
+        view.addSubview(forgotPasswordButton)
         
         outsideButton.frame = view.frame
         
@@ -76,6 +83,9 @@ class LogInEmailController: UIViewController, UITextFieldDelegate {
         
         dontHaveAccountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dontHaveAccountButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
+        
+        forgotPasswordButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        forgotPasswordButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70).isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -113,5 +123,9 @@ class LogInEmailController: UIViewController, UITextFieldDelegate {
     
     func dontHaveAccountClicked() {
         navigationController?.pushViewController(SignUpEmailController(), animated: true)
+    }
+    
+    func forgotPasswordClicked() {
+        navigationController?.pushViewController(ResetPasswordController(), animated: true)
     }
 }
