@@ -25,6 +25,7 @@
 		144F7DB41F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F7DB31F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift */; };
 		1455620F1F776EE600769BB7 /* SignUpEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1455620E1F776EE600769BB7 /* SignUpEmailController.swift */; };
 		145562111F78798B00769BB7 /* LogInEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145562101F78798B00769BB7 /* LogInEmailController.swift */; };
+		145562131F7B391400769BB7 /* ResetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145562121F7B391400769BB7 /* ResetPasswordController.swift */; };
 		1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */; };
 		1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51A1F0979DD00F173DE /* ContactSettingController.swift */; };
 		1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458B51C1F097A1400F173DE /* HelpSettingController.swift */; };
@@ -75,6 +76,7 @@
 		144F7DB31F57AE0E0003F0DF /* ViewProfileSocialMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileSocialMediaCell.swift; sourceTree = "<group>"; };
 		1455620E1F776EE600769BB7 /* SignUpEmailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpEmailController.swift; sourceTree = "<group>"; };
 		145562101F78798B00769BB7 /* LogInEmailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInEmailController.swift; sourceTree = "<group>"; };
+		145562121F7B391400769BB7 /* ResetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordController.swift; sourceTree = "<group>"; };
 		1458B5181F096A7E00F173DE /* TermsPrivacySettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsPrivacySettingController.swift; sourceTree = "<group>"; };
 		1458B51A1F0979DD00F173DE /* ContactSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSettingController.swift; sourceTree = "<group>"; };
 		1458B51C1F097A1400F173DE /* HelpSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpSettingController.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				142FA69A1F761962004598E9 /* LoginController.swift */,
 				1455620E1F776EE600769BB7 /* SignUpEmailController.swift */,
 				145562101F78798B00769BB7 /* LogInEmailController.swift */,
+				145562121F7B391400769BB7 /* ResetPasswordController.swift */,
 			);
 			name = LoginVC;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */,
 				149A54DF1F421719007BA1F3 /* DiskManager.swift in Sources */,
 				F67D96241F1ACE05009F6EF8 /* TabBar.swift in Sources */,
+				145562131F7B391400769BB7 /* ResetPasswordController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

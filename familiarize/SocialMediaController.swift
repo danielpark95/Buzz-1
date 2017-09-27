@@ -17,6 +17,7 @@ class SocialMediaController: UIViewController, UITextFieldDelegate {
         didSet {
             inputTextField.placeholder = socialMedia?.appName
             inputTextField.text = socialMedia?.inputName
+            socialMediaImageView.image = UIImage(named: (socialMedia?.imageName)!)
         }
     }
     
@@ -146,15 +147,13 @@ class SocialMediaController: UIViewController, UITextFieldDelegate {
         
         socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
-        socialMediaImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        socialMediaImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
         inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true
         inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
         inputTextField.widthAnchor.constraint(equalToConstant: popupImageView.intrinsicContentSize.width - 80).isActive = true
         
-        socialMediaImageView.image = UIImage(named: (socialMedia?.imageName)!)
+        
     }
     
 }
