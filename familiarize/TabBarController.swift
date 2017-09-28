@@ -50,7 +50,6 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
         view.addSubview(revealingSplashView)
         revealingSplashView.startAnimation()
-        
     }
     
     func setupTabBarControllers() {

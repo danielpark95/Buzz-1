@@ -26,7 +26,7 @@ class SocialMediaProfileImage: SocialMedia {
     }
 }
 
-class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate {
+class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate, UIScrollViewDelegate {
     
     private let profileImageSelectionCellId = "profileImageSelectionCellId"
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
@@ -71,6 +71,17 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true)
     ]
     
+    lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.alwaysBounceVertical = true
+        sv.isScrollEnabled = true
+        sv.contentSize = CGSize(width: self.view.frame.width, height: 1000)
+        sv.delegate = self
+        sv.tag = 696969
+        return sv
+    }()
+ 
     lazy var socialMediaSelectionContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
@@ -93,7 +104,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return view
     }()
     
-    
     lazy var socialMediaSelectionCollectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -112,7 +122,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.delegate = self
         collectionView.register(SocialMediaSelectionCell.self, forCellWithReuseIdentifier: self.socialMediaSelectionCellId)
         
-        
         collectionView.layer.cornerRadius = 8
         collectionView.layer.masksToBounds = true
         collectionView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
@@ -120,7 +129,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return collectionView
     }()
 
-    
     lazy var socialMediaSelectedTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
         tableView.alwaysBounceVertical = true
@@ -138,11 +146,18 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return tableView
     }()
     
+    lazy var profileImageSelectionContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     lazy var profileImageSelectionCollectionView: UICollectionView = {
         let layout = UPCarouselFlowLayout()
         layout.scrollDirection = .horizontal
         layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -150)
+        // If the size is not set to 400|400, then the first cell is not centered.
         layout.itemSize = CGSize(width: 400, height: 400)
         //layout.sideItemAlpha = 0.75
         //layout.sideItemScale = 0.75
@@ -156,7 +171,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.register(ProfileImageSelectionCell.self, forCellWithReuseIdentifier: self.profileImageSelectionCellId)
         collectionView.tag = collectionViewTag.profileImageSelectionTableView.rawValue
         return collectionView
-        
     }()
 
     
@@ -171,28 +185,42 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     
     func setupView() {
+        view.addSubview(scrollView)
         
-        view.addSubview(socialMediaSelectionContainerView)
-        view.addSubview(socialMediaSelectedContainerView)
-        view.addSubview(profileImageSelectionCollectionView)
+        scrollView.addSubview(profileImageSelectionContainerView)
+        scrollView.addSubview(socialMediaSelectionContainerView)
+        scrollView.addSubview(socialMediaSelectedContainerView)
         
-        profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
-        
-        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
-        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
-        
-        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: view.frame.height - 350).isActive = true
-        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 335).isActive = true
-        
+        profileImageSelectionContainerView.addSubview(profileImageSelectionCollectionView)
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
+        
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 500).isActive = true
+//        scrollView.heightAnchor.constraint(equalToConstant: 1000).isActive = true
+
+        profileImageSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        profileImageSelectionContainerView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        profileImageSelectionContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        profileImageSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 55).isActive = true
+        
+        profileImageSelectionCollectionView.leftAnchor.constraint(equalTo: profileImageSelectionContainerView.leftAnchor).isActive = true
+        profileImageSelectionCollectionView.rightAnchor.constraint(equalTo: profileImageSelectionContainerView.rightAnchor).isActive = true
+        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: profileImageSelectionContainerView.topAnchor).isActive = true
+        profileImageSelectionCollectionView.bottomAnchor.constraint(equalTo: profileImageSelectionContainerView.bottomAnchor).isActive = true
+        
+        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 250).isActive = true
+        
+        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        //socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: scrollView.frame.height - socialMediaSelectionContainerView.frame.height).isActive = true
+        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        socialMediaSelectedContainerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         
         socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
         socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
@@ -203,6 +231,16 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
         socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
         socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.tag == 696969 {
+            print("i am scrolling")
+        }
+    }
+    
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        print("HELLO")
     }
     //# MARK: - Body Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -215,10 +253,12 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
+            print("I have been made")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaSelectionCellId, for: indexPath) as! SocialMediaSelectionCell
             cell.socialMedia = socialMediaChoices[indexPath.item]
             return cell
         } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
+            print("I have been made")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileImageSelectionCellId, for: indexPath) as! ProfileImageSelectionCell
             cell.socialMediaProfileImage = socialMediaProfileImages[indexPath.item]
             return cell
