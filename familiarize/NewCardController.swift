@@ -76,7 +76,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alwaysBounceVertical = true
         sv.isScrollEnabled = true
-        sv.contentSize = CGSize(width: self.view.frame.width, height: 1000)
+        
         sv.delegate = self
         sv.tag = 696969
         return sv
@@ -108,7 +108,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        let cellSize = CGSize(width: 55, height: 50)
+        let cellSize = CGSize(width: 70, height: 65)
         layout.itemSize = cellSize
         layout.minimumLineSpacing = 15.0
         //layout.minimumInteritemSpacing = 7
@@ -185,7 +185,17 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     
     func setupView() {
+        view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height + 500)
+        
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
         view.addSubview(scrollView)
+        
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        
         
         scrollView.addSubview(profileImageSelectionContainerView)
         scrollView.addSubview(socialMediaSelectionContainerView)
@@ -195,12 +205,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
         
-        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 500).isActive = true
-//        scrollView.heightAnchor.constraint(equalToConstant: 1000).isActive = true
-
         profileImageSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         profileImageSelectionContainerView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         profileImageSelectionContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
@@ -218,9 +222,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        //socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: scrollView.frame.height - socialMediaSelectionContainerView.frame.height).isActive = true
         socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        socialMediaSelectedContainerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 400).isActive = true
+        
         
         socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
         socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
