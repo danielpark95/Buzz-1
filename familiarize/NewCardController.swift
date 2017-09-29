@@ -75,8 +75,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let sv = UIScrollView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alwaysBounceVertical = true
-        sv.isScrollEnabled = true
-        
         sv.delegate = self
         sv.tag = 696969
         return sv
@@ -183,9 +181,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         setupNavBarButton()
     }
     
-    
+    //var noInternetAccessFrameTopAnchor: NSLayoutConstraint?
+    var socialMediaSelectionContainerTopAnchor: NSLayoutConstraint?
     func setupView() {
-        view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height + 500)
+        view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height + 100)
         
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
         view.addSubview(scrollView)
@@ -196,34 +195,35 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         
-        
-        scrollView.addSubview(profileImageSelectionContainerView)
+
+//        scrollView.addSubview(profileImageSelectionContainerView)
         scrollView.addSubview(socialMediaSelectionContainerView)
-        scrollView.addSubview(socialMediaSelectedContainerView)
+//        scrollView.addSubview(socialMediaSelectedContainerView)
         
-        profileImageSelectionContainerView.addSubview(profileImageSelectionCollectionView)
+//        profileImageSelectionContainerView.addSubview(profileImageSelectionCollectionView)
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
-        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
+//        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
         
-        profileImageSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        profileImageSelectionContainerView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        profileImageSelectionContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImageSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 55).isActive = true
-        
-        profileImageSelectionCollectionView.leftAnchor.constraint(equalTo: profileImageSelectionContainerView.leftAnchor).isActive = true
-        profileImageSelectionCollectionView.rightAnchor.constraint(equalTo: profileImageSelectionContainerView.rightAnchor).isActive = true
-        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: profileImageSelectionContainerView.topAnchor).isActive = true
-        profileImageSelectionCollectionView.bottomAnchor.constraint(equalTo: profileImageSelectionContainerView.bottomAnchor).isActive = true
-        
+//        profileImageSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+//        profileImageSelectionContainerView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//        profileImageSelectionContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+//        profileImageSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 55).isActive = true
+//        
+//        profileImageSelectionCollectionView.leftAnchor.constraint(equalTo: profileImageSelectionContainerView.leftAnchor).isActive = true
+//        profileImageSelectionCollectionView.rightAnchor.constraint(equalTo: profileImageSelectionContainerView.rightAnchor).isActive = true
+//        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: profileImageSelectionContainerView.topAnchor).isActive = true
+//        profileImageSelectionCollectionView.bottomAnchor.constraint(equalTo: profileImageSelectionContainerView.bottomAnchor).isActive = true
+//        
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
         socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
-        socialMediaSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 250).isActive = true
+        socialMediaSelectionContainerTopAnchor = socialMediaSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 250)
+        socialMediaSelectionContainerTopAnchor?.isActive = true
         
-        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 400).isActive = true
+//        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+//        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+//        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+//        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 400).isActive = true
         
         
         socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
@@ -231,21 +231,27 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectionCollectionView.rightAnchor.constraint(equalTo: socialMediaSelectionContainerView.rightAnchor).isActive = true
         socialMediaSelectionCollectionView.topAnchor.constraint(equalTo: socialMediaSelectionContainerView.topAnchor).isActive = true
         
-        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
-        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
-        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
-        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
+//        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
+//        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
+//        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
+//        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.tag == 696969 {
-            print("i am scrolling")
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print("The target content offset is: \(targetContentOffset.pointee.y)")
+        let currentYValue = targetContentOffset.pointee.y
+        if currentYValue > 80 {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                scrollView.contentOffset = CGPoint(x: 0, y: 100)
+            }, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                scrollView.contentOffset = CGPoint(x: 0, y: 0)
+            }, completion: nil)
         }
     }
     
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        print("HELLO")
-    }
     //# MARK: - Body Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
