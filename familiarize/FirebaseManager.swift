@@ -47,6 +47,28 @@ class FirebaseManager {
     }
  */
     
+    static func deleteCard(uniqueID: UInt64) {
+        let uniqueIDString = String(uniqueID)
+        databaseRef.child("cards").child(uniqueIDString).removeValue()
+        let user = Auth.auth().currentUser
+        guard let userID = user?.uid else { return }
+        
+        databaseRef.child("users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            var childByAutoIDKey: String?
+            for childSnap in snapshot.children {
+                let snap = childSnap as! DataSnapshot
+                if snap.value as! String == uniqueIDString {
+                    childByAutoIDKey = snap.key
+                    break
+                }
+            }
+            guard let key = childByAutoIDKey else { return }
+            databaseRef.child("users").child(userID).child(key).removeValue()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     static func generateUniqueID() -> UInt64 {
         return UInt64(arc4random()) + (UInt64(arc4random()) << 32)
     }
@@ -99,6 +121,7 @@ class FirebaseManager {
         let uniqueIDString = String(uniqueID)
         databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
             var card = [String:[String]]()
+            
             for childSnap in snapshot.children {
                 let snap = childSnap as! DataSnapshot
                 if card[snap.key] == nil {
