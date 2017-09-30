@@ -145,6 +145,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     lazy var deleteButton: UIButton = {
         let button = UIManager.makeTextButton(buttonText: "Delete Card", color: .red)
+        button.addTarget(self, action: #selector(deleteClicked), for: .touchUpInside)
         button.backgroundColor = .white
         button.tintColor = .red
         button.layer.masksToBounds = true
@@ -244,6 +245,12 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         currentPositionOfSelectedContainer = selectedContainerOffset
         currentPositionOfProfileImage = -55
         currentPositionOfDeleteButton = view.frame.height - 40
+    }
+    
+    func deleteClicked() {
+        guard let userProfile = editingUserProfile else { return }
+        UserProfile.deleteProfile(user: userProfile)
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

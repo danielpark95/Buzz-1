@@ -176,6 +176,10 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             blockOperations.append(BlockOperation(block: {
                 self.collectionView?.reloadItems(at: [newIndexPath!])
             }))
+        } else if type == .delete {
+            blockOperations.append(BlockOperation(block: {
+                self.collectionView?.deleteItems(at: [indexPath!])
+            }))
         }
     }
     
