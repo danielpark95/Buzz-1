@@ -132,11 +132,22 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return tableView
     }()
     
-    lazy var profileImageSelectionContainerView: UIView = {
+    lazy var deleteButtonContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
+        view.backgroundColor = UIColor.clear
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowOffset = CGSize(width: 4.0, height: 3.0)
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 2
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    lazy var deleteButton: UIButton = {
+        let button = UIManager.makeTextButton(buttonText: "Delete Card")
+        button.backgroundColor = .white
+        button.tintColor = .red
+        return button
     }()
     
     lazy var profileImageSelectionCollectionView: UICollectionView = {
@@ -164,6 +175,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     var currentPositionOfSelectionContainer: CGFloat?
     var currentPositionOfSelectedContainer: CGFloat?
     var currentPositionOfProfileImage: CGFloat?
+    var currentPositionOfDeleteButton: CGFloat?
     var scrolledUp: Bool = false
     func handlePan(_ sender: UIPanGestureRecognizer) {
         // TODO: Utilize the velocity of the swipe and the point.y to determine if the bottom/top portion should be shown.
@@ -172,48 +184,21 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSelectionContainer! + point.y)
         socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer! + point.y)
         profileImageSelectionCollectionView.center = CGPoint(x: profileImageSelectionCollectionView.center.x, y: currentPositionOfProfileImage! + point.y)
+        deleteButtonContainerView.center = CGPoint(x: deleteButtonContainerView.center.x, y: currentPositionOfDeleteButton! + point.y)
         
         switch sender.state {
         case .ended:
             if scrolledUp == false {
                 if point.y > -20 {
-                    UIView.animate(withDuration: 0.2, animations: { 
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
-                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + 440)
-                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 50)
-                    })
-                    currentPositionOfSelectionContainer = view.center.y + 165
-                    currentPositionOfSelectedContainer = view.center.y + 440
-                    currentPositionOfProfileImage = view.center.y - 50
+                    backToOriginalPosition()
                 } else {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
-                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: 420)
-                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
-                    })
-                    currentPositionOfSelectionContainer = 140
-                    currentPositionOfSelectedContainer = 420
-                    currentPositionOfProfileImage = -55
+                    toTopPosition()
                 }
             } else if scrolledUp == true{
                 if point.y > 20 {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
-                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + 440)
-                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 50)
-                    })
-                    currentPositionOfSelectionContainer = view.center.y + 165
-                    currentPositionOfSelectedContainer = view.center.y + 440
-                    currentPositionOfProfileImage = view.center.y - 50
+                    backToOriginalPosition()
                 } else {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
-                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: 420)
-                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
-                    })
-                    currentPositionOfSelectionContainer = 140
-                    currentPositionOfSelectedContainer = 420
-                    currentPositionOfProfileImage = -55
+                    toTopPosition()
                 }
             }
             scrolledUp = !scrolledUp
@@ -221,17 +206,123 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         }
     }
     
+    func backToOriginalPosition() {
+        var selectedContainerOffset: CGFloat = 0
+        if editingUserProfile != nil {
+            selectedContainerOffset = 410
+        } else {
+            selectedContainerOffset = 440
+        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
+            self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + selectedContainerOffset)
+            self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 50)
+            self.deleteButtonContainerView.center = CGPoint(x: self.deleteButtonContainerView.center.x, y: self.view.center.y + 500)
+        })
+        currentPositionOfSelectionContainer = view.center.y + 165
+        currentPositionOfSelectedContainer = view.center.y + selectedContainerOffset
+        currentPositionOfProfileImage = view.center.y - 50
+        currentPositionOfDeleteButton = view.center.y + 500
+    }
+    
+    func toTopPosition() {
+        var selectedContainerOffset: CGFloat = 0
+        if editingUserProfile != nil {
+            selectedContainerOffset = 390
+        } else {
+            selectedContainerOffset = 420
+        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
+            self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: selectedContainerOffset)
+            self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
+            self.deleteButtonContainerView.center = CGPoint(x: self.deleteButtonContainerView.center.x, y: self.view.frame.height - 40)
+        })
+        currentPositionOfSelectionContainer = 140
+        currentPositionOfSelectedContainer = selectedContainerOffset
+        currentPositionOfProfileImage = -55
+        currentPositionOfDeleteButton = view.frame.height - 40
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = UIColor.black
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20), NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-        setupView()
+        if editingUserProfile != nil {
+            setupEditingView()
+        } else {
+            setupView()
+        }
         setupNavBarButton()
+    }
+    
+    func setupEditingView() {
+        
+        // Mr. Pan is added to the whole view. So when you touch anything on the view,
+        // it calls Mrs. PanHandle
+        view.addGestureRecognizer(panGestureRecognizer)
+        
+        view.addSubview(profileImageSelectionCollectionView)
+        view.addSubview(socialMediaSelectionContainerView)
+        view.addSubview(socialMediaSelectedContainerView)
+        view.addSubview(deleteButtonContainerView)
+        
+        socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
+        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
+//        deleteButtonContainerView.addSubview(deleteButton)
+        
+        // Profile Image View
+        currentPositionOfProfileImage = view.center.y - 50
+        
+        profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 240).isActive = true
+        profileImageSelectionCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        
+        // Selection View
+        currentPositionOfSelectionContainer = view.center.y + 165
+        
+        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        socialMediaSelectionContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 165).isActive = true
+        
+        socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
+        socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
+        socialMediaSelectionCollectionView.rightAnchor.constraint(equalTo: socialMediaSelectionContainerView.rightAnchor).isActive = true
+        socialMediaSelectionCollectionView.topAnchor.constraint(equalTo: socialMediaSelectionContainerView.topAnchor).isActive = true
+        
+        // Selected View
+        currentPositionOfSelectedContainer = view.center.y + 410
+        
+        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 405).isActive = true
+        socialMediaSelectedContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 410).isActive = true
+        
+        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
+        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
+        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
+        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
+        
+        //Delete Button
+        currentPositionOfDeleteButton = view.center.y + 500
+        
+        deleteButtonContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        deleteButtonContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        deleteButtonContainerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        deleteButtonContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 500).isActive = true
+        
+//        deleteButton.centerYAnchor.constraint(equalTo: deleteButtonContainerView.centerYAnchor).isActive = true
+//        deleteButton.centerXAnchor.constraint(equalTo: deleteButtonContainerView.centerXAnchor).isActive = true
+        
     }
     
     func setupView() {
         
+        // Mr. Pan is added to the whole view. So when you touch anything on the view,
+        // it calls Mrs. PanHandle
         view.addGestureRecognizer(panGestureRecognizer)
 
         view.addSubview(profileImageSelectionCollectionView)
