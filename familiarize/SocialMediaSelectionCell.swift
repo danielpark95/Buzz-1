@@ -28,7 +28,7 @@ class SocialMediaSelectionCell: UICollectionViewCell {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
         socialMediaImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        socialMediaImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30).isActive = true
+        socialMediaImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 }
 

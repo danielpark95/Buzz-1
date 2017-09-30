@@ -99,8 +99,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         layout.scrollDirection = .horizontal
         let cellSize = CGSize(width: 70, height: 65)
         layout.itemSize = cellSize
-        layout.minimumLineSpacing = 15.0
-        //layout.minimumInteritemSpacing = 7
+        layout.minimumLineSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
@@ -237,7 +236,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 //        
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         socialMediaSelectionContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
         currentPositionOfSocialMediaContainer = view.center.y + 50
     
