@@ -94,7 +94,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }()
     
     lazy var socialMediaSelectionCollectionView: UICollectionView = {
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cellSize = CGSize(width: 70, height: 65)
@@ -119,7 +118,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 
     lazy var socialMediaSelectedTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
-        tableView.alwaysBounceVertical = true
         tableView.register(SocialMediaSelectedCell.self, forCellReuseIdentifier: self.socialMediaSelectedCellId)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
@@ -128,9 +126,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.showsVerticalScrollIndicator = false
-        
         tableView.layer.cornerRadius = 8
         tableView.layer.masksToBounds = true
+        tableView.alwaysBounceVertical = false
         return tableView
     }()
     
@@ -163,44 +161,54 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return UIPanGestureRecognizer(target: self, action: #selector(handlePan))
     }()
     
-    var currentPositionOfSocialMediaContainer: CGFloat?
+    var currentPositionOfSelectionContainer: CGFloat?
+    var currentPositionOfSelectedContainer: CGFloat?
     var scrolledUp: Bool = false
     func handlePan(_ sender: UIPanGestureRecognizer) {
         let point = sender.translation(in: view)
-        socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSocialMediaContainer! + point.y)
+        socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSelectionContainer! + point.y)
+        socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer! + point.y)
         
         switch sender.state {
         case .ended:
             if scrolledUp == false {
-                if socialMediaSelectionContainerView.center.y > 373 {
+                if point.y > -3 {
                     UIView.animate(withDuration: 0.2, animations: { 
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 50)
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
+                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + 440)
                     })
-                    currentPositionOfSocialMediaContainer = self.view.center.y + 50
+                    currentPositionOfSelectionContainer = view.center.y + 165
+                    currentPositionOfSelectedContainer = view.center.y + 440
                 } else {
                     UIView.animate(withDuration: 0.2, animations: {
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 100)
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
+                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: 420)
                     })
-                    currentPositionOfSocialMediaContainer = 100
+                    currentPositionOfSelectionContainer = 140
+                    currentPositionOfSelectedContainer = 420
                 }
             } else if scrolledUp == true{
-                if socialMediaSelectionContainerView.center.y > 110 {
+                if point.y > 3 {
                     UIView.animate(withDuration: 0.2, animations: {
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 50)
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
+                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + 440)
                     })
-                    currentPositionOfSocialMediaContainer = self.view.center.y + 50
+                    currentPositionOfSelectionContainer = self.view.center.y + 165
+                    currentPositionOfSelectedContainer = view.center.y + 440
                 } else {
                     UIView.animate(withDuration: 0.2, animations: {
-                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 100)
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
+                        self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: 420)
                     })
-                    currentPositionOfSocialMediaContainer = 100
+                    currentPositionOfSelectionContainer = 140
+                    currentPositionOfSelectedContainer = 420
                 }
             }
             scrolledUp = !scrolledUp
         default:
             print("HI")
         }
-        print(socialMediaSelectionContainerView.center.y)
+        print(point.y)
     }
     
     override func viewDidLoad() {
@@ -218,44 +226,48 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 
 //      view.addSubview(profileImageSelectionContainerView)
         view.addSubview(socialMediaSelectionContainerView)
-//        view.addSubview(socialMediaSelectedContainerView)
+        view.addSubview(socialMediaSelectedContainerView)
         
 //        profileImageSelectionContainerView.addSubview(profileImageSelectionCollectionView)
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
-//        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
+        socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
         
 //        profileImageSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
 //        profileImageSelectionContainerView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
 //        profileImageSelectionContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
 //        profileImageSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 55).isActive = true
-//        
+//
 //        profileImageSelectionCollectionView.leftAnchor.constraint(equalTo: profileImageSelectionContainerView.leftAnchor).isActive = true
 //        profileImageSelectionCollectionView.rightAnchor.constraint(equalTo: profileImageSelectionContainerView.rightAnchor).isActive = true
 //        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: profileImageSelectionContainerView.topAnchor).isActive = true
 //        profileImageSelectionCollectionView.bottomAnchor.constraint(equalTo: profileImageSelectionContainerView.bottomAnchor).isActive = true
 //        
+        
+        // Selection View
+        currentPositionOfSelectionContainer = view.center.y + 165
+        
         socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
         socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        socialMediaSelectionContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
-        currentPositionOfSocialMediaContainer = view.center.y + 50
-    
-        
-//        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-//        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
-//        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-//        socialMediaSelectedContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 400).isActive = true
-        
+        socialMediaSelectionContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 165).isActive = true
         
         socialMediaSelectionCollectionView.bottomAnchor.constraint(equalTo: socialMediaSelectionContainerView.bottomAnchor).isActive = true
         socialMediaSelectionCollectionView.leftAnchor.constraint(equalTo: socialMediaSelectionContainerView.leftAnchor).isActive = true
         socialMediaSelectionCollectionView.rightAnchor.constraint(equalTo: socialMediaSelectionContainerView.rightAnchor).isActive = true
         socialMediaSelectionCollectionView.topAnchor.constraint(equalTo: socialMediaSelectionContainerView.topAnchor).isActive = true
         
-//        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
-//        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
-//        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
-//        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
+        // Selected View
+        currentPositionOfSelectedContainer = view.center.y + 440
+        
+        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        socialMediaSelectedContainerView.heightAnchor.constraint(equalToConstant: 465).isActive = true
+        socialMediaSelectedContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 440).isActive = true
+        
+        socialMediaSelectedTableView.bottomAnchor.constraint(equalTo: socialMediaSelectedContainerView.bottomAnchor).isActive = true
+        socialMediaSelectedTableView.leftAnchor.constraint(equalTo: socialMediaSelectedContainerView.leftAnchor).isActive = true
+        socialMediaSelectedTableView.rightAnchor.constraint(equalTo: socialMediaSelectedContainerView.rightAnchor).isActive = true
+        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
     }
     
     //# MARK: - Body Collection View
