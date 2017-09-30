@@ -175,19 +175,19 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return UIPanGestureRecognizer(target: self, action: #selector(handlePan))
     }()
     
-    var currentPositionOfSelectionContainer: CGFloat?
-    var currentPositionOfSelectedContainer: CGFloat?
-    var currentPositionOfProfileImage: CGFloat?
-    var currentPositionOfDeleteButton: CGFloat?
+    var currentPositionOfSelectionContainer: CGFloat = 0
+    var currentPositionOfSelectedContainer: CGFloat = 0
+    var currentPositionOfProfileImage: CGFloat = 0
+    var currentPositionOfDeleteButton: CGFloat = 0
     var scrolledUp: Bool = false
     func handlePan(_ sender: UIPanGestureRecognizer) {
         // TODO: Utilize the velocity of the swipe and the point.y to determine if the bottom/top portion should be shown.
         
         let point = sender.translation(in: view)
-        socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSelectionContainer! + point.y)
-        socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer! + point.y)
-        profileImageSelectionCollectionView.center = CGPoint(x: profileImageSelectionCollectionView.center.x, y: currentPositionOfProfileImage! + point.y)
-        deleteButtonContainerView.center = CGPoint(x: deleteButtonContainerView.center.x, y: currentPositionOfDeleteButton! + point.y)
+        socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSelectionContainer + point.y)
+        socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer + point.y)
+        profileImageSelectionCollectionView.center = CGPoint(x: profileImageSelectionCollectionView.center.x, y: currentPositionOfProfileImage + point.y)
+        deleteButtonContainerView.center = CGPoint(x: deleteButtonContainerView.center.x, y: currentPositionOfDeleteButton + point.y)
         
         switch sender.state {
         case .ended:
