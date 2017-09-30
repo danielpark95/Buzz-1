@@ -106,6 +106,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func setupNavBarButton() {
         if fetchedResultsController.fetchedObjects?.count != 0 {
             navigationItem.leftBarButtonItem = editButton
+        } else {
+            navigationItem.leftBarButtonItem = nil
         }
         navigationItem.rightBarButtonItem = addButton
     }
@@ -179,6 +181,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } else if type == .delete {
             blockOperations.append(BlockOperation(block: {
                 self.collectionView?.deleteItems(at: [indexPath!])
+                self.setupNavBarButton()
             }))
         }
     }
