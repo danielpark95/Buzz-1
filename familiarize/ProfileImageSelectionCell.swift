@@ -20,7 +20,7 @@ class ProfileImageSelectionCell: UICollectionViewCell {
     }
     
     let profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 100)
+        return UIManager.makeProfileImage(valueOfCornerRadius: 120)
     }()
     
     func setupViews() {
@@ -28,9 +28,9 @@ class ProfileImageSelectionCell: UICollectionViewCell {
         addSubview(profileImage)
         
         profileImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -32).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 240).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 240).isActive = true
 
     }
 }

@@ -134,7 +134,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     lazy var profileImageSelectionContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .blue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -142,7 +142,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     lazy var profileImageSelectionCollectionView: UICollectionView = {
         let layout = UPCarouselFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -150)
+        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -100)
         // If the size is not set to 400|400, then the first cell is not centered.
         layout.itemSize = CGSize(width: 400, height: 400)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -163,52 +163,62 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     var currentPositionOfSelectionContainer: CGFloat?
     var currentPositionOfSelectedContainer: CGFloat?
+    var currentPositionOfProfileImage: CGFloat?
     var scrolledUp: Bool = false
     func handlePan(_ sender: UIPanGestureRecognizer) {
+        // TODO: Utilize the velocity of the swipe and the point.y to determine if the bottom/top portion should be shown.
+        
         let point = sender.translation(in: view)
         socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSelectionContainer! + point.y)
         socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer! + point.y)
+        profileImageSelectionCollectionView.center = CGPoint(x: profileImageSelectionCollectionView.center.x, y: currentPositionOfProfileImage! + point.y)
         
         switch sender.state {
         case .ended:
             if scrolledUp == false {
-                if point.y > -3 {
+                if point.y > -20 {
                     UIView.animate(withDuration: 0.2, animations: { 
                         self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
                         self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + 440)
+                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 50)
                     })
                     currentPositionOfSelectionContainer = view.center.y + 165
                     currentPositionOfSelectedContainer = view.center.y + 440
+                    currentPositionOfProfileImage = view.center.y - 50
                 } else {
                     UIView.animate(withDuration: 0.2, animations: {
                         self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
                         self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: 420)
+                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
                     })
                     currentPositionOfSelectionContainer = 140
                     currentPositionOfSelectedContainer = 420
+                    currentPositionOfProfileImage = -55
                 }
             } else if scrolledUp == true{
-                if point.y > 3 {
+                if point.y > 20 {
                     UIView.animate(withDuration: 0.2, animations: {
                         self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
                         self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + 440)
+                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 50)
                     })
-                    currentPositionOfSelectionContainer = self.view.center.y + 165
+                    currentPositionOfSelectionContainer = view.center.y + 165
                     currentPositionOfSelectedContainer = view.center.y + 440
+                    currentPositionOfProfileImage = view.center.y - 50
                 } else {
                     UIView.animate(withDuration: 0.2, animations: {
                         self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 140)
                         self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: 420)
+                        self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
                     })
                     currentPositionOfSelectionContainer = 140
                     currentPositionOfSelectedContainer = 420
+                    currentPositionOfProfileImage = -55
                 }
             }
             scrolledUp = !scrolledUp
-        default:
-            print("HI")
+        default: break
         }
-        print(point.y)
     }
     
     override func viewDidLoad() {
@@ -224,25 +234,21 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         view.addGestureRecognizer(panGestureRecognizer)
 
-//      view.addSubview(profileImageSelectionContainerView)
+        view.addSubview(profileImageSelectionCollectionView)
         view.addSubview(socialMediaSelectionContainerView)
         view.addSubview(socialMediaSelectedContainerView)
         
-//        profileImageSelectionContainerView.addSubview(profileImageSelectionCollectionView)
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
         
-//        profileImageSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-//        profileImageSelectionContainerView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//        profileImageSelectionContainerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-//        profileImageSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 55).isActive = true
-//
-//        profileImageSelectionCollectionView.leftAnchor.constraint(equalTo: profileImageSelectionContainerView.leftAnchor).isActive = true
-//        profileImageSelectionCollectionView.rightAnchor.constraint(equalTo: profileImageSelectionContainerView.rightAnchor).isActive = true
-//        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: profileImageSelectionContainerView.topAnchor).isActive = true
-//        profileImageSelectionCollectionView.bottomAnchor.constraint(equalTo: profileImageSelectionContainerView.bottomAnchor).isActive = true
-//        
+        // Profile Image View
+        currentPositionOfProfileImage = view.center.y - 50
         
+        profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 240).isActive = true
+        profileImageSelectionCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+
         // Selection View
         currentPositionOfSelectionContainer = view.center.y + 165
         

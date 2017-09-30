@@ -28,7 +28,7 @@ class SocialMediaSelectionCell: UICollectionViewCell {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
         socialMediaImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        socialMediaImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        socialMediaImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30).isActive = true
     }
 }
 
@@ -58,7 +58,6 @@ class SocialMedia: NSObject, UICollectionViewDelegateFlowLayout {
         self.inputName = copyFrom.inputName
         self.isSet = copyFrom.isSet
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 50)
