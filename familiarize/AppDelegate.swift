@@ -50,28 +50,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
+        
+        print("This is the fcm registration token \(Messaging.messaging().fcmToken)")
 
         setupInternetAccessView()
         
         return true
     }
     
+    // Notification documents 
+    // https://stackoverflow.com/questions/39834018/how-to-send-push-notification-in-ios-10-via-fcmfirebase-or-by-native?rq=1
+    
+    // For receiving just data
     func application(received remoteMessage: MessagingRemoteMessage) {
-        print("RECEIVED A MESSAGE")
+        print("AW FUCKING YEA")
+        print("%@", remoteMessage.appData)
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("HI")
-    }
-    
+    // For receiving notification data
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("Good stuff")
+        print(notification.request.content)
+        print("another good stuff")
+        print(notification.request.content.userInfo)
+        completionHandler([.alert, .badge, .sound])
         print("BYE")
     }
     
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        print("Received data message: \(remoteMessage.appData)")
-    }
-
     /// This method will be called whenever FCM receives a new, default FCM token for your
     /// Firebase project's Sender ID.
     /// You can send this token to your application server to send notifications to this device.
@@ -80,9 +85,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         print("huh")
     }
     
+    // I do not know what these are for [userNotificationCenter-didReceiveResponse & messaging didReceiveRemoteMessage]. Stackoverflow/firebase documents told me to include these. I will find out later.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("HI")
+    }
+    
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("Received data message: \(remoteMessage.appData)")
+    }
+
+
+    
+    // For opening facebook application on redirection
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
-        
         return handled
     }
     

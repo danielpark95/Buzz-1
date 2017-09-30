@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SwiftyJSON
+import Firebase
 
 extension Notification.Name {
     static let reloadMeCards = Notification.Name("reloadMeCards")
