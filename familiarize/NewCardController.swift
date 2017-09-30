@@ -26,7 +26,7 @@ class SocialMediaProfileImage: SocialMedia {
     }
 }
 
-class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate, UIScrollViewDelegate {
+class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate {
     
     private let profileImageSelectionCellId = "profileImageSelectionCellId"
     private let socialMediaSelectionCellId = "socialMediaSelectionCellId"
@@ -70,15 +70,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "", withAlreadySet: true),
         SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true)
     ]
-    
-    lazy var scrollView: UIScrollView = {
-        let sv = UIScrollView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.alwaysBounceVertical = true
-        sv.delegate = self
-        sv.tag = 696969
-        return sv
-    }()
  
     lazy var socialMediaSelectionContainerView: UIView = {
         let view = UIView()
@@ -157,8 +148,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: -150)
         // If the size is not set to 400|400, then the first cell is not centered.
         layout.itemSize = CGSize(width: 400, height: 400)
-        //layout.sideItemAlpha = 0.75
-        //layout.sideItemScale = 0.75
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -170,7 +159,50 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         collectionView.tag = collectionViewTag.profileImageSelectionTableView.rawValue
         return collectionView
     }()
-
+    
+    lazy var panGestureRecognizer: UIPanGestureRecognizer = {
+        return UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+    }()
+    
+    var currentPositionOfSocialMediaContainer: CGFloat?
+    var scrolledUp: Bool = false
+    func handlePan(_ sender: UIPanGestureRecognizer) {
+        let point = sender.translation(in: view)
+        socialMediaSelectionContainerView.center = CGPoint(x: socialMediaSelectionContainerView.center.x, y: currentPositionOfSocialMediaContainer! + point.y)
+        
+        switch sender.state {
+        case .ended:
+            if scrolledUp == false {
+                if socialMediaSelectionContainerView.center.y > 373 {
+                    UIView.animate(withDuration: 0.2, animations: { 
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 50)
+                    })
+                    currentPositionOfSocialMediaContainer = self.view.center.y + 50
+                } else {
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 100)
+                    })
+                    currentPositionOfSocialMediaContainer = 100
+                }
+            } else if scrolledUp == true{
+                if socialMediaSelectionContainerView.center.y > 110 {
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 50)
+                    })
+                    currentPositionOfSocialMediaContainer = self.view.center.y + 50
+                } else {
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: 100)
+                    })
+                    currentPositionOfSocialMediaContainer = 100
+                }
+            }
+            scrolledUp = !scrolledUp
+        default:
+            print("HI")
+        }
+        print(socialMediaSelectionContainerView.center.y)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,24 +213,13 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         setupNavBarButton()
     }
     
-    //var noInternetAccessFrameTopAnchor: NSLayoutConstraint?
-    var socialMediaSelectionContainerTopAnchor: NSLayoutConstraint?
     func setupView() {
-        view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y, width: view.frame.width, height: view.frame.height + 100)
         
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
-        view.addSubview(scrollView)
-        
-        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        
+        view.addGestureRecognizer(panGestureRecognizer)
 
-//        scrollView.addSubview(profileImageSelectionContainerView)
-        scrollView.addSubview(socialMediaSelectionContainerView)
-//        scrollView.addSubview(socialMediaSelectedContainerView)
+//      view.addSubview(profileImageSelectionContainerView)
+        view.addSubview(socialMediaSelectionContainerView)
+//        view.addSubview(socialMediaSelectedContainerView)
         
 //        profileImageSelectionContainerView.addSubview(profileImageSelectionCollectionView)
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
@@ -214,11 +235,12 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 //        profileImageSelectionCollectionView.topAnchor.constraint(equalTo: profileImageSelectionContainerView.topAnchor).isActive = true
 //        profileImageSelectionCollectionView.bottomAnchor.constraint(equalTo: profileImageSelectionContainerView.bottomAnchor).isActive = true
 //        
-        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        socialMediaSelectionContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         socialMediaSelectionContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
         socialMediaSelectionContainerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
-        socialMediaSelectionContainerTopAnchor = socialMediaSelectionContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 250)
-        socialMediaSelectionContainerTopAnchor?.isActive = true
+        socialMediaSelectionContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
+        currentPositionOfSocialMediaContainer = view.center.y + 50
+    
         
 //        socialMediaSelectedContainerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
 //        socialMediaSelectedContainerView.widthAnchor.constraint(equalToConstant: 340).isActive = true
@@ -237,21 +259,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
 //        socialMediaSelectedTableView.topAnchor.constraint(equalTo: socialMediaSelectedContainerView.topAnchor).isActive = true
     }
     
-
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print("The target content offset is: \(targetContentOffset.pointee.y)")
-        let currentYValue = targetContentOffset.pointee.y
-        if currentYValue > 80 {
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                scrollView.contentOffset = CGPoint(x: 0, y: 100)
-            }, completion: nil)
-        } else {
-            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                scrollView.contentOffset = CGPoint(x: 0, y: 0)
-            }, completion: nil)
-        }
-    }
-    
     //# MARK: - Body Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
@@ -263,12 +270,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == collectionViewTag.socialMediaSelectionTableView.rawValue {
-            print("I have been made")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: socialMediaSelectionCellId, for: indexPath) as! SocialMediaSelectionCell
             cell.socialMedia = socialMediaChoices[indexPath.item]
             return cell
         } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
-            print("I have been made")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileImageSelectionCellId, for: indexPath) as! ProfileImageSelectionCell
             cell.socialMediaProfileImage = socialMediaProfileImages[indexPath.item]
             return cell
