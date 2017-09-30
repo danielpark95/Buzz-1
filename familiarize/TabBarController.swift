@@ -36,21 +36,16 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         NotificationCenter.default.addObserver(self, selector: #selector(setupLogInController), name: .logInController, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setupLoggedInController), name: .loggedInController, object: nil)
 
-        if isNotFirstTime() {
-            setupTabBarControllers()
-        } else {
-            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.93)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         // If you just logged in, then the revealing splashview will not show.
         let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
         view.addSubview(revealingSplashView)
         revealingSplashView.startAnimation()
         
+        if isNotFirstTime() {
+            setupTabBarControllers()
+        } else {
+            perform(#selector(showWalkthroughController), with: nil, afterDelay: 0.93)
+        }
     }
     
     func setupTabBarControllers() {

@@ -20,18 +20,15 @@ class SocialMediaSelectionCell: UICollectionViewCell {
     }
     
     let socialMediaImage: UIImageView = {
-        let image = UIManager.makeImage()
-        image.contentMode = .scaleAspectFill
-        return image
+        return UIManager.makeImage()
+       
     }()
     
     func setupViews() {
         backgroundColor = UIColor.white
         addSubview(socialMediaImage)
-        socialMediaImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        socialMediaImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        socialMediaImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        //socialMediaImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        socialMediaImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        socialMediaImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30).isActive = true
     }
 }
 
@@ -62,8 +59,7 @@ class SocialMedia: NSObject, UICollectionViewDelegateFlowLayout {
         self.isSet = copyFrom.isSet
     }
     
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 50)
     }
 

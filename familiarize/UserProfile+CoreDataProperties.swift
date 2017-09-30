@@ -161,6 +161,7 @@ extension UserProfile {
         do {
             try managedObjectContext.save()
         } catch let err {
+            print("Deleting didn't go so well.")
             print(err)
         }
     }

@@ -10,21 +10,17 @@ import UIKit
 import CoreData
 import ESTabBarController_swift
 import Firebase
-
 import Quikkly
 import Alamofire
 import FBSDKCoreKit
-
 
 // Firebase messaging
 import UserNotifications
 import FirebaseInstanceID
 import FirebaseMessaging
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
-
 
     var window: UIWindow?
     var previousIndex: Int?
@@ -34,8 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
-        
-
         
         // Facebook login setup
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -82,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     /// Firebase project's Sender ID.
     /// You can send this token to your application server to send notifications to this device.
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("This is the current token! \(fcmToken)")
         print("huh")
     }
     
