@@ -25,11 +25,11 @@ class UIManager {
         return button
     }
     
-    static func makeTextButton(buttonText: String) -> UIButton {
+    static func makeTextButton(buttonText: String, color: UIColor = .black) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(buttonText, for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(color, for: .normal)
         return button
     }
     

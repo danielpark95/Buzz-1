@@ -136,7 +136,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let view = UIView()
         view.backgroundColor = UIColor.clear
         view.layer.shadowColor = UIColor.lightGray.cgColor
-        view.layer.shadowOffset = CGSize(width: 4.0, height: 3.0)
+        view.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         view.layer.shadowOpacity = 1.0
         view.layer.shadowRadius = 2
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -144,9 +144,11 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }()
     
     lazy var deleteButton: UIButton = {
-        let button = UIManager.makeTextButton(buttonText: "Delete Card")
+        let button = UIManager.makeTextButton(buttonText: "Delete Card", color: .red)
         button.backgroundColor = .white
         button.tintColor = .red
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 8
         return button
     }()
     
@@ -270,7 +272,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
-//        deleteButtonContainerView.addSubview(deleteButton)
+        deleteButtonContainerView.addSubview(deleteButton)
         
         // Profile Image View
         currentPositionOfProfileImage = view.center.y - 50
@@ -314,11 +316,13 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         deleteButtonContainerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         deleteButtonContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 500).isActive = true
         
-//        deleteButton.centerYAnchor.constraint(equalTo: deleteButtonContainerView.centerYAnchor).isActive = true
-//        deleteButton.centerXAnchor.constraint(equalTo: deleteButtonContainerView.centerXAnchor).isActive = true
-        
+        deleteButton.bottomAnchor.constraint(equalTo: deleteButtonContainerView.bottomAnchor).isActive = true
+        deleteButton.leftAnchor.constraint(equalTo: deleteButtonContainerView.leftAnchor).isActive = true
+        deleteButton.rightAnchor.constraint(equalTo: deleteButtonContainerView.rightAnchor).isActive = true
+        deleteButton.topAnchor.constraint(equalTo: deleteButtonContainerView.topAnchor).isActive = true
     }
     
+ 
     func setupView() {
         
         // Mr. Pan is added to the whole view. So when you touch anything on the view,
