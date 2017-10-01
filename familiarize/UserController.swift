@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SwiftyJSON
+import Firebase
 
 extension Notification.Name {
     static let reloadMeCards = Notification.Name("reloadMeCards")
@@ -67,6 +68,8 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FirebaseManager.sendCard(receiverUID: "ryJYEdZ13AepOeqpD86AhGj2M3f2", cardUID: 13121340415180362844)
         
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
         do {

@@ -157,11 +157,12 @@ extension UserProfile {
     }
     
     static func deleteProfile(user: UserProfile) {
+        FirebaseManager.deleteCard(uniqueID: user.uniqueID!.uint64Value)
         managedObjectContext.delete(user)
         do {
             try managedObjectContext.save()
         } catch let err {
-            print("Deleting didn't go so well.")
+            print("Deleting didn't go so well. ):")
             print(err)
         }
     }
