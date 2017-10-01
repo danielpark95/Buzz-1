@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
         
+        FirebaseManager.updateFCMToken()
         print("This is the fcm registration token \(Messaging.messaging().fcmToken)")
 
         setupInternetAccessView()
@@ -81,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     /// Firebase project's Sender ID.
     /// You can send this token to your application server to send notifications to this device.
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        FirebaseManager.updateFCMToken()
         print("This is the current token! \(fcmToken)")
         print("huh")
     }

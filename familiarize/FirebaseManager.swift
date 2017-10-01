@@ -46,14 +46,25 @@ class FirebaseManager {
         }
     }
  */
+    static func sendCard(receiverUID: String, cardUID: UInt64) {
+        let uniqueIDString = String(cardUID)
+        databaseRef.child("notificationQueue").child(receiverUID).child(uniqueIDString).child("Alex Oh").setValue("true")
+    }
+    
+    static func updateFCMToken() {
+        let user = Auth.auth().currentUser
+        guard let userID = user?.uid else { return }
+        let fcmToken = Messaging.messaging().fcmToken
+        databaseRef.child("users").child(userID).updateChildValues(["fcmToken": fcmToken!])
+    }
     
     static func deleteCard(uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
-        databaseRef.child("cards").child(uniqueIDString).removeValue()
         let user = Auth.auth().currentUser
         guard let userID = user?.uid else { return }
         
-        databaseRef.child("users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+        databaseRef.child("cards").child(uniqueIDString).removeValue()
+        databaseRef.child("users").child(userID).child("cards").observeSingleEvent(of: .value, with: { (snapshot) in
             var childByAutoIDKey: String?
             for childSnap in snapshot.children {
                 let snap = childSnap as! DataSnapshot
@@ -63,7 +74,7 @@ class FirebaseManager {
                 }
             }
             guard let key = childByAutoIDKey else { return }
-            databaseRef.child("users").child(userID).child(key).removeValue()
+            databaseRef.child("users").child(userID).child("cards").child(key).removeValue()
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -77,7 +88,7 @@ class FirebaseManager {
         let uniqueIDString = String(uniqueID)
         let user = Auth.auth().currentUser
         guard let userID = user?.uid else { return }
-        databaseRef.child("users").child(userID).childByAutoId().setValue(uniqueIDString)
+        databaseRef.child("users").child(userID).child("cards").childByAutoId().setValue(uniqueIDString)
         for (eachKey, manyValues) in userCard {
             for eachValue in manyValues{
                 databaseRef.child("cards").child(uniqueIDString).child(eachKey).childByAutoId().setValue(eachValue)

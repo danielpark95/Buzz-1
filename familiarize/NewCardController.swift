@@ -454,13 +454,18 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     }
     
     func setupNavBarButton() {
-        let cancelButton = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
-        let saveButton = UIBarButtonItem.init(title: "Save", style: .plain, target: self, action: #selector(saveClicked))
-        cancelButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
-        saveButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
-        
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = saveButton
+        let leftButton = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
+        var rightButton: UIBarButtonItem?
+        if editingUserProfile != nil {
+            rightButton = UIBarButtonItem.init(title: "Update", style: .plain, target: self, action: #selector(saveClicked))
+        } else {
+            rightButton = UIBarButtonItem.init(title: "Save", style: .plain, target: self, action: #selector(saveClicked))
+        }
+
+        leftButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
+        rightButton?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     func cancelClicked() {
