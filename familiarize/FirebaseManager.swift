@@ -47,7 +47,10 @@ class FirebaseManager {
     }
  */
     static func sendCard(receiverUID: String, cardUID: UInt64) {
+        
         let uniqueIDString = String(cardUID)
+        
+        // Just pass up a true value to these certain paths and then a notification will be sent to that corresponding user!
         databaseRef.child("notificationQueue").child(receiverUID).child(uniqueIDString).child("Alex Oh").setValue("true")
     }
     
