@@ -131,7 +131,7 @@ class FirebaseManager {
         }
     }
     
-    static func getCard(withUniqueID uniqueID: UInt64, completionHandler: @escaping ([String:[String]]) -> Void) {
+    static func getCard(withUniqueID uniqueID: UInt64, completionHandler: @escaping ([String:[String]]?, Error?) -> Void) {
         let uniqueIDString = String(uniqueID)
         databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
             var card = [String:[String]]()
@@ -147,8 +147,9 @@ class FirebaseManager {
                     print(moreSnap.value as! String)
                 }
             }
-            completionHandler(card)
+            completionHandler(card, nil)
         }) { (error) in
+            completionHandler(nil, error)
             print(error.localizedDescription)
         }
     }

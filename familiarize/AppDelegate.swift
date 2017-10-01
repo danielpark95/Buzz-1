@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         window?.rootViewController = TabBarController()
         
         FirebaseManager.updateFCMToken()
-        print("This is the fcm registration token \(Messaging.messaging().fcmToken)")
 
         setupInternetAccessView()
         
@@ -64,18 +63,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     
     // For receiving just data
     func application(received remoteMessage: MessagingRemoteMessage) {
-        print("AW FUCKING YEA")
         print("%@", remoteMessage.appData)
     }
     
     // For receiving notification data
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("Good stuff")
-        print(notification.request.content)
-        print("another good stuff")
-        print(notification.request.content.userInfo)
+        
+        let cardUIDString = notification.request.content.userInfo["gcm.notification.cardUID"] as! String
+        let cardUID = UInt64(cardUIDString) ?? 0
+        
+        FirebaseManager.getCard(withUniqueID: cardUID, completionHandler: { (card, error) in
+            guard let card = card else { return }
+            if card.count == 0 {
+                // Perform some animation to show that the quikkly code is invalid.
+                return
+            }
+            
+            // Save the fetched data into CoreData.
+            let userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: cardUID)
+            
+            // For fetching the profile image picture.
+            let socialMedia = SocialMedia(withAppName: (userProfile.profileImageApp)!, withImageName: "", withInputName: (userProfile.profileImageURL)!, withAlreadySet: false)
+            
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
+                    DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: cardUID, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                }
+            })
+        })
+        
+        
         completionHandler([.alert, .badge, .sound])
-        print("BYE")
     }
     
     /// This method will be called whenever FCM receives a new, default FCM token for your
@@ -83,20 +101,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     /// You can send this token to your application server to send notifications to this device.
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         FirebaseManager.updateFCMToken()
-        print("This is the current token! \(fcmToken)")
-        print("huh")
+    }
+    
+    // This bad boy is called whenever a user swipes on the notification!
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if window?.rootViewController as? TabBarController != nil {
+            // Must get access to the original tab bar controller.
+            let tabBarController = window?.rootViewController as! TabBarController
+            // Switch to the third page, which is the contacts page.
+            tabBarController.selectedIndex = 2
+            // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
+            tabBarController.tabBar.isHidden = false
+        }
+        NotificationCenter.default.post(name: .viewProfile, object: nil)
     }
     
     // I do not know what these are for [userNotificationCenter-didReceiveResponse & messaging didReceiveRemoteMessage]. Stackoverflow/firebase documents told me to include these. I will find out later.
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("HI")
-    }
-    
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         print("Received data message: \(remoteMessage.appData)")
     }
-
-
     
     // For opening facebook application on redirection
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {

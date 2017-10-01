@@ -19,13 +19,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-/**
- * Triggers when a user gets a new follower and sends a notification.
- *
- * Followers add a flag to `/followers/{followedUid}/{followerUid}`.
- * Users save their device notification tokens to `/users/{followedUid}/notificationTokens/{notificationToken}`.
- */
-exports.sendFollowerNotification = functions.database.ref('/notificationQueue/{receiverUID}/{cardUID}/{cardName}').onWrite(event => {
+exports.sendNotification = functions.database.ref('/notificationQueue/{receiverUID}/{cardUID}/{cardName}').onCreate(event => {
 
   const receiverUID = event.params.receiverUID;
   const cardUID = event.params.cardUID;

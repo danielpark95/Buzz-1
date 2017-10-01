@@ -120,7 +120,8 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             self.scanProfileController.ScannerControllerDelegate = self
             present(self.scanProfileController, animated: false)
             
-            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { card in
+            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { (card, error) in
+                guard let card = card else { return }
                 if card.count == 0 {
                     // Perform some animation to show that the quikkly code is invalid.
                     return
