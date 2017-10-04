@@ -19,7 +19,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-exports.sendNotification = functions.database.ref('/notificationQueue/{receiverUID}/{cardUID}/{cardName}').onWrite(event => {
+exports.sendNotification = functions.database.ref('/notificationQueue/{receiverUID}/{cardUID}/{cardName}').onCreate(event => {
 
   const receiverUID = event.params.receiverUID;
   const cardUID = event.params.cardUID;
@@ -36,7 +36,6 @@ exports.sendNotification = functions.database.ref('/notificationQueue/{receiverU
     // Notification details.
     const payload = {
       notification: {
-        title: 'You have a new contact!',
         body: `${cardName} has shared a card with you!`,
         cardUID: cardUID
       }

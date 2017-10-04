@@ -47,7 +47,10 @@ class FirebaseManager {
     }
  */
     static func sendCard(receiverUID: String, cardUID: UInt64) {
+        
         let uniqueIDString = String(cardUID)
+        
+        // Just pass up a true value to these certain paths and then a notification will be sent to that corresponding user!
         databaseRef.child("notificationQueue").child(receiverUID).child(uniqueIDString).child("Alex Oh").setValue("true")
     }
     
@@ -128,7 +131,7 @@ class FirebaseManager {
         }
     }
     
-    static func getCard(withUniqueID uniqueID: UInt64, completionHandler: @escaping ([String:[String]]) -> Void) {
+    static func getCard(withUniqueID uniqueID: UInt64, completionHandler: @escaping ([String:[String]]?, Error?) -> Void) {
         let uniqueIDString = String(uniqueID)
         databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
             var card = [String:[String]]()
@@ -144,8 +147,9 @@ class FirebaseManager {
                     print(moreSnap.value as! String)
                 }
             }
-            completionHandler(card)
+            completionHandler(card, nil)
         }) { (error) in
+            completionHandler(nil, error)
             print(error.localizedDescription)
         }
     }
