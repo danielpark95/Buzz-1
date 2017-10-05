@@ -39,6 +39,25 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     var editingUserProfile: UserProfile?
 
+    let socialMediaTableViewRanking: [String:Int] = [
+        "name": 1,
+        "bio": 2,
+        "email": 3,
+        "phoneNumber": 4,
+        "faceBookProfile": 5,
+        "gitHubProfile": 6,
+        "instagramProfile": 7,
+        "kakaoTalkProfile": 8,
+        "linkedInProfile": 9,
+        "slackProfile": 10,
+        "snapChatProfile": 11,
+        "soundCloudProfile": 12,
+        "spotifyProfile": 13,
+        "twitterProfile": 14,
+        "venmoProfile": 15,
+        "whatsAppProfile": 16
+    ]
+
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_add", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "email", withImageName: "dan_email_add", withInputName: "", withAlreadySet: false),
@@ -66,9 +85,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "dan_addprofileimage_orange", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "dan_addprofileimage_orange")!)
     ]
     
-    var socialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true)
+    lazy var socialMediaInputs: [SocialMedia] = [
+        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "", withAlreadySet: true, withRanking: self.socialMediaTableViewRanking["name"]!),
+        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true, withRanking: self.socialMediaTableViewRanking["bio"]!)
     ]
  
     lazy var socialMediaSelectionContainerView: UIView = {
@@ -180,6 +199,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     var currentPositionOfProfileImage: CGFloat = 0
     var currentPositionOfDeleteButton: CGFloat = 0
     var scrolledUp: Bool = false
+    var selectedSocialMediaProfileImage: SocialMediaProfileImage?
     func handlePan(_ sender: UIPanGestureRecognizer) {
         // TODO: Utilize the velocity of the swipe and the point.y to determine if the bottom/top portion should be shown.
         
@@ -205,6 +225,14 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
                 }
             }
             scrolledUp = !scrolledUp
+        case .began:
+            // Always be on the lookout for when scrolling occurs so that you can save what position the collectionview was at, and so that it wont throw an error when the table view goes up.
+            let initialPinchPoint = CGPoint(x: (profileImageSelectionCollectionView.center.x) + (profileImageSelectionCollectionView.contentOffset.x), y: (profileImageSelectionCollectionView.center.y) + (profileImageSelectionCollectionView.contentOffset.y))
+            // Select the chosen image from the carousel.
+            let selectedIndexPath = profileImageSelectionCollectionView.indexPathForItem(at: initialPinchPoint)
+            if selectedIndexPath != nil {
+                selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
+            }
         default: break
         }
     }
@@ -249,10 +277,12 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func deleteClicked() {
         guard let userProfile = editingUserProfile else { return }
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+        FirebaseManager.deleteCard(uniqueID: userProfile.uniqueID!.uint64Value)
         UserProfile.deleteProfile(user: userProfile)
         dismiss(animated: true, completion: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -455,15 +485,10 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func setupNavBarButton() {
         let leftButton = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
-        var rightButton: UIBarButtonItem?
-        if editingUserProfile != nil {
-            rightButton = UIBarButtonItem.init(title: "Update", style: .plain, target: self, action: #selector(saveClicked))
-        } else {
-            rightButton = UIBarButtonItem.init(title: "Save", style: .plain, target: self, action: #selector(saveClicked))
-        }
-
+        let rightButton = UIBarButtonItem.init(title: "Save", style: .plain, target: self, action: #selector(saveClicked))
+        
         leftButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
-        rightButton?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
+        rightButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 17)], for: UIControlState.normal)
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
@@ -475,10 +500,11 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     // For adding it to the coredata
     func saveClicked() {
         let initialPinchPoint = CGPoint(x: (profileImageSelectionCollectionView.center.x) + (profileImageSelectionCollectionView.contentOffset.x), y: (profileImageSelectionCollectionView.center.y) + (profileImageSelectionCollectionView.contentOffset.y))
-        
         // Select the chosen image from the carousel.
         let selectedIndexPath = profileImageSelectionCollectionView.indexPathForItem(at: initialPinchPoint)
-        let selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
+        if selectedIndexPath != nil {
+            selectedSocialMediaProfileImage = socialMediaProfileImages[(selectedIndexPath?.item)!]
+        }
         
         var uniqueID: UInt64?
         if editingUserProfile != nil {
@@ -487,23 +513,24 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             uniqueID = FirebaseManager.generateUniqueID()
         }
         
-        myUserProfileImageCache.setObject((selectedSocialMediaProfileImage.profileImage)!, forKey: "\(uniqueID!)" as NSString)
+        myUserProfileImageCache.setObject((selectedSocialMediaProfileImage?.profileImage)!, forKey: "\(uniqueID!)" as NSString)
         
         var userProfile: UserProfile?
         if editingUserProfile != nil {
             userProfile = UserProfile.updateProfile(socialMediaInputs, userProfile: editingUserProfile!)
         } else {
             // Save the new card information into core data.
-            userProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID!)
+            userProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID!, completionHandler: { (userCard) in
+                FirebaseManager.uploadCard(userCard, withUniqueID: uniqueID!)
+            })
         }
         
         // Save the image to disk.
-        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage.profileImage)!)!)
+        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage?.profileImage)!)!)
         DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: userProfile!.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
-        
         // When the image chosen is from the camera roll, upload the image to firebase
         // And then update the URL link to that image.
-        FirebaseManager.uploadImage(selectedSocialMediaProfileImage, completionHandler: { fetchedProfileImageURL in
+        FirebaseManager.uploadImage(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
             UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withUserProfile: userProfile!)
         })
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)

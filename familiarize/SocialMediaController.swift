@@ -116,13 +116,6 @@ class SocialMediaController: UIViewController, UITextFieldDelegate {
         }, completion: nil)
     }
     
-//    let limitLength = 20
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        guard let text = textField.text else { return true }
-//        let newLength = text.characters.count + string.characters.count - range.length
-//        return newLength <= limitLength
-//    }
-//    
     var popupCenterYAnchor: NSLayoutConstraint?
     func setupViews() {
         view.addSubview(tintOverlay)

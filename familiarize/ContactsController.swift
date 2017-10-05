@@ -104,10 +104,8 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
             controller = HelpSettingController(collectionViewLayout: layout)
         case .Feedback:
             controller = FeedbackSettingController(collectionViewLayout: layout)
-        case .Logout:
-            FirebaseManager.logOutUser()
-            navigationController?.popToRootViewController(animated: true)
-            NotificationCenter.default.post(name: .logInController, object: nil)
+        case .LogOut:
+            didClickLogOut()
             return
         }
     
@@ -115,6 +113,14 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
             controller?.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(controller!, animated: true)
         }
+    }
+    
+    func didClickLogOut() {
+        FirebaseManager.logOutUser()
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.clearData(forProfile: .otherUser)
+        navigationController?.popToRootViewController(animated: true)
+        NotificationCenter.default.post(name: .logInController, object: nil)
     }
     
     func viewProfileNotification() {
@@ -140,7 +146,8 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
-        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID!.uint64Value)
+        FirebaseManager.deleteCard(uniqueID: userProfile.uniqueID!.uint64Value)
         UserProfile.deleteProfile(user: userProfile)
     }
     

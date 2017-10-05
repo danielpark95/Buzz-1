@@ -29,7 +29,6 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         cv.delegate = self
         cv.isPagingEnabled = true
         cv.showsHorizontalScrollIndicator = false
-        
         return cv
     }()
     
@@ -65,8 +64,6 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         view.addSubview(collectionView)
         view.addSubview(pageControl)
         
-        //print(pageControl.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)[1])
-        
         pageControlBottomAnchor = pageControl.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)[3]
         
         collectionView.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
@@ -94,25 +91,15 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
         pageControl.currentPage = pageNumber
         
         if pageNumber == walkthroughs.count {
-            //pageControlBottomAnchor?.constant = 0
-            //pageControl.pageIndicatorTintColor = .clear
-            //pageControl.currentPageIndicatorTintColor = .clear
             isLastPage = true
             print ("bool = " , isLastPage)
             
             if isLastPage == true {
                 cheerView.config.particle = .confetti
-                //let image = UIImage(named: "honeycomb")
-                //cheerView.config.particle = .image([image!])
-                
-                //cheerView.config.colors = [UIColor.red, UIColor.yellow, UIColor.green, UIColor.blue]
-                
                 view.addSubview(cheerView)
-                
                 cheerView.start()
             }
         } else {
-            //pageControlBottomAnchor?.constant = 40
             pageControl.pageIndicatorTintColor = UIColor(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
             pageControl.currentPageIndicatorTintColor = UIColor(red:255/255.0, green: 191/255.0, blue: 21/255.0, alpha: 1.0)
             isLastPage = false
@@ -120,9 +107,6 @@ class WalkthroughController: UIViewController, UICollectionViewDataSource, UICol
                 cheerView.stop()
             }
         }
-        //UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-        //    self.view.layoutIfNeeded()
-        //}, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

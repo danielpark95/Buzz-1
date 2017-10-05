@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FBSDKLoginKit
 
+
 class FirebaseManager {
     
     // MARK: - Shared Instance - Singleton
@@ -23,33 +24,59 @@ class FirebaseManager {
         return database.reference()
     }()
     
-    /* Attempt at trying to find unique id.
-    static func generateUniqueID(completionHandler: @escaping (UInt64) -> Void) {
-        let asyncDispatchGroup = DispatchGroup()
-        while true {
-            asyncDispatchGroup.enter()
-            let uniqueID = UInt64(arc4random()) + (UInt64(arc4random()) << 32)
-            let uniqueIDString = String(uniqueID)
-            var isTruelyUnique = false
-            databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
-                if snapshot.value == nil {
-                    isTruelyUnique = true
-                    asyncDispatchGroup.leave()
-                }
-            })
-            asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
-                if isTruelyUnique {
-                    completionHandler(uniqueID)
-                    return
-                }
-            })
+    class fetchedCard {
+        var card: [String: [String]]?
+        var uniqueID: UInt64?
+        
+        init(card: [String: [String]], uniqueID: UInt64) {
+            self.card = card
+            self.uniqueID = uniqueID
         }
     }
- */
+
+    static func getCards(userProfileSelection: UserProfile.userProfileSelection, completionHandler: @escaping (([fetchedCard]?) -> Void)) {
+        
+        let user = Auth.auth().currentUser
+        guard let userID = user?.uid else { return }
+        
+        let asyncDispatchGroup = DispatchGroup()
+
+        var cardsID: [UInt64] = []
+        var cards: [fetchedCard] = []
+        
+        var cardType: String = ""
+        if userProfileSelection == .myUser {
+            cardType = "cards"
+        } else {
+            cardType = "otherCards"
+        }
+        
+        asyncDispatchGroup.enter()
+        databaseRef.child("users").child(userID).child(cardType).observeSingleEvent(of: .value, with: { (snapshot) in
+            for childSnap in snapshot.children {
+                let snap = childSnap as! DataSnapshot
+                let uniqueIDString = snap.value as! String
+                let uniqueID = UInt64(uniqueIDString) ?? 0
+                cardsID.append(uniqueID)
+            }
+            for uniqueID in cardsID {
+                asyncDispatchGroup.enter()
+                getCard(withUniqueID: uniqueID, isARefetch: true, completionHandler: { (card, error) in
+                    guard let card = card else { return }
+                    cards.append(fetchedCard(card: card, uniqueID: uniqueID))
+                    asyncDispatchGroup.leave()
+                })
+            }
+            asyncDispatchGroup.leave()
+        })
+        
+        asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            completionHandler(cards)
+        })
+    }
+    
     static func sendCard(receiverUID: String, cardUID: UInt64) {
-        
         let uniqueIDString = String(cardUID)
-        
         // Just pass up a true value to these certain paths and then a notification will be sent to that corresponding user!
         databaseRef.child("notificationQueue").child(receiverUID).child(uniqueIDString).child("Alex Oh").setValue("true")
     }
@@ -57,8 +84,8 @@ class FirebaseManager {
     static func updateFCMToken() {
         let user = Auth.auth().currentUser
         guard let userID = user?.uid else { return }
-        let fcmToken = Messaging.messaging().fcmToken
-        databaseRef.child("users").child(userID).updateChildValues(["fcmToken": fcmToken!])
+        guard let fcmToken = Messaging.messaging().fcmToken else { return }
+        databaseRef.child("users").child(userID).updateChildValues(["fcmToken": fcmToken])
     }
     
     static func deleteCard(uniqueID: UInt64) {
@@ -131,7 +158,9 @@ class FirebaseManager {
         }
     }
     
-    static func getCard(withUniqueID uniqueID: UInt64, completionHandler: @escaping ([String:[String]]?, Error?) -> Void) {
+    static func getCard(withUniqueID uniqueID: UInt64, isARefetch: Bool = false, completionHandler: @escaping ([String:[String]]?, Error?) -> Void) {
+        let user = Auth.auth().currentUser
+        guard let userID = user?.uid else { return }
         let uniqueIDString = String(uniqueID)
         databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
             var card = [String:[String]]()
@@ -144,13 +173,18 @@ class FirebaseManager {
                 for more in snap.children {
                     let moreSnap = more as! DataSnapshot
                     card[snap.key]?.append(moreSnap.value as! String)
-                    print(moreSnap.value as! String)
+                    
+                    print("This is value: ", moreSnap.value as! String)
                 }
             }
             completionHandler(card, nil)
         }) { (error) in
             completionHandler(nil, error)
             print(error.localizedDescription)
+        }
+        
+        if isARefetch == false {
+            databaseRef.child("users").child(userID).child("otherCards").childByAutoId().setValue(uniqueIDString)
         }
     }
     
@@ -214,3 +248,38 @@ class FirebaseManager {
         }
     }
 }
+
+/*
+Attempt at trying to find unique id.
+static func generateUniqueID(completionHandler: @escaping (UInt64) -> Void) {
+    let asyncDispatchGroup = DispatchGroup()
+    while true {
+        asyncDispatchGroup.enter()
+        let uniqueID = UInt64(arc4random()) + (UInt64(arc4random()) << 32)
+        let uniqueIDString = String(uniqueID)
+        var isTruelyUnique = false
+        databaseRef.child("cards").child(uniqueIDString).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.value == nil {
+                isTruelyUnique = true
+                asyncDispatchGroup.leave()
+            }
+        })
+        asyncDispatchGroup.notify(queue: DispatchQueue.main, execute: {
+            if isTruelyUnique {
+                completionHandler(uniqueID)
+                return
+            }
+        })
+    }
+}
+
+
+
+*/
+
+
+
+
+
+
+

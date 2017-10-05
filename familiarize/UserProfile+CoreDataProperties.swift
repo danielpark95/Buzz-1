@@ -110,7 +110,7 @@ extension UserProfile {
         return userProfile
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64) -> UserProfile {
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64, completionHandler: (_ userCard:[String:[String]]) -> Void) -> UserProfile? {
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
             if userCard[eachSocialMediaInput.appName!] == nil {
@@ -118,12 +118,14 @@ extension UserProfile {
             }
             userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
         }
+
         
-        let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser, withUniqueID: uniqueID)
+        guard let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser, withUniqueID: uniqueID) else { return nil }
+        completionHandler(userCard)
         return userProfile
     }
     
-    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
+    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile:userProfileSelection, withUniqueID uniqueID:UInt64) -> UserProfile? {
         // NSCore data functionalities. -- Persist the data when user scans!
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
@@ -143,31 +145,30 @@ extension UserProfile {
         newUser.uniqueID = NSNumber(value: uniqueID)
         
         // If this is my user that I am saving, then push it to the cloud.
-        if userProfile == .myUser {
-            FirebaseManager.uploadCard(userCard, withUniqueID: newUser.uniqueID!.uint64Value)
-        }
+//        if userProfile == .myUser && isARefetch == false {
+//            FirebaseManager.uploadCard(userCard, withUniqueID: newUser.uniqueID!.uint64Value)
+//        }
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
+        
         do {
             try(managedObjectContext.save())
         } catch let err {
             print(err)
+            return nil
         }
         return newUser
     }
     
     static func deleteProfile(user: UserProfile) {
-        FirebaseManager.deleteCard(uniqueID: user.uniqueID!.uint64Value)
         managedObjectContext.delete(user)
         do {
             try managedObjectContext.save()
         } catch let err {
-            print("Deleting didn't go so well. ):")
             print(err)
         }
     }
     
-    // This is just a test run on how we can utilize clearData within the contactsVC
     static func clearData(forProfile userProfile: userProfileSelection) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
@@ -176,6 +177,7 @@ extension UserProfile {
             for userProfile in userProfiles! {
                 managedObjectContext.delete(userProfile)
             }
+            try managedObjectContext.save()
         } catch let err {
             print(err)
         }
