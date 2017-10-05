@@ -133,7 +133,7 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
             guard let ranking = newCardController.socialMediaTableViewRanking[appName] else { continue }
             if UserProfile.editableMultipleInputUserData.contains(appName) {
                 for eachInput in inputName as! [String] {
-                    let socialMediaInput = SocialMedia(withAppName: appName, withImageName: "dan_\(appName)_color", withInputName: eachInput, withAlreadySet: false, withRanking: ranking)
+                    let socialMediaInput = SocialMedia(withAppName: appName, withImageName: "dan_\(appName)_add", withInputName: eachInput, withAlreadySet: false, withRanking: ranking)
                     newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
                 }
             } else if UserProfile.editableSingleInputUserData.contains(appName) {
