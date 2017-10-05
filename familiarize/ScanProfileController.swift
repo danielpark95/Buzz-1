@@ -102,8 +102,6 @@ class ScanProfileController: UIViewController {
     }()
     
     func setUserName(_ userProfileName: String) {
-       //print(userProfileName.lengthOfBytes(using: <#T##String.Encoding#>))
-        
         var fontSize : CGFloat = 26.0
         
         print ("CHARACTERS = ", userProfileName.characters.count)

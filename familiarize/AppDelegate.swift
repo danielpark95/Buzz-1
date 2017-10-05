@@ -92,7 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             })
         })
         
-        
         completionHandler([.alert, .badge, .sound])
     }
     

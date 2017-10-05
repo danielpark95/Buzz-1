@@ -23,7 +23,7 @@ enum SettingName: String {
     case Contact = "Contact"
     case Help = "Help"
     case Feedback = "Feedback"
-    case Logout = "Logout"
+    case LogOut = "LogOut"
 }
 
 class SettingsController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -39,7 +39,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     let settings: [Setting] = {
-        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback"), Setting(name: .Logout, imageName: "")]
+        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback"), Setting(name: .LogOut, imageName: "")]
     }()
     
     let collectionView: UICollectionView = {

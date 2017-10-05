@@ -34,7 +34,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeScanner), name: .removeScanner, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setupLogInController), name: .logInController, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(setupLoggedInController), name: .loggedInController, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchUserDataOnLogIn), name: .loggedInController, object: nil)
 
         // If you just logged in, then the revealing splashview will not show.
         let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "bee")!,iconInitialSize: CGSize(width: 200, height: 200), backgroundColor: UIColor(red: 255/255.0, green: 203/255.0, blue: 0/255.0, alpha:1.0))
@@ -64,6 +64,27 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
         tabBar.isHidden = true
         viewControllers?.removeAll()
         viewControllers = [loginNavigationController]
+    }
+    
+    func fetchUserDataOnLogIn() {
+        let userProfiles = [UserProfile.userProfileSelection.myUser, UserProfile.userProfileSelection.otherUser]
+        for userProfile in userProfiles {
+            FirebaseManager.getCards(userProfileSelection: userProfile, completionHandler: { (fetchedCardObjects) in
+                guard let fetchedCardObjects = fetchedCardObjects else { return }
+                for fetchedCardObject in fetchedCardObjects {
+                    guard let card = fetchedCardObject.card else { return }
+                    guard let uniqueID = fetchedCardObject.uniqueID else { return }
+                    let userProfile = UserProfile.saveProfile(card, forProfile: userProfile, withUniqueID: uniqueID, isARefetch: true)
+                    let socialMedia = SocialMedia(withAppName: (userProfile.profileImageApp)!, withImageName: "", withInputName: (userProfile.profileImageURL)!, withAlreadySet: false)
+                    ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                        if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
+                            DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: userProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                        }
+                    })
+                }
+            })
+        }
+        setupLoggedInController()
     }
     
     func setupLoggedInController() {

@@ -123,7 +123,7 @@ extension UserProfile {
         return userProfile
     }
     
-    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile: userProfileSelection, withUniqueID uniqueID: UInt64) -> UserProfile {
+    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile:userProfileSelection, withUniqueID uniqueID:UInt64, isARefetch:Bool = false) -> UserProfile {
         // NSCore data functionalities. -- Persist the data when user scans!
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
         
@@ -143,7 +143,8 @@ extension UserProfile {
         newUser.uniqueID = NSNumber(value: uniqueID)
         
         // If this is my user that I am saving, then push it to the cloud.
-        if userProfile == .myUser {
+        if userProfile == .myUser && isARefetch == false {
+            print("HUH")
             FirebaseManager.uploadCard(userCard, withUniqueID: newUser.uniqueID!.uint64Value)
         }
         newUser.userProfileSelection = userProfile
@@ -167,7 +168,6 @@ extension UserProfile {
         }
     }
     
-    // This is just a test run on how we can utilize clearData within the contactsVC
     static func clearData(forProfile userProfile: userProfileSelection) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
@@ -176,6 +176,7 @@ extension UserProfile {
             for userProfile in userProfiles! {
                 managedObjectContext.delete(userProfile)
             }
+            try managedObjectContext.save()
         } catch let err {
             print(err)
         }

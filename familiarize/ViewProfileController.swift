@@ -195,9 +195,6 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
         view.addSubview(userSocialMediaCollectionView)
         view.addSubview(pageControl)
         
-        print("width = ", popupImageView.image?.size.width)
-        print("height = ", popupImageView.image?.size.height)
-        
         popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         popupImageView.widthAnchor.constraint(equalToConstant: (popupImageView.image?.size.width)!).isActive = true
         popupImageView.heightAnchor.constraint(equalToConstant: (popupImageView.image?.size.height)!).isActive = true
