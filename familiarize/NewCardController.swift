@@ -39,6 +39,25 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     var editingUserProfile: UserProfile?
 
+    let socialMediaTableViewRanking: [String:Int] = [
+        "name": 1,
+        "bio": 2,
+        "email": 3,
+        "phoneNumber": 4,
+        "faceBookProfile": 5,
+        "gitHubProfile": 6,
+        "instagramProfile": 7,
+        "kakaoTalkProfile": 8,
+        "linkedInProfile": 9,
+        "slackProfile": 10,
+        "snapChatProfile": 11,
+        "soundCloudProfile": 12,
+        "spotifyProfile": 13,
+        "twitterProfile": 14,
+        "venmoProfile": 15,
+        "whatsAppProfile": 16
+    ]
+
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_add", withInputName: "", withAlreadySet: false),
         SocialMedia(withAppName: "email", withImageName: "dan_email_add", withInputName: "", withAlreadySet: false),
@@ -66,9 +85,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         SocialMediaProfileImage(copyFrom: SocialMedia(withAppName: "default", withImageName: "dan_addprofileimage_orange", withInputName: "default", withAlreadySet: false), withImage: UIImage(named: "dan_addprofileimage_orange")!)
     ]
     
-    var socialMediaInputs: [SocialMedia] = [
-        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "", withAlreadySet: true),
-        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true)
+    lazy var socialMediaInputs: [SocialMedia] = [
+        SocialMedia(withAppName: "name", withImageName: "dan_name_black", withInputName: "", withAlreadySet: true, withRanking: self.socialMediaTableViewRanking["name"]!),
+        SocialMedia(withAppName: "bio", withImageName: "dan_bio_black", withInputName: "", withAlreadySet: true, withRanking: self.socialMediaTableViewRanking["bio"]!)
     ]
  
     lazy var socialMediaSelectionContainerView: UIView = {
@@ -254,7 +273,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         UserProfile.deleteProfile(user: userProfile)
         dismiss(animated: true, completion: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

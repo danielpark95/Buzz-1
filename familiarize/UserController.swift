@@ -128,20 +128,20 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let userProfile = fetchedResultsController.object(at: selectedIndexPath!) as! UserProfile
         newCardController.editingUserProfile = userProfile
         
-        for key in userProfile.entity.propertiesByName.keys {
-            guard let inputName = userProfile.value(forKey: key) else {
-                continue
-            }
-            if UserProfile.editableMultipleInputUserData.contains(key) {
+        for appName in userProfile.entity.propertiesByName.keys {
+            guard let inputName = userProfile.value(forKey: appName) else { continue }
+            guard let ranking = newCardController.socialMediaTableViewRanking[appName] else { continue }
+            if UserProfile.editableMultipleInputUserData.contains(appName) {
                 for eachInput in inputName as! [String] {
-                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: false)
+                    let socialMediaInput = SocialMedia(withAppName: appName, withImageName: "dan_\(appName)_color", withInputName: eachInput, withAlreadySet: false, withRanking: ranking)
                     newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
                 }
-            } else if UserProfile.editableSingleInputUserData.contains(key) {
-                let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_black", withInputName: inputName as! String, withAlreadySet: false)
+            } else if UserProfile.editableSingleInputUserData.contains(appName) {
+                let socialMediaInput = SocialMedia(withAppName: appName, withImageName: "dan_\(appName)_black", withInputName: inputName as! String, withAlreadySet: false, withRanking: ranking)
                 newCardController.addSocialMediaInput(socialMedia: socialMediaInput)
             }
         }
+        newCardController.socialMediaInputs.sort(by: {$0.ranking < $1.ranking})
         present(navigationController, animated: true)
     }
     
