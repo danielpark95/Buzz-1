@@ -67,7 +67,7 @@ class UIManager {
     static func makeCardProfileImageData(_ imageData: Data) -> Data {
         var image = UIImage(data: imageData)
         image = image?.roundImage()
-        return UIImagePNGRepresentation(image!)!
+        return (UIImageJPEGRepresentation(image!, 0.7)!)
     }
     
     static func makeRegularHandForDisplay(_ longSocialMediaName: String) -> String? {
