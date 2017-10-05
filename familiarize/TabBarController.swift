@@ -74,7 +74,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
                 for fetchedCardObject in fetchedCardObjects {
                     guard let card = fetchedCardObject.card else { return }
                     guard let uniqueID = fetchedCardObject.uniqueID else { return }
-                    let userProfile = UserProfile.saveProfile(card, forProfile: userProfile, withUniqueID: uniqueID, isARefetch: true)
+                    guard let userProfile = UserProfile.saveProfile(card, forProfile: userProfile, withUniqueID: uniqueID) else { return }
                     let socialMedia = SocialMedia(withAppName: (userProfile.profileImageApp)!, withImageName: "", withInputName: (userProfile.profileImageURL)!, withAlreadySet: false)
                     ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                         if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {

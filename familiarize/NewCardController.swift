@@ -249,6 +249,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func deleteClicked() {
         guard let userProfile = editingUserProfile else { return }
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+        FirebaseManager.deleteCard(uniqueID: userProfile.uniqueID!.uint64Value)
         UserProfile.deleteProfile(user: userProfile)
         dismiss(animated: true, completion: nil)
     }
@@ -494,7 +496,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             userProfile = UserProfile.updateProfile(socialMediaInputs, userProfile: editingUserProfile!)
         } else {
             // Save the new card information into core data.
-            userProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID!)
+            userProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID!, completionHandler: { (userCard) in
+                FirebaseManager.uploadCard(userCard, withUniqueID: uniqueID!)
+            })
         }
         
         // Save the image to disk.

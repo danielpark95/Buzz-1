@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             }
             
             // Save the fetched data into CoreData.
-            let userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: cardUID)
+            guard let userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: cardUID) else { return }
             
             // For fetching the profile image picture.
             let socialMedia = SocialMedia(withAppName: (userProfile.profileImageApp)!, withImageName: "", withInputName: (userProfile.profileImageURL)!, withAlreadySet: false)
