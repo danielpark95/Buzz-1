@@ -190,6 +190,17 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return collectionView
     }()
     
+    let beeView: UIImageView = {
+        let imageView = UIManager.makeImage(imageName: "bee_icon")
+        imageView.image = imageView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        imageView.tintColor = .purple
+        return imageView
+    }()
+    
+    let cardClassLabel: UILabel = {
+        return UIManager.makeLabel(numberOfLines: 1, withText: "card class")
+    }()
+    
     lazy var panGestureRecognizer: UIPanGestureRecognizer = {
         return UIPanGestureRecognizer(target: self, action: #selector(handlePan))
     }()
@@ -198,6 +209,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     var currentPositionOfSelectedContainer: CGFloat = 0
     var currentPositionOfProfileImage: CGFloat = 0
     var currentPositionOfDeleteButton: CGFloat = 0
+    var currentPositionOfBeeView: CGFloat = 0
+    var currentPositionOfCardClassLabel: CGFloat = 0
     var scrolledUp: Bool = false
     var selectedSocialMediaProfileImage: SocialMediaProfileImage?
     func handlePan(_ sender: UIPanGestureRecognizer) {
@@ -208,6 +221,13 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer + point.y)
         profileImageSelectionCollectionView.center = CGPoint(x: profileImageSelectionCollectionView.center.x, y: currentPositionOfProfileImage + point.y)
         deleteButtonContainerView.center = CGPoint(x: deleteButtonContainerView.center.x, y: currentPositionOfDeleteButton + point.y)
+        beeView.center = CGPoint(x: beeView.center.x, y: currentPositionOfBeeView + point.y)
+        
+        var cardClassLabelOptionalCenter = CGPoint(x: cardClassLabel.center.x, y: currentPositionOfCardClassLabel + point.y)
+        if cardClassLabelOptionalCenter.y < 83 {
+            cardClassLabelOptionalCenter.y = 83
+        }
+        cardClassLabel.center = cardClassLabelOptionalCenter
         
         switch sender.state {
         case .ended:
@@ -247,13 +267,17 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         UIView.animate(withDuration: 0.2, animations: {
             self.socialMediaSelectionContainerView.center = CGPoint(x: self.socialMediaSelectionContainerView.center.x, y: self.view.center.y + 165)
             self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + selectedContainerOffset)
-            self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 50)
+            self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 25)
             self.deleteButtonContainerView.center = CGPoint(x: self.deleteButtonContainerView.center.x, y: self.view.center.y + 500)
+            self.beeView.center = CGPoint(x: self.beeView.center.x, y: self.view.center.y - 220)
+            self.cardClassLabel.center = CGPoint(x: self.cardClassLabel.center.x, y: self.view.center.y - 175)
         })
         currentPositionOfSelectionContainer = view.center.y + 165
         currentPositionOfSelectedContainer = view.center.y + selectedContainerOffset
-        currentPositionOfProfileImage = view.center.y - 50
+        currentPositionOfProfileImage = view.center.y - 25
         currentPositionOfDeleteButton = view.center.y + 500
+        currentPositionOfBeeView = view.center.y - 220
+        currentPositionOfCardClassLabel = view.center.y - 175
     }
     
     func toTopPosition() {
@@ -268,11 +292,15 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: selectedContainerOffset)
             self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
             self.deleteButtonContainerView.center = CGPoint(x: self.deleteButtonContainerView.center.x, y: self.view.frame.height - 40)
+            self.beeView.center = CGPoint(x: self.beeView.center.x, y: -220)
+            self.cardClassLabel.center = CGPoint(x: self.cardClassLabel.center.x, y: 83)
         })
         currentPositionOfSelectionContainer = 140
         currentPositionOfSelectedContainer = selectedContainerOffset
         currentPositionOfProfileImage = -55
         currentPositionOfDeleteButton = view.frame.height - 40
+        currentPositionOfBeeView = -220
+        currentPositionOfCardClassLabel = 83
     }
     
     func deleteClicked() {
@@ -369,17 +397,31 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         view.addSubview(profileImageSelectionCollectionView)
         view.addSubview(socialMediaSelectionContainerView)
         view.addSubview(socialMediaSelectedContainerView)
+        view.addSubview(cardClassLabel)
+        view.addSubview(beeView)
         
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
         
+        // Card Class Label
+        currentPositionOfCardClassLabel = view.center.y - 175
+        
+        cardClassLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cardClassLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -175).isActive = true
+        
+        // Bee Image
+        currentPositionOfBeeView = view.center.y - 220
+        
+        beeView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
+        beeView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -220).isActive = true
+        
         // Profile Image View
-        currentPositionOfProfileImage = view.center.y - 50
+        currentPositionOfProfileImage = view.center.y - 25
         
         profileImageSelectionCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageSelectionCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         profileImageSelectionCollectionView.heightAnchor.constraint(equalToConstant: 240).isActive = true
-        profileImageSelectionCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        profileImageSelectionCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25).isActive = true
 
         // Selection View
         currentPositionOfSelectionContainer = view.center.y + 165

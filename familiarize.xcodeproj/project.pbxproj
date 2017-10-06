@@ -18,7 +18,6 @@
 		143532411EDA9CC2000507DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143532401EDA9CC2000507DB /* AppDelegate.swift */; };
 		143532431EDA9CC2000507DB /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143532421EDA9CC2000507DB /* ContactsController.swift */; };
 		143532491EDA9CC2000507DB /* familiarize.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 143532471EDA9CC2000507DB /* familiarize.xcdatamodeld */; };
-		1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1435324A1EDA9CC2000507DB /* Assets.xcassets */; };
 		1435324E1EDA9CC2000507DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */; };
 		144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144372AC1F1710840052C544 /* ImageFetchingManager.swift */; };
 		144F192A1EE0FD1300A9250E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F19291EE0FD1300A9250E /* UserCell.swift */; };
@@ -40,6 +39,7 @@
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
 		14CE71261F575D5C006B8C97 /* ViewProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */; };
+		14E510D71F86FE6800932894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14E510D61F86FE6800932894 /* Assets.xcassets */; };
 		14E6A1AB1F68904900931676 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E6A1AA1F68904900931676 /* GoogleService-Info.plist */; };
 		14EFB1191F11A74800B7FE08 /* SocialMediaSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */; };
 		14F35FED1EE2A427007A2A8D /* ScanProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */; };
@@ -68,7 +68,6 @@
 		143532401EDA9CC2000507DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		143532421EDA9CC2000507DB /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
 		143532481EDA9CC2000507DB /* familiarize.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = familiarize.xcdatamodel; sourceTree = "<group>"; };
-		1435324A1EDA9CC2000507DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1435324D1EDA9CC2000507DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1435324F1EDA9CC2000507DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		144372AC1F1710840052C544 /* ImageFetchingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFetchingManager.swift; sourceTree = "<group>"; };
@@ -91,6 +90,7 @@
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
 		14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileCell.swift; sourceTree = "<group>"; };
+		14E510D61F86FE6800932894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		14E6A1AA1F68904900931676 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14E6A1AC1F68919F00931676 /* familiarize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = familiarize.entitlements; sourceTree = "<group>"; };
 		14EFB1181F11A74800B7FE08 /* SocialMediaSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectedCell.swift; sourceTree = "<group>"; };
@@ -223,11 +223,11 @@
 				141CEEBC1EDCD03C0068B2B9 /* TabController */,
 				140ECD831EF6167700E538E4 /* Controller */,
 				144E40FE1EE4CE8D00207F99 /* CoreData */,
-				1435324A1EDA9CC2000507DB /* Assets.xcassets */,
 				1435324C1EDA9CC2000507DB /* LaunchScreen.storyboard */,
 				1435324F1EDA9CC2000507DB /* Info.plist */,
 				14E6A1AA1F68904900931676 /* GoogleService-Info.plist */,
 				14773E031EE604D7000D6AA9 /* Extensions.swift */,
+				14E510D61F86FE6800932894 /* Assets.xcassets */,
 			);
 			path = familiarize;
 			sourceTree = "<group>";
@@ -374,7 +374,7 @@
 				1435324E1EDA9CC2000507DB /* LaunchScreen.storyboard in Resources */,
 				14E6A1AB1F68904900931676 /* GoogleService-Info.plist in Resources */,
 				F65430741F3D04AB0047FC35 /* ProximaNovaSoft-Regular.otf in Resources */,
-				1435324B1EDA9CC2000507DB /* Assets.xcassets in Resources */,
+				14E510D71F86FE6800932894 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
