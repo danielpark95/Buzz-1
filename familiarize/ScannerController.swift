@@ -71,7 +71,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     }()
     
     lazy var cameraFrame: UIImageView = {
-        return UIManager.makeImage(imageName: "dan_quikkly_circle_frame")
+        return UIManager.makeImage(imageName: "dan_camera_box_frame")
     }()
     
     func didSelectBack() {
