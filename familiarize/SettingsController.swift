@@ -39,7 +39,7 @@ class SettingsController: NSObject, UICollectionViewDataSource, UICollectionView
     }
     
     let settings: [Setting] = {
-        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback"), Setting(name: .LogOut, imageName: "")]
+        return [Setting(name: .TermsPrivacy, imageName: "dan_privacy"),Setting(name: .Contact, imageName: "dan_support"),Setting(name: .Help, imageName: "dan_help"), Setting(name: .Feedback, imageName: "dan_feedback"), Setting(name: .LogOut, imageName: "dan_logout")]
     }()
     
     let collectionView: UICollectionView = {
