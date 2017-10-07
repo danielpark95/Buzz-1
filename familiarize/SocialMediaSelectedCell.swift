@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SocialMediaSelectedCell: UICollectionViewCell {
+class SocialMediaSelectedCell: UITableViewCell, UITextFieldDelegate {
     
     var selectedSocialMedia: SocialMedia? {
         didSet {
@@ -19,30 +19,31 @@ class SocialMediaSelectedCell: UICollectionViewCell {
             }
             
             if let selectedSocialMediaImageName = selectedSocialMedia?.imageName {
-                socialMediaImageView.image = UIImage(named: selectedSocialMediaImageName)
-                
-                // Do we need this?
-                //socialMediaImageView.clipsToBounds = true
+                var name = selectedSocialMediaImageName
+                if (name != "dan_name_black" && name != "dan_bio_black") {
+                    name = String(selectedSocialMediaImageName.characters.dropLast(3)) + "color"
+                }
+                socialMediaImageView.image = UIImage(named: name)
             }
+            socialMediaInputName.placeholder = selectedSocialMedia?.appName
             setupViews()
         }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     let socialMediaImageView: UIImageView = {
        return UIManager.makeImage()
     }()
     
-    let socialMediaInputName: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 1)
+    lazy var socialMediaInputName : UITextField = {
+        let textField = UITextField()
+        //change to "name" and "bio" for name and bio. username doesn't really make sense.
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = .no
+        textField.tintColor = UIColor(white: 0.55, alpha: 1)
+        textField.textAlignment = NSTextAlignment.left
+        textField.delegate = self
+        textField.isEnabled = false
+        return textField
     }()
     
     // This creates the line in between each of the cells.
@@ -52,39 +53,23 @@ class SocialMediaSelectedCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    let deleteButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_help")
-        return button
-    }()
-    
 
     func setupViews() {
         addSubview(separatorView)
         addSubview(socialMediaInputName)
         addSubview(socialMediaImageView)
-        addSubview(deleteButton)
         
-        separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
+        separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         separatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
-        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        separatorView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         
-        socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        socialMediaInputName.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 5).isActive = true
         socialMediaInputName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 65).isActive = true
-        socialMediaInputName.heightAnchor.constraint(equalToConstant: socialMediaInputName.intrinsicContentSize.height).isActive = true
-        socialMediaInputName.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
         
         socialMediaImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
-        socialMediaImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        socialMediaImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        
-        deleteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -50).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50).isActive = true
-        deleteButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
+        socialMediaImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        socialMediaImageView.heightAnchor.constraint(equalToConstant: 47).isActive = true
+        socialMediaImageView.widthAnchor.constraint(equalToConstant: 47).isActive = true
     }
-
 }

@@ -10,25 +10,7 @@ import UIKit
 import pop
 import ESTabBarController_swift
 
-class ExampleBasicContentView: ESTabBarItemContentView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        //textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        //highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-       // backgroundColor = UIColor.init(white: 200.0 / 255.0, alpha: 1.0)
-       // backdropColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
-class ExampleBouncesContentView: ExampleBasicContentView {
+class ExampleBouncesContentView: ESTabBarItemContentView {
     
     public var duration = 0.15
     
@@ -65,11 +47,7 @@ class ExampleIrregularityBasicContentView: ExampleBouncesContentView {
         super.init(frame: frame)
         
         
-        textColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightTextColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
-        //iconColor = UIColor.init(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1.0)
-        highlightIconColor = UIColor.init(red: 247/255.0, green: 169/255.0, blue:169/255.0, alpha: 1.0)
-        //highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
+        highlightIconColor = UIColor.init(red: 47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)
         backdropColor = .clear
         
         highlightBackdropColor = .clear
@@ -88,21 +66,12 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
         renderingMode = .alwaysOriginal
         self.layer.borderWidth = 0
         self.imageView.backgroundColor = UIColor.white
-        //self.bringSubview(toFront: iconC)
-        //self.imageView.layer.borderColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0).cgColor
-        
         self.imageView.layer.cornerRadius = 33
         self.insets = UIEdgeInsetsMake(-32, 0, 0, 0)
         let transform = CGAffineTransform.identity
         self.imageView.transform = transform
         self.superview?.bringSubview(toFront: self)
         self.imageView.layer.masksToBounds = true
-        //iconColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
-        //iconColor = UIColor.purple
-        //iconColor = UIColor.clear
-        
-        //highlightIconColor = UIColor.purple
-        //highlightIconColor = UIColor.init(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
     }
     
     public required init?(coder aDecoder: NSCoder) {

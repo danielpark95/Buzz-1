@@ -25,24 +25,33 @@ target 'familiarize' do
   #textfield effects
   pod 'TextFieldEffects'
   
+  #Twitter style launch screen
+  pod 'RevealingSplashView'
+  
   #Loading screen for fetching profile pictures
   pod 'NVActivityIndicatorView'
   
   #Carousel layout for selecting profile image
   pod 'UPCarouselFlowLayout'
   
+  #Confetti
+  pod 'Cheers'
+  
   #Quikkly QR Code
-#  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
+  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
   #Firebase baby (:
   pod 'Firebase/Storage'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Auth'  
 
-  #Circular Image Cropper -- Looks suprisingly like aquaints. FUCKKCKCKCKCKKCKC
-  pod 'RSKImageCropperSwift', '1.5.1.swift3'
+  #Circular image cropper
+  pod 'AAPhotoCircleCrop'
 
-  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
-
+  #Facebook login
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
 
 end

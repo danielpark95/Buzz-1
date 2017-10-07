@@ -9,23 +9,59 @@
 import UIKit
 import CoreData
 
-class ViewProfileController: UIViewController {
+class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    
     var socialMediaButtons: [String : UIButton]?
+    var socialMediaInputs: [SocialMedia]?
+    
     var userProfile: UserProfile?
+    let profileImageHeightAndWidth: CGFloat = 100
+    fileprivate let viewProfileCellId = "viewProfileCellId"
+    
+    // TODO: We have to wrap the pagecontrol around a uiview, or else it fucks up with the whole background
+    // This is so that the dots that animate your current location can be seen. Amazing piece of art (:
+    var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.hidesForSinglePage = true
+        pc.pageIndicatorTintColor = UIColor(red: 222/255, green: 223/255, blue: 224/255, alpha: 1.0)
+        pc.currentPageIndicatorTintColor = UIColor(red:139/255.0, green: 139/255.0, blue: 139/255.0, alpha: 1.0)
+        pc.alpha = 0.4
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.isUserInteractionEnabled = false
+        return pc
+    }()
+    
+    // Width is 326 -> Cause the width of the popupImageView is 326.
+    // Height is 150 -> Cause the height was set to 150 within setupviews
+    let userSocialMediaCollectionViewWidth: CGFloat = 326
+    let userSocialMediaCollectionViewHeight: CGFloat = 600
+    lazy var userSocialMediaCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        //layout.itemSize = CGSize(width: self.userSocialMediaCollectionViewWidth, height: self.userSocialMediaCollectionViewHeight)
+        layout.itemSize = CGSize(width: 50, height: 50)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        //collectionView.showsHorizontalScrollIndicator = false
+        //collectionView.alwaysBounceHorizontal = true
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(ViewProfileCell.self, forCellWithReuseIdentifier: self.viewProfileCellId)
+        collectionView.isPagingEnabled = true
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setPopup()
-        self.setupBackground()
-        self.addToBackground()
-        self.setupGraphics()
-        self.addToGraphics()
-        self.setImage()
+        setupViews()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.animatePopup()
+        animatePopup()
     }
     
     // This makes the profile image into a circle.
@@ -36,12 +72,7 @@ class ViewProfileController: UIViewController {
     
     // MARK: - UI Properties
     
-    // Text gets it textual label from QRScannerController
-    // This is to just define it
-    let nameAndBioLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 2)
-    }()
-    
+    // Texts gets it textual label from ScannerController
     let nameLabel: UILabel = {
         return UIManager.makeLabel(numberOfLines: 1)
     }()
@@ -51,140 +82,52 @@ class ViewProfileController: UIViewController {
     }()
     
     var popupImageView: UIImageView = {
-        let imageView = UIManager.makeImage()
+        let imageView = UIManager.makeImage(imageName: "dan_profilepopup_small_blue")
+        let tap = UITapGestureRecognizer()
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOpacity = 1
+        imageView.layer.shadowOffset = CGSize.zero
+        imageView.layer.shadowRadius = 10
+        imageView.layer.shadowPath = UIBezierPath(rect: imageView.bounds).cgPath
         return imageView
     }()
     
     lazy var profileImage: UIImageView = {
-        return UIManager.makeProfileImage(valueOfCornerRadius: 75)
+        return UIManager.makeProfileImage(valueOfCornerRadius: self.profileImageHeightAndWidth/2)
     }()
     
     lazy var dismissButton: UIButton = {
-        return UIManager.makeButton()
-    }()
-    
-    lazy var outsideButton: UIButton = {
-        let button = UIManager.makeButton()
+        let button = UIManager.makeButton(imageName: "dan_x_button_red")
+        // Set the image to have a size of 14px.
+        // Then set the overall button to be larger around it -- To increase the hitbox.
+        // This is done in the autolayout portion.
+        button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         button.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
         return button
     }()
     
-    // MARK: - Setting up views
-    
-    func setPopup() {
-        view.addSubview(self.tintOverlay)
-        self.popupImageView = UIManager.makeImage(imageName: "dan_profilepopup_blue")
-        
-        let tap = UITapGestureRecognizer()
-        self.popupImageView.addGestureRecognizer(tap)
-        self.popupImageView.isUserInteractionEnabled = true
-        
-        
-        self.popupImageView.layer.shadowColor = UIColor.black.cgColor
-        self.popupImageView.layer.shadowOpacity = 1
-        self.popupImageView.layer.shadowOffset = CGSize.zero
-        self.popupImageView.layer.shadowRadius = 10
-        self.popupImageView.layer.shadowPath = UIBezierPath(rect: popupImageView.bounds).cgPath
-        
-        view.addSubview(self.popupImageView)
-        self.popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // Initially set all the way at the bottom so that it animates up.
-        self.popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height)
-        self.popupCenterYAnchor?.isActive = true
-    }
-    
-    // For setting up the popup background, the checkbox (but not fully animating it), and also the blurry background
-    func setupBackground() {
-        
-        view.addSubview(self.outsideButton)
-        
-        self.outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        self.outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        self.outsideButton.heightAnchor.constraint(equalToConstant: view.frame.size.height).isActive = true
-        self.outsideButton.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
-    }
-    
-    func addToBackground() {
-        view.addSubview(tintOverlay)
-        view.sendSubview(toBack: tintOverlay)
-    }
-    
-    func setupGraphics() {
-        setName()
-        setBio()
-        setDismissButton()
-    }
-    
-    func addToGraphics() {
-        
-        view.addSubview(self.profileImage)
-        view.addSubview(self.nameLabel)
-        view.addSubview(self.bioLabel)
-        
-        //drawMiddleLine()
-        createSocialMediaButtons()
-        presentSocialMediaButtons()
-        
-        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 30).isActive = true
-        
-        // Set to 80 --> Then you also have to change the corner radius to 40 ..
-        profileImage.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        
-        nameLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.width).isActive = true
-        
-        bioLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 3).isActive = true
-        bioLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
-        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
-        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
-    }
+    lazy var tintOverlay: UIView = {
+        let visualEffect = UIView()
+        visualEffect.backgroundColor = UIColor(white: 0, alpha: 0.15)
+        visualEffect.alpha = 0
+        visualEffect.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissClicked)))
+        return visualEffect
+    }()
     
     func setImage() {
-        if userProfile?.profileImage != nil {
-            self.profileImage.image = UIImage(data: (userProfile?.profileImage!)!)
-            //self.profileImage.image = UIManager.makeImage(imageName: "tjmiller6").image
-            self.profileImage.clipsToBounds = true
+        guard let uniqueID = userProfile?.uniqueID else {
+            print("unique id is null")
+            return
         }
-    }
-    
-    // MARK: - Animating popup display
-    
-    func dismissClicked() {
-        self.popupCenterYAnchor?.constant = view.frame.size.height
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-        }, completion: { _ in
-            // After moving the background up to the middle, then load the name and buttons.
-            self.dismiss(animated: false)
-        })
-    }
-    
-    // Slides up the popup from the bottom of the screen to the middle
-    var popupCenterYAnchor: NSLayoutConstraint?
-    func animatePopup() {
-        self.popupCenterYAnchor?.constant = 0
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.15)
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    // MARK: - Assigning UI Properties (Label, Button, Lines)
-    
-    func setDismissButton() {
-        dismissButton = UIManager.makeButton(imageName: "dan_x_button_red")
-        view.addSubview(self.dismissButton)
-        dismissButton.addTarget(self, action: #selector(dismissClicked), for: .touchUpInside)
-        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
-        
-        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 14).isActive = true
+        guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID as! UInt64) else {
+            print("file was not able to be retrieved from disk")
+            return
+        }
+        self.profileImage.image = profileImage
     }
     
     func drawMiddleLine() {
@@ -196,294 +139,131 @@ class ViewProfileController: UIViewController {
     
     func setName(){
         var attributedText = NSMutableAttributedString()
+        //change font size based on length of name
         if let name = userProfile?.name {
-            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 26), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
+            attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 30), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
         }
         nameLabel.attributedText = attributedText
     }
     
     func setBio() {
         var attributedText = NSMutableAttributedString()
+        //change font size based on length of bio
         if let bio = userProfile?.bio {
-            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
+            attributedText = NSMutableAttributedString(string: bio, attributes: [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20), NSForegroundColorAttributeName: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)])
         }
         bioLabel.attributedText = attributedText
     }
     
-    // MARK: - Button Properties
+    // MARK: - Animating popup display
+    func dismissClicked() {
+        self.popupCenterYAnchor?.constant = view.frame.size.height
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tintOverlay.alpha = 0
+        }, completion: { _ in
+            self.dismiss(animated: false)
+        })
+    }
     
-    func buttonLink(_ userURL: String) {
+    // Slides up the popup from the bottom of the screen to the middle
+    func animatePopup() {
+        self.popupCenterYAnchor?.constant = 0
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.tintOverlay.alpha = 1
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    // MARK: - Setting up views
+    var popupCenterYAnchor: NSLayoutConstraint?
+    func setupViews() {
+        setName()
+        setBio()
+        setImage()
         
-        // Lmao, in order to get profile id, just scrape the facebook page again.
-        // <meta property="al:ios:url" content="fb://profile/100001667117543">
-        
-        let fbURL = URL(string: "fb://profile?id=100001667117543")!
-        
-        let safariFBURL = URL(string: "https://www.facebook.com/100001667117543")!
-        
-        if UIApplication.shared.canOpenURL(fbURL)
-        {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(fbURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(fbURL)
-            }
-            
-        } else {
-            //redirect to safari because the user doesn't have facebook application
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(safariFBURL, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(safariFBURL)
-            }
+        if let window = UIApplication.shared.keyWindow {
+            tintOverlay.frame = window.frame
         }
-    }
-    
-    func didSelectFB() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectIG() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectSC() {
-        buttonLink("Kabooya")
-    }
-    
-    func didSelectPN() {
-        buttonLink("Kabooya")
-    }
-    
-    lazy var tintOverlay: UIImageView = {
-        let visualEffect = UIManager.makeImage()
-        //visualEffect.backgroundColor = UIColor.black.withAlphaComponent(0.35)
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        visualEffect.frame = (delegate.window?.bounds)!
-        return visualEffect
-    }()
-    
-    // FYI the button should be a facebook button
-    lazy var fbButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_facebook_black")
-        button.addTarget(self, action: #selector(didSelectFB), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var igButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_instagram_black")
-        button.addTarget(self, action: #selector(didSelectIG), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var scButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_snapchat_black")
-        button.addTarget(self, action: #selector(didSelectSC), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var pnButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_phone_black")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var emButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_email_black")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    lazy var inButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_linkedin_black")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var soButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_soundcloud_black")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    lazy var twButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_twitter_black")
-        button.addTarget(self, action: #selector(didSelectPN), for: .touchUpInside)
-        return button
-    }()
-    
-    func createSocialMediaButtons() {
-        socialMediaButtons = [
-            "fb": fbButton,
-            "ig": igButton,
-            "sc": scButton,
-            "pn": pnButton,
-            "in": emButton,
-            "em": inButton,
-            "so": soButton,
-            "tw": twButton,
-        ]
-    }
-    
-    let socialMedia = [
-        "faceBookProfile": "fb",
-        "instagramProfile": "ig",
-        "snapChatProfile": "sc" ,
-        "phoneNumber": "pn",
-        "email": "em",
-        "linkedInProfile": "in",
-        "soundCloudProfile": "so",
-        "twitterProfile": "tw",
-        ]
-    
-    func presentSocialMediaButtons() {
-        var xSpacing: CGFloat = 50
-        var ySpacing: CGFloat = 10
-        let yConstant: CGFloat = 90
-        var shortHandArray = [String]()
-        for key in (self.userProfile?.entity.attributesByName.keys)! {
-            if (userProfile?.value(forKey: key) != nil && socialMedia[key] != nil) {
-                shortHandArray.append(socialMedia[key]!)
-            }
-        }
-        let size = shortHandArray.count
-        var count = 0
         
-        if size == 1 {
-            count = 0
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
-                count += 1
-                if count == 1{
-                    break
-                }
-            }
-        } else if size == 2 {
-            count = 0
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: ySpacing + yConstant).isActive = true
-                xSpacing = xSpacing * (-1)
-                count += 1
-                if count == 2{
-                    break
-                }
-                
-            }
+        view.addSubview(tintOverlay)
+        view.addSubview(popupImageView)
+        view.addSubview(profileImage)
+        view.addSubview(nameLabel)
+        view.addSubview(bioLabel)
+        view.addSubview(dismissButton)
+        view.addSubview(userSocialMediaCollectionView)
+        view.addSubview(pageControl)
+        
+        popupImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        popupImageView.widthAnchor.constraint(equalToConstant: (popupImageView.image?.size.width)!).isActive = true
+        popupImageView.heightAnchor.constraint(equalToConstant: (popupImageView.image?.size.height)!).isActive = true
+        // Initially set all the way at the bottom so that it animates up.
+        popupCenterYAnchor = self.popupImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: (popupImageView.image?.size.height)!)
+        popupCenterYAnchor?.isActive = true
+        
+        profileImage.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: 0).isActive = true
+        profileImage.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: -50).isActive = true
+        // Set to 80 --> Then you also have to change the corner radius to 40 ..
+        profileImage.heightAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: profileImageHeightAndWidth).isActive = true
+        
+        nameLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 55).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: 0).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.height).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: nameLabel.intrinsicContentSize.width).isActive = true
+        
+        bioLabel.topAnchor.constraint(equalTo: popupImageView.topAnchor, constant: 90).isActive = true
+        bioLabel.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        bioLabel.heightAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.height).isActive = true
+        bioLabel.widthAnchor.constraint(equalToConstant: bioLabel.intrinsicContentSize.width).isActive = true
+        
+        dismissButton.centerYAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -20).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        userSocialMediaCollectionView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        userSocialMediaCollectionView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 50).isActive = true
+        //userSocialMediaCollectionView.bottomAnchor.constraint(equalTo: popupImageView.bottomAnchor, constant: -60).isActive = true
+        userSocialMediaCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        userSocialMediaCollectionView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        pageControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        pageControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+    
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let pageNumber = Int(targetContentOffset.pointee.x / userSocialMediaCollectionViewWidth)
+        pageControl.currentPage = pageNumber
+    }
+    
+    //# MARK: - Body Collection View
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if var count = socialMediaInputs?.count {
+            count = Int((Double(count)/6.0).rounded(.up))
+            pageControl.numberOfPages = count
             
-        } else if size == 3 {
-            count = 0
-            ySpacing = 20
-            
-            
-            for shortHand in shortHandArray {
-                
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                if count < 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + yConstant).isActive = true
-                }
-                
-                count += 1
-                if count == 3 {
-                    break
-                }
-            }
-        } else if size == 4 {
-            count = 0
-            ySpacing = 20
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                if count < 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                }
-                else if count < 4 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 3*ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                }
-                count += 1
-                if count == 4 {
-                    break
-                }
-            }
-        } else if size == 5 { //5 looks good
-            count = 0
-            xSpacing = 80
-            ySpacing = 11
-            
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                if count == 0 || count == 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 1 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                } else if count == 3 {
-                    xSpacing = 45
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                } else if count == 4 {
-                    xSpacing = 45
-                    xSpacing = xSpacing * (-1)
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                }
-                count += 1
-                if count == 5 {
-                    break
-                }
-            }
-        } else if size == 6 { //6 looks good
-            count = 0
-            xSpacing = 100
-            ySpacing = 17
-            
-            for shortHand in shortHandArray {
-                view.addSubview((socialMediaButtons?[shortHand])!)
-                (socialMediaButtons?[shortHand])!.heightAnchor.constraint(equalToConstant: 58).isActive = true
-                (socialMediaButtons?[shortHand])!.widthAnchor.constraint(equalToConstant: 58).isActive = true
-                if count == 0 || count == 2 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 1 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -ySpacing + yConstant).isActive = true
-                } else if count == 3 || count == 5 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor, constant: xSpacing).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                    xSpacing = xSpacing * (-1)
-                } else if count == 4 {
-                    (socialMediaButtons?[shortHand])!.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-                    (socialMediaButtons?[shortHand])!.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 4*ySpacing + yConstant).isActive = true
-                }
-                count += 1
-                if count == 6 {
-                    break
-                }
-            }
-        } else {
-            //write code for when there are more than 6 linked accounts
+            return count
         }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewProfileCellId, for: indexPath) as! ViewProfileCell
+        if cell.socialMediaInputs == nil {
+            cell.socialMediaInputs = [SocialMedia]()
+        }
+        for index in (indexPath.item*6)...(indexPath.item*6)+5 {
+            if index >= (socialMediaInputs?.count)! {
+                break
+            }
+            cell.socialMediaInputs?.append((socialMediaInputs?[index])!)
+        }
+        cell.userSocialMediaCollectionView.reloadData()
+        return cell
     }
 }

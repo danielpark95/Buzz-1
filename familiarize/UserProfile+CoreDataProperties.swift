@@ -17,7 +17,7 @@ extension UserProfile {
         return NSFetchRequest<UserProfile>(entityName: "UserProfile")
     }
 
-    @objc enum userProfileSelection: Int32 {
+    @objc enum userProfileSelection: Int16 {
         case myUser
         case otherUser
     }
@@ -25,187 +25,162 @@ extension UserProfile {
     @NSManaged public var name: String?
     @NSManaged public var bio: String?
     @NSManaged public var date: NSDate?
-    @NSManaged public var email: String?
-    @NSManaged public var phoneNumber: String?
-    @NSManaged public var faceBookProfile: String?
-    @NSManaged public var instagramProfile: String?
-    @NSManaged public var snapChatProfile: String?
-    @NSManaged public var profileImage: Data?
-    @NSManaged public var linkedInProfile: String?
-    @NSManaged public var soundCloudProfile: String?
-    @NSManaged public var twitterProfile: String?
+    @NSManaged public var email: [String]?
+    @NSManaged public var phoneNumber: [String]?
+    @NSManaged public var faceBookProfile: [String]?
+    @NSManaged public var instagramProfile: [String]?
+    @NSManaged public var snapChatProfile: [String]?
+    @NSManaged public var linkedInProfile: [String]?
+    @NSManaged public var soundCloudProfile: [String]?
+    @NSManaged public var twitterProfile: [String]?
+    
+    @NSManaged public var venmoProfile: [String]?
+    @NSManaged public var slackProfile: [String]?
+    @NSManaged public var gitHubProfile: [String]?
+    @NSManaged public var spotifyProfile: [String]?
+    @NSManaged public var kakaoTalkProfile: [String]?
+    @NSManaged public var whatsAppProfile: [String]?
+    
+    
     @NSManaged public var profileImageApp: String?
     @NSManaged public var profileImageURL: String?
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
- 
-    static func getData(forUserProfile userProfile: userProfileSelection) -> [UserProfile]{
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
-        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        do {
-            return try(managedObjectContext.fetch(fetchRequest)) as! [UserProfile]
-        } catch let err {
-            print(err)
-        }
-        return []
-    }
     
-    static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withSocialMediaProfileApp socialMediaProfileApp: String, withUserProfile userProfile: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        userProfile.profileImageApp = socialMediaProfileApp
+    static let singleInputUserData: Set<String> = ["name", "bio", "profileImageApp", "profileImageURL"]
+    static let multipleInputUserData: Set<String> = ["email", "phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile", "venmoProfile", "slackProfile", "gitHubProfile", "spotifyProfile", "kakaoTalkProfile", "whatsAppProfile"]
+    
+    static let editableSingleInputUserData: Set<String> = ["name", "bio"]
+    static let editableMultipleInputUserData: Set<String> = UserProfile.multipleInputUserData
+    
+    static let delegate = UIApplication.shared.delegate as! AppDelegate
+    static let managedObjectContext = delegate.persistentContainer.viewContext
+    
+    static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withUserProfile userProfile: UserProfile) {
+        userProfile.profileImageApp = "default"
         userProfile.profileImageURL = socialMediaProfileURL
         do {
             try(managedObjectContext.save())
-            let newCardJSON: JSON = JSON(["profileImageApp":socialMediaProfileApp, "profileImageURL": socialMediaProfileURL])
-            FirebaseManager.updateCard(newCardJSON, withUniqueID: userProfile.uniqueID as! UInt64)
-            NotificationCenter.default.post(name: .reload, object: nil)
+            let profileImageInfo: [String:String] = ["profileImageApp": userProfile.profileImageApp!, "profileImageURL": userProfile.profileImageURL!]
+            FirebaseManager.updateCard(profileImageInfo, withUniqueID: userProfile.uniqueID as! UInt64)
         } catch let err {
             print(err)
         }
     }
     
-    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withSocialMediaProfileImage socialMediaProfileImage: SocialMediaProfileImage) -> UserProfile {
-        var concantenatedSocialMediaInputs: [(socialMediaName: String, inputName: String)] = []
+    static func updateProfile(_ socialMediaInputs: [SocialMedia], userProfile: UserProfile) -> UserProfile {
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+        var userCard = [String:[String]]()
+        for eachSocialMediaInput in socialMediaInputs {
+            if userCard[eachSocialMediaInput.appName!] == nil {
+                userCard[eachSocialMediaInput.appName!] = [String]()
+            }
+            userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
+        }
         
-        var currentSocialMediaName: String = ""
-        for eachSocialInput in socialMediaInputs {
-            if eachSocialInput.appName == currentSocialMediaName {
-                concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName = concantenatedSocialMediaInputs[(concantenatedSocialMediaInputs.count)-1].inputName + ",\(eachSocialInput.inputName!)"
-            } else {
-                currentSocialMediaName = eachSocialInput.appName!
-                concantenatedSocialMediaInputs.append((eachSocialInput.appName!, eachSocialInput.inputName!))
-                print(concantenatedSocialMediaInputs.count)
+        // Zero out all the data.
+        for key in userProfile.entity.propertiesByName.keys {
+            if multipleInputUserData.contains(key) {
+                userProfile.setValue(nil, forKeyPath: key)
             }
         }
         
-        // There's always going to be a profile image. Either default or not.
-        // Previous errors with this => must be initialized with:
-        // [:] to create an empty dictionary. [] creates an empty array and is wrong.
-        var toSaveCard: JSON = [:]
-        for eachConcantenatedSocialMediaInput in concantenatedSocialMediaInputs {
-            let currentSocialMediaName = eachConcantenatedSocialMediaInput.socialMediaName
-            toSaveCard[currentSocialMediaName].string = eachConcantenatedSocialMediaInput.inputName
+        // Put in new data.
+        for key in userProfile.entity.propertiesByName.keys {
+            if userCard[key] != nil && multipleInputUserData.contains(key) {
+                var input = [String]()
+                for eachInput in userCard[key]! {
+                    input.append(eachInput)
+                }
+                userProfile.setValue(input, forKeyPath: key)
+            } else if userCard[key] != nil && singleInputUserData.contains(key) {
+                userProfile.setValue(userCard[key]?.first, forKeyPath: key)
+            }
         }
         
+        userProfile.date = NSDate()
         
-        // profileImageApp
-        // When default profile image is chosen, then the appName is: default
-        // profileImageURL
-        // When default profile image is chosen, then the inputName is the url link to the image
-        toSaveCard["profileImageApp"].string = socialMediaProfileImage.appName
-        toSaveCard["profileImageURL"].string = socialMediaProfileImage.inputName
+        FirebaseManager.updateCard(userCard, withUniqueID: userProfile.uniqueID!.uint64Value)
         
-        let userProfile = UserProfile.saveProfile(toSaveCard, forProfile: .myUser)
-        let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation(socialMediaProfileImage.profileImage!)! , withImageXCoordPadding: -230)
-        UserProfile.saveProfileImage(profileImageData, withUserProfile: userProfile)
+        do {
+            try(managedObjectContext.save())
+        } catch let err {
+            print(err)
+        }
         return userProfile
     }
     
-    static func saveProfile(_ cardJSON: JSON, forProfile userProfile: userProfileSelection) -> UserProfile {
+    static func saveProfileWrapper(_ socialMediaInputs: [SocialMedia], withUniqueID uniqueID: UInt64, completionHandler: (_ userCard:[String:[String]]) -> Void) -> UserProfile? {
+        var userCard = [String:[String]]()
+        for eachSocialMediaInput in socialMediaInputs {
+            if userCard[eachSocialMediaInput.appName!] == nil {
+                userCard[eachSocialMediaInput.appName!] = [String]()
+            }
+            userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
+        }
+
         
-        // TODO: A NEW CARD IS ALWAYS BEING UPLOADED ON SCAN!!! 
-        
+        guard let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser, withUniqueID: uniqueID) else { return nil }
+        completionHandler(userCard)
+        return userProfile
+    }
+    
+    static func saveProfile(_ userCard: [String:[String]], forProfile userProfile:userProfileSelection, withUniqueID uniqueID:UInt64) -> UserProfile? {
         // NSCore data functionalities. -- Persist the data when user scans!
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserProfile", into: managedObjectContext) as! UserProfile
-
-        if (cardJSON["name"].exists()) {
-            newUser.name = cardJSON["name"].string
-        }
-        if (cardJSON["bio"].exists()) {
-            newUser.bio = cardJSON["bio"].string
-        }
-        if (cardJSON["faceBookProfile"].exists()) {
-            newUser.faceBookProfile = cardJSON["faceBookProfile"].string
-        }
-        if (cardJSON["snapChatProfile"].exists()) {
-            newUser.snapChatProfile = cardJSON["snapChatProfile"].string
-        }
-        if (cardJSON["instagramProfile"].exists()) {
-            newUser.instagramProfile = cardJSON["instagramProfile"].string
-        }
-        if (cardJSON["email"].exists()) {
-            newUser.email = cardJSON["email"].string
-        }
-        if (cardJSON["phoneNumber"].exists()) {
-            newUser.phoneNumber = cardJSON["phoneNumber"].string
-        }
-        if (cardJSON["linkedInProfile"].exists()) {
-            newUser.linkedInProfile = cardJSON["linkedInProfile"].string
-        }
-        if (cardJSON["twitterProfile"].exists()) {
-            newUser.twitterProfile = cardJSON["twitterProfile"].string
-        }
-        if (cardJSON["soundCloudProfile"].exists()) {
-            newUser.soundCloudProfile = cardJSON["soundCloudProfile"].string
-        }
-        if (cardJSON["profileImageApp"].exists()) {
-            newUser.profileImageApp = cardJSON["profileImageApp"].string
-        }
-        if (cardJSON["profileImageURL"].exists()) {
-            newUser.profileImageURL = cardJSON["profileImageURL"].string
+        
+        for key in newUser.entity.propertiesByName.keys {
+            if userCard[key] != nil && multipleInputUserData.contains(key) {
+                var input = [String]()
+                for eachInput in userCard[key]! {
+                    input.append(eachInput)
+                }
+                newUser.setValue(input, forKeyPath: key)
+            } else if userCard[key] != nil && singleInputUserData.contains(key) {
+                newUser.setValue(userCard[key]?.first, forKeyPath: key)
+            }
         }
 
+        // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
+        newUser.uniqueID = NSNumber(value: uniqueID)
+        
         // If this is my user that I am saving, then push it to the cloud.
-        if userProfile == .myUser {
-            // Create a global unique ID. And after that, push this new card into Firebase so that anyone can access it one day.
-            newUser.uniqueID = NSNumber(value: UInt64(FirebaseManager.generateUniqueID()))
-
-            FirebaseManager.uploadCard(cardJSON, withUniqueID: UInt64(newUser.uniqueID!.uint64Value))
-        }
+//        if userProfile == .myUser && isARefetch == false {
+//            FirebaseManager.uploadCard(userCard, withUniqueID: newUser.uniqueID!.uint64Value)
+//        }
         newUser.userProfileSelection = userProfile
         newUser.date = NSDate()
         
         do {
             try(managedObjectContext.save())
-            NotificationCenter.default.post(name: .reload, object: nil)
         } catch let err {
             print(err)
+            return nil
         }
         return newUser
     }
     
-    static func saveProfileImage(_ profileImage: Data, withUserProfile userProfile: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        userProfile.profileImage = profileImage as Data
+    static func deleteProfile(user: UserProfile) {
+        managedObjectContext.delete(user)
         do {
-            try(managedObjectContext.save())
-            NotificationCenter.default.post(name: .reload, object: nil)
+            try managedObjectContext.save()
         } catch let err {
             print(err)
         }
     }
     
-    static func deleteProfile(user: UserProfile) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
-        managedObjectContext.delete(user)
-    }
-    
-    // This is just a test run on how we can utilize clearData within the contactsVC
     static func clearData(forProfile userProfile: userProfileSelection) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = delegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
         fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [userProfile.rawValue])
-        
         do {
             let userProfiles = try(managedObjectContext.fetch(fetchRequest)) as? [UserProfile]
             for userProfile in userProfiles! {
                 managedObjectContext.delete(userProfile)
             }
+            try managedObjectContext.save()
         } catch let err {
             print(err)
         }
     }
-    
-
 
 }

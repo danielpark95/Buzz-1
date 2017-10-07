@@ -25,56 +25,69 @@ class UIManager {
         return button
     }
     
+    static func makeTextButton(buttonText: String, color: UIColor = .black) -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(buttonText, for: .normal)
+        button.setTitleColor(color, for: .normal)
+        return button
+    }
+    
     static func makeImage(imageName: String = "") -> UIImageView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .clear
         return imageView
     }
     
-    static func makeLabel(numberOfLines: Int = 1) -> UILabel {
+    static func makeLabel(numberOfLines: Int = 1, withText text: String = " ") -> UILabel {
         let label =  UILabel()
         label.numberOfLines = numberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = " "
+        label.text = text
         return label
     }
     
     static func makeProfileImage(valueOfCornerRadius cr: CGFloat) -> UIImageView {
-        let image = UIManager.makeImage(imageName: "blank_man")
+        let image = UIManager.makeImage(imageName: "")
         image.contentMode = .scaleAspectFit
+        // Creates a corner radius around the image but doesnt not crop the picture yet.
         image.layer.cornerRadius = cr
+        // Crops the image according to the corner radius size.
         image.layer.masksToBounds = true
+        image.layer.borderWidth = 0
+        image.layer.borderColor = UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0).cgColor
+        image.clipsToBounds = true
+        image.backgroundColor = .clear
         return image
     }
     
-    static func makeCardProfileImageData(_ imageData: Data, withImageXCoordPadding imageXCoordPadding: CGFloat) -> Data {
+    static func makeCardProfileImageData(_ imageData: Data) -> Data {
         var image = UIImage(data: imageData)
         image = image?.roundImage()
-        
-        // Make all images uniform in size so that cropping is uniform.
-        UIGraphicsBeginImageContext(CGSize(width: 1400, height: 1400))
-        image?.draw(in: CGRect(x: 0, y: 0, width: 1400, height: 1400))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        // Crop the right side of the image so that we can make the card on the top right of the screen.
-        image = cropRightImage(image: newImage!, withImageXCoordPadding: imageXCoordPadding)
-        return UIImagePNGRepresentation(image!)!
+        return (UIImageJPEGRepresentation(image!, 0.7)!)
     }
     
     static func makeRegularHandForDisplay(_ longSocialMediaName: String) -> String? {
         let shortHandForQR = [
             "name": "Name",
             "bio": "Bio",
-            "email": "Email",
-            "phoneNumber": "Phone Number",
-            "faceBookProfile": "Facebook",
-            "snapChatProfile": "Snapchat" ,
-            "instagramProfile": "Instagram",
-            "linkedInProfile": "LinkedIn",
-            "soundCloudProfile": "Soundcloud",
-            "twitterProfile": "Twitter",
+            "phoneNumber": "PHONE",
+            "email": "EMAIL",
+            "faceBookProfile": "FACEBOOK",
+            "instagramProfile": "INSTAGRAM",
+            "snapChatProfile": "SNAPCHAT" ,
+            "twitterProfile": "TWITTER",
+            "linkedInProfile": "LINKEDIN",
+            "soundCloudProfile": "SOUNDCLOUD",
+            "venmoProfile": "VENMO",
+            "slackProfile": "SLACK",
+            "gitHubProfile": "GITHUB",
+            "spotifyProfile": "SPOTIFY",
+            "kakaoTalkProfile": "KAKAOTALK",
+            "whatsAppProfile": "WHATSAPP",
             ]
         if let shortName = shortHandForQR[longSocialMediaName] {
             return shortName
@@ -104,12 +117,15 @@ extension UIImage
     {
         let newImage = self.copy() as! UIImage
         let cornerRadius = self.size.height/2
+        
+        
         UIGraphicsBeginImageContextWithOptions(self.size, false, 1.0)
         let bounds = CGRect(origin: CGPoint.zero, size: self.size)
         UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).addClip()
         newImage.draw(in: bounds)
         let finalImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
         return finalImage!
     }
 }

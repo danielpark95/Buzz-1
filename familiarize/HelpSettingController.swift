@@ -8,8 +8,8 @@
 
 import UIKit
 class HelpSettingController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    private let cellId = "cellId"
     
+    private let cellId = "cellId"
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Help"
@@ -18,6 +18,7 @@ class HelpSettingController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
         collectionView?.register(SettingsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = UIColor.white
         

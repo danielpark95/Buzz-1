@@ -12,139 +12,218 @@ import SwiftyJSON
 import Foundation
 
 extension Notification.Name {
-    static let reload = Notification.Name("reloadNotification")
+    static let reloadFriendCards = Notification.Name("reloadFriendCards")
     static let viewProfile = Notification.Name("viewProfileNotification")
-    static let changeBrightness = Notification.Name("UIScreenBrightnessDidChangeNotification")
 }
 
-class ContactsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-    private let cellId = "cellId"
-    var userProfiles: [UserProfile]?
-    var refresher:UIRefreshControl = UIRefreshControl()
-    
-    lazy var searchBar:UISearchBar = UISearchBar()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.previousIndex = 2
-        //UIScreen.main.brightness = delegate.userBrightnessLevel
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.title = "Friends"
-        
-        searchBar.searchBarStyle = UISearchBarStyle.prominent
-        searchBar.placeholder = " Search... "
-        searchBar.sizeToFit()
-        searchBar.isTranslucent = false
-        searchBar.delegate = self
-        
-        userProfiles = UserProfile.getData(forUserProfile: .otherUser)
-        setupRefreshingAndReloading()
-        setupCollectionView()
+protocol ContactsControllerDelegate {
+    func closeHamburger()
+    func showControllerForSetting(setting: Setting)
+}
 
-    }
+class ContactsController: UITableViewController, NSFetchedResultsControllerDelegate, ContactsControllerDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
-    {
-        collectionView?.reloadData()
-    }
+    private let cellId = "cellId"
     
-    func viewProfileNotification() {
-        self.viewProfile()
-    }
+    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = delegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserProfile")
+        fetchRequest.predicate = NSPredicate(format: "userProfileSelection == %@", argumentArray: [UserProfile.userProfileSelection.otherUser.rawValue])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.fetchBatchSize = 20
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
     
-    override init(collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(collectionViewLayout: layout)
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
         NotificationCenter.default.addObserver(self, selector: #selector(viewProfileNotification), name: .viewProfile, object: nil)
+        // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadFriendCards), name: .reloadFriendCards, object: nil)
+        navigationItem.title = "Friends"
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func viewProfile(_ idx: Int = 0) {
-        
-        userProfiles = UserProfile.getData(forUserProfile: .otherUser)
-        
-        let viewProfileController = ViewProfileController()
-        
-        if let userProfile = userProfiles?[idx] {
-            
-            viewProfileController.userProfile = userProfile
+    override func viewDidLoad() {
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNovaSoft-Regular", size: 20)!]
+        super.viewDidLoad()
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let err {
+            print(err)
         }
-        
-        viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        
-        self.definesPresentationContext = true
-        self.tabBarController?.present(viewProfileController, animated: false, completion: nil)
-        //self.present(viewProfileController, animated: false)
+        setupTableView()
+        setupRefreshingAndReloading()
+        setupNavBarButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        delegate.previousIndex = 2
+    }
+    
+    func setupNavBarButton() {
+        let hamburgerButton = UIBarButtonItem(image: UIImage(named:"dan_hamburger_button")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(openHamburger))
+        navigationItem.rightBarButtonItem = hamburgerButton
+    }
+    
+    lazy var settingsLauncher: SettingsController = {
+        let launcher = SettingsController()
+        launcher.contactsControllerDelegate = self
+        return launcher
+    }()
+    
+    func closeHamburger() {
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    func openHamburger() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            UIApplication.shared.isStatusBarHidden = true
+        }, completion: nil)
+        settingsLauncher.setupViews()
+    }
+    
+    func showControllerForSetting(setting: Setting) {
+        
+        let layout = UICollectionViewFlowLayout()
+        var controller: UIViewController?
+        
+        switch setting.name {
+        case .TermsPrivacy:
+            controller = TermsPrivacySettingController(collectionViewLayout: layout)
+        case .Contact:
+            controller = ContactSettingController(collectionViewLayout: layout)
+        case .Help:
+            controller = HelpSettingController(collectionViewLayout: layout)
+        case .Feedback:
+            controller = FeedbackSettingController(collectionViewLayout: layout)
+        case .LogOut:
+            didClickLogOut()
+            return
+        }
+    
+        if controller != nil {
+            controller?.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(controller!, animated: true)
+        }
+    }
+    
+    func didClickLogOut() {
+        FirebaseManager.logOutUser()
+        UserProfile.clearData(forProfile: .myUser)
+        UserProfile.clearData(forProfile: .otherUser)
+        navigationController?.popToRootViewController(animated: true)
+        NotificationCenter.default.post(name: .logInController, object: nil)
+    }
+    
+    func viewProfileNotification() {
+        viewProfile()
+    }
+    
+    func reloadFriendCards() {
+        tableView.reloadData()
+    }
+    
+    func refreshTableData(sender: UIRefreshControl) {
+        tableView.reloadData()
+        sender.endRefreshing()
+    }
+    
+    func setupTableView() {
+        tableView.alwaysBounceVertical = true
+        tableView.backgroundColor = UIColor.white
+        tableView.register(ContactsCell.self, forCellReuseIdentifier: self.cellId)
+        tableView.separatorStyle = .none
+        tableView.allowsMultipleSelectionDuringEditing = true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID!.uint64Value)
+        FirebaseManager.deleteCard(uniqueID: userProfile.uniqueID!.uint64Value)
+        UserProfile.deleteProfile(user: userProfile)
+    }
     
     func setupRefreshingAndReloading() {
-        // This is like a signal. When the QRScanner VC clicks on add friend, this event fires, which calls refreshTableData
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: .reload, object: nil)
-        
-        //This is a different signal from the one written in notification center. This signal is fired whenever a user drags down the collection view in contacts.
-        if #available(iOS 10.0, *)  {
-            self.refresher.addTarget(self, action: #selector(ContactsController.refreshTableData), for: UIControlEvents.valueChanged)
-            collectionView?.refreshControl = self.refresher
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action:#selector(ContactsController.refreshTableData(sender:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
         } else {
-            collectionView?.addSubview(refresher)
+            tableView.addSubview(refreshControl!)
         }
     }
     
-    func setupCollectionView() {
+    func viewProfile(_ indexPath: IndexPath = IndexPath(item: 0, section: 0)) {
+        //userProfiles = UserProfile.getData(forUserProfile: .otherUser)
+        let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
         
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(ContactsCell.self, forCellWithReuseIdentifier: self.cellId)
-    }
-    
-    func reloadTableData() {
-        userProfiles = UserProfile.getData(forUserProfile: .otherUser)
-        collectionView?.reloadData()
-    }
-    
-    func refreshTableData() {
-        // This is our refresh animator
-        //collectionView!.refreshControl?.beginRefreshing()
+        let viewProfileController = ViewProfileController()
+        viewProfileController.socialMediaInputs = [SocialMedia]()
+        for key in userProfile.entity.propertiesByName.keys {
+            guard let inputName = userProfile.value(forKey: key) else {
+                continue
+            }
+            if UserProfile.editableMultipleInputUserData.contains(key) {
+                for eachInput in inputName as! [String] {
+                    let socialMediaInput = SocialMedia(withAppName: key, withImageName: "dan_\(key)_color", withInputName: eachInput, withAlreadySet: true)
+                    print(socialMediaInput.imageName!)
+                    viewProfileController.socialMediaInputs?.append(socialMediaInput)
+                }
+            }
+        }
+        viewProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        viewProfileController.userProfile = userProfile
         
-        collectionView?.refreshControl?.endRefreshing()
-        collectionView?.refreshControl?.isHidden = true
-        collectionView?.reloadData()
+        definesPresentationContext = true
+        tabBarController?.present(viewProfileController, animated: false, completion: nil)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = self.userProfiles?.count {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .insert {
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        } else if type == .delete {
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        } else if type == .update {
+            tableView.reloadData()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let count = fetchedResultsController.sections?[0].numberOfObjects {
             return count
         }
         return 0
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! ContactsCell
-        
-        if let userProfile = userProfiles?[indexPath.item] {
-            cell.userProfile = userProfile
-        }
-        
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewProfile(indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ContactsCell
+        let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
+        cell.userProfile = userProfile
+        cell.selectionStyle = .none
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 70)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.viewProfile(indexPath.item)
-    }
-
-
 }

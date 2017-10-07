@@ -11,42 +11,120 @@ import CoreData
 import ESTabBarController_swift
 import Firebase
 import Quikkly
+import Alamofire
+import FBSDKCoreKit
+
+// Firebase messaging
+import UserNotifications
+import FirebaseInstanceID
+import FirebaseMessaging
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
     var previousIndex: Int?
     var userBrightnessLevel: CGFloat!
-
+    var noInternetAccessFrameTopAnchor: NSLayoutConstraint?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
         Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
         
-        // Firebase Setup 
+        // Facebook login setup
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        // Push notification
+        UNUserNotificationCenter.current().delegate = self
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
+        // For iOS 10 data message (sent via FCM
+        Messaging.messaging().delegate = self
+        application.registerForRemoteNotifications()
+        
+        // Firebase setup
         FirebaseApp.configure()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = TabBarController()
-        UITabBar.appearance().layer.borderWidth = 1.0
-        UITabBar.appearance().layer.borderColor = UIColor.white.cgColor
-        //UITabBar.appearance().clipsToBounds = true
-        let tabBarController = window!.rootViewController as! TabBarController
-        tabBarController.selectedIndex = 0
+        
+        FirebaseManager.updateFCMToken()
 
-       UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().barStyle = UIBarStyle.black
-        UINavigationBar.appearance().barTintColor = UIColor(red:243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1)
-    
-        //Change navigation font
-        let navigationTitleFont = UIFont(name: "Avenir", size: 17)
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navigationTitleFont,NSForegroundColorAttributeName: UIColor(red:47/255.0, green: 47/255.0, blue: 47/255.0, alpha: 1.0)]
-        UIApplication.shared.statusBarStyle = .default
+        setupInternetAccessView()
+        
         return true
- 
     }
     
+    // Notification documents 
+    // https://stackoverflow.com/questions/39834018/how-to-send-push-notification-in-ios-10-via-fcmfirebase-or-by-native?rq=1
+    
+    // For receiving just data
+    func application(received remoteMessage: MessagingRemoteMessage) {
+        print("%@", remoteMessage.appData)
+    }
+    
+    // For receiving notification data
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        let cardUIDString = notification.request.content.userInfo["gcm.notification.cardUID"] as! String
+        let cardUID = UInt64(cardUIDString) ?? 0
+        
+        FirebaseManager.getCard(withUniqueID: cardUID, completionHandler: { (card, error) in
+            guard let card = card else { return }
+            if card.count == 0 {
+                // Perform some animation to show that the quikkly code is invalid.
+                return
+            }
+            
+            // Save the fetched data into CoreData.
+            guard let userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: cardUID) else { return }
+            
+            // For fetching the profile image picture.
+            let socialMedia = SocialMedia(withAppName: (userProfile.profileImageApp)!, withImageName: "", withInputName: (userProfile.profileImageURL)!, withAlreadySet: false)
+            
+            ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+                if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
+                    DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: cardUID, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                }
+            })
+        })
+        
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    /// This method will be called whenever FCM receives a new, default FCM token for your
+    /// Firebase project's Sender ID.
+    /// You can send this token to your application server to send notifications to this device.
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        FirebaseManager.updateFCMToken()
+    }
+    
+    // This bad boy is called whenever a user swipes on the notification!
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if window?.rootViewController as? TabBarController != nil {
+            // Must get access to the original tab bar controller.
+            let tabBarController = window?.rootViewController as! TabBarController
+            // Switch to the third page, which is the contacts page.
+            tabBarController.selectedIndex = 2
+            // Since the viewdiddisappear doesnt get called within familiarizecontroller, we have to manually display the tab bar.
+            tabBarController.tabBar.isHidden = false
+        }
+        NotificationCenter.default.post(name: .viewProfile, object: nil)
+    }
+    
+    // I do not know what these are for [userNotificationCenter-didReceiveResponse & messaging didReceiveRemoteMessage]. Stackoverflow/firebase documents told me to include these. I will find out later.
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("Received data message: \(remoteMessage.appData)")
+    }
+    
+    // For opening facebook application on redirection
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        return handled
+    }
     
     // This is to hardcode the fact that we will only be supporting portrait mode. Say no to landscape mode!
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -120,6 +198,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             }
         }
     }
-
+    
+    func setupInternetAccessView() {
+        let noInternetAccessFrame = UIManager.makeImage()
+        noInternetAccessFrame.backgroundColor = .red
+        let noInternetAccessText = UIManager.makeLabel(numberOfLines: 1, withText: "No Fucking Internet Access")
+        noInternetAccessText.textColor = .white
+        
+        window?.addSubview(noInternetAccessFrame)
+        window?.addSubview(noInternetAccessText)
+        
+        noInternetAccessFrameTopAnchor = noInternetAccessFrame.topAnchor.constraint(equalTo: (window?.topAnchor)!, constant: -20)
+        noInternetAccessFrameTopAnchor?.isActive = true
+        noInternetAccessFrame.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        noInternetAccessFrame.leftAnchor.constraint(equalTo: (window?.leftAnchor)!).isActive = true
+        noInternetAccessFrame.rightAnchor.constraint(equalTo: (window?.rightAnchor)!).isActive = true
+        
+        noInternetAccessText.topAnchor.constraint(equalTo: noInternetAccessFrame.topAnchor).isActive = true
+        noInternetAccessText.centerXAnchor.constraint(equalTo: noInternetAccessFrame.centerXAnchor).isActive = true
+        
+        let manager = NetworkReachabilityManager(host: "www.google.com")
+        manager?.listener = { status in
+            // If the network is not reachable through internet, then show the no internet access sign.
+            if (manager?.isReachable == false) {
+                self.noInternetAccessFrameTopAnchor?.constant = 0
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.window?.windowLevel = UIWindowLevelStatusBar + 1
+                    self.window?.layoutIfNeeded()
+                }, completion: nil)
+            } else {
+            // If the network is reachable through internet, then show the no internet access sign.
+                self.noInternetAccessFrameTopAnchor?.constant = -20
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.window?.windowLevel = UIWindowLevelStatusBar - 1
+                    self.window?.layoutIfNeeded()
+                }, completion: nil)
+            }
+        }
+        manager?.startListening()
+    }
 }
 
