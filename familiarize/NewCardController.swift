@@ -386,7 +386,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         deleteButton.rightAnchor.constraint(equalTo: deleteButtonContainerView.rightAnchor).isActive = true
         deleteButton.topAnchor.constraint(equalTo: deleteButtonContainerView.topAnchor).isActive = true
     }
-    
  
     func setupView() {
         
