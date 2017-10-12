@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             
             ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                 if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
-                    DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: cardUID, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                    DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: cardUID, withUserProfileSelection: UserProfile.userProfileSelection.otherUser, imageDataType: .profileImage)
                 }
             })
         })

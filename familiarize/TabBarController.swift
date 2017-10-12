@@ -78,7 +78,7 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
                     let socialMedia = SocialMedia(withAppName: (userProfile.profileImageApp)!, withImageName: "", withInputName: (userProfile.profileImageURL)!, withAlreadySet: false)
                     ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                         if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
-                            DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: userProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                            DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: userProfile.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser, imageDataType: .profileImage)
                         }
                     })
                 }

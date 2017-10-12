@@ -93,6 +93,17 @@ class FirebaseManager {
         let user = Auth.auth().currentUser
         guard let userID = user?.uid else { return }
         
+        // Remove the images in storage.
+        storageRef.child("\(userID)/profileImage/\(uniqueID)").delete { (error) in
+            guard let error = error else { return }
+            print(error)
+        }
+        storageRef.child("\(userID)/qrCodeImage/\(uniqueID)").delete { (error) in
+            guard let error = error else { return }
+            print(error)
+        }
+        
+        // Remove the values in database.
         databaseRef.child("cards").child(uniqueIDString).removeValue()
         databaseRef.child("users").child(userID).child("cards").observeSingleEvent(of: .value, with: { (snapshot) in
             var childByAutoIDKey: String?
@@ -127,6 +138,7 @@ class FirebaseManager {
         // TODO: Check for when the uniqueIDString is already in the database. Then return false and create a new unique id.
     }
     
+    // For when an edit needs to be performed.
     static func updateCard(_ userCard: [String:[String]], withUniqueID uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
         databaseRef.child("cards").child(uniqueIDString).removeValue()
@@ -137,26 +149,32 @@ class FirebaseManager {
         }
     }
     
-    static func updateCard(_ profileImageInfo: [String:String], withUniqueID uniqueID: UInt64) {
+    static func setCardImagesURL(_ profileImageInfo: [String:String], withUniqueID uniqueID: UInt64) {
         let uniqueIDString = String(uniqueID)
         for (key,value):(String, String) in profileImageInfo {
             databaseRef.child("cards").child(uniqueIDString).child(key).childByAutoId().setValue(value)
         }
     }
-
-    static func uploadImage(_ socialMediaProfileImage: SocialMediaProfileImage, completionHandler: @escaping (String) -> Void) {
-        let profileImage = UIImageJPEGRepresentation(socialMediaProfileImage.profileImage!, 1.0)
+    
+    static func uploadImageData(imageData: Data, imageDataType: ImageDataType, uniqueID: UInt64, completionHandler: @escaping (String) -> Void) {
+        
         let user = Auth.auth().currentUser
         guard let userID = user?.uid else { return }
         
-        // Create a reference to the file you want to upload
-        let profileImageRef = storageRef.child("\(userID)/\(UUID().uuidString)")
-
-        _ = profileImageRef.putData(profileImage!, metadata: nil) { (metadata, error) in
+        var imageRef: StorageReference?
+        switch imageDataType {
+        case .profileImage:
+            imageRef = storageRef.child("\(userID)/profileImage/\(uniqueID)")
+        case .qrCodeImage:
+            imageRef = storageRef.child("\(userID)/qrCodeImage/\(uniqueID)")
+        }
+        
+        _ = imageRef?.putData(imageData, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else { return }
             completionHandler((metadata.downloadURL()?.absoluteString)!)
         }
     }
+    
     
     static func getCard(withUniqueID uniqueID: UInt64, isARefetch: Bool = false, completionHandler: @escaping ([String:[String]]?, Error?) -> Void) {
         let user = Auth.auth().currentUser
@@ -173,8 +191,6 @@ class FirebaseManager {
                 for more in snap.children {
                     let moreSnap = more as! DataSnapshot
                     card[snap.key]?.append(moreSnap.value as! String)
-                    
-                    print("This is value: ", moreSnap.value as! String)
                 }
             }
             completionHandler(card, nil)

@@ -6,6 +6,9 @@
 //  Copyright © 2017 nosleep. All rights reserved.
 //
 
+
+// LOOK AT THE FIRST MARK. Around line 47.
+
 import UIKit
 
 var otherUserProfileImageCache = NSCache<NSString, UIImage>()
@@ -32,19 +35,13 @@ class ContactsCell: UITableViewCell {
             } else {
                 DispatchQueue.global(qos: .userInteractive).async {
                     // if it is not in cache, then call from disk.
-                    if let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.userProfile!.uniqueID as! UInt64) {
+                    if let profileImage = DiskManager.readImageFromLocal(withUniqueID: self.userProfile!.uniqueID as! UInt64, imageDataType: .profileImage) {
                         DispatchQueue.main.async {
                             self.profileImage.image = profileImage
                             otherUserProfileImageCache.setObject(self.profileImage.image!, forKey: "\(self.userProfile!.uniqueID!)" as NSString)
                         }
                     }
                 }
-            }
-            
-            if let profileImage = DiskManager.readImageFromLocal(withUniqueID: userProfile?.uniqueID as! UInt64) {
-                self.profileImage.image = profileImage
-                self.profileImage.contentMode = .scaleAspectFill
-                self.profileImage.clipsToBounds = true
             }
             
             // Views is set after knowing how long the texts are.
@@ -64,10 +61,8 @@ class ContactsCell: UITableViewCell {
     // This creates the line in between each of the cells.
     let separatorView: UIView = {
         let view = UIView()
-        //view.backgroundColor = UIColor(white: 0.95, alpha:1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-        
     }()
     
     func setupViews() {

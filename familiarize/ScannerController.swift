@@ -140,7 +140,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                     if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
                         self.scanProfileController.setUserProfileImage(profileImage)
-                        DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: self.userProfile?.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser)
+                        DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: self.userProfile?.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser, imageDataType: .profileImage)
                     }
                 })
             })

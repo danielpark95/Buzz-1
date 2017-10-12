@@ -305,7 +305,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     
     func deleteClicked() {
         guard let userProfile = editingUserProfile else { return }
-        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64, imageDataType: .profileImage)
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64, imageDataType: .qrCodeImage)
         FirebaseManager.deleteCard(uniqueID: userProfile.uniqueID!.uint64Value)
         UserProfile.deleteProfile(user: userProfile)
         dismiss(animated: true, completion: nil)
@@ -538,6 +539,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         self.dismiss(animated: true, completion: nil)
     }
     
+    // TODO: Set a cache for the qrcodeimage data. 
+    // Be able to retrieve this image from cache.
+    
     // For adding it to the coredata
     func saveClicked() {
         let initialPinchPoint = CGPoint(x: (profileImageSelectionCollectionView.center.x) + (profileImageSelectionCollectionView.contentOffset.x), y: (profileImageSelectionCollectionView.center.y) + (profileImageSelectionCollectionView.contentOffset.y))
@@ -558,7 +562,9 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         
         var userProfile: UserProfile?
         if editingUserProfile != nil {
-            userProfile = UserProfile.updateProfile(socialMediaInputs, userProfile: editingUserProfile!)
+            userProfile = UserProfile.updateProfile(socialMediaInputs, userProfile: editingUserProfile!, completionHandler: { (userCard) in
+                FirebaseManager.updateCard(userCard, withUniqueID: uniqueID!)
+            })
         } else {
             // Save the new card information into core data.
             userProfile = UserProfile.saveProfileWrapper(socialMediaInputs, withUniqueID: uniqueID!, completionHandler: { (userCard) in
@@ -566,13 +572,31 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             })
         }
         
+        // Delete saved profile image.
+        if editingUserProfile != nil {
+            DiskManager.deleteImageFromLocal(withUniqueID: userProfile?.uniqueID as! UInt64, imageDataType: .profileImage)
+        }
+        
+        // Generate new qr code if this is the first time you are creating a card.
+        if editingUserProfile == nil {
+            ImageFetchingManager.generateQRCode(uniqueID: uniqueID!, completionHandler: { (qrCodeImageData) in
+                guard let qrCodeImageData = qrCodeImageData else { return }
+                myUserQRCodeImageCache.setObject(UIImage(data: qrCodeImageData)!, forKey: "\(uniqueID!)" as NSString)
+                DiskManager.writeImageDataToLocal(withData: qrCodeImageData, withUniqueID: uniqueID!, withUserProfileSelection: .myUser, imageDataType: .qrCodeImage)
+                //uploadQRCodeImageData
+                FirebaseManager.uploadImageData(imageData: qrCodeImageData, imageDataType: .qrCodeImage, uniqueID: uniqueID!, completionHandler: { (qrCodeImageDownloadURL) in
+                    UserProfile.setQRCodeImageURL(qrCodeImageURL: qrCodeImageDownloadURL, userProfile: userProfile!)
+                })
+            })
+        }
+        
         // Save the image to disk.
         let profileImageData = UIManager.makeCardProfileImageData(UIImagePNGRepresentation((selectedSocialMediaProfileImage?.profileImage)!)!)
-        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: userProfile!.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser)
+        DiskManager.writeImageDataToLocal(withData: profileImageData, withUniqueID: userProfile!.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.myUser, imageDataType: .profileImage)
         // When the image chosen is from the camera roll, upload the image to firebase
         // And then update the URL link to that image.
-        FirebaseManager.uploadImage(selectedSocialMediaProfileImage!, completionHandler: { fetchedProfileImageURL in
-            UserProfile.updateSocialMediaProfileImage(fetchedProfileImageURL, withUserProfile: userProfile!)
+        FirebaseManager.uploadImageData(imageData: profileImageData, imageDataType: .profileImage, uniqueID: uniqueID!, completionHandler: { fetchedProfileImageURL in
+            UserProfile.setProfileImageURL(fetchedProfileImageURL, withUserProfile: userProfile!)
         })
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }

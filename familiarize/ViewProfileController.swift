@@ -123,7 +123,7 @@ class ViewProfileController: UIViewController,  UICollectionViewDataSource, UICo
             print("unique id is null")
             return
         }
-        guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID as! UInt64) else {
+        guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID as! UInt64, imageDataType: .profileImage) else {
             print("file was not able to be retrieved from disk")
             return
         }

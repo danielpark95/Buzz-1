@@ -146,7 +146,7 @@ class ContactsController: UITableViewController, NSFetchedResultsControllerDeleg
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let userProfile = fetchedResultsController.object(at: indexPath) as! UserProfile
-        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID!.uint64Value)
+        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID!.uint64Value, imageDataType: .profileImage)
         FirebaseManager.deleteCard(uniqueID: userProfile.uniqueID!.uint64Value)
         UserProfile.deleteProfile(user: userProfile)
     }

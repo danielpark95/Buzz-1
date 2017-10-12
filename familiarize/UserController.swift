@@ -67,61 +67,11 @@ class UserController: UICollectionViewController, UICollectionViewDelegateFlowLa
         delegate.previousIndex = 0
     }
     
-    
-    let httpURL: String = "https://qrcode-monkey.p.mashape.com/qr/custom"
-    let httpHeader: HTTPHeaders = [
-        "X-Mashape-Key": "KT41kN7vl7mshiGSRoAZ3gU2UZpIp1dT1vgjsnqHC0CQqRL0ys",
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    ]
-    let httpBody: Parameters = [
-        "data": "https://www.qrcode-monkey.com",
-        "config": [
-            "body": "circle-zebra-vertical",
-            "eye": "frame13",
-            "eyeBall": "ball15",
-            "erf1": [],
-            "erf2": [],
-            "erf3": [],
-            "brf1": [],
-            "brf2": [],
-            "brf3": [],
-            "bodyColor": "#0277BD",
-            "bgColor": "#FFFFFF",
-            "eye1Color": "#075685",
-            "eye2Color": "#075685",
-            "eye3Color": "#075685",
-            "eyeBall1Color": "#0277BD",
-            "eyeBall2Color": "#0277BD",
-            "eyeBall3Color": "#0277BD",
-            "gradientColor1": "#075685",
-            "gradientColor2": "#0277BD",
-            "gradientType": "linear",
-            "gradientOnEyes": false,
-            "logo": "#facebook"
-        ],
-        "size": 300,
-        "download": false,
-        "file": "png"
-    ]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 
-        Alamofire.request(httpURL, method: .post, parameters: httpBody, encoding: JSONEncoding.default, headers: httpHeader).responseData(completionHandler: { (responseData) in
-            print(responseData)
-            print("RESPONSE WAS RECEIEVED")
-            if let data = responseData.result.value {
-                print("RESPONSE WAS RECEIEVED")
-                let image = UIImage(data: data)
-                let imageView = UIImageView(image: image)
-                imageView.translatesAutoresizingMaskIntoConstraints = false
-                self.view.addSubview(imageView)
-                imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-                imageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-            }
-        })
+
     
     
         

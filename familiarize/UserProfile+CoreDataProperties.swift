@@ -41,13 +41,13 @@ extension UserProfile {
     @NSManaged public var kakaoTalkProfile: [String]?
     @NSManaged public var whatsAppProfile: [String]?
     
-    
+    @NSManaged public var qrCodeImageURL: String?
     @NSManaged public var profileImageApp: String?
     @NSManaged public var profileImageURL: String?
     @NSManaged public var uniqueID: NSNumber?
     @NSManaged var userProfileSelection: userProfileSelection
     
-    static let singleInputUserData: Set<String> = ["name", "bio", "profileImageApp", "profileImageURL"]
+    static let singleInputUserData: Set<String> = ["name", "bio", "profileImageApp", "profileImageURL", "qrCodeImageURL"]
     static let multipleInputUserData: Set<String> = ["email", "phoneNumber", "faceBookProfile", "instagramProfile", "snapChatProfile", "linkedInProfile", "soundCloudProfile", "twitterProfile", "venmoProfile", "slackProfile", "gitHubProfile", "spotifyProfile", "kakaoTalkProfile", "whatsAppProfile"]
     
     static let editableSingleInputUserData: Set<String> = ["name", "bio"]
@@ -56,20 +56,31 @@ extension UserProfile {
     static let delegate = UIApplication.shared.delegate as! AppDelegate
     static let managedObjectContext = delegate.persistentContainer.viewContext
     
-    static func updateSocialMediaProfileImage(_ socialMediaProfileURL: String, withUserProfile userProfile: UserProfile) {
+    static func setProfileImageURL(_ socialMediaProfileURL: String, withUserProfile userProfile: UserProfile) {
         userProfile.profileImageApp = "default"
         userProfile.profileImageURL = socialMediaProfileURL
         do {
             try(managedObjectContext.save())
             let profileImageInfo: [String:String] = ["profileImageApp": userProfile.profileImageApp!, "profileImageURL": userProfile.profileImageURL!]
-            FirebaseManager.updateCard(profileImageInfo, withUniqueID: userProfile.uniqueID as! UInt64)
+            FirebaseManager.setCardImagesURL(profileImageInfo, withUniqueID: userProfile.uniqueID as! UInt64)
         } catch let err {
             print(err)
         }
     }
     
-    static func updateProfile(_ socialMediaInputs: [SocialMedia], userProfile: UserProfile) -> UserProfile {
-        DiskManager.deleteImageFromLocal(withUniqueID: userProfile.uniqueID as! UInt64)
+    static func setQRCodeImageURL(qrCodeImageURL: String, userProfile: UserProfile) {
+        userProfile.qrCodeImageURL = qrCodeImageURL
+        do {
+            try(managedObjectContext.save())
+            let profileImageInfo: [String:String] = ["qrCodeImageURL": qrCodeImageURL]
+            FirebaseManager.setCardImagesURL(profileImageInfo, withUniqueID: userProfile.uniqueID as! UInt64)
+        } catch let err {
+            print(err)
+        }
+        
+    }
+    
+    static func updateProfile(_ socialMediaInputs: [SocialMedia], userProfile: UserProfile, completionHandler: (_ userCard:[String:[String]]) -> Void) -> UserProfile {
         var userCard = [String:[String]]()
         for eachSocialMediaInput in socialMediaInputs {
             if userCard[eachSocialMediaInput.appName!] == nil {
@@ -100,7 +111,7 @@ extension UserProfile {
         
         userProfile.date = NSDate()
         
-        FirebaseManager.updateCard(userCard, withUniqueID: userProfile.uniqueID!.uint64Value)
+        completionHandler(userCard)
         
         do {
             try(managedObjectContext.save())
@@ -118,7 +129,6 @@ extension UserProfile {
             }
             userCard[eachSocialMediaInput.appName!]?.append(eachSocialMediaInput.inputName!)
         }
-
         
         guard let userProfile = UserProfile.saveProfile(userCard, forProfile: .myUser, withUniqueID: uniqueID) else { return nil }
         completionHandler(userCard)

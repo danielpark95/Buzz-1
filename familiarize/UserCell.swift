@@ -13,6 +13,7 @@ import Quikkly
 import Alamofire
 
 var myUserProfileImageCache = NSCache<NSString, UIImage>()
+var myUserQRCodeImageCache = NSCache<NSString, UIImage>()
 
 class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
@@ -34,6 +35,10 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     var codeProfileImage: UIImageView = {
         let image = UIManager.makeProfileImage(valueOfCornerRadius: 97)
         return image
+    }()
+    
+    var qrCodeImage: UIImageView = {
+       return UIManager.makeImage()
     }()
     
     let bioLabel: UILabel = {
@@ -76,7 +81,7 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
             if let profileImage = myUserProfileImageCache.object(forKey: "\(uniqueID)" as NSString) {
                 cardProfileImage.image = profileImage
             } else {
-                guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID) else {
+                guard let profileImage = DiskManager.readImageFromLocal(withUniqueID: uniqueID, imageDataType: .profileImage) else {
                     print("file was not able to be retrieved from disk")
                     return
                 }
@@ -84,8 +89,20 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
                 myUserProfileImageCache.setObject(cardProfileImage.image!, forKey: "\(uniqueID)" as NSString)
             }
             codeProfileImage.image = cardProfileImage.image
+            
+            
+            if let qrCode = myUserQRCodeImageCache.object(forKey: "\(uniqueID)" as NSString) {
+                qrCodeImage.image = qrCode
+            } else {
+                guard let qrCode = DiskManager.readImageFromLocal(withUniqueID: uniqueID, imageDataType: .qrCodeImage) else {
+                    print("file was not able to be retrieved from disk")
+                    return
+                }
+                qrCodeImage.image = qrCode
+                myUserQRCodeImageCache.setObject(qrCodeImage.image!, forKey: "\(uniqueID)" as NSString)
+            }
     
-            // We must purge all the data that is in socialMediaInputs due 
+            // We must purge all the data that is in socialMediaInputs due
             // to the fact that user cells aren't destroyed when you move it out from view.
             // Instead, the cell is being recycled, and thus you need to remove all contents that it 
             // may have from previous cells.
@@ -118,40 +135,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
             presentScannableCode()
         }
     }
-    
-    /*
- "data": "https://www.qrcode-monkey.com",
- "config": {
- "body": "circle-zebra-vertical",
- "eye": "frame13",
- "eyeBall": "ball15",
- "erf1": [],
- "erf2": [],
- "erf3": [],
- "brf1": [],
- "brf2": [],
- "brf3": [],
- "bodyColor": "#0277BD",
- "bgColor": "#FFFFFF",
- "eye1Color": "#075685",
- "eye2Color": "#075685",
- "eye3Color": "#075685",
- "eyeBall1Color": "#0277BD",
- "eyeBall2Color": "#0277BD",
- "eyeBall3Color": "#0277BD",
- "gradientColor1": "#075685",
- "gradientColor2": "#0277BD",
- "gradientType": "linear",
- "gradientOnEyes": false,
- "logo": "#facebook"
- },
- "size": 300,
- "download": false,
- "file": "png"
- */
- 
- 
-
 
     func createQR(_ userProfile: UserProfile) {
         let skin = ScannableSkin()
@@ -168,18 +151,26 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     }
     
     func presentScannableCode() {
-        self.addSubview(scannableView)
-        self.addSubview(codeProfileImage)
-        scannableView.translatesAutoresizingMaskIntoConstraints = false
-        scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        scannableView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        scannableView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
+//        self.addSubview(scannableView)
+//        self.addSubview(codeProfileImage)
+//        scannableView.translatesAutoresizingMaskIntoConstraints = false
+//        scannableView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+//        scannableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+//        scannableView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+//        scannableView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
+//        
+//        codeProfileImage.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
+//        codeProfileImage.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
+//        codeProfileImage.heightAnchor.constraint(equalToConstant: 194).isActive = true
+//        codeProfileImage.widthAnchor.constraint(equalToConstant: 194).isActive = true
+//        
         
-        codeProfileImage.centerXAnchor.constraint(equalTo: scannableView.centerXAnchor, constant: 0).isActive = true
-        codeProfileImage.centerYAnchor.constraint(equalTo: scannableView.centerYAnchor, constant: 0).isActive = true
-        codeProfileImage.heightAnchor.constraint(equalToConstant: 194).isActive = true
-        codeProfileImage.widthAnchor.constraint(equalToConstant: 194).isActive = true
+        self.addSubview(qrCodeImage)
+        
+        qrCodeImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        qrCodeImage.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        qrCodeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        qrCodeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -50).isActive = true
     }
     
     func presentProfile() {
