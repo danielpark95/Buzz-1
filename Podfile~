@@ -49,4 +49,12 @@ target 'familiarize' do
 
   #Circular image cropper
   pod 'AAPhotoCircleCrop'
+
+  #Facebook login
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+
+  #Nice Colors
+  pod 'ChameleonFramework/Swift'
+
 end

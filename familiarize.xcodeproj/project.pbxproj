@@ -38,7 +38,8 @@
 		14A25B381F2B1890000F90BE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A25B371F2B1890000F90BE /* FirebaseManager.swift */; };
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
-		14C3ED751F907D1B0035D99E /* CardClassController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3ED741F907D1B0035D99E /* CardClassController.swift */; };
+		14C3ED751F907D1B0035D99E /* CardNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3ED741F907D1B0035D99E /* CardNameController.swift */; };
+		14C3ED771F90993E0035D99E /* CardColorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3ED761F90993E0035D99E /* CardColorController.swift */; };
 		14CE71261F575D5C006B8C97 /* ViewProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */; };
 		14E510D71F86FE6800932894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14E510D61F86FE6800932894 /* Assets.xcassets */; };
 		14E6A1AB1F68904900931676 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E6A1AA1F68904900931676 /* GoogleService-Info.plist */; };
@@ -90,7 +91,8 @@
 		14A25B371F2B1890000F90BE /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
-		14C3ED741F907D1B0035D99E /* CardClassController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardClassController.swift; sourceTree = "<group>"; };
+		14C3ED741F907D1B0035D99E /* CardNameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNameController.swift; sourceTree = "<group>"; };
+		14C3ED761F90993E0035D99E /* CardColorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardColorController.swift; sourceTree = "<group>"; };
 		14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileCell.swift; sourceTree = "<group>"; };
 		14E510D61F86FE6800932894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		14E6A1AA1F68904900931676 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -178,7 +180,8 @@
 				14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */,
 				1497A2281EEDCEB600366303 /* ViewProfileController.swift */,
 				1432D9E21F0F40A400B2BF88 /* SocialMediaController.swift */,
-				14C3ED741F907D1B0035D99E /* CardClassController.swift */,
+				14C3ED741F907D1B0035D99E /* CardNameController.swift */,
+				14C3ED761F90993E0035D99E /* CardColorController.swift */,
 			);
 			name = PopUpVC;
 			sourceTree = "<group>";
@@ -393,8 +396,11 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-familiarize/Pods-familiarize-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AAPhotoCircleCrop/AAPhotoCircleCrop.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Cheers/Cheers.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kanna/Kanna.framework",
@@ -415,8 +421,11 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AAPhotoCircleCrop.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cheers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kanna.framework",
@@ -453,7 +462,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		800B0AF55C8A80D74B3DFF15 /* [CP] Copy Pods Resources */ = {
@@ -494,7 +503,7 @@
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				142FA69B1F761962004598E9 /* LoginController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
-				14C3ED751F907D1B0035D99E /* CardClassController.swift in Sources */,
+				14C3ED751F907D1B0035D99E /* CardNameController.swift in Sources */,
 				F65430721F3CEF150047FC35 /* Walkthrough.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				1414A1201F1862CD00289EEB /* ProfileImageSelectionCell.swift in Sources */,
@@ -509,6 +518,7 @@
 				14773E041EE604D7000D6AA9 /* Extensions.swift in Sources */,
 				1458B51D1F097A1400F173DE /* HelpSettingController.swift in Sources */,
 				144372AD1F1710840052C544 /* ImageFetchingManager.swift in Sources */,
+				14C3ED771F90993E0035D99E /* CardColorController.swift in Sources */,
 				1458B5191F096A7E00F173DE /* TermsPrivacySettingController.swift in Sources */,
 				1458B51B1F0979DD00F173DE /* ContactSettingController.swift in Sources */,
 				14323B811F04EBAD004694A6 /* SettingsCell.swift in Sources */,

@@ -53,5 +53,4 @@ target 'familiarize' do
   #Facebook login
   pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
-
 end

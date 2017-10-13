@@ -15,6 +15,7 @@ import AAPhotoCircleCrop
 protocol NewCardControllerDelegate {
     func presentSocialMediaPopup(socialMedia: SocialMedia) -> Void
     func addSocialMediaInput(socialMedia: SocialMedia) -> Void
+    func updateCardType(cardType: CardType) -> Void
 }
 
 class SocialMediaProfileImage: SocialMedia {
@@ -26,7 +27,7 @@ class SocialMediaProfileImage: SocialMedia {
     }
 }
 
-class CardClass {
+class CardType {
     var cardName: String?
     var cardColor: UIColor?
     init(cardName: String, cardColor: UIColor) {
@@ -44,6 +45,11 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
     private enum collectionViewTag: Int {
         case profileImageSelectionTableView
         case socialMediaSelectionTableView
+    }
+    
+    private enum cardTypeSelection: Int {
+        case cardColor
+        case cardName
     }
     
     var editingUserProfile: UserProfile?
@@ -67,7 +73,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         "whatsAppProfile": 16
     ]
     
-    var cardClass = CardClass(cardName: "card class", cardColor: UIColor.lightGray)
+    var cardType = CardType(cardName: "card class", cardColor: UIColor.lightGray)
 
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_add", withInputName: "", withAlreadySet: false),
@@ -201,23 +207,40 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         return collectionView
     }()
     
-    let beeView: UIImageView = {
+    lazy var cardColor: UIImageView = {
         let imageView = UIManager.makeImage(imageName: "bee_icon")
         imageView.image = imageView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         imageView.tintColor = .purple
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardClassClicked)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardColorClicked)))
+        imageView.tag = cardTypeSelection.cardColor.rawValue
         return imageView
     }()
     
-    let cardClassLabel: UILabel = {
+    lazy var cardName: UILabel = {
         let label = UIManager.makeLabel(numberOfLines: 1, withText: "Card Class")
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardClassClicked)))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardNameClicked)))
+        label.tag = cardTypeSelection.cardName.rawValue
         return label
     }()
     
-    func cardClassClicked() {
-        
-        // Pass in some stuff to the card class please.
+    func cardColorClicked() {
+        let cardColorController = CardColorController()
+        cardColorController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        cardColorController.cardType = cardType
+        cardColorController.newCardControllerDelegate = self
+        navigationController?.definesPresentationContext = true
+        navigationController?.present(cardColorController, animated: false)
+    }
+    
+    func cardNameClicked() {
+        let cardNameController = CardNameController()
+        cardNameController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        cardNameController.cardType = cardType
+        cardNameController.newCardControllerDelegate = self
+        navigationController?.definesPresentationContext = true
+        navigationController?.present(cardNameController, animated: false)
     }
     
     lazy var panGestureRecognizer: UIPanGestureRecognizer = {
@@ -240,13 +263,13 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         socialMediaSelectedContainerView.center = CGPoint(x: socialMediaSelectedContainerView.center.x, y: currentPositionOfSelectedContainer + point.y)
         profileImageSelectionCollectionView.center = CGPoint(x: profileImageSelectionCollectionView.center.x, y: currentPositionOfProfileImage + point.y)
         deleteButtonContainerView.center = CGPoint(x: deleteButtonContainerView.center.x, y: currentPositionOfDeleteButton + point.y)
-        beeView.center = CGPoint(x: beeView.center.x, y: currentPositionOfBeeView + point.y)
+        cardColor.center = CGPoint(x: cardColor.center.x, y: currentPositionOfBeeView + point.y)
         
-        var cardClassLabelOptionalCenter = CGPoint(x: cardClassLabel.center.x, y: currentPositionOfCardClassLabel + point.y)
+        var cardClassLabelOptionalCenter = CGPoint(x: cardName.center.x, y: currentPositionOfCardClassLabel + point.y)
         if cardClassLabelOptionalCenter.y < 83 {
             cardClassLabelOptionalCenter.y = 83
         }
-        cardClassLabel.center = cardClassLabelOptionalCenter
+        cardName.center = cardClassLabelOptionalCenter
         
         switch sender.state {
         case .ended:
@@ -288,8 +311,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: self.view.center.y + selectedContainerOffset)
             self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: self.view.center.y - 25)
             self.deleteButtonContainerView.center = CGPoint(x: self.deleteButtonContainerView.center.x, y: self.view.center.y + 500)
-            self.beeView.center = CGPoint(x: self.beeView.center.x, y: self.view.center.y - 220)
-            self.cardClassLabel.center = CGPoint(x: self.cardClassLabel.center.x, y: self.view.center.y - 175)
+            self.cardColor.center = CGPoint(x: self.cardColor.center.x, y: self.view.center.y - 220)
+            self.cardName.center = CGPoint(x: self.cardName.center.x, y: self.view.center.y - 175)
         })
         currentPositionOfSelectionContainer = view.center.y + 165
         currentPositionOfSelectedContainer = view.center.y + selectedContainerOffset
@@ -311,8 +334,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             self.socialMediaSelectedContainerView.center = CGPoint(x: self.socialMediaSelectedContainerView.center.x, y: selectedContainerOffset)
             self.profileImageSelectionCollectionView.center = CGPoint(x: self.profileImageSelectionCollectionView.center.x, y: -55)
             self.deleteButtonContainerView.center = CGPoint(x: self.deleteButtonContainerView.center.x, y: self.view.frame.height - 40)
-            self.beeView.center = CGPoint(x: self.beeView.center.x, y: -220)
-            self.cardClassLabel.center = CGPoint(x: self.cardClassLabel.center.x, y: 83)
+            self.cardColor.center = CGPoint(x: self.cardColor.center.x, y: -220)
+            self.cardName.center = CGPoint(x: self.cardName.center.x, y: 83)
         })
         currentPositionOfSelectionContainer = 140
         currentPositionOfSelectedContainer = selectedContainerOffset
@@ -417,8 +440,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         view.addSubview(profileImageSelectionCollectionView)
         view.addSubview(socialMediaSelectionContainerView)
         view.addSubview(socialMediaSelectedContainerView)
-        view.addSubview(cardClassLabel)
-        view.addSubview(beeView)
+        view.addSubview(cardName)
+        view.addSubview(cardColor)
         
         socialMediaSelectionContainerView.addSubview(socialMediaSelectionCollectionView)
         socialMediaSelectedContainerView.addSubview(socialMediaSelectedTableView)
@@ -426,14 +449,14 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         // Card Class Label
         currentPositionOfCardClassLabel = view.center.y - 175
         
-        cardClassLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        cardClassLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -175).isActive = true
+        cardName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cardName.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -175).isActive = true
         
         // Bee Image
         currentPositionOfBeeView = view.center.y - 220
         
-        beeView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
-        beeView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -220).isActive = true
+        cardColor.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
+        cardColor.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -220).isActive = true
         
         // Profile Image View
         currentPositionOfProfileImage = view.center.y - 25
@@ -663,6 +686,11 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
             })
         }
         socialMediaSelectedTableView.reloadData()
+    }
+    
+    func updateCardType(cardType: CardType) {
+        cardColor.tintColor = cardType.cardColor
+        cardName.text = cardType.cardName
     }
     
     // MARK: - UIImagePickerControllerDelegate Delegate Implementation

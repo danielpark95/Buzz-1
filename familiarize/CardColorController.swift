@@ -1,5 +1,5 @@
 //
-//  CardClassController.swift
+//  CardColorController.swift
 //  familiarize
 //
 //  Created by Alex Oh on 10/12/17.
@@ -9,31 +9,25 @@
 import UIKit
 import CoreData
 
-class CardClassController: UIViewController, UITextFieldDelegate {
+class CardColorController: UIViewController {
     
-    var newCardControllerDelegate: NewCardController?
+    var newCardControllerDelegate: NewCardControllerDelegate?
     
-    var socialMedia: SocialMedia? {
+    var cardType: CardType? {
         didSet {
-            inputTextField.placeholder = socialMedia?.appName
-            inputTextField.text = socialMedia?.inputName
-            socialMediaImageView.image = UIImage(named: (socialMedia?.imageName)!)
+            beeView.tintColor = cardType?.cardColor
         }
     }
+    
+    let beeView: UIImageView = {
+        let imageView = UIManager.makeImage(imageName: "bee_icon")
+        imageView.image = imageView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        return imageView
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupViews()
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true) //This will hide the keyboard
-    }
-    
-    // When the "done" button is pressed, dismiss the vc
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        addClicked()
-        return false
     }
     
     // After all of the views are setups, then animate the motion where the popup image
@@ -41,17 +35,9 @@ class CardClassController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.animatePopup()
-        // Makes the inputTextField show up immendiately when the social media icon is pressed.
-        inputTextField.becomeFirstResponder()
     }
     
     lazy var addButton: UIButton = {
-        let button = UIManager.makeButton(imageName: "dan_save")
-        button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var nextButton: UIButton = {
         let button = UIManager.makeButton(imageName: "dan_save")
         button.addTarget(self, action: #selector(addClicked), for: .touchUpInside)
         return button
@@ -64,10 +50,6 @@ class CardClassController: UIViewController, UITextFieldDelegate {
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
         return imageView
-    }()
-    
-    let socialMediaImageView: UIImageView = {
-        return UIManager.makeImage()
     }()
     
     lazy var tintOverlay: UIImageView = {
@@ -83,21 +65,10 @@ class CardClassController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    lazy var inputTextField : UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "username"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = .no
-        textField.tintColor = UIColor(white: 0.55, alpha: 1)
-        textField.textAlignment = NSTextAlignment.center
-        textField.delegate = self
-        textField.returnKeyType = .done
-        return textField
-    }()
-    
     func addClicked() {
-        socialMedia?.inputName = inputTextField.text!
-        newCardControllerDelegate?.addSocialMediaInput(socialMedia: socialMedia!)
+        if let cardType = cardType {
+            newCardControllerDelegate?.updateCardType(cardType: cardType)
+        }
         self.dismiss(animated: false, completion: nil)
     }
     
@@ -128,8 +99,7 @@ class CardClassController: UIViewController, UITextFieldDelegate {
         view.addSubview(outsideButton)
         view.addSubview(popupImageView)
         view.addSubview(addButton)
-        view.addSubview(socialMediaImageView)
-        view.addSubview(inputTextField)
+        view.addSubview(beeView)
         
         outsideButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         outsideButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -144,14 +114,8 @@ class CardClassController: UIViewController, UITextFieldDelegate {
         addButton.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
         addButton.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 75).isActive = true
         
-        socialMediaImageView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        socialMediaImageView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
-        
-        inputTextField.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
-        inputTextField.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: 20).isActive = true
-        inputTextField.heightAnchor.constraint(equalToConstant: inputTextField.intrinsicContentSize.height).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: popupImageView.intrinsicContentSize.width - 80).isActive = true
-        
+        beeView.centerXAnchor.constraint(equalTo: popupImageView.centerXAnchor).isActive = true
+        beeView.centerYAnchor.constraint(equalTo: popupImageView.centerYAnchor, constant: -50).isActive = true
         
     }
     
