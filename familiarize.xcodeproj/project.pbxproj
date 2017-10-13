@@ -38,6 +38,7 @@
 		14A25B381F2B1890000F90BE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A25B371F2B1890000F90BE /* FirebaseManager.swift */; };
 		14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10EE1F0DD691004E0CEB /* NewCardController.swift */; };
 		14AF10F11F0DE329004E0CEB /* SocialMediaSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */; };
+		14C3ED751F907D1B0035D99E /* CardClassController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3ED741F907D1B0035D99E /* CardClassController.swift */; };
 		14CE71261F575D5C006B8C97 /* ViewProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */; };
 		14E510D71F86FE6800932894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14E510D61F86FE6800932894 /* Assets.xcassets */; };
 		14E6A1AB1F68904900931676 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E6A1AA1F68904900931676 /* GoogleService-Info.plist */; };
@@ -89,6 +90,7 @@
 		14A25B371F2B1890000F90BE /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		14AF10EE1F0DD691004E0CEB /* NewCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardController.swift; sourceTree = "<group>"; };
 		14AF10F01F0DE329004E0CEB /* SocialMediaSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMediaSelectionCell.swift; sourceTree = "<group>"; };
+		14C3ED741F907D1B0035D99E /* CardClassController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardClassController.swift; sourceTree = "<group>"; };
 		14CE71251F575D5C006B8C97 /* ViewProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewProfileCell.swift; sourceTree = "<group>"; };
 		14E510D61F86FE6800932894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		14E6A1AA1F68904900931676 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				14F35FEC1EE2A427007A2A8D /* ScanProfileController.swift */,
 				1497A2281EEDCEB600366303 /* ViewProfileController.swift */,
 				1432D9E21F0F40A400B2BF88 /* SocialMediaController.swift */,
+				14C3ED741F907D1B0035D99E /* CardClassController.swift */,
 			);
 			name = PopUpVC;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				1458B51F1F097A2A00F173DE /* FeedbackSettingController.swift in Sources */,
 				142FA69B1F761962004598E9 /* LoginController.swift in Sources */,
 				14AF10EF1F0DD691004E0CEB /* NewCardController.swift in Sources */,
+				14C3ED751F907D1B0035D99E /* CardClassController.swift in Sources */,
 				F65430721F3CEF150047FC35 /* Walkthrough.swift in Sources */,
 				143532431EDA9CC2000507DB /* ContactsController.swift in Sources */,
 				1414A1201F1862CD00289EEB /* ProfileImageSelectionCell.swift in Sources */,

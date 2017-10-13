@@ -26,6 +26,15 @@ class SocialMediaProfileImage: SocialMedia {
     }
 }
 
+class CardClass {
+    var cardName: String?
+    var cardColor: UIColor?
+    init(cardName: String, cardColor: UIColor) {
+        self.cardName = cardName
+        self.cardColor = cardColor
+    }
+}
+
 class NewCardController: UIViewController, NewCardControllerDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AACircleCropViewControllerDelegate {
     
     private let profileImageSelectionCellId = "profileImageSelectionCellId"
@@ -57,6 +66,8 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         "venmoProfile": 15,
         "whatsAppProfile": 16
     ]
+    
+    var cardClass = CardClass(cardName: "card class", cardColor: UIColor.lightGray)
 
     let socialMediaChoices: [SocialMedia] = [
         SocialMedia(withAppName: "phoneNumber", withImageName: "dan_phoneNumber_add", withInputName: "", withAlreadySet: false),
@@ -194,12 +205,20 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         let imageView = UIManager.makeImage(imageName: "bee_icon")
         imageView.image = imageView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         imageView.tintColor = .purple
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardClassClicked)))
         return imageView
     }()
     
     let cardClassLabel: UILabel = {
-        return UIManager.makeLabel(numberOfLines: 1, withText: "card class")
+        let label = UIManager.makeLabel(numberOfLines: 1, withText: "Card Class")
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardClassClicked)))
+        return label
     }()
+    
+    func cardClassClicked() {
+        
+        // Pass in some stuff to the card class please.
+    }
     
     lazy var panGestureRecognizer: UIPanGestureRecognizer = {
         return UIPanGestureRecognizer(target: self, action: #selector(handlePan))
@@ -325,6 +344,7 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         setupNavBarButton()
     }
     
+
     func setupEditingView() {
         
         // Mr. Pan is added to the whole view. So when you touch anything on the view,
@@ -477,7 +497,6 @@ class NewCardController: UIViewController, NewCardControllerDelegate, UITableVie
         } else { // if collectionView.tag == collectionViewTag.profileImageSelectionTableView.rawValue
             return UIEdgeInsetsMake(0, 0, 0, 0)
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
