@@ -16,6 +16,7 @@ import M13Checkbox
 
 class ScanProfileController: UIViewController {
     
+    var scannerControllerDelegate: ScannerControllerDelegate?
     var userProfile: UserProfile?
     let profileImageHeightAndWidth: CGFloat = 100.0
     
@@ -156,6 +157,7 @@ class ScanProfileController: UIViewController {
     func dismissClicked() {
         // TODO: There's an error that occurs where while the camera is still pointing at the qr code, the camera begins to scan, while the view has not been dismissed yet.
 //        ScannerControllerDelegate?.startCameraScanning()
+        scannerControllerDelegate?.startCameraScanning()
         popupCenterYAnchor?.constant = view.frame.size.height
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()

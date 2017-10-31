@@ -83,7 +83,6 @@ PODS:
   - pop (1.0.10)
   - Protobuf (3.4.0)
   - QRCode (2.0)
-  - Quikkly (1.2.0)
   - RevealingSplashView (0.4.0)
   - SwiftyJSON (3.1.4)
   - TextFieldEffects (1.3.3)
@@ -106,20 +105,10 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - pop
   - QRCode
-  - Quikkly (from `https://github.com/quikkly/ios-sdk.git`)
   - RevealingSplashView
   - SwiftyJSON
   - TextFieldEffects
   - UPCarouselFlowLayout
-
-EXTERNAL SOURCES:
-  Quikkly:
-    :git: https://github.com/quikkly/ios-sdk.git
-
-CHECKOUT OPTIONS:
-  Quikkly:
-    :commit: 8d46b3fdc27169757ddb77a1aae79c30ee920daf
-    :git: https://github.com/quikkly/ios-sdk.git
 
 SPEC CHECKSUMS:
   AAPhotoCircleCrop: 61371491e3db6d295f6402b40d4ab481129ddf43
@@ -147,12 +136,11 @@ SPEC CHECKSUMS:
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
-  Quikkly: 4256fa2c2b44586ea0a0097c0086aceb46f73bb4
   RevealingSplashView: 72be158ad5e1bc72713e8f78383dc3e1803ce4d1
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
   UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: 7c15faceb0e9175ac8bc1f187eb483741b2a6cad
+PODFILE CHECKSUM: a6d01234d8fb5e3f510aee10111d8675fb147724
 
 COCOAPODS: 1.3.1

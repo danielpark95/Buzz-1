@@ -123,11 +123,11 @@ class TabBarController: ESTabBarController, UITabBarControllerDelegate, TabBarCo
     }
 
     func removeScanner() {
-        viewControllers?.remove(at: 1)
-        //Scanner Controller
-        let scannerController = ScannerController()
-        let scannerNavigationController = UINavigationController(rootViewController: scannerController)
-        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
-        viewControllers?.insert(scannerNavigationController, at: 1)
+//        viewControllers?.remove(at: 1)
+//        //Scanner Controller
+//        let scannerController = ScannerController()
+//        let scannerNavigationController = UINavigationController(rootViewController: scannerController)
+//        scannerController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(),title: nil, image: UIImage(named: "dan_tabbarcircle_orange_25"), selectedImage: UIImage(named: "dan_tabbarcircle_orange_25"))
+//        viewControllers?.insert(scannerNavigationController, at: 1)
     }
 }

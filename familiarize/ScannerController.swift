@@ -13,17 +13,22 @@ import Kanna
 import CoreData
 import AVFoundation
 
-class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+protocol ScannerControllerDelegate {
+    func startCameraScanning()
+    func stopCameraScanning()
+}
+
+class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, ScannerControllerDelegate {
     
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     
     // Added to support different barcodes
     let supportedBarCodes = [AVMetadataObjectTypeQRCode]
-    
-    
+
     var userProfile: UserProfile?
     let generator = UIImpactFeedbackGenerator(style: .heavy)
+    var cameraActive: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +79,9 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.tabBarController?.tabBar.isHidden = false
+        if captureSession != nil {
+            captureSession?.stopRunning()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +89,9 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = true
         setupViews()
+        if captureSession != nil {
+            captureSession?.startRunning()
+        }
     }
     
     lazy var backButton: UIButton = {
@@ -122,43 +133,52 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         cameraFrame.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
     }
     
+    func startCameraScanning() {
+        self.cameraActive = true
+    }
+    
+    func stopCameraScanning() {
+        captureSession?.stopRunning()
+    }
+    
     let scanProfileController = ScanProfileController()
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+    func captureOutput(_ output: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+        print("HOLA")
         
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
             return
         }
-        
         // Get the metadata object.
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+        
         
         // Here we use filter method to check if the type of metadataObj is supported
         // Instead of hardcoding the AVMetadataObjectTypeQRCode, we check if the type
         // can be found in the array of supported bar codes.
-        if (supportedBarCodes.contains(metadataObj.type) && metadataObj.stringValue != nil) {
+        if (supportedBarCodes.contains(metadataObj.type) && metadataObj.stringValue != nil && cameraActive == true) {
+            cameraActive = false
             let cardUID = UInt64(metadataObj.stringValue) ?? 0
             generator.impactOccurred()
             scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            present(self.scanProfileController, animated: false)
-            
+            present(scanProfileController, animated: false)
             FirebaseManager.getCard(withUniqueID: cardUID, completionHandler: { (card, error) in
                 guard let card = card else { return }
                 if card.count == 0 {
-                    // Perform some animation to show that the quikkly code is invalid.
                     return
                 }
                 
                 // Save the fetched data into CoreData.
                 self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: cardUID)
-                
+
                 // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile
                 self.scanProfileController.setUserName((self.userProfile?.name)!)
-                
+                self.scanProfileController.scannerControllerDelegate = self
+
                 // For fetching the profile image picture.
                 let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
-                
+
                 ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
                     if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
                         self.scanProfileController.setUserProfileImage(profileImage)
@@ -168,48 +188,4 @@ class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegat
             })
         }
     }
-    
-//    let scanProfileController = ScanProfileController()
-//    func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
-//        cameraScanView = scanView
-//
-//        // Handle detected scannables
-//        if let scannable = scannables.first {
-//
-//            // Taptic engine enabled!
-//            generator.impactOccurred()
-//
-//            // If we dont stop the camera the cpu is going off the fucking charts . . .
-//            cameraScanView?.stop()
-//
-//            scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//            self.scanProfileController.ScannerControllerDelegate = self
-//            present(self.scanProfileController, animated: false)
-//
-//            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { (card, error) in
-//                guard let card = card else { return }
-//                if card.count == 0 {
-//                    // Perform some animation to show that the quikkly code is invalid.
-//                    return
-//                }
-//
-//                // Save the fetched data into CoreData.
-//                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: scannable.value)
-//
-//                // Pass on data to scanProfileController
-//                self.scanProfileController.userProfile = self.userProfile
-//                self.scanProfileController.setUserName((self.userProfile?.name)!)
-//
-//                // For fetching the profile image picture.
-//                let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
-//
-//                ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
-//                    if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
-//                        self.scanProfileController.setUserProfileImage(profileImage)
-//                        DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: self.userProfile?.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser, imageDataType: .profileImage)
-//                    }
-//                })
-//            })
-//        }
-//    }
 }
