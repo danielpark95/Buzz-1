@@ -77,7 +77,6 @@ class CardColorController: UIViewController {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.tintOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-            self.inputTextField.endEditing(true)
         }, completion: { _ in
             // After moving the background up to the middle, then load the name and buttons.
             self.dismiss(animated: false)
