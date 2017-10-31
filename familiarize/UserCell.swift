@@ -9,7 +9,6 @@
 import QRCode
 import SwiftyJSON
 import UIKit
-import Quikkly
 import Alamofire
 
 var myUserProfileImageCache = NSCache<NSString, UIImage>()
@@ -24,7 +23,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
     // We have to compensate for the lost padding in the view controller by removing the width of the image when applying constraints
     let imageXCoordPadding: CGFloat = -230
     var onQuikklyCode: Bool = false
-    var scannableView = ScannableView()
     var socialMediaInputs = [SocialMedia]()
     
     var cardProfileImage: UIImageView = {
@@ -74,7 +72,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
             bioLabel.attributedText = bio
             
             // When myUserProfile is set within the UserController as a cell, then load up the required information that the user has.
-            createQR(myUserProfile!)
             setupViews()
             
             let uniqueID = UInt64(self.myUserProfile!.uniqueID!)
@@ -89,7 +86,6 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
                 myUserProfileImageCache.setObject(cardProfileImage.image!, forKey: "\(uniqueID)" as NSString)
             }
             codeProfileImage.image = cardProfileImage.image
-            
             
             if let qrCode = myUserQRCodeImageCache.object(forKey: "\(uniqueID)" as NSString) {
                 qrCodeImage.image = qrCode
@@ -136,19 +132,19 @@ class UserCell:  UICollectionViewCell, UICollectionViewDataSource, UICollectionV
         }
     }
 
-    func createQR(_ userProfile: UserProfile) {
-        let skin = ScannableSkin()
-        skin.backgroundColor = "#FFD705"
-        skin.dotColor = "#2f2f2f"
-        skin.borderColor = "#2f2f2f"
-        skin.overlayColor = "#2f2f2f"
-        skin.imageUri = ""
-        skin.imageFit = .templateDefault
-        skin.logoUri = ""
-        
-        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0014style3", skin: skin)
-        scannableView.scannable = scannable
-    }
+//    func createQR(_ userProfile: UserProfile) {
+//        let skin = ScannableSkin()
+//        skin.backgroundColor = "#FFD705"
+//        skin.dotColor = "#2f2f2f"
+//        skin.borderColor = "#2f2f2f"
+//        skin.overlayColor = "#2f2f2f"
+//        skin.imageUri = ""
+//        skin.imageFit = .templateDefault
+//        skin.logoUri = ""
+//
+//        let scannable = Scannable(withValue: userProfile.uniqueID as! UInt64, template: "template0014style3", skin: skin)
+//        scannableView.scannable = scannable
+//    }
     
     func presentScannableCode() {
 //        self.addSubview(scannableView)

@@ -36,9 +36,6 @@ target 'familiarize' do
   
   #Confetti
   pod 'Cheers'
-  
-  #Quikkly QR Code
-  pod 'Quikkly', :git => 'https://github.com/quikkly/ios-sdk.git'
 
   #Firebase baby (:
   pod 'Firebase/Storage'

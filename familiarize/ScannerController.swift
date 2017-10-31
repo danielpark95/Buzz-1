@@ -11,32 +11,63 @@ import SwiftyJSON
 import Alamofire
 import Kanna
 import CoreData
-import Quikkly
+import AVFoundation
 
-protocol ScannerControllerDelegate {
-    func startCameraScanning()
-    func stopCameraScanning()
-}
-
-class ScannerController: ScanViewController, ScannerControllerDelegate {
+class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
-    var cameraScanView: ScanView?
+    var captureSession:AVCaptureSession?
+    var videoPreviewLayer:AVCaptureVideoPreviewLayer?
+    
+    // Added to support different barcodes
+    let supportedBarCodes = [AVMetadataObjectTypeQRCode]
+    
+    
     var userProfile: UserProfile?
     let generator = UIImpactFeedbackGenerator(style: .heavy)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // This for loop is for removing bullshit from quikkly
-        var count = 0
-        for v in (view.subviews){
-            if count != 0 {
-                v.removeFromSuperview()
-            }
-            count = count + 1
+        // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
+        // as the media type parameter.
+        let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        
+        do {
+            // Get an instance of the AVCaptureDeviceInput class using the previous device object.
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            
+            // Initialize the captureSession object.
+            captureSession = AVCaptureSession()
+            // Set the input device on the capture session.
+            captureSession?.addInput(input)
+            
+            // Initialize a AVCaptureMetadataOutput object and set it as the output device to the capture session.
+            let captureMetadataOutput = AVCaptureMetadataOutput()
+            captureSession?.addOutput(captureMetadataOutput)
+            
+            // Set delegate and use the default dispatch queue to execute the call back
+            captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            
+            // Detect all the supported bar code
+            captureMetadataOutput.metadataObjectTypes = supportedBarCodes
+            
+            // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            videoPreviewLayer?.frame = view.layer.bounds
+            view.layer.addSublayer(videoPreviewLayer!)
+            
+            // Start video capture
+            captureSession?.startRunning()
+            generator.prepare()
+            setupViews()
+            
+        } catch {
+            // If any error occurs, simply print it out and don't continue any more.
+            print(error)
+            return
         }
-        generator.prepare()
-        setupViews()
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,15 +81,6 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = true
         setupViews()
-    }
-    
-    // MARK: ScannerControllerDelegate Functions
-    func startCameraScanning() {
-        cameraScanView?.start()
-    }
-    
-    func stopCameraScanning() {
-        cameraScanView?.stop()
     }
     
     lazy var backButton: UIButton = {
@@ -77,9 +99,6 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     func didSelectBack() {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         tabBarController?.selectedIndex = delegate.previousIndex!
-        if let myCameraScanView = self.cameraScanView {
-            myCameraScanView.stop()
-        }
         // These three steps are vital in memory management and cpu usage.
         // This is because quikkly has made it so fucking weird to turn off the fucking camera.
         // Dismisses the view controller.
@@ -104,23 +123,26 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
     }
     
     let scanProfileController = ScanProfileController()
-    func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
-        cameraScanView = scanView
-      
-        // Handle detected scannables
-        if let scannable = scannables.first {
-            
-            // Taptic engine enabled!
-            generator.impactOccurred()
-            
-            // If we dont stop the camera the cpu is going off the fucking charts . . .
-            cameraScanView?.stop()
+    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
         
+        // Check if the metadataObjects array is not nil and it contains at least one object.
+        if metadataObjects == nil || metadataObjects.count == 0 {
+            return
+        }
+        
+        // Get the metadata object.
+        let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+        
+        // Here we use filter method to check if the type of metadataObj is supported
+        // Instead of hardcoding the AVMetadataObjectTypeQRCode, we check if the type
+        // can be found in the array of supported bar codes.
+        if (supportedBarCodes.contains(metadataObj.type) && metadataObj.stringValue != nil) {
+            let cardUID = UInt64(metadataObj.stringValue) ?? 0
+            generator.impactOccurred()
             scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            self.scanProfileController.ScannerControllerDelegate = self
             present(self.scanProfileController, animated: false)
             
-            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { (card, error) in
+            FirebaseManager.getCard(withUniqueID: cardUID, completionHandler: { (card, error) in
                 guard let card = card else { return }
                 if card.count == 0 {
                     // Perform some animation to show that the quikkly code is invalid.
@@ -128,7 +150,7 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
                 }
                 
                 // Save the fetched data into CoreData.
-                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: scannable.value)
+                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: cardUID)
                 
                 // Pass on data to scanProfileController
                 self.scanProfileController.userProfile = self.userProfile
@@ -146,4 +168,48 @@ class ScannerController: ScanViewController, ScannerControllerDelegate {
             })
         }
     }
+    
+//    let scanProfileController = ScanProfileController()
+//    func scanView(_ scanView: ScanView, didDetectScannables scannables: [Scannable]) {
+//        cameraScanView = scanView
+//
+//        // Handle detected scannables
+//        if let scannable = scannables.first {
+//
+//            // Taptic engine enabled!
+//            generator.impactOccurred()
+//
+//            // If we dont stop the camera the cpu is going off the fucking charts . . .
+//            cameraScanView?.stop()
+//
+//            scanProfileController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//            self.scanProfileController.ScannerControllerDelegate = self
+//            present(self.scanProfileController, animated: false)
+//
+//            FirebaseManager.getCard(withUniqueID: scannable.value, completionHandler: { (card, error) in
+//                guard let card = card else { return }
+//                if card.count == 0 {
+//                    // Perform some animation to show that the quikkly code is invalid.
+//                    return
+//                }
+//
+//                // Save the fetched data into CoreData.
+//                self.userProfile = UserProfile.saveProfile(card, forProfile: .otherUser, withUniqueID: scannable.value)
+//
+//                // Pass on data to scanProfileController
+//                self.scanProfileController.userProfile = self.userProfile
+//                self.scanProfileController.setUserName((self.userProfile?.name)!)
+//
+//                // For fetching the profile image picture.
+//                let socialMedia = SocialMedia(withAppName: (self.userProfile?.profileImageApp)!, withImageName: "", withInputName: (self.userProfile?.profileImageURL)!, withAlreadySet: false)
+//
+//                ImageFetchingManager.fetchImages(withSocialMediaInputs: [socialMedia], completionHandler: { fetchedSocialMediaProfileImages in
+//                    if let profileImage = fetchedSocialMediaProfileImages[0].profileImage {
+//                        self.scanProfileController.setUserProfileImage(profileImage)
+//                        DiskManager.writeImageDataToLocal(withData: UIImagePNGRepresentation(profileImage)!, withUniqueID: self.userProfile?.uniqueID as! UInt64, withUserProfileSelection: UserProfile.userProfileSelection.otherUser, imageDataType: .profileImage)
+//                    }
+//                })
+//            })
+//        }
+//    }
 }

@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import ESTabBarController_swift
 import Firebase
-import Quikkly
 import Alamofire
 import FBSDKCoreKit
 
@@ -28,8 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     var noInternetAccessFrameTopAnchor: NSLayoutConstraint?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
-        Quikkly.apiKey = "sedXkqs5Ak6v2V7yXIs9FCdgbD39IpT5R3FdibJQDnYCbrzJmX6EPbpXcgRX3UH4vV"
         
         // Facebook login setup
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

@@ -53,8 +53,4 @@ target 'familiarize' do
   #Facebook login
   pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
-
-  #Nice Colors
-  pod 'ChameleonFramework/Swift'
-
 end
